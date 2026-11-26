@@ -114,7 +114,57 @@ def IsRounding (mode : RoundingMode) (rnd : ℝ → EReal) : Prop :=
 theorem IsRounding.monotone_and_eq {mode : RoundingMode} {rnd : ℝ → EReal}
     (h : F.IsRounding mode rnd) :
     Monotone rnd ∧ ∀ x ∈ F.numbers, rnd x = (x : EReal) := by
-  sorry
+  have hex (x : ℝ) (hx : x ∈ F.numbers) : (x : EReal) ∈ F.extendedNumbers :=
+    Or.inl ⟨x, hx, rfl⟩
+  have down_mono {x y : ℝ} (hxy : x ≤ y)
+      (hx : IsGreatest {z ∈ F.extendedNumbers | z ≤ (x : EReal)} (rnd x))
+      (hy : IsGreatest {z ∈ F.extendedNumbers | z ≤ (y : EReal)} (rnd y)) : rnd x ≤ rnd y :=
+    hy.2 ⟨hx.1.1, hx.1.2.trans (EReal.coe_le_coe_iff.mpr hxy)⟩
+  have up_mono {x y : ℝ} (hxy : x ≤ y)
+      (hx : IsLeast {z ∈ F.extendedNumbers | (x : EReal) ≤ z} (rnd x))
+      (hy : IsLeast {z ∈ F.extendedNumbers | (y : EReal) ≤ z} (rnd y)) : rnd x ≤ rnd y :=
+    hx.2 ⟨hy.1.1, (EReal.coe_le_coe_iff.mpr hxy).trans hy.1.2⟩
+  cases mode with
+  | nearest =>
+      rw [IsRounding] at h
+      refine ⟨?_, fun x hx ↦ ?_⟩
+      · intro x y hxy
+        rcases hxy.eq_or_lt with rfl | hxy
+        · rfl
+        obtain ⟨a, ha, hra, hxa⟩ := h x
+        obtain ⟨b, hb, hrb, hyb⟩ := h y
+        rw [hra, hrb, EReal.coe_le_coe_iff]
+        by_contra! hab
+        have square_le (u v : ℝ) (huv : |u| ≤ |v|) : u ^ 2 ≤ v ^ 2 := by
+          simpa only [sq_abs] using pow_le_pow_left₀ (abs_nonneg u) huv 2
+        have hxa' := square_le _ _ (hxa b hb)
+        have hyb' := square_le _ _ (hyb a ha)
+        have hprod := mul_pos (sub_pos.mpr hab) (sub_pos.mpr hxy)
+        nlinarith only [hxa', hyb', hprod]
+      · obtain ⟨a, _, hra, hxa⟩ := h x
+        have hzero : |a - x| ≤ 0 := by simpa only [sub_self, abs_zero] using hxa x hx
+        rw [hra, sub_eq_zero.mp (abs_eq_zero.mp (le_antisymm hzero (abs_nonneg _)))]
+  | down =>
+      rw [IsRounding] at h
+      exact ⟨fun _ _ hxy ↦ down_mono hxy (h _) (h _),
+        fun x hx ↦ le_antisymm (h x).1.2 ((h x).2 ⟨hex x hx, le_rfl⟩)⟩
+  | up =>
+      rw [IsRounding] at h
+      exact ⟨fun _ _ hxy ↦ up_mono hxy (h _) (h _),
+        fun x hx ↦ le_antisymm ((h x).2 ⟨hex x hx, le_rfl⟩) (h x).1.2⟩
+  | towardZero =>
+      rw [IsRounding] at h
+      refine ⟨?_, fun x hx ↦ ?_⟩
+      · intro x y hxy
+        rcases le_total 0 x with hx | hx
+        · exact down_mono hxy (h.1 x hx) (h.1 y (hx.trans hxy))
+        rcases le_total y 0 with hy | hy
+        · exact up_mono hxy (h.2 x hx) (h.2 y hy)
+        have hz : rnd 0 = (0 : ℝ) := le_antisymm (h.1 0 le_rfl).1.2 (h.2 0 le_rfl).1.2
+        exact (up_mono hx (h.2 x hx) (h.2 0 le_rfl)).trans (down_mono hy (h.1 0 le_rfl) (h.1 y hy))
+      · rcases le_total 0 x with h₀ | h₀
+        · exact le_antisymm (h.1 x h₀).1.2 ((h.1 x h₀).2 ⟨hex x hx, le_rfl⟩)
+        · exact le_antisymm ((h.2 x h₀).2 ⟨hex x hx, le_rfl⟩) (h.2 x h₀).1.2
 
 /-- The unit roundoff for a rounding mode. -/
 def unitRoundoff (mode : RoundingMode) : ℝ :=
@@ -218,7 +268,28 @@ theorem roundingGamma_add_bound {u : ℝ} {j k : ℕ} (hu : 0 ≤ u)
     (h : ((j + k : ℕ) : ℝ) * u < 1) :
     roundingGamma u j + roundingGamma u k + roundingGamma u j * roundingGamma u k ≤
       roundingGamma u (j + k) := by
-  sorry
+  simp only [roundingGamma_def, Nat.cast_add, add_mul] at h ⊢
+  let a := (j : ℝ) * u
+  let b := (k : ℝ) * u
+  have ha : 0 ≤ a := mul_nonneg (Nat.cast_nonneg _) hu
+  have hb : 0 ≤ b := mul_nonneg (Nat.cast_nonneg _) hu
+  have hab : a + b < 1 := h
+  have ha' : 0 < 1 - a := by linarith only [hab, hb]
+  have hb' : 0 < 1 - b := by linarith only [hab, ha]
+  have hden : 0 < 1 - (a + b) := sub_pos.mpr hab
+  suffices a / (1 - a) + b / (1 - b) + a / (1 - a) * (b / (1 - b)) ≤
+      (a + b) / (1 - (a + b)) from this
+  have hfrac (c : ℝ) (hc : 1 - c ≠ 0) : 1 + c / (1 - c) = 1 / (1 - c) := by
+    field_simp
+    ring
+  have hden_le : 1 - (a + b) ≤ (1 - a) * (1 - b) := by
+    nlinarith only [mul_nonneg ha hb]
+  have hle := one_div_le_one_div_of_le hden hden_le
+  have heq : 1 / ((1 - a) * (1 - b)) = 1 / (1 - a) * (1 / (1 - b)) := by
+    rw [div_mul_div_comm, one_mul]
+  rw [heq, ← hfrac a ha'.ne', ← hfrac b hb'.ne',
+    ← hfrac (a + b) hden.ne'] at hle
+  linarith only [hle]
 
 /-- A finite summation tree records addition order and preserves multiplicities. -/
 inductive SumTree (ι : Type*)
@@ -274,7 +345,35 @@ of computed intermediate sums using the inverse relative-error model. -/
 theorem abs_eval_sub_sum_le_computed (t : SumTree ι) {rnd : ℝ → ℝ} {x : ι → ℝ} {u : ℝ}
     (ht : t.HasInverseRelativeError rnd x u) :
     |t.eval rnd x - (t.leaves.map x).sum| ≤ u * t.sumAbsComputed rnd x := by
-  sorry
+  induction t with
+  | leaf i =>
+      simp [eval, leaves, sumAbsComputed]
+  | branch a b iha ihb =>
+      rw [HasInverseRelativeError] at ht
+      obtain ⟨ha, hb, hnode⟩ := ht
+      obtain ⟨δ, hδ, hlocal⟩ := (hasRelativeError_iff _ _ _).mp hnode
+      have hdiff :
+          (branch a b).eval rnd x - (a.eval rnd x + b.eval rnd x) =
+            -(branch a b).eval rnd x * δ := by
+        linarith only [hlocal]
+      have hlocal_bound :
+          |(branch a b).eval rnd x - (a.eval rnd x + b.eval rnd x)| ≤
+            u * |(branch a b).eval rnd x| := by
+        rw [hdiff, abs_mul, abs_neg, mul_comm u]
+        exact mul_le_mul_of_nonneg_left hδ (abs_nonneg _)
+      rw [leaves, List.map_append, List.sum_append, sumAbsComputed]
+      calc
+        _ = |((branch a b).eval rnd x - (a.eval rnd x + b.eval rnd x)) +
+              (a.eval rnd x - (a.leaves.map x).sum) +
+              (b.eval rnd x - (b.leaves.map x).sum)| := by
+          congr 1
+          ring
+        _ ≤ |(branch a b).eval rnd x - (a.eval rnd x + b.eval rnd x)| +
+            |a.eval rnd x - (a.leaves.map x).sum| +
+            |b.eval rnd x - (b.leaves.map x).sum| :=
+          (abs_add_le _ _).trans (add_le_add (abs_add_le _ _) le_rfl)
+        _ ≤ _ := by
+          simpa only [mul_add] using add_le_add (add_le_add hlocal_bound (iha ha)) (ihb hb)
 
 /-- **Gap 1.10.** A dot product computed with one multiplication per entry admits a
 componentwise backward error under the standard arithmetic model. -/

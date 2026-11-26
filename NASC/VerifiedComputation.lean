@@ -201,7 +201,35 @@ theorem norm_error_le_of_approximateInverse {n : ℕ}
     A.det ≠ 0 ∧ R.det ≠ 0 ∧
       ‖(A⁻¹).toEuclideanLin b - x‖ ≤
         ‖R.toEuclideanLin (b - A.toEuclideanLin x)‖ / (1 - ‖1 - R * A‖) := by
-  sorry
+  have hRA : IsUnit (R * A) := by
+    simpa only [sub_sub_cancel] using isUnit_one_sub_of_norm_lt_one h
+  have hdet : R.det * A.det ≠ 0 := by
+    simpa only [Matrix.det_mul, isUnit_iff_ne_zero] using
+      (Matrix.isUnit_iff_isUnit_det _).mp hRA
+  have hA := right_ne_zero_of_mul hdet
+  have hR := left_ne_zero_of_mul hdet
+  refine ⟨hA, hR, ?_⟩
+  let e := (A⁻¹).toEuclideanLin b - x
+  have hAx : A.toEuclideanLin ((A⁻¹).toEuclideanLin b) = b := by
+    rw [← LinearMap.comp_apply, ← Matrix.toLpLin_mul_same,
+      Matrix.mul_nonsing_inv A (isUnit_iff_ne_zero.mpr hA), Matrix.toLpLin_one,
+      LinearMap.id_apply]
+  have hsplit : e = R.toEuclideanLin (b - A.toEuclideanLin x) +
+      (1 - R * A).toEuclideanLin e := by
+    simp only [map_sub, LinearMap.sub_apply, Matrix.toLpLin_one, LinearMap.id_apply,
+      Matrix.toLpLin_mul_same, LinearMap.comp_apply, e, hAx]
+    abel
+  have hbound := (Matrix.l2_opNorm_mulVec (1 - R * A) e :
+    ‖(1 - R * A).toEuclideanLin e‖ ≤ ‖1 - R * A‖ * ‖e‖)
+  exact (le_div_iff₀ (sub_pos.mpr h)).mpr <| calc
+    ‖e‖ * (1 - ‖1 - R * A‖) =
+        ‖e‖ - ‖1 - R * A‖ * ‖e‖ := by ring
+    _ ≤ ‖e‖ - ‖(1 - R * A).toEuclideanLin e‖ := sub_le_sub_left hbound _
+    _ ≤ ‖R.toEuclideanLin (b - A.toEuclideanLin x)‖ := by
+      have htri := norm_add_le (R.toEuclideanLin (b - A.toEuclideanLin x))
+        ((1 - R * A).toEuclideanLin e)
+      rw [← hsplit] at htri
+      exact sub_le_iff_le_add.mpr htri
 
 /-- **Gap 7.12.** A strict interior affine enclosure forces the linear part to
 have spectral radius less than one. -/

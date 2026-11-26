@@ -1,9 +1,0 @@
-308 8. Matrix Methods for Parabolic Partial Differential Equations
-
-Because the above uniform error bound involves these small constants Am,m,
-these Chebyshev rational approximations were used in Reusch, et. al (1988)
-and Gallopoulos and Saad (1992) in numerically solving discretizations of
-time-dependent parabolic problems. It should be pointed out that these ma-
-trix Chebyshev rational approximations do not directly apply to nonlinear
-forms of the parabolic equation (8.1), ie., when the coefficients K;, Gi, o,
-and S' depend nonlinearly on the sought-solution u(x, t).

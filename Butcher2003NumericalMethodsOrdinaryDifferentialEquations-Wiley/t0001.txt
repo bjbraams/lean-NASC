@@ -1,6 +1,0 @@
-Numerical Methods for
-Ordinary Differential
-Equations
-
-Numerical Methods for Ordinary Differential Equations. J.C. Butcher
-Copyright © 2003 John Wiley & Sons, Ltd. ISBN: 0-471-96758-0

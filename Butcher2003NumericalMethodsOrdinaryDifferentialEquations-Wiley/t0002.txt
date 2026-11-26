@@ -1,8 +1,0 @@
-Numerical Methods for
-Ordinary Differential
-Equations
-
-J.C. Butcher
-The University of Auckland, New Zealand
-
-WILEY
