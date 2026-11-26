@@ -1,0 +1,61 @@
+312
+
+NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+5 bycd = des
+Dobie? = 38,
+
+i=t
+4
+1
+_ tos
+S> biaie; = re
+ijt
+
+where € is a real parameter and the elements of A are independent of
+&. Show how this method can be used as a starter for the third order
+Adams-Bashforth, Adams—Moulton predictor—corrector pair.
+
+40.2 For each of the following polynomial pairs, written as [a(z), 8(z)],
+
+determine if the corresponding numerical method is consistent and
+stable:
+
+. [L—2z,22- 27],
+
+. [L- 27,22 — 24],
+
+. [L+2—327 + 23,32 — 27],
+. [l+z2-2?- 23,34 2].
+
+wn
+
+40.3 Translate the conditions for stability, preconsistency and consistency
+
+from the [a, 8] representation to the (p,c) representation.
+
+40.4 For a linear multistep method, [a, f], define polynomials a and b by
+
+41
+
+a(z) =(1+2)* —ay(1 + z)F"(1 - 2) — and +2) 20 — 2)? - +
+
+—~(1—2z)*ax,
+b(z) = Bo(1 + 2)* + Ail tz) 41 — 2) + Bo(1+2)F FL -— zy? t---
++(1 - z)* Bp.
+
+Find the conditions for stability, preconsistency and stability in terms
+of the polynomials a and 6.
+
+The Order of Linear Multistep Methods
+
+410 Criteria for order
+
+Given a linear multistep method [a, f], we seek conditions on the coefficients in
+the polynomials @ and f that will guarantee that, locally, errors are O(h? +).
+By this we mean that if starting values satisfy y; = y(zi) + O(h?t?), for
+i= 0,1,...,4—1, then this will imply that a similar estimate persists for i > k.
+We emphasize that this is a local property in the sense that it cannot be used in
+a limiting case in which integration is carried to a fixed point F > xo, because
+the number of steps required to achieve this is approximately (E — x9)/h, and
+this is unbounded as h —> 0. To verify that yn = y(tn) + O(h?*+), assuming

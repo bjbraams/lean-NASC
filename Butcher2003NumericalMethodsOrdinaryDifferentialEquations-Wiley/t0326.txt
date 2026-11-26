@@ -1,0 +1,59 @@
+LINEAR MULTISTEP METHODS 315
+
+giving the coefficients Bp = fi = 4
+
+If k = 2 we have 1 1
+BA +z)=1+52-=2
+2 12
+and
+_ 1 ~1, i j2_ 5 72, 1
+Biz) =1+ (2 1) ale 1°= wt 3*t ol
+
+giving So = %, fi = 2, b=
+In general we can find the coeflicients by rewriting (411a) in the form
+
+Be) =14 5@~Y~ Be-1 + Gle-1)- Beet
+
+863 275
+_ 71/8 _ See _ 1/6 Ate _4)7
+“ae, " roe re ass
+_ _1)8 ~1) — —~ 1)4...
+3628800) + iga6a00'* ~~ grago1600% — 2) +>
+
+and truncating at the term in (z — 1)* to obtain the coefficients in the k-step
+order k + 1 method.
+
+For Adams-Bashforth methods, in which {9 necessarily vanishes, we write
+Biz)= 2B(z), where B has degree k — 1 for a k-step method.
+
+In this case Theorem 410D can be written in the form
+
+z a(1 +z)
+(1+2z)log(l1+z)  z
+and we aim for order p = k.
+It is found that
+
++ BL + z) = O(2?),
+
+Ba +2z)= I 1 T
+ila 3
+a+z)(1 a 7 +: -)
+15 5 35, Bly 5
+= 1-924 79? ~ gt 799% 7 D387 (4116)
+19087, 5257 7 , 1070017,
+60480~ 17280" 3628800°
+25713 (9 | 26842253 9
+~ 89600 95800320" >
+so that the coefficients 8;, B2, ..., 8, can be found by selecting the coefficients
+of z°, z1,..., z*-1 in the truncation to the term in (z—1)*~? in the expansion
+Blo\ =~ 1— ; _ o _12_ 3 _ 133 _ 1/4
+Be) =1 ee 3-19 + Bes)
+7 5257
+5 ~ 1/6 —1y
+23 ~ "+ goago% ~ Y" ~ Trego — Y
+1017 25713 26842253
+— 18 — _—1)9 — 1)
++ 3628800" ~ )” ~ agg09* ~ 1" + 95800820 ° »
+For example, when k= = 2 we have Blz) = =1- $(z -l= 3 — £2 leading
+
+to fi = 5 3 and f2 = -} for the ‘Adams-Bashforth ' method with order p=2.

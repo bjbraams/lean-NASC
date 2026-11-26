@@ -1,0 +1,52 @@
+310 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+Theorem 406C Let ¢, denote the vector
+
+En = y(@n) — Yn-
+
+Then for ho sufficiently small so that ho|So|L < 1 and h < ho, there exist
+constants C and D such that
+
+k
+en ) OUEn—i
+
+i=1
+
+< Chmbax llen-il| + Dh? (406¢)
+ma
+
+Proof. The value of €, — vi ini — Rg Bil F(y(@n-a)) — F(yn—i)) is
+the difference of two terms, of which the first can be bounded by a constant
+times h?, by Theorem 406B, and the second is zero. This means that
+
+fn ~ 3 ain = Ty + To + Tay (4064)
+where =
+Til] = AlBolllfw(en)) — FYn)Il < AL|Aol - [lenll,
+Il =h ¥Aiolens) - fim-d)] < HE SIA
+
+and ||T3|| can be bounded in terms of a constant times h?. We now use (406d)
+twice. First, assuming h < ho, it is used to obtain a bound on (1—AL|fo|)|len||
+and hence of ||e,|| in terms of max*_, ||en—:||, and of terms that are bounded
+in terms of a constant times h?. Secondly, by inserting this preliminary result
+in the bound on T;, we obtain the result of the theorem. O
+
+Theorem 406D A-stable consistent linear multistep method is convergent.
+
+Proof. Write (406c) in the form
+
+k
+En = So aien—i + Vn,
+
+i=l
+where, according to Theorem 406C,
+
+Ildall < Ch max llen—;l| + DA”,
+
+for A sufficiently small. Define @,, 62, ... as in Subsection 131, and note that,
+because the method is convergent, the @ sequence is bounded. From Theorem
+131A, we have
+
+k-1 n
+én = Oni + DY On-air,
+izk
+
+i=0

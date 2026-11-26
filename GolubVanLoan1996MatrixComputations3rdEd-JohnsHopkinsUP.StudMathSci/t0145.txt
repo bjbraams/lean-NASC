@@ -1,0 +1,109 @@
+5.5. THE RANK DEFICIENT LS PROBLEM 259
+
+where
+
+v Tv Tp fod r
+[2] n~r and Q'b = [<] m-r
+Thus, if x is an LS minimizer, then we must have
+
+==0| Rii(e~ Razz) .
+
+If z is set to zero in this expression, then we obtain the basic solution
+
+_n| fie
+z=R= an [ 0 .
+Notice that zg has at most r nonzero components and so Azg involves a
+subset of A’s columns.
+The basic solution is not the minimal 2-norm solution unless the sub-
+matrix 29 is zero since
+
+zus jl2 = min
+
+(5.5.4)
+zéR™
+
+cae] -n| Rip Ris IE
+~fa-r
+
+Indeed, this characterization of || zz¢ ||z can be used to show
+
+za lle t
+< 1+], Rk 5.5.5
+Izu la = S Ylt+ Rn Rill - (5.5.5)
+
+See Golub and Pereyra (1976) for details.
+
+2
+
+5.5.7 Numerical Rank Determination with AII = QR
+
+If Algorithm 5.4.1 is used to compute zg, then care must be exercised in
+the determination of rank(A). In order to appreciate the difficulty of this,
+suppose
+
+RY
+
+SIH, WAM, Tk) = RO = [“ Re > | k k
+0 RD
+ko on-k
+
+is the matrix computed after k steps of the algorithm have been executed
+in floating point. Suppose rank(A) = &. Because of roundoff error, RY
+will not be exactly zero. However, if R& is suitably small in norm then it
+is reasonable to terminate the reduction and declare A to have rank k. A
+typical termination criteria might be
+
+WRB Ip sal A lla (8.5.6)
+
+260 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+for some small machine-dependent parameter €,. In view of the roundoff
+properties associated with Householder matrix computation (cf. §5.1.12),
+we know that A() is the exact R factor of a matrix A+ Ey, where
+
+Ee lla Seal] Allz «2 = Ofu).
+Using Theorem 2.5.2 we have
+
+hel + Ex) = oe (R™) < | AD I
+Since O41(A) < Tre (A + Ex) +i] Ee lz, it follows that
+ona) < (er + ea) A a.
+
+Tn other words, a relative perturbation of O(e; +€2) in A can yield a rank-k
+matrix. With this termination criterion, we conclude that QR with column
+pivoting “discovers” rank degeneracy if in the course of the reduction RY
+is small for some k < n.
+
+Unfortunately, this is not always the case. A matrix can be nearly rank
+deficient without a single RY being particularly small. Thus, QR with
+column pivoting by itself is not entirely reliable as a method for detecting
+near rank deficiency. However, if a good condition estimator is applied to
+R it is practically impossible for near rank deficiency to go unnoticed.
+
+Example 5.5.1 Let T,(c) be the matrix
+
+lo o-e -¢ -c
+
+0 1 -e “c
+Fa(e) = diag(1,s,...,2"77)
+
+: 1 =e
+
+0 nee 1
+
+with c? +? = 1 with c,s > 0 (See Lawson and Hanson (1974, p.31).) These matrices are
+unaltered by Algorithm 5.4.1 and thus {| 2) |l2 > s"—1 for k= 1n—1. This inequality
+implies (for example} that the matrix Tipo(.2) has no particularly small trailing principal
+submatrix since «** = .13. However, it can be shown that on = O(107*).
+
+5.5.8 Numerical Rank and the SVD
+
+We now focus our attention on the ability of the SVD to handle rank-
+deficiency in the presence of roundoff. Recall that if A = UEV7 is the
+SVD of A, then
+ul
+fig = 7, (5.5.7)
+
+i=l ~*
+
+where r = rank(A). Denote the computed versions of U, V, and 5 =
+diag(o,) by U, V, and & = diag(é,). Assume that both sequences of singular

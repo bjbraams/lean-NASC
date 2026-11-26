@@ -1,0 +1,54 @@
+62
+
+2.4
+
+2. Nonnegative Matrices
+
+AF := (df,d§,---,d*),
+and
+m
+trA* := Va.
+
+j=l
+
+Then, their result, in this special case, is
+
+Theorem 2.25. Let A = (d1,do,---,dm) be an m-tuple of nonzero
+compler numbers. Then, A is the nonzero spectrum of a primitive
+nxn matric A, for some n > m, if and only if
+
+1. the polynomial in the variable t, given by []5~,(t—d,), has all real
+coefficients;
+
+2. there is a positive real d; such that d; > |d;| for all i 4 j;
+
+3. tr A* > 0 for all positive integers k, and, whenever tr A‘ > 0,
+then tr A*" > 0 for all positive integers r.
+
+The conditions 1.-3. above on A are easily seen to be necessary condi-
+tions for A to be the nonzero spectrum of a primitive n x n matrix A.
+Assuming that such a primitive n x n matrix A, with nonzero spec-
+trum A, does exist, its characteristic polynomial would necessarily be
+the real polynomial ¢”~™ |]; (¢ — dj), thus giving condition 1.. Note
+that condition 1. implies that if some component d; of A is nonreal,
+then d; is also a component of A. Condition 2. is a direct consequence
+of Definition 2.10. Finally, tr A* = tr A* for all k > 1, and as A* > O,
+then tr A* > 0. If tr A* = tr A* > 0 for some k, then some diagonal
+entry of A* is positive, and, without loss of generality, we may assume
+that (A*);,1 > 0. But then, (A*- A*), 1 > 0, etc., which gives the last
+part of condition 3.
+
+Theorem 2.25 of Boyle and Hendelman, an inverse eigenvalue problem,
+is of course interesting for numerical analysts. Because of the possibly
+large number of zero eigenvalues (n — m) of the primitive n x n matrix
+A, having the m-tuple A as its non-zero spectrum, it would seem that
+an algorithm for computationally finding the matrix A would have
+difficulties with this large null space!
+
+The use of directed graphs in matrix theory is not new, but recently
+several authors (cf. Harary (1959) and Parter (1961a)) have applied
+their geometrical aspects to the classical problems of Gaussian elimi-
+nation and the determination of eigenvalues of large matrices. Specific
+use of directed graphs will be made in Chap. 6 in analyzing the matrix
+properties of matrix equations, derived from elliptic (and parabolic)
+partial differential equations.

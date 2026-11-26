@@ -1,0 +1,50 @@
+290 8. Matrix Methods for Parabolic Partial Differential Equations
+
+\|(7 — Ats)|| > pi — AtS) = max |1 — Atd,|,
+Si<n
+
+where the ,’s, the eigenvalues of S, satisfy 0 < a < Red; < f. It is evident
+that p(I — AtS) is not uniformly bounded for all At > 0.
+
+We now concentrate on those approximations for exp(— AtS) which have
+their spectral radii less than unity for certain choices of At > 0. The reason
+that these approximations are of interest lies simply in the following: Let
+T(At) be any matrix approximation of exp(—AtS). Then, we would approx-
+imate the vector v(to + At) of (8.31) by
+
+(8.42)  -w(to + At) = T(At) - {w(to) — A74s} + A71s, At>0.
+
+Starting with to = 0, we arrive by induction at
+(8.43) w(mAt) = [T(At)]™{w(0) — A's} + A's, m>0.
+
+If p(T(At)) > 1, we see that the sequence of vectors. w(mAt) will not in
+general be bounded in norm for all choices of w(0). Actually, what we are
+considering here is the topic of stability. It has been recognized for some time
+that, although in practice one wishes to take longer time steps (At large) in
+order to arrive at an approximation w(t) for the solution u(x;t) of (8.1)
+with as few arithmetic computations as possible, one must restrict the size
+of At = t/m in order to insure that w(mAt) is a reasonable approximation
+to u(x;t). This brings us to
+
+Definition 8.9. The matrix T(t) is stable for 0 < t < to if p(T(t)) < 1 for
+this interval. It is unconditionally stable if p(T(t)) < 1 for all t > 0.
+
+Note that the definition of stability is independent of the closeness of
+approximation of T(t) to exp(—tS).
+
+For stability intervals for the approximations considered, we have
+
+Theorem 8.10. Let S be ann x n matrix whose eigenvalues r; satisfy 0 <
+a < Red; < B,1<i<n. Then, the forward difference matriz approximation
+I — AtS is stable for
+
+. 2Red;
+. < < a Pe
+(8.44) 0<At< aia, { Dal \
+
+On the other hand, the matrix approzimations
+At .\~"
+(I + AtS)~! and (1+ $s) : (:- $s)
+
+for the backward difference and Crank-Nicolson matrix approximations are
+unconditionally stable.

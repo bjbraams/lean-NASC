@@ -1,0 +1,44 @@
+DIFFERENTIAL AND DIFFERENCE EQUATIONS 1k
+
+Swat) = (N +1)? (yw_a(t) — 2yw-1) + yn (0),
+dune) = Cv +1)? (yn-a(8) — 2un(®) + 800).
+
+This system can be written in vector-matrix form as
+
+y'(t) = Ay(t) + v(t), (103b)
+
+where
+
+—2 #1 0 0 0 a(t)
+
+1-2 #1 0 o 0 0
+
+0 41 -2 0 0 90 0
+A=(N+IP] 2: Poof i}, v=(v+0?
+
+0 0 O--- -2 1 #90 0
+
+0 60 6 (0 1-2 #1 0
+
+0 0 O-- O 1 -2 B(t)
+
+The original problem is ‘dissipative’ in the sense that, if u and v are each
+solutions to the diffusion equation, which have identical boundary values but
+different initial values, then
+
+1
+W(t) = ; [ (u(x,t) — v(2,t)) de
+
+is non-increasing as ¢ increases. We can verify this by differentiating with
+respect to ¢ and by showing, using integration by parts, that the result found
+cannot be positive. We have
+
+aw _ P"(u u(z, t) — o(2, t)) on ,t) - 2.0) ix
+
+_ [ (u(x,t) — v(e, ‘ ea ,t) oe °) de
+-[ oie) * ae
+__f ice i.
+[ ( Ox ox ) “
+
+<0.
+

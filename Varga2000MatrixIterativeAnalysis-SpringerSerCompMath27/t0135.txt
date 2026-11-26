@@ -1,0 +1,50 @@
+4.3 Theoretical Determination of an Optimum Relaxation Factor 127
+
+[2p/(p — 1)]'/? of (4.36) is strictly decreasing and is clearly maximized when
+the cyclic index is 2. This, as we shall see, is of considerable value, since the
+case p = 2 occurs naturally, by virtue of symmetry, in the numerical solution
+of many physical problems.
+
+As an example of the difference in asymptotic rates of convergence that
+orderings alone can make, consider the 3 x 3 matrix B of (3.97), with a =
+p(B) = 0.9999. In Sect. 3.6, it was shown that
+
+min p(C..) = (£1)
+
+which in this case is (0.9999)9/? = 0.99985. Thus,
+
+(4.39) max Roo (Ly) = Reo(L1) = 0.00015.
+But if P is a particular 3 x 3 permutation matrix such that
+_ 001
+(4.40) PBPT=B=a]100],
+010
+
+then B is a consistently ordered 3-cyclic matrix. Since all the eigenvalues of
+B? are a? and hence positive, we can apply Corollary 4.9, and it follows that
+
+(4.41) max Roo(L.) = Roo(Lu,) = 0.03,
+
+w real
+
+a significant improvement over that of (4.39). Further results of the effect of
+orderings on asymptotic rates of convergence will be discussed in Sect. 4.4
+for the special case p = 2.
+
+The method of proof of Theorem 4.7 shows that the optimum relaxation
+factor w, is obtained by coalescing two positive eigenvalues of L,,. This in
+turn results in the fact® that the Jordan normal form of £,,, contains a single
+2 x 2 submatrix J of the form
+
+rl
+
+where A = p(L,,,). The discussion in Sect. 3.2 on norms of powers of matrices
+is now relevant, and applying Theorems 3.3 and 4.7, we conclude that
+
+Lobe
+m|(w» — 1)(p — 1)}™"?
+In Chap. 5 the goal is to minimize
+
+(4.42) Timm—oo <v.
+
+® See Young (1954a) for the case p = 2 and Varga (1959a) for the general case
+p22.

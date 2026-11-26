@@ -1,0 +1,49 @@
+156 5. Semi-Iterative Methods
+
+Note this again implies that the matrix norms ||f,.(M)|| are strictly decreas-
+ing. Thus, with the polynomials j,,(M) of (5.21), our conclusion is that the
+norms of the error vectors €“”) for the vector approximations y‘™ satisfy
+
+~ 2(we - 1yr/ 2
+5.27 (mc (AMET) VO) m>o.
+(5.27) jerry s (Fe) He, m>
+In terms of the average rate of convergence for m steps for this semi-
+iterative method, we have from (5.26)
+
+In 2
+(5.28) Rlim(M)] = — 5 ins -1)- n (rao) ee =) m>0,
+
+and thus
+
+(5.29) lim Rlm(M)] = — 5 Inu ~1)=In (=)
+
+The identities, used in rewriting the norms ||f,,(M)|| of (5.25) in the form
+(5.26), can be used to show that the constants wm of (5.24) are also strictly
+decreasing for m > 2, and
+
+(5.30) lim Wm = wp,
+m-—0o
+
+where wy, is defined in (4.30).
+Exercises
+
+1. Verify (5.23).
+2. Verify (5.30).
+
+3. Let M be ann xn convergent Hermitian matrix whose eigenvalues 1;
+satisfy
+—p(M) <a < pi Sb=p(M) <1.
+
+With jm(x) defined as in (5.21),
+
+a. Deduce a three-term recurrence relation for the vectors y") anal-
+ogous to (5.23).
+b. if Om is the associated parameter analogous to wy of (5.23) derived
+from part a, find
+gi(a):= lim Om.
+m—co
+c. If R[pm(M)] is the average rate of convergence for m iterations of
+this method, find
+g2(a):= lim R[pn(M)).
+
+m—oo

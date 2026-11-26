@@ -1,0 +1,64 @@
+80 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Table 221(I) Errors in the numerical solution of the orbital problem (201d)
+with zero eccentricity through a half period using (221a) and (221b)
+
+n ¥1 error Ratio ye error Ratio
+
+32 || 0.01479021 —0.04016858
+3.9676 3.9688
+
+64 || 0.00372781 —0.01012098
+4.0417 4.0001
+
+128 || 0.00092233 —0.00253020
+4.0361 4.0041
+
+256 |} 0.00022852 —0.00063190
+4.0219 4.0031
+
+512 | 0.00005682 —0.00015785
+4.0119 4.0018
+
+1024 |) 0.00001416 —0.00003945
+n yg error Ratio ya error Ratio
+
+32 || 0.04038636 —0.01548159
+3.9497 4.1552
+
+64 || 0.01022525 —0.00372585
+4.0132 4.0659
+
+128 | 0.00254793 —0.00091636
+4.0163 4.0294
+
+256 || 0.00063440 —0.00022742
+4.0105 4.0138
+
+512 || 0.00015818 —0.00005666
+4.0059 4.0067
+
+1024 || 0.00003949 —0.00001414
+
+222 Greater dependence on previous values
+
+After the first step of a numerical method has been completed, approximations
+are available, to be used in the computation of y,, not only for y(,_-1) and
+y'(@n—-1), but also for y(tp—-2) and y’(tp__2). After further steps, even more
+previous information is available. Instead of computing y, in a complicated
+manner from just the value of yn-1, we could consider making more use of
+the values computed in past steps, as it becomes available.
+
+In the generalization of the Euler method, introduced in Subsection 221,
+we were, in effect, using an approximation to the derivative, not at tp-1,
+but at 2,3 = fn. + 3h. One way of doing a similar adjustment, but
+using past information, is to note that existing data indicates that the value
+of y’(#) is changing by about f(tn_1,¥n_1) ~ f(@n—2,Yn—2), per step. It
+therefore seems reasonable to assume that, as x advances from z,-1 to
+Endy the approximation to the derivative at rp_1, given as f(€p_1,Yn—1),
+should be increased by } (f(a-1,¥n-1) — f(%n—2,Yn—2)) to obtain a usable
+approximation to y’(x,_ 4 ). This means that we could approximate the
+
+derivative at z,_1, the midpoint of the interval, by 3 f(@n-1,yn-1) -
+
+3?

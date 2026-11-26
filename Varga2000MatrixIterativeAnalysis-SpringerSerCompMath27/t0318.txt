@@ -1,0 +1,46 @@
+8.5 Chebyshev Rational Approximations for exp(—tS) 311
+
+Not all known methods for approximating solutions of parabolic par-
+tial differential equations can be obtained from Padé matrix approxi-
+mations of exp(—tA). For example, multilevel approximations such as
+the unconditionally stable method of DuFort and Frankel (1953) and
+the unconditionally unstable method of Richardson (1910) require spe-
+cial treatment. See, for example, Douglas (1961b), Todd (1956), and
+Richtmyer (1957).
+
+Padé rational approximations are only a particular type of rational
+approximation of exp(—tA). Franklin (1959b) considers consistent ex-
+plicit polynomial approximations of high order in order to maximize
+the stability interval in At. Varga (1961) considers Chebyshev rational
+approximations of exp(—tA) that are aimed at obtaining useful vector
+approximations in just one time step.
+
+It is interesting to note that several definitions of stability exist in the
+literature. For example, O’Brien, Hyman, and Kaplan (1951) relate
+stability to growth of rounding errors, where Lax and Richtmyer (1956)
+define an operator C(At) to be stable if for some 7 > 0, the set of
+norms ||C™(At)|| is uniformly bounded for 0 < At < 1,0 < mAt <T.
+However, if the size of mAt is unrestricted, a supposition of interest
+in problems admitting a finite steady-state solution, this definition of
+Lax and Richtmyer reduces to that given in Definition 8.9. See also
+Richtmyer (1957) and Esch (1960).
+
+Because we have omitted the entire topic of convergence of the differ-
+ence approximations to the solution of the differential equation, the
+basic results of Lax and Richtmyer (1956) and Douglas (1956), which
+in essence show the equivalence of the concepts of stability and conver-
+gence, are not discussed here. These analyses consider the combined
+errors due to spatial as well as time discretizations. In this regard, the
+article of John (1952) is basic. See also Lees (1959), Strang (1960),
+and Kreiss (1959b).
+
+The matrix result of Theorem 8.12, linking the Perron-Frobenius the-
+ory of nonnegative matrices to the solutions of discrete approximations
+to certain parabolic partial differential equations, is apparently new.
+
+It must also be mentioned that our treatment in Sect. 8.3 does not
+cover the parabolic partial differential equations for which the coeffi-
+cients of the differential equation are functions of time, or functions of
+the unknown solution, nor does it cover coupled systems of parabolic
+partial differential equations. For the numerical solution of such prob-
+lems, we recommend the survey article by Douglas (1961b).

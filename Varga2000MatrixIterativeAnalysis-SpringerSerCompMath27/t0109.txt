@@ -1,0 +1,48 @@
+3.6 Regular and Weak Regular Splittings of Matrices 101
+
+it is evident from the hypotheses that A = M,, — N,, is a regular splitting
+of A for alO <w <1. 1f 0 < wy < we <1, then O < N,, < N.,, equality
+excluded, and as A~! > O, the result follows directly from Theorem 3.32.
+
+Evidently, for nonnegative irreducible and convergent Jacobi matrices, un-
+derrelaration (0 < w < 1) for the successive overrelaxation iterative method
+can only result in asymptotically slower iterative procedures, and as such,
+these are of little practical interest. Continuing in this case, if p(L,,) is dif-
+ferentiable as a function of w for w = 1, and
+
+d
+qo lho) lw=t <0,
+
+the above results would strongly suggest that the use of w’s greater than unity
+would decrease even further the spectral radius of p(L,,) beneath p(L1). In
+other words, for B > O irreducible and convergent, overrelaxation (w > 1)
+would appear to be the promising way of minimizing the spectral radius
+p(L).,) of the successive overrelaxation matrix. Indeed, the pioneering work
+of Young (1950) shows that this is true for a large class of matrices. We will
+consider this topic in detail in Chaps. 4 and 5, where we shall see that the
+theory of cyclic and primitive matrices, as developed in Chap. 2, can be used
+as a basis for such a topic.
+
+Before leaving this section, however, we consider a simple counterexam-
+ple!® to the notion that the minimum of p(L,,) occurs when w > 1, even
+in the case where the point Jacobi matrix is nonnegative, irreducible, and
+convergent. Let
+
+010
+(3.97) B=al001], 0<a<1.
+100
+
+The matrix B is evidently nonnegative, convergent, and irreducible, and the
+matrix B is in fact in the normal form (2.37) of a matrix which is cyclic of
+index 3. By direct computation,
+
+1l-w aw 0
+Ly = 0 l-w a |,
+aw(l—w) a®w 1-w
+
+and it can be verified that p(L,,) increases as w increases from unity. For this
+example, p(L,,) is not differentiable for w = 1, and
+
+min p(Lu) = p(L1).
+
+18 Due to Kahan (1958).

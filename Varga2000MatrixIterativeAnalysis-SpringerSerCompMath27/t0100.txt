@@ -1,0 +1,63 @@
+92 3. Basic Iterative Methods and Comparison Theorems
+
+Proof. Since the diagonal entries of the matrices of A and C are identical, the
+diagonal matrix D defined in (3.77) is the same for the matrices A and C. If
+Ba :=I-DA, and Bo := I—DC, we have by hypothesis that O < Bo < Ba,
+and as p(Ba) < 1 from Theorem 3.18, we conclude from the Theorem 2.21
+that Bo is also convergent. Thus, from Theorem 3.18, C is an M-matrix.
+
+As a consequence of this theorem, note that any principal submatrix of
+an M-matrix is also an M-matrix.
+
+As a simple example of the above results, consider the real 4 x 4 matrix A
+first described in (1.9). As we have seen, this matrix is symmetric, irreducible,
+and positive definite. Applying Corollary 3.21 above, we conclude that A~! >
+O, which of course agrees with the expression for A~! in (1.12). In terms of
+Definition 3.23, this matrix is evidently an irreducible Stieltjes matrix. As a
+second example, considering the matrix
+
+>
+i
+
+Oo OND
+|
+
+CO ONIY PONIE
+
+|
+|
+
+Nr OOO
+
+ONI® NIH ©
+|
+NIO DNF OO
+
+We deduce by inspection that A is an irreducibly diagonally dominant matrix,
+and applying Corollary 3.20, we necessarily have that A~! > O. Thus, A is
+evidently an irreducible M-matrix.
+
+To conclude this section, consider any complex n x n matrix A = [a;,;],
+and to it, we associate the following real n x n comparison matrix M(A) =
+[ai,3], where
+
+(3.80) aig := lai], and a,j := —|a;,;| fori Aj, (1 <i,j <n).
+
+By definition, the entries of this real matrix M(A) have at least the necessary
+sign pattern, from Definition 3.22, to be an M-matrix. This brings us to
+
+Definition 3.26. A complex n x n matrix A = [a;,;] is an H-matrix if its
+comparison matrix M(A) of (3.80) is an M-matrix.
+
+Given any n x n complex matrix A, its comparison matrix M(A) is not
+in general an M-matrix, but the following result gives sufficient conditions
+for this.
+
+Theorem 3.27. Let A = {a;,;] be ann x n complex matrix which is either
+a strictly diagonally dominant or an irreducibly diagonally dominant matriz.
+Then, A is an H-matric.
+
+Proof. From the hypotheses for the matrix A, it is immediate that its compar-
+ison matrix M(A) is also either strictly diagonally dominant or irreducibly
+diagonally dominant. Hence, M(A) is nonsingular from Theorem 1.21, and,
+moreover, the diagonal entries of M(A) are all necessarily positive, while its

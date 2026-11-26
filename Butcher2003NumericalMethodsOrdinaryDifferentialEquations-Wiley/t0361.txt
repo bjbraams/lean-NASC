@@ -1,0 +1,56 @@
+350 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+and Adams—Moulton methods, approximations are available to y(rn), hy’ (rn),
+hy'(@n-1), «++» hy'(@n—p4i). If the stepsize is to be altered by a factor r to
+a new value rh, then there seem to be two distinct approaches to proceeding
+further.
+
+The first approach is to use a modified form of the Adams formulae which
+enables y(z, + rh), to be written in terms of y(z,), hy'(tn), hy'(@n-1), ---+
+hy’ (@n—p+i). Of course this only works for a single step. For the step after
+that, the data on which to base the approximation would be y(z, + hr),
+hy'(@n + hr), hy'(tn), ---, hy'(@a—p+2) and the results computed would be
+approximations to y(tn + hr + hrr), where 7 is the stepsize ratio for this new
+step. Rather than explore the form of the modified Adams formula in this
+rather ad hoc manner, write the exact quantities that the incoming data is
+supposed to approximate as the sequence consisting of
+
+y(tn — hr), hy'(@n— 81), hy'(tn — AO), --., hy" (tn — AO).
+
+The Adams-Bashforth method would then generalize to an approximation of
+the form
+
+k
+y(@n) © y(@n ~ hr) + D7 BThy'(an — hOi), (461a)
+i=1
+and the Adams—Moulton to an approximation of the form
+
+k
+y(2n) © Bohy' (an) + y(an — 61) + > Bihy' (tn — hO:). (461)
+i=1
+To obtain order p = k for (461a), the coefficients 87, i = 1,2,...,% have to
+be chosen so that
+
+k
+1 = exp(—1z) + 2) BF exp(—6:2) + O(2?**),
+i=1
+
+and to obtain order p = k +1 for (461b), 8;, i = 1,2,...,& are chosen so that
+
+k
+1 =exp(-61z) + 280 +z > B; exp(—0;z) + O(2?*4).
+
+t=1
+
+To use this approach in practice, the coefficients @[, Bj, ... and Bo, fi,
+... have to be evaluated afresh every step, before any differential equation
+solutions are approximated. For many problems this is justified, and many
+codes use some sort of approach based on this technique.
+
+The second main approach to stepsize adjustment was proposed by
+Nordsieck (1962) and further developed by Gear (1967, 1971). For a Nordsieck
+method of order p, the data imported into step number n consists of
+approximations to
+
+1 1
+y(tn-1), hy'(n-1), gy" en-1), pty? (en),

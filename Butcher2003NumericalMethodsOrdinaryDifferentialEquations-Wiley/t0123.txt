@@ -1,0 +1,49 @@
+110 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Algorithm 252a A Taylor step for problem (252a)
+
+a(1) = y3
+b(1) = y + x;
+c(i) =y - x;
+
+for i=0:m- 1,
+temp = b(it1);
+for j = 1: i,
+temp = temp - d(1+i-j)*c(1+j);
+end;
+d(it1) = temp/c(1);
+a(it+2) = d(i+1)/(i+1);
+if i == 0,
+b(it2)
+c(it+2)
+else
+b(i+2) = alit+2);
+e(it+2) = a(i+2);
+end;
+end;
+x=x+h;
+y = a(mti1);
+for i = m-1:-1:0,
+y = a(itl) + hey;
+end;
+
+a(i+2) + 1;
+a(it2) - 1;
+
+Let ao,@1,..-,Qm denote Taylor coefficients for y(rt,—1 + h) and let
+bo, b1,.-., bm be the corresponding coefficients for y +z, and co,C1,...,Cm be
+the coefficients for y—2. If do, di,...,dm are the coefficients for (y+2)/(y—2),
+then Algorithm 252a, written in MATLAB can be used to update the value
+of = £,~1 and y = yn_1 to the values at the end of a step, r = fn, Y = Yn-
+Note that ao,@1,...,Qm are represented in this program by a(1), a(2),...,
+a(m+1), because MATLAB subscripts start from 1 (and similarly for the };,
+etc.).
+
+Numerical experiments based on this program have been made for a
+sequence of m values from 1 to 10 and using step sizes h = 0.10 x 2-*,
+with k = 1,2,... . The errors in the approximations to y(0.5) are presented
+in Figure 252(i). It can be seen that the rate of increase in accuracy, as smaller
+and smaller steps are taken, becomes more and more impressive as m increases.
+The results found for m = 9 and m = 10 are not included because, even for
+10 steps with h = 0.05, the numerical results in these cases are accurate to
+approximately 15 decimal places.

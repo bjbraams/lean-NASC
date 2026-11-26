@@ -1,0 +1,99 @@
+1.4. VECTORIZATION AND RE-USE IssuEs 37
+
+1.4.3. The Vector Length Issue
+
+Suppose the pipeline for the vector operation op takes 7), cycles to “set
+up.” Assume that one component of the result is obtained per cycle once
+the pipeline is filled. The time required to perform an n-dimensional op is
+then given by
+Top(n) = (Top + 7) nsvu
+
+where j is the cycle time and v, is the length of the vector hardware.
+
+If the vectors to be combined are longer than the vector hardware length,
+then as we have seen the overall vector operation must be broken down into
+hardware-manageable chunks. Thus, if
+
+n=nyv, +n O<no<u,,
+then we assume that
+Top(n) = { (Ten +U,)B ny = 0
+” (r1(Top + YL) + Top + ro) 9 #0
+specifies the overall time required to perform a length-n op. This simplifies
+to
+Top(n) = (1 + Topceil(n/v.)) o
+where ceil(c) is the smallest integer such that a < ceil(a). If p flops per
+component are involved, then the effective rate of computation for general
+n is given by
+
+- om ed
+
+(If 1 is in seconds, then Ro» is in flops per second.) The asymptotic rate of
+performance is given by
+
+" _ 1 Pp
+is Rent) = Te
+
+As a way of assessing how serious the start-up overhead is for a vector
+operation, Hockney and Jesshope (1988) define the quantity 2,/2 to be the
+smallest n for which half of peak performance is achieved, i.e.,
+
+omy _ le
+
+Top(ij2) 2B"
+Machines that have big 1/2 factors do not perform well on short vector
+operations.
+
+Let us see what the above performance model says about the design
+of the matrix multiply update C = AB + C where Ae R™*?, Be RP,
+and C € R™*", Recall from §1.1.11 that there are six possible versions of
+
+the conventional algorithm and they correspond to the six possible loop
+orderings of
+
+38 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+for i= 1:m
+for j = 1:n
+for k = l:p
+Ci, 9) = AG, k) BCR, 3) + CG, 9)
+end
+end
+end
+
+This is the ijk variant and its innermost loop oversees a length-p dot prod-
+uct. Thus, our performance model predicts that
+
+Tie = mnp + mn - ceil(p/v,)Tdot
+
+cycles are required. A similar analysis for each of the other variants leads
+to the following table:
+
+Variant Cycles
+17k mnp + mn - Tioe(p/uL)
+jik mnp + mn: Tdor(p/vr)
+tkj map + Mp: Tra2(n/v_)
+jki | map +np-ty92(m/v,)
+kij | mnp + mp- Tsae(n/v1)
+kji mnp + MD: Traz(m/v,)
+
+We make a few observations based upon some elementary integer arithmetic
+manipulation. Assume that rTsg; and Tyo are roughly equal. If m, n, and
+p are all less than v,, then the most efficient variants will have the longest
+inner loops. If m, n, and p are much bigger than v,, then the distinction
+between the six options is small.
+
+1.4.4 The Stride Issue
+
+The “layout” of a vector operand in memory often has a bearing on execu-
+tion speed. The key factor is stride. The stride of a stored floating point
+vector is the distance (in logical memory locations) between the vector’s
+components. Accessing a row in a two-dimensional Fortran array is not a
+unit stride operation because arrays are stored by column. In C, it is just
+the opposite ss matrices are stored by row. Nonunit stride vector opera-
+tions may interfere with the pipelining capability of a computer degrading
+performance.
+
+To clarify the stride issue we consider how the six variants of matrix
+multiplication “pull up” data from the A, B, and C matrices in the inner
+loop. This is where the vector calculation occurs (dot product or saxpy)
+and there are three possibilities:

@@ -1,0 +1,124 @@
+4.4, SYMMETRIC INDEFINITE SYSTEMS 171
+
+However, it is clear by considering steps (b) and (c) above that the accuracy
+of the computed solution depends upon «(C) and this quantity may be
+much greater than «(A). The situation has been carefully analyzed and
+various structure-exploiting algorithms have been proposed. A brief review
+of the literature is given at the end of the section.
+
+But before we close it is interesting to consider a special case of (4.4.14)
+that clarifies what it means for an algorithm to be stable and illustrates
+how perturbation analysis can structure the search for better methods.
+In several important applications, g = 0, C is diagonal, and the solution
+subvector y is of primary importance. A manipulation of (4.4.14) shows
+that this vector is specified by
+
+y=(BTC"'B)"'BTC7f. (4.4.15)
+
+Looking at this we are again led to believe that x(C’) should have a bearing
+on the accuracy of the computed y. However, it can be shown that
+
+| (B?C1B)-1BTC I S ve (4.4.18)
+
+where the upper bound #g is independent of C, a result that (correctly)
+suggests that y is nat sensitive to perturbations in C. A stable method for
+computing this vector should respect this, meaning that the accuracy of
+the computed y should be independent of C. Vavasis (1994) has developed
+a method with this property. It involves the careful assembly of a matrix
+V € R"*(~») whose columns are a basis for the nullspace of B'C-!. The
+n-by-n linear system
+
+iavi [t=
+
+is then solved implying f = By + Vq. Thus, BTC-!f = BTC-'By and
+(4.4.15) holds.
+
+Problems
+
+P4.4.1 Show that if all the 1-by-1 and 2-by-2 principal submatrices of an n-by-n
+symmetric matrix A are singular, then A is zero.
+
+P4.4.2 Show that no 2-by-2 pivots can arise in the Bunch-Kaufman algorithm if A is
+positive definite.
+
+P4.4.3 Arrange Algorithm 4.4.1 a0 that only the lower triangular portion of A is
+referenced and so that a(j) overwrites A(j, 3) for j = Lin, 8(j) overwrites A(j + 1,7) for
+j= im -1, and L(i, 7} overwrites A(i,j — 1) for j = 2:n — 1 and i = 7 + Ln.
+
+P4.4.4 Suppose A € R"*” is nonsingular, symmetric, and strictly diagonally dominant.
+Give an algorithm that computes the factorization
+
+r R 0 RT sf
+nant = [3 _y |[ DP
+
+where R ¢ RY™* and M ¢ RO"—)*(9—*) are lower triangular and nonsingular and II is
+& permutation.
+
+172 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+
+P4.4.5 Show that if
+An Ai n
+Aa -An P
+
+n Pp
+in symmetric with Ay; and Azz positive definite, then it hagas LDL? factorization with
+the property that
+
+pafm 29
+~ 0 ~-D,
+
+where D, € R°™" and D2 € RP*? have positive diagonal entries.
+P4.4.8 Prove (4.4.11) and (4.4.12).
+P4.4.7 Show that —(87C~!B)-" is the (2,2) block of A~! where A is given by (4.4.13).
+
+As
+
+P4.4.8 The point of this problem is to consider a special case of (4.4.15). Define the
+matrix
+
+Mla) =(87C7)B)-'BTo7?}
+where
+
+C=(In taexet) a>-l.
+and ¢, = In(:,k). (Note that C is just the identity with a added to the (k, k) entry.)
+Asaume that 3 € ROX? has rank p and show that
+
+= (BT B)-\aT (: _ a r)
+M(a) = (B* B)-'B Clareresr: om poure ct
+
+where w = (In — B(BTB)-'BT)e,. Show that if {wig = O or ||wil, = 1, then
+It 44(a) lly = Yomin(B). Show that if 0 < |} wl, < 1, then
+
+1 1
+Wf M(a) a < we | ST 1 Sig} [omnis
+
+Thus, || 44(a) |p has an a-independent upper bound.
+
+Notes and References for Sec. 4.4
+The basic references for computing (4.4.1) are
+
+3.0. Aasen (1971), “On the Reduction of 4 Symmetric Matrix to Tridiagonal Form,”
+BIT 11, 233-42.
+
+B.N. Parlett and J.K. Reid (1970). “On the Solution of a System of Linear Equations
+Whose Matrix ia Symmetric but aot Definite,” IT’ 10, 386-97.
+
+The diagonal pivoting literature includes
+
+J.R. Bunch and B.N. Parlett (1971). “Direct Methods for Solving Symmetric Indefinite
+Systems of Linear Equations,” SIAM J. Num. Anal. 8, 639-55.
+
+J.R. Bunch (1971). “Analysis of the Diagonal Pivoting Method,” SIAM J. Num. Anal.
+&, 656-680.
+
+J.R. Bunch (1974). “Partial Pivoting Strategies for Symmetric Matrices,” SIAM J. Num.
+Anal. 11, 521-528,
+
+JR. Bunch, L. Kaufman, and 5.N. Pariett (1976). “Decomposition of a Symmetric
+Matrix,” Numer. Math. #7, 95-109.
+
+J.#L Bunch aod L, Kaufman (1977). “Some Stable Methods for Calculating Inertia and
+Solving Symmetric Linear Systems,” Math. Comp. 31, 162-79.
+
+LS. Daff, N.LM. Gould, J.K. Reid, J.A. Scott, and K. Turner (1991). “The Factorization
+af Sparse Indefinite Matrices,” IMA J. Num. Anal 11, 181-204.

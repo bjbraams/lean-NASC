@@ -1,0 +1,50 @@
+RUNGE-KUTTA METHODS 285
+
+389 An algebraic interpretation of effective order
+
+The concept of conjugacy in group theory provides an algebraic interpretation
+of effective order. Two members of a group, x and z, are conjugate if there
+exists a member y of the group such that yry~! = z. We consider the group
+G /(1+Hp,) whose members are cosets of G; corresponding to sets of Runge—
+Kutta methods, which give identical numerical results in a single step to within
+O(h?*1). In particular, E(1+Hp) is the coset corresponding to methods which
+reproduce the exact solution to within O(h?+!). This mean that a method,
+with corresponding group element a, is of order p if
+
+a € E(1+H,).
+
+If a second method with corresponding group element § exists so that the
+conjugacy relation
+
+Bop € E(1+4H,), (389a)
+
+then the method corresponding to a has effective order p and the method
+corresponding to £ has the role of perturbing method.
+
+We use this interpretation to find conditions for effective orders up to 5. To
+simplify the calculation, we use a minor result,
+
+Lemma 389A A Runge-Kutta method with corresponding group element a
+has effective order p iff (389a) holds where f is such that B(r) = 0.
+
+Proof. Suppose that (389a) holds with 8 replaced by B. Let 6 = ECBO) B
+so that {(r) = 0. We then find
+
+aya a, yaya
+Bop = BF) Ba (E88)
+= EA) Bap BO)
+
+€ E80) BRA) (1 + H,)
+= E(. + Hp). o
+
+Once we have found effective order conditions on a and found a
+corresponding choice of 8 for a satisfying these conditions, we can use Lemma
+389A in reverse to construct a family of possible perturbing methods.
+
+To obtain the conditions we need on a we have constructed Table 389(I)
+based on Table 386(II).
+
+In this table, the trees up to order 5 are numbered, just as in the earlier
+table, and faf-! € E(1+ Hp) is replaced by Ba € EB(1 + H,), for
+convenience. In the order conditions formed from Table 389(I), we regard
+Bo, 83, ... as free parameters. Simplifications are achieved by substituting

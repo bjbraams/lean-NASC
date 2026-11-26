@@ -1,0 +1,102 @@
+2.4. FIntreE PRECISION MATRIX COMPUTATIONS 59
+
+Equation (2.1.3) says that (A+ E£)~! — A~! = —A-'B(A+ E)-! and so
+by taking norms we find
+WA+2)%-AT, < HATH IEW A+2)7 I,
+
+1972
+|A ‘WE ly
+1-r
+
+Problems
+
+P2.3.1 Show [| AB ll, <HA lpi Bil, where 1 < p< co.
+
+P2.3.2 Let B be any submatrix of A. Show that {| B (|, <i All,-
+
+P2.3.3 Show that if D = diag(s1,...,4%) € R"*" with k = min{m, n}, then || D{|,
+= max |ysil-
+
+P2.3.4 Verify (2.3.7) and (2.3.8).
+
+P2.3.5 Verify (2.3.9) and (2.3.10).
+
+P2.3.6 Verify (2.3.11) and (2.3.12).
+
+P2.3.7 Verify (2.3.13).
+
+P2.3.8 Show that if0 # s€ R" and E ¢ R™", then
+
+ss?
+P2.3.9 Suppose u € R™ and vé R”. Show that if E = uvT then || Ellp = || Elz =
+ll 3 [laid v fla and thet | Ff, < llulloll lly
+P2.3.10 Suppose A € R™*", y € R™, and 0 # 3 € R". Show thet E = (y—As)sT/s7s
+has the smallest 2-norm of all m-by-n matrices £ that satisfy (A + E)s = y.
+
+Es 13
+
+2.
+= 1ENb -
+
+2
+F
+
+Notes and References for Sec. 2.3
+
+FL. Bauer and C.T. File (1960). “Norma and Exclusion Theorems,” Numer. Math. £,
+137-44,
+
+L. Mirsky (1960). “Symmetric Gauge Functions and Unitarily Invariant Norms,” Quart.
+J. Math. 11, 50-59.
+
+A.S. Houssholder (1964). The Theory of Matrices in Numerical Analysis , Dover Pub-
+licationa, New York.
+
+N.J. Higham (1992). “Estimating the Matrix p-Norm,” Numer. Math. 62, 539-556.
+
+2.4 Finite Precision Matrix Computations
+
+In part, rounding errors are what makes the matrix computation area so
+nontrivial and interesting. In this section we set up a model of floating point
+arithmetic and then use it to develop error bounds for floating point dot
+products, saxpy’s, matrix-vector products and matrix-matrix products. For
+
+60 CHAPTER 2. MATRIX ANALYSIS
+
+@ more comprehensive treatment than what we offer, see Higham (1996) or
+Wilkinson (1965). The coverage in Forsythe and Moler (1967) and Stewart
+(1973) is also excellent.
+
+2.4.1 The Floating Point Numbers
+
+When calculations are performed on a computer, each arithmetic opera-
+tion is generally affected by roundoff error. This error arises because the
+machine hardware can only represent a subset of the real numbers. We
+denote this subset by F and refer to its elements as floating point numbers.
+Following conventions set forth in Forsythe, Malcolm, and Moler (1977, pp.
+10-29), the floating point number system on a particular computer is char-
+acterized by four integers: the base 6, the precision t, and the exponent
+range {L,U]. In particular, F consists of all numbers f of the form
+
+fa=tdidy...dgxf O<d;<f, di #0, L<e<U
+
+together with zero. Notice that for a nonzero f € F we have m < |f| <M
+where
+
+m=6'"' and M=f¥ (1-87). (2.4.1)
+As an example, if 8 = 2, t = 3, L = 0, and U = 2, then the non-negative
+
+elements of F are represented by hash marks on the axis displayed in Fic.
+2.4.1. Notice that the floating point numbers are not equally spaced. A
+
+FIGURE 2.4.1 Sample Floating Point Number System
+
+typical value for (G,t,L,U) might be (2, 56, -64, 64).
+
+2.4.2 A Model of Floating Point Arithmetic
+To make general pronouncements about the effect of rounding errors on a
+
+given algorithm, it is necessary to have a mode! of computer arithmetic on
+F. To this end define the set G by
+
+G={xreR:m¢ |z| <M }u (O} (2.4.2)

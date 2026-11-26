@@ -1,0 +1,75 @@
+6.3. FACTORIZATIONS 307
+
+Peraliel factorization methods for shared memory machines are discumed in
+
+S. Chen, D. Kuck, and A. Semeh (1978). “Practical Parallel Band Triangular Systems
+Solvers,” ACM Trans. Math. Soft. 4, 270-277.
+
+A. Sameh and D. Kuck (1978). "On Stable Parallel Linear System Solvers,” J. Assoc.
+Comp. Mach. £5, 81-91.
+
+P. Swarstranber (1979). “A Parallel Algorithm for Solving Generai Tridiagonal Equa-
+tions,” Math. Comp. 23, 185-199.
+
+S. Chen, J. Dongarra, and C. Hsuing (1984). “Multiprocessing Linear Algebra Algo-
+rithms on the Cray X-MP-2: Experiences with Small Granularity,” J. Parallel and
+Distributed Computing 1, 22-31.
+
+J.J. Dongarra and A.H. Sameh (1984). “On Some Parallel Banded System Solvers,”
+Parallel Computing 1, 223-235.
+
+J.J. Dongarra and R.E. Hiromoto (1984). “A Collection of Parallel Linear Equation
+Routines for the Denelcor HEP,’ Parallel Computing 1, 133-142.
+
+J.J. Dongarra and T. Hewitt (1986). “Implementing Dense Linesr Algebra Algorithms
+Using Multitasking on the Cray X-MP-4 (ox Approaching the Gignflop},” SIAM J.
+Sci. and Stat. Comp. 7, 347-350.
+
+J.J. Dongarra, A. Sameh, and D. Sorensen (1986). “Implementation of Some Concurrent
+Algorithms for Matrix Factorization,” Parallel Computing 3, 25-34.
+
+A. George, M.T. Heath, and J. Liu (1986). “Parallel Chotesky Factorization on a Shared
+Memory Multiprocessor,” Lin. Alg. and its Applic. 77, 165~-187.
+
+J.J. Dongarra and D.C. Sorensen (1987). “Linear Algebra on High Performance Com-
+puters,” Appl. Math. and Comp. 20, 57-88.
+
+K. Dackland, E. Elmroth, and B. Kagstrom (1992). “Parallel Block Factorizations on the
+Shared Memory Multiprocessor IBM 3090 VF/600J," International J. Supercomputer
+Applications, 6, 69-97.
+
+Chapter 7
+
+The Unsymmetric
+Eigenvalue Problem
+
+§7.1 Properties and Decompositions
+
+§7.2 Perturbation Theory
+
+§7.3 Power Iterations
+
+§7.4 The Hessenberg and Real Schur Forms
+§7.5 The Practical QR Algorithm
+
+§7.6 Invariant Subspace Computations
+
+§7.7 The QZ Method for Ax = ABx
+
+Having discussed linear equations and least squares, we now direct our
+attention to the third major problem area in matrix computations, the
+algebraic eigenvalue problem. The unsymmetric problem is considered in
+this chapter and the more agreeable symmetric case in the next.
+
+Our first task is to present the decompositions of Schur and Jordan
+along with the basic properties of eigenvalues and invariant subspaces. The
+contrasting behavior of these two decompositions sets the stage for §7.2
+in which we investigate how the eigenvalues and invariant subspaces of
+@ matrix ate affected by perturbation. Condition numbers are developed
+that permit estimation of the errors that can be expected to arise because
+of roundoff.
+
+The key algorithm of the chapter is the justly famous QR algorithm.
+This procedure is the most complex algorithm presented in this book and its
+development is spread aver three sections. We derive the basic QR iteration
+in §7.3 as a natural generalization of the simple power method. The next

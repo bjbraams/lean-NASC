@@ -1,0 +1,46 @@
+A. Appendix
+
+In order to gain some familiarity with the methods of derivation of finite
+difference equations of Chapter 6, consider the two-point boundary-value
+problem!
+
+dy(x) _
+(A.1) ~ Gar + ¥(2) = -2, 0<2<il,
+
+subject to the boundary conditions
+
+(A.2) y(0)=0, y(t) =1.
+It is readily verified that the unique solution of this problem is given by
+2sinhz
+
+. = - <a2<l1
+(A3) v(o) = “SZ 2, O<2<1,
+so that
+
+dry(z)
+
+. = = 21.
+
+(A.4) Mon smax, | Gan 2, foralln>1
+
+First, we use a uniform mesh of h = 4. As y(0) and y(1) are known from
+(A.2), we then seek approximations to the three values y(ih) =: yi,1 <i < 3.
+Now, the differential equation (A.1) corresponds exactly to the case o(r) = 1
+of (6.1), so that for h = 1/4, the matrix equation of (6.8), with (6.5) and
+(6.6), reduces in our case to
+
+33-16 0] [a -}
+(A.5) -16 33-16] |z |= | -3
+0-16 33} | 23 +9
+
+From (6.9) of Theorem 6.2 we know, with h = 4, that
+Mgh?
+24
+
+' This is also considered by (Fox (1957), p. 68) for illustrating the method of
+differential corrections.
+
+(A6)  |yi— il <
+
+h2
+fih(1 — ih)] = Fp [ih —ih)], 1<e<3.

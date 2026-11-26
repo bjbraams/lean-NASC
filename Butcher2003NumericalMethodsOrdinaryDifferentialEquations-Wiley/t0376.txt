@@ -1,0 +1,48 @@
+366 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+replaced by n, has to be computed in step n for use in the following step. The
+(3 + 2) x (3 + 2) matrix representing this method is
+
+0 o of1 0
+3 0 o|]1 0
+-i 4 0 1 0
+il 1 1
+
+iw -3 4 | 0 O
+
+For a seventh order method taken from Butcher (1965), the solution at
+the end of the step is approximated using ‘predictors’ at zn — th and
+
+at 2,, in preparation for a final ‘corrector’ value, also at x,. The input
+quantities correspond to three solution approximations yell ® y(fn-1),
+yr) ®% y(fp—-2) and yet ® y(@n—3), and the three corresponding scaled
+derivative approximations yr x hy'(¢n-1), yet) = hy'(@n-2) and
+
+yr  hy'(tn_3). The general linear representation is
+
+ro. 0660 ol —28 0 0088 225 300 45 J
+128 128 128 128 128 128
+384 0 0 840 _297 _212 _ 1395 __ 2130 — 309
+155 128 31 31 155 155 155
+2304 465 | (783 185031858
+3085 __3085 617 617 617 3085 3085 3085
+2304465 | 7830~=~C«SHCBL COC
+3085 3085 617 61 617 3085 3085 3085
+0 0 0 1 0 0 0 0 0
+0 0 0 0 1 0 0 0 0
+0 a | 0 0 0 0 0 0
+0 0 0 0 0 0 1 0 0
+Lo o o| o 0 0 0 1 o |
+
+505 Some recently discovered general linear methods
+
+The methods already introduced in this section were inspired as modifications
+of Runge-Kutta or linear multistep methods. We now consider two example
+methods motivated, not by either of the classical forms, but by the general
+linear structure in its own right.
+
+The first of these is known as an ‘Almost Runge-Kutta’ method. That
+is, although it uses three input and output approximations, it behaves like
+a Runge-Kutta method from many points of view. The input vectors can be
+thought of as approximations to y(%n_1), hy'(@n_1) and $h?y"(z__1) and the
+output vectors are intended to be approximations to these same quantities,

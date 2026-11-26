@@ -1,0 +1,48 @@
+7.3 The Noncommutative Case 261
+
+x4) — C,y(™) + (Ay +rl)-'k
+
+(7.65) yl) = Dx) + (V, +rI)-'k, m>0,
+
+which is necessarily convergent for any initial vector y©). But this application
+of the of the block Gauss-Seidel iterative method to (7.63) is precisely equiv-
+alent to the original definition of the Peaceman-Rachford iterative method;
+this is most easily seen by setting x("+)) := y(+1/2)_ In other words, for a
+fixed acceleration parameter r, the Peaceman-Rachford iterative method is
+equivalent to the application of the block Gauss-Seidel iterative method to
+the 2n x 2n matrix equation of (7.63).
+
+We can generalize this result to the case where m positive acceleration pa-
+rameters 71,72,-*-,Tm are used cyclically in the Peaceman-Rachford iterative
+method. For this case, consider the 2mn x 2mn matrix equation of
+
+(7.66) B= Jp rm +h,
+where
+000-0 GC,
+Dy, 0 OO O
+. OC, O-.. O O
+(7.67) Srvorm'= 10 0D oo}
+
+T2
+OO O-=-D,, O
+and the matrices C, and D, are defined in (7.62). Again, we see by inspection
+
+that J.,,JSrs,rm i8 a consistently ordered weakly cyclic matrix of index 2m.
+In an analogous way, we can show that
+
+o{(Snrn)  } =p ie ’
+j=l
+
+and that the rigorous application of the block Gauss-Seidel iterative method
+to (7.66) is again the Peaceman-Rachford iterative method with m accelera-
+tion parameters used cyclically, which gives us
+
+Theorem 7.14. The Peaceman-Rachford iterative method of (7.11) with m
+positive acceleration parameters 3,1 <j <m, used cyclically, is equivalent
+to the application of the Gauss-Seidel iterative method to the matrix equation
+(7.66), where the matrix J,,,---,Tm, of order 2mn, is a consistently ordered
+weakly cyclic matrix of index 2m.
+
+The theory of primitive matrices also has a nontrivial connection with
+the Peaceman-Rachford iterative method that is analogous to the observation
+that for 0 < w < 1, the point successive overrelaxation matrix L,, is primitive

@@ -1,0 +1,40 @@
+7.3 The Noncommutative Case 257
+
+that A is irreducible. Again, as in Sect. 7.1, we set Hy := H+ 3Z and
+Y= V +35.
+
+Lemma 7.8. If H; and V; commute, then
+
+h
+ky (2+ 5.) =k, (2+ 5.u+n)
+
+h h
+Ke («u+5) = Ko (e+ nue 5)
+
+whenever (x,y),(c +h,y),(c+h,y+h), and (x,y +h) are mesh points of
+An.
+
+and
+
+Proof. Let the values of K, and Ko at the four points of the statement of
+this lemma be denoted simply by the quantities K, G » of Fig. 7.4. By direct
+computation,
+
+(2)
+
+(x,yth) K, (xth,y+h)
+K” kK.
+(xy) K° (xth,y)
+
+Fig. 7.4.
+
+[Hu] (2,y) = KO KM u(x t hyy +h) te,
+and
+(ViFiul (o,y) = KY? KP ule t hy +h) +--.
+
+Thus, as H,V; = Vi Hj, we necessarily have that KOKO) = KOKO,
+Similarly,
+
+AVyul (c+ hyy) = KOKO uz, y +h) +.
+1 2
+[Vital (2 + hyy) = KO KM u(y +h) +.

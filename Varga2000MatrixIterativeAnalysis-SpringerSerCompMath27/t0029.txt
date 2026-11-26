@@ -1,0 +1,49 @@
+1.4 Bounds for the Spectral Radius of a Matrix and Directed Graphs 21
+
+This sharpening of Theorem 1.11 immediately gives rise to the sharpened
+form of Corollary 1.12 of Theorem 1.11.
+
+Corollary 1.19. Let A = [a;,;] be an irreducible n x n complex matriz, and
+
+let x1,,£2,-++,2n be any n positive real numbers. If
+n
+So lai sles
+“I
+1.42 oO <a
+(1.42) =<
+
+for all 1 <i <n, with strict inequality for at least one i, then p(A) < v.
+Similarly, if
+
+(1.43) ay ye ial <
+
+for all 1 <j <n, with strict inequality for at least one j, then p(A) <v’.
+
+Proof. For simplicity, we shall prove only the first assertion under the as-
+sumption that x1 = 22 = +++ = Zp = 1. (The complete proof follows easily in
+the manner of the proof of Corollary 1.14 of Theorem 1.11.) If
+
+n
+Vilaisl se
+jal
+
+for all 1 <i <n, with strict inequality for at least one i, it is clear that all
+the circles
+
+n
+
+|z- aia] = Ai = Slaa,s|
+
+j=l
+
+ai
+do not pass through a common point o where |o| = v. Moreover, all the disks
+|z — ai,i| < |Ai are subsets of the disk |z| < v. Thus, by Theorem 1.18, no
+point of the circle |z| = v is an eigenvalue of A, proving that p(A) < v.
+
+Exercises
+
+1. Using the notation of Theorem 1.11, if the union of m particular disks
+|z — ai,i| < A; is disjoint from the union of the remaining disks, show
+that this union of m disks contains precisely m eigenvalues of the
+matrix A (Gerschgorin (1931)).

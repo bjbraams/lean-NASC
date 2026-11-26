@@ -1,0 +1,46 @@
+GENERAL LINEAR METHODS 407
+
+Differentiate k times and divide by k!. The result is
+
+1 1 1
+
+= ah) = — gf) (&-1) = wen.
+X GOO) = (IFAD OMA) + GaP PA, KALB Mo
+Hence the vectors $(A), #¢/(A), 30" (A), --5 war? PQA) form a sequence
+of eigenvector and generalized eigenvectors, and the result follows. O
+
+The inverse of S is easy to evaluate by interchanging the roles of rows and
+columns of X. We present the following result without further proof.
+
+Corollary 545C If
+
+xa) =[1 Ata, M+ajA+aq +: WA ¢aM? te tant |,
+then
+r
+St=[XOQ) BX peX0) wag) |
+
+546 Inherent Runge-Kutta stability
+
+In this subsection we discuss a special type of general linear method based
+on several assumptions on the form of the method. The work is new and still
+in the development stage, and represents a collaboration between the author
+and William Wright. Besides making use of doubly companion matrices, we
+also use the special r x r matrix J and its transpose K’, where
+
+0 0 0 0 0
+100 0 0
+J=}9 1 0 0.0
+000: 10
+
+In the formulation of the methods, J took the role now assumed by the matrix
+X in the discussion below, but generality came about in a different manner.
+
+We now introduce a special type of inherently RK stable general linear
+method in which A has diagonally implicit form
+
+A GO O + O
+Q21 Xr 0 os 0
+
+A=] @1 @32 A --- 0
+
+Qs. G2 Gs3 -*- X

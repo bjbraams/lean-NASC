@@ -1,0 +1,44 @@
+6.4 Factorization Techniques and Block Iterative Methods 223
+
+(6.68) M :=I-D"A4,
+where
+By
+By
+(6.69) D:=
+By
+
+is the block diagonal matrix of A. More precisely, we see from (6.68) that
+O BIG
+By'Ag O By'C2
+(6.70) M=-
+
+By! ,Cn-1
+
+By) An O
+
+Comparing this with the matrix Bo of (4.8) of Sect. 4.1, we necessarily con-
+clude that M is a consistently ordered weakly cyclic matrix of index 2. More-
+over (Exer. 5), M has real eigenvalues. Thus, the block successive overrelax-
+ation iterative method, which now can be rigorously applied to the solution
+of Az =k, takes the form
+
+G71) A? = WB AZ — O28) + Ki — BZ} +22,
+; 1<i<QN,
+
+where the vectors Zo) are arbitrary. A more convenient computational form
+of (6.71) is
+
+(6.72) BZ") = -A Zr) OZ) 4K, <i SN,
+
+and
+
+(6.73) ZED = (Zl) — 2) 4. 7) SSN.
+
+Since the matrices B, are tridiagonal Stieltjes matrices, the matrix prob-
+lems of (6.72) can be directly solved by the method of (6.61)-(6.62). This
+particular block iterative method is often called the successive line overrelaz-
+ation method (SLOR), using the graphical idea that lines of mesh points are
+treated as units. In this sense, it is closely related to the Russian “method of
+lines,” due to Faddeeva (1949), where one approximates a partial differen-
+tial equation by a coupled system of ordinary differential equations. See also
+Kantorovich and Krylov (1958), p. 321.

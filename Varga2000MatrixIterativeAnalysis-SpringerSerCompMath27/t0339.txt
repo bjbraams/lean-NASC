@@ -1,0 +1,29 @@
+B. Appendix
+
+In this appendix we consider the numerical solution of the following two-
+dimensional elliptic partial differential equation, typical of those encountered
+in reactor engineering:
+
+(B-1) -(D(z, y)te)2 — (D(z, y)uy)y + o(z, y)ulz, y) = S(z,y), (2,y) € R,
+
+where R is the square 0 < x,y < 2.1, shown in Fig. B.1, with the external
+boundary conditions
+
+0.1
+
+WL
+Yo
+1
+y
+1
+Yo +4
+Xo xX X, X
+Fig. B.1.
+Ou(z,y
+(B.2) ( ) <0, (z,y) ET,
+
+On
+where I’ is the boundary of R. The given functions D,o, and S are piecewise
+constant, with values given in the Table B.1 below. Thus, we are considering
+the numerical solution of a problem with internal interfaces, which appear
+in Fig. B.1 as the common boundaries of adjacent regions with different

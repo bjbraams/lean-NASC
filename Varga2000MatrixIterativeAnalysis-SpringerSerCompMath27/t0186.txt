@@ -1,0 +1,39 @@
+178 5. Semi-Iterative Methods
+
+and intuitively, it would be difficult to imagine that semi-iteration, applied to
+L., (for 1 < w < wy) could improve both (5.98) and (5.99). Another startling
+result of Theorem 5.5 is (cf. (5.97)) that one has convergence of an optimized
+semi-iterative method applied to L,,, for any w € (—co, wg)\{0}. Recall that
+the interval of convergence for L,,, in this case, is just the interval (0, 2).
+
+0.95
+
+09
+
+0.85
+
+08
+
+or O05 0 0s 1 15 We 2 We
+
+Fig. 5.3. p(£u.) and «({2.,,8) as functions of the real variable w [for 6 = p(B) =
+0.99, w, = 1.75274..., and we = 2.32847...].
+
+It is also interesting to mention that the constant w, of (5.96) plays a
+role in the theory of Markov chains of Kontovasilis, Plemmons and Stewart
+(1991). Also, we note from Theorem 5.5 that
+
+(5.100) K(Qu,8) >» —1=p(Lu,) (all real w),
+
+which affirmatively solved a conjecture of Young (1971), p. 376, that (5.100)
+holds for w € (0, 2).
+
+Finally, it should be mentioned that the paper by Eiermann and Varga
+(1993a), in applying semi-iteration to the SOR matrix L,,, specifically arose
+from seeing a paper by Dancis (1991), with the astounding and unbelievable
+title, “The optimum w in not best for the SOR iteration method,” where
+Dancis claimed “that a smaller average spectral radius can be achieved by
+using a polynomial acceleration |i.e., semi-iteration] together with a subopti-
+mal relaxation factor (w < wy)”. A closer reading of Dancis’ paper revealed
+that his improvement could only be achieved with the additional hypothesis
+on the spectrum of B? that

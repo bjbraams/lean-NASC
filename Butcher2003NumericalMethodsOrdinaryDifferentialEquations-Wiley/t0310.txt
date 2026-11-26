@@ -1,0 +1,44 @@
+298 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+and values of z with large magnitude in the left half-plane, correspond to stiff
+components. Hence, it seems desirable to choose @ to minimize |¢(z)| for z in
+the left half plane. The value that achieves this is
+
+_ 2
+“dtr
+For fully implicit Runge-Kutta methods, the problem of evaluating the
+
+stages becomes much more complicated and potentially more costly. For a
+method with coefficient matrix A, we need to consider all stages at the same
+time. Let Y denote the sN-dimensional vector made up from the vectors Yj,
+Yo, ..-, Y;. Furthermore the approximation sequence will be written as YU,
+j =0,1,..., each also made up from s subvectors, and A will denote a vector
+in R®’ made up from the subtrahends in each of the s components in iteration
+number 7. Thus
+
+Y yf A yf-4) _ yf!
+Y; [a] A. f-1)_ yld
+y-|?], vwa]™ |) au] @]e) 2? 7%
+In place of (395a), the algebraic equations to solve in a step take the form
+Y-hA@S(X,Y) -U ER. (395c)
+Note that f(X,¥) denotes a vector in R°’ made up from subvectors of the
+form f(X;,¥Yj), j = 1,2,...,8. The iteration scheme consists of solving the
+equations
+
+s 8
+k=l k=1
+and then carrying out the update yf = yey —A;, j = 1,2,...,8. If it
+is assumed that Jacobians are evaluated only once per step, or even less
+frequently, then we can write (395c) in the simplified form
+
+(I, @In -hA@IA=Y¥!"4_pA@ FHM _y, (395d)
+
+where Fl'-1] is the vector with subvector number k equal to f (Xe, ¥E").
+Here J is a single approximation to the n x n Jacobian matrix. One of the
+advantages of using a single J approximation is the fact that it is possible
+to operate, for example, with similarity transformations, on the coefficient
+matrix A and J independently.
+
+Tf no such transformation is carried out, the computational costs can become
+very severe. The LU factorization of the matrix on the left-hand side of (395d)
+requires a number of operations proportional to s?N? compared with just N*

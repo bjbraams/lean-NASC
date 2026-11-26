@@ -1,0 +1,49 @@
+74 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+We already know this estimate can be used, quite satisfactorily, to control
+stepsize, because of its evident success in Subsection 202.
+
+218 Rounding error
+
+The mathematical analysis of the behaviour of a numerical method, such
+as the Euler method, is usually idealized to exact arithmetic. However,
+in practical computation, the nature of computer arithmetic can play a
+significant, and possibly overwhelming, part. Thus the discussion of error
+growth, given in Subsection 212, is deficient in this respect. Let a, denote the
+total error in the result, computed at step number n, and ,, the corresponding
+error in the derivative, computed at this step number. Thus,
+
+On = y(n) — Yn
+
+Bn = f(@n,y(En)) — f(tn, Yn):
+
+The sequences of exact and approximate values are interrelated by
+
+Yn = Yn-1 + Af (t@a—15 Yn-1) —Tr,
+y(n) = y(@n—1) + hf (@n-1,y(@n-1)) + fn,
+
+where r,, is the rounding error committed in this step, and /, is the truncation
+error that we have already discussed.
+These lead to the difference equation
+
+On = On-1 + hBa-1+la ttn.
+
+Even though we know something about J,, in particular that it behaves
+asymptotically like a constant times h?, very little is known about rp.
+
+A somewhat pessimistic model of rounding error would bound its magnitude
+in terms of the magnitude of y,. It would also assume that its sign (or
+direction, in the high-dimensional case) is always such as to reinforce errors
+already accumulated. Bounding the magnitude of the rounding error, in terms
+of the magnitude of y,, is quite reasonable, because the greatest contribution
+to the total rounding error will usually arise from the final addition of
+hf (Zn-1,Yn—1) to yn. Of these two terms, yn_1 is usually far the greater
+in magnitude. Thus, the rounding error will have a magnitude approximately
+equal to ||yn—ille ¥ ||yn|le, where € is the machine roundoff constant defined
+as the smallest positive number which satisfies the inequality 1+. > 1, in
+computer arithmetic.
+
+The other aspect of this model, that rounding errors always conspire to
+produce the worst possible outcome is, of course, too severe an assumption.
+An alternative is to treat the rounding errors arising in different steps as being
+independently and randomly distributed.

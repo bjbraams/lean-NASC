@@ -1,0 +1,95 @@
+3.4. PIvoTING 117
+
+The first step in the block reduction is typical and proceeds as follows:
+
+« Use scalar Gaussian elimination with partial pivoting (e.g. a rectan-
+gular version of Algorithm 3.4.1) to compute permutation P, € R°*",
+unit lower triangular L141 € IR)" and upper triangular Ui; € R'™* so
+
+Au | _ | fu
+ml ae] = [ato
+
+e Apply the P, across the rest of A:
+
+e Solve the lower triangular multiple right hand side problem
+Livy = Ay.
+¢ Perform the level-3 update
+A = Ag - Iie.
+
+With these computations we obtain the factorization
+_f fu 0 i 0 Ui Ui
+pas| 7H we fs 0 Ine |
+The process is then repeated on the first r columns of A.
+
+In general, during step k (I < k < N — 1) of the block algorithm we
+apply scalar Gaussian elimination to a matrix of size (n — (k — 1)r)-by-r.
+An r-by-(n — kr) multiple right hand side system is solved and a level 3
+update of size (n — kr)-by-(n — kr) is performed. The level 3 fraction for
+
+the overall process is approximately given by 1 ~ 3/(2N). Thus, for large
+N the procedure is rich in matrix multiplication.
+
+3.4.8 Complete Pivoting
+
+Another pivot strategy called complete pivoting has the property that the
+associated growth factor bound is considerably smaller than 2"-'. Recall
+that in partial pivoting, the kth pivot is determined by scanning the current
+subcolumn A(k:n,k). In complete pivoting, the largest entry in the cur-
+rent submatrix A(k:n, kin) is permuted into the (k,k) position. Thus, we
+compute the upper triangularization My; Ey-1---M,£, AF, +--+: Fp-1 =U
+with the property that in step & we are confronted with the matrix
+
+AGW) = My Ey My EAP, ++ Feat
+
+118 CHAPTER 3. GENERAL LINEAR SYSTEMS
+
+and determine interchange permutations E, and F, such thet
+
+[(ea*-Om) | = mex
+
+(2.4*-F) al
+
+We have the analog of Theorem 3.4.1
+
+Theorem 3.4.2 If Gaussian elimination with complete pivoting is used to
+compute the upper triangularization
+
+My-iEa-1-'* Mi BAR + Foor = U (3.4.7)
+
+then
+PAQ = LU
+
+where P = En, -:' Ey , Q= Fi--: Fa-1 and L is @ unit lower triangular
+matrix with |€;| <1. The kth column of L below the diagonal is a permuted
+version of the kth Gauss vector. In particular, if M, = I -1eT then
+L(k + lin, k) = g(k + Lin) where g = Engin s+ Exit .
+
+Proof. The proof is similar to the proof of Theorem 3.4.1. Details are left
+to the reader. 0
+
+Here is Gaussian elimination with complete pivoting in detail:
+
+Algorithm 3.4.2 (Gaussian Elimination with Complete Pivoting)
+This algorithm computes the complete pivoting factorization PAQ = LU
+where L is unit lower triangular and U is upper triangular. P = E,_1--- £;
+and Q = F,---F,~1 are products of interchange permutations. A(1:k, k)
+is overwritten by U/(1:k,k),k = In. A(k + 1:n, k) is overwritten by E(k +
+In, &k),& = in - 1. 2 interchanges rows & and p(k). F, interchanges
+
+columns k and 9(k).
+
+for k=1:n-1
+Determine p with k <p <n and A withk<A<Snso
+|A(z, A)] = max{ |A(i,7)| 22 = Aen, 7 = ken }
+A(k, in) + A(p, len)
+A(1in, k) + A(1:n, A)
+
+p(k) = 4
+a{k) =>
+if A(k,k) #0
+
+rows =k+1n
+A{rows, k) = A(rows, k)/A(k, k)
+A(rows, rows) = A(rows,rows) — A(rows, k)A(k,rows)
+end
+end

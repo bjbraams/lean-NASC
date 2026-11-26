@@ -1,0 +1,46 @@
+4.2 The Successive Overrelaxation Iterative Method for p-Cyclic Matrices 119
+
+9. Let A satisfy the hypotheses of Exer. 1. If y7 is an ordering vector
+of Exer. 2, so that A is p-cyclic, then A is consistently ordered if and
+only if the following conditions hold. If A;,; # O, and i # j, then:
+
+a. If j >, then y; —-y =p-—1.
+b. Ift>j, then y; —-% =—1.
+
+10. While the block directed graph of the Jacobi matrix B for the parti-
+tioned matrix
+
+8-1] 0-1)-1-1
+-1 8| 0-1)-1-1
+—1 i| 8-l| 8-8
+A=} g_s)1 a-1 1
+—1-1|-1 0] 8-1
+-1-1/-1 0-1 8
+
+is not a cyclic graph of index 2, show that B is nevertheless weakly
+cyclic of index 2. What does this imply about the converse of Theorem
+4.2?
+
+4.2 The Successive Overrelaxation Iterative Method for
+p-Cyclic Matrices
+
+With the partitioned matrix A of (4.2) and its associated nonsingular block
+diagonal matrix D of (4.3), as in Sect. 3.4 we now let the respectively strictly
+lower and strictly upper triangular matrices E and F be defined from the
+decomposition A = D — E — F, where these matrices are explicitly given in
+(3.69). In terms of splittings of the matrix A, writing A = M, — N, where
+M, = D,N, = E+ F gives rise to the block Jacobi iterative method
+
+(4.14) Dx) = (E+ F)x™ +k, m>0.
+
+Similarly, the splitting A = Mz — N2 where
+Mp = =(D —wE), Np= = {(oF +(1—w)D}
+for w # 0 gives rise to the block successive overrelaration iterative method
+
+(4.15) (D—wE)x'™*) = WF + (1—w)D)x"™ +wk, m>0.
+
+With L := D-!E and U := D7'F, these iterative methods can be written
+simply as
+(4.16) x) — (L4U)x™ + Dk, ~m>0,
+
+and

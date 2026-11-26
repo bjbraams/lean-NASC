@@ -1,0 +1,55 @@
+RUNGE-KUTTA METHODS 135
+
+evaluate the Taylor coefficients by repeated differentiation. We start with a
+differential equation, assumed for convenience to be autonomous,
+
+y'(2) = f(y(2)). (310a)
+
+We also write (310a) in component-by-component form, with arguments
+omitted for brevity
+
+(iy =F. (310b}
+
+To obtain the second derivative, use the chain rule
+
+d
+y'(a) = FF) = F¢@)y'(@) = Fy) Fy) (310c)
+or, using (310b) as the starting point,
+dp iy — | gi _ pigs
+=i! = afi = iF. (3104)
+Note that in (310d), we have used the summation convention. We continue
+to use this convention without further comment. The third derivative can be
+found in a similar manner, but is complicated by the fact that y(x) is present
+in both factors in f'(y(x))f(y(x)). Even though we are omitting arguments,
+
+y(a) is also implicitly present in the tensor form fj fi. The two forms of the
+third derivative are
+
+fe) = f"y(2)) (FO), Fy@)) + FO@O)F@@)F(y@))), (810e)
+
+3
+oui = Shaft + Hits (3101
+
+We can find a pattern in the terms occurring in the first, second and third
+derivatives, using rooted trees. In the total derivative form, (310a), (310c),
+(310e), we relate f(y(x)) to a leaf in a tree, we relate f'(y(x)) to a vertex
+with a single outwardly directed edge, and to f"(y(x)) we relate a vertex with
+two outward edges. In the case of f! and f”, the outward edges are joined
+to subtrees, as representatives of the operands of these linear and bilinear
+operators, respectively.
+
+For the tensor representations of the terms in the first three derivatives of
+y', we treat the superscripts in f‘, f7, f* as members of the vertex set V, and
+we define the edge set E in terms of the pairs, such as (i,j) that occur in fi,
+
+.7
+
+i
+
+“Thus, we can identify four trees as representatives of the terms that occur
+in the first, second and third derivatives of y. In Table 310(I) we illustrate
+this correspondence using both formulations. Note that we write f, f’ and
+f” as abbreviations for f(y(x)), f'(y(x)) and f"(y(z)), respectively. We can
+expect this pattern to continue, because the operation of differentiating adds
+an additional vertex to an existing tree, in a number of different ways, and
+each of these corresponds to a further tree.

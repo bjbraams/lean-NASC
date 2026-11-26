@@ -1,0 +1,40 @@
+NUMERICAL DIFFERENTIAL EQUATION METHODS 89
+
+leaf
+leaf leaf leaf
+leaf leaf leaf leaf leaf
+leaf leaf leaf leaf
+root root root root root root
+order=2 order=3 order=4  order=5 order=8 order=5
+
+Figure 234(i) Some illustrative rooted trees
+
+having a specific vertex designated as the root. The ‘order’ of a tree is the
+number of vertices in this tree. If the order is greater than one, then the
+‘leaves’ of a tree are the vertices from which there are no outward-growing
+arcs; in other words, a leaf is a vertex, other than the root, which has exactly
+one other vertex joined to it.
+
+An assortment of trees of various orders, with leaves and the root indicated
+in each case, is shown in Figure 234(i). In pictorial representations of particular
+rooted trees, as in this Figure, we use a convention of placing the root at the
+lowest point in the picture.
+
+For each tree t, a corresponding polynomial in the coefficients of the method
+can be written down. Denote this by @(£). Also, associated with each tree t is
+an integer +(t). We now explain how ©(¢) and 7(é) are constructed.
+
+In the case of &(t), associate with each vertex of the tree, except the leaves,
+a label i, 7, ..., and assume that 7 is the label attached to the root. Write down
+a sequence of factors of which the first is ;. For each arc of the tree, other
+than an arc that terminates in a leaf, write down a factor, say aj,, where j
+and k are the beginning and end of the arc (assuming that all directions are in
+the sense of movement away from the root). Finally, for each arc terminating
+at a leaf, write down a factor, say cj, where j is the label attached to the
+beginning of this arc. Having written down this sequence of factors, sum their
+product for all possible choices of each of the labels, in the set {1,2,...,s}.
+
+To find the value of +(£), associate a factor with each vertex of the tree. For
+the leaves this factor is 1, and for all other vertices it is equal to 1, added to
+the factors attached to all outwards growing neighbours. The product of the
+factors, for all vertices of the tree, is the value of y(t).

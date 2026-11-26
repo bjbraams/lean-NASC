@@ -1,0 +1,100 @@
+5.1. HOUSEHOLDER AND GIVENS MATRICES 217
+for j = lim
+N= AG, i)
+n=AG, k)
+AG, i) = cr, - 57
+A(j,k) = a7, +07
+end
+
+5.1.10 Roundoff Properties
+
+The numerical properties of Givens rotations are as favorable as those for
+Householder reflections. In particular, it can be shown that the computed
+é and § in givens satisfy
+
+é = e(1 +e) Ec
+& = s(1+e,) &
+
+O(u)
+
+If é and & are subsequently used in a Givens update, then the computed
+update is the exact update of a nearby matrix:
+
+SUGG, &, 8)? A} Gk, A™(A+E) Ells sult Alla
+
+FUAG(, k, OY] (A+ E)G(i, k, @)
+
+A detailed error analysis of Givens rotations may be found in Wilkinson
+(1965, pp. 131-39).
+
+{| E lla = ull A [le
+
+5.1.11 Representing Products of Givens Rotations
+
+Suppose Q = G,--- G; is a product of Givens rotations. As we have seen in
+connection with Householder reflections, it ia more economical to keep the
+orthogonal matrix Q in factored form than to compute explicitly the prod-
+uct of the rotations. Using a technique demonstrated by Stewart (1976),
+it is possible to do this in a very compact way. The idea is to associate a
+single floating point number p with each rotation. Specifically, if
+
+z=| 53] +37 = 1
+
+-s ¢
+then we define the scalar p by
+ife=0
+p=1
+elseif || < |c|
+p = sign(c)s/2 (5.1.9)
+
+p = 2sign(s)/c
+
+end
+
+218 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+Essentially, this amounts to storing s/2 if the sine is smaller and 2/c if the
+cosine is smaller. With this encoding, it is possible to reconstruct +Z as
+follows:
+
+ifp=1
+e=0;s=1
+elseif [p| <1
+s=%2»c=V1l-s? (5.1.10)
+else
+c=%ps=vi-d
+end
+
+That -Z may be generated is usually of no consequence for if Z zeros a
+particular matrix entry, so does —Z. The reason for essentially storing the
+smaller of c and s is that the formula yi — z* renders poor results if x is
+near unity. More details may be found in Stewart (1976). Of course, to
+“reconstruct” G(i,k,9) we need i and k in addition to the assaciated p.
+This usually poses no difficulty as we discuss in §5.2.3.
+
+5.1.12 Error Propagation
+
+We offer some remarks about the propagation of roundoff error in algo-
+rithms that involve sequences of Householder/Givens updates. To be pre-
+cise, suppose A = Ay € IR™™*" is given and that matrices A1,...,Ap = B
+are generated via the formula
+
+Ag = FUQeAR-124) = Lp.
+
+Assume that the above Householder and Givens algorithms are used for
+both the generation and application of the Q, and Z, . Let Q, and 2; be
+the orthogonal matrices that would be produced in the absence of roundoff.
+Tt can be shown that
+
+B= (Qp---Qy(At E)(Z---Z5), (5.1.11)
+
+where || £ ||2 < cull A Jz and c is a constant that depends mildly on n, m,
+and p. In plain English, B is an exact orthogonal update of a matrix near
+to A.
+
+5.1.13 Fast Givens Transformations
+
+The ability to introduce zeros in a selective fashion makes Givens rotations
+an important zeroing tool in certain structured problems. This has led to
+the development of “fast Givens” procedures. The fast Givens idea amounts
+to a clever representation of Q when Q is the product of Givens rotations.

@@ -1,0 +1,47 @@
+7.3 The Noncommutative Case 259
+
+whereas
+[AiViul(z, y + h)
+1
+=-KP) [ies (2 Foy) +R? + 5a o(ea)] wlan) +.
+
+Thus if H, and V; commute, then it follows from Lemma 7.1 that
+
+o(z,y) =o(x,y +h).
+
+Similarly,
+
+o(z,y) =o(z +h,y).
+
+From Corollary 7.10 above we can continue this argument for all mesh points
+of Ap, and thus the matrix is a nonnegative scalar (because of (7.54))
+multiple of the identity matrix, which completes the proof. li
+
+Combining the results of the lemmas and the corollary, we have
+
+1
+Theorem 7.12. The matrices (H+52) and (V+55), defined from (7.55)-
+
+(7.57), commute if and only if the convex closure of the mesh points Ap is
+a rectangle with sides parallel to the coordinate ares, : = cI where c is a
+nonnegative scalar, and
+
+(7.58) Ky («+ 3.) Hah («+$), Ky (av+5) =ha (+5).
+
+Proof. The necessity follows from the previous lemmas and the Corollary.
+The converse follows by direct computation. i
+
+It now becomes apparent that the basic assumption H,V; = Vi.H; made
+in Sect. 7.2 places rather severe limitations on the type of boundary-value
+problems which can be rigorously treated by the analysis of Sect. 7.2. Con-
+sidering all mesh lengths h > 0 gives us, in analogy with Theorem 7.12,
+
+Theorem 7.13. Let Ki(x,y) and K2(z,y) be any positive continuous func-
+tions defined on R. Except for the case when Ki(z,y) = fi(z), Ko(z,y) =
+fo(y),o(z,y) is a constant, and R is a rectangle, then for all sufficiently small
+mesh spacings h > 0 the matrices H, and V; defined from (7.55)-(7.57) fail
+to commute.
+
+Proof. If the matrices H; and V; commute for all mesh spacings h > 0,
+it is clear from Lemma 7.8 that Ki(z,y) = fi(z), Ko(z,y) = fo(h) for all
+(x,y) € R. The remainder follows from Theorem 7.12. i

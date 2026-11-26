@@ -1,0 +1,53 @@
+364 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Bo | Y Y2 Ya *'  Ye-1 Vk
+Bi lor a2 a3 --- OK ap
+
+0 1 0 0 -:-- 0 0
+
+0 |/o 1 0+ 0 0 |,
+
+0 0 0 0 0 0
+
+0 0 0 0 1 0
+
+where
+
+-1
+
+k
+a (74) (Boar + Bi), i= 1,2)...,k.
+j=0
+
+504 Some known unconventional methods
+
+Amongst the methods that do not fit under the conventional Runge-Kutta
+or linear multistep headings, we consider the cyclic composite methods of
+Donelson and Hansen (1971), the pseudo Runge-Kutta methods of Byrne
+and Lambert (1966) and the hybrid methods of Gragg and Stetter (1964),
+Butcher (1965) and Gear (1965). We illustrate, by examples, how methods of
+these types can be cast in general linear form.
+
+To overcome the limitations of linear multistep methods imposed by the
+conflicting demands of order and stability, Donelson and Hansen proposed
+a procedure in which two or more linear multistep methods are used in
+rotation over successive steps. Write the constituent methods as (a), 6@)),
+(a), B@)), ..., (a@™, B(™)), so that the formula for computing yp will be
+
+k k
+gn =P unit D> BP HL Oni Yn—a)s
+i=1 i=0
+where j € {1,2,...,m} is chosen so that n — j is a multiple of m.
+
+The step value, that is the maximum of the degrees of a) and 64), may
+vary amongst the m constituent methods, but they can be assumed to have
+a common value & equal to the maximum over all the basic methods. We
+illustrate these ideas in the case k = 3, m = 2. As a consequence of the
+Dahlquist barrier, order p = 5 with k = 3 is inconsistent with stability and
+therefore convergence. Consider the following two linear multistep methods
+
+fal) (2), BM (2)] = [1+ Bz - 227,10 4 2+ Be? ~ S25],
+[a (z), BP) (z)] =([1- itd - 32? + 36123, zt + Bz - a2? - 32).
+
+Each of these has order 5 and is, of course, unstable. To combine them, used
+alternately, into a single step of a general linear method, it is convenient to

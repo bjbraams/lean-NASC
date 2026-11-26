@@ -1,0 +1,49 @@
+352 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+In this formulation we have assumed a PECE mode but, if further iterations
+are carried out the only essential change will be that the second argument of
+hf (an, y%,) will be modified.
+
+For constant stepsize, the method should be equivalent to the Adams
+predictor—corrector pair and this means that all the output values will be
+modified in one way or another from the result that would have been formed
+by simple extrapolation from the incoming Nordsieck components. Thus we
+can write the result computed in a step as
+
+nfl 40 Lil 11 fae
+cs n 012 ++ p-1 p ci
+ny "yo 001 -- (1) @ nt
+2 tay Jaye ( 2 ) () * |. (461e)
+nit, ‘p- 00 0 1 op po
+ng! Yp-2 000 -::: 0 1 a
+
+The quantities y;, i = 0,1,2,...,p have values determined by the equivalence
+with the standard fixed stepsize method and we know at least that
+
+y=, n=l.
+
+The value selected for 7 ensures that All is precisely the result evaluated
+
+from nl using the differential equation. We can arrive at the correct values
+of 2, ..-, Yp, by the requirement that the matrix
+
+13 - (2) @) a
+01 - (5) @) 1
+Do : op f-| oz f[2 3. p-1 e],
+00+ 1 p 1
+00-- 0 1 "Yp
+
+has zero spectral radius.
+
+Values of the coefficients +, i = 0,1,...,p are given in Table 461(I) for
+p= 2,3,...,8.
+
+Adjustment of stepsize is carried out by multiplying the vector of output
+approximations formed in (46le) at the completion of stepnumber n, by the
+diagonal matrix D(r) before the results are accepted as input to step number
+n+1, where
+
+D(r) = diag(1,r,r?,...,7r?).
+
+It was discovered experimentally by Gear that numerical instabilities can
+result from using this formulation. This can be seen in the example p = 3,

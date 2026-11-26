@@ -1,0 +1,52 @@
+8.1 Semi-Discrete Approximation 277
+
+expect in this case that matrix equations arising from finite difference ap-
+proximations of (8.6) would preserve some form of this particular coupling,
+ie.,
+
+ut} := u(mAz, (n + 1)At)
+
+would be coupled through nonnegative coefficients to each u?. Clearly, this
+suggests that the Perron-Frobenius theory of nonnegative matrices would
+again be useful in finite difference approximations of (8.1). Indeed, one of the
+main objectives of this chapter is to show that this property of nonnegative
+couplings, as noted for the infinite thin rod, is a general characteristic of
+discrete approximations to (8.1)-(8.3) and gives a further association of the
+Perron- Frobenius theory of nonnegative matrices to the numerical solution
+of partial differential equations.
+
+To obtain finite difference approximations of the general initial value prob-
+lem (8.1)-(8.3), we discretize first only the spatial variables, leaving the time
+variable continuous. In this semi-discrete form,® matrix properties of the
+resulting system of ordinary differential equations are studied. Then, when
+the time variable is finally discretized, the concept of stability is introduced.
+In this way, stability, or lack thereof, is seen to be a property of matrix ap-
+proximations only. Again, our primary concern in this chapter is with the
+analysis of matrix methods, rather than with questions of convergence of
+such finite difference approximations to the solution of (8.1)-(8.3).
+
+Returning to the parabolic partial differential equation of (8.1) with
+boundary conditions given in (8.2), we now assume, for simplicity, that the
+number of spatial variables is n = 2, although it will be clear that the re-
+sults to be obtained extend to the general case. Letting R;, denote a general
+two-dimensional (nonuniform) Cartesian mesh region which approximates R,
+we derive spatial equations, as in Sect. 6.3, by integrating the differential
+equation (8.1) at each mesh (2;,y;) over its corresponding two-dimensional
+mesh rectangle r;,;. For the integration of the left-side of (8.1), we make the
+approximation”
+
+(8.10) I. fo (2,9) Sede dy = Gufs ge) [ [een dz dy.
+
+49
+The five-point approximation to the right side of (8.1), by means of integra-
+
+tion, is carried out as in Sect. 6.3, and we thus obtain the ordinary matrix
+differential equation
+
+du(t) _
+
+(8.11) C di = —Au(t)+s(t)+7(t), t>0,
+
+® These approximations are also called semi-explicit. See Lees (1961).
+7 Since ¢ is a known function in R, we can in principle exactly evaluate the integral
+of ¢ over each rectangular mesh region ri,; of Ri.

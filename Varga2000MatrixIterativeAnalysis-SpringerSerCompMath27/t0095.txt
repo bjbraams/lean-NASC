@@ -1,0 +1,36 @@
+3.5 Stieltjes Matrices, M-Matrices and H-Matrices 87
+
+2. Let A be the 4 x 4 matrix of (1.9). If A is partitioned in the manner
+of (3.68) so that A = D — E — E* where
+
+determine the spectral radius p2 of the block Gauss-Seidel matrix (D—
+E)~1E*. If p; is the spectral radius of the corresponding point Gauss-
+Seidel matrix, show that 1 > p; > p2. From this example, we conclude
+that block iterative methods can be asymptotically faster than their
+corresponding point iterative methods.
+
+3. Let A be a strictly or irreducibly diagonally dominant n x n Hermitian
+matrix with positive real diagonal entries. If this matrix is arbitrarily
+partitioned in the manner of (3.68), and if the matrices D, E, and F
+are defined as in (3.69), prove that the block successive overrelaxation
+iterative method of (3.73) is convergent for any 0 < w < 2.
+
+4. Verify (3.65).
+
+5. Let A = D—-— E-— E* be an n x n Hermitian matrix, where D is
+Hermitian and positive definite. For w real, prove that the iterative
+method of (3.59) is convergent (for any x(°)) if and only if i) either
+A is positive definite and w € (0,2), or ii) A is negative definite and
+w ¢ (0, 2]. (Kuznetsov (1984)).
+
+3.5 Stieltjes Matrices, M-Matrices and H-Matrices
+
+At the conclusion of Sect. 3.4, we stated that any partitioning of a positive
+definite Hermitian matrix of the form (3.68) gives rise to a convergent block
+Gauss-Seidel iterative method, and we are ultimately interested in comparing
+the asymptotic rates of convergence of iterative methods derived from differ-
+ent partitionings of the matrix A. The first exercise of Sect. 3.4 in essence
+shows that taking “larger” blocks does not always result in larger asymptotic
+rates of convergence. In Sect. 3.6, however, we shall show that, under suitable
+conditions, iterative methods based on partitionings with large blocks of the
+matrix A do have larger asymptotic rates of convergence. As these “suitable

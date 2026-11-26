@@ -1,0 +1,54 @@
+344. NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+For convenience we write,
+
+3 Bi
+==
+Dio Bi
+
+It is obvious that the linear stability of a one-leg method is the same
+as for the corresponding linear multistep method. However, it is possible
+to investigate the stability of numerical solutions of non-linear dissipative
+equations in a relatively simple way if thecomputation is carried out using
+one-leg methods. By contrast, the corresponding analysis for linear multistep
+methods becomes hopelessly complicated because of the occurrence of the
+same derivative terms in several steps in sequence.
+
+Even though these stability results are derived for one-leg methods, they
+can be regarded as having a relevance to linear multistep method, because of
+a transformation that links them.
+
+In later papers by Dahlquist and others (Dahlquist, 1983; Wantanabe and
+Sheikh, 1984; Hundsdorfer and Steininger, 1991), the feasibility of using one-
+leg methods directly, as a practical numerical algorithm, came into serious
+consideration. In this brief introduction to these methods, we also discuss an
+interpretation in terms of effective order. We also review the main results on
+G-stability.
+
+4=0,1,2,...,k.
+
+451 The concept of G-stability
+
+We recall the non-linear stability property introduced in Subsection 357.
+The corresponding property for one-leg methods was introduced in Dahlquist
+(1976), and given the name G-stability. For convenience, we consider
+applications only to autonomous problems
+
+y'(z) = f(y(z)), (451a)
+
+and we assume that the dissipativity property holds in the sense that solution
+values lie in an N-dimensional inner-product space, and that
+
+(f(u) — f(v),u—v) <0, (451b)
+
+for all u,v € RY.
+
+For Runge-Kutta methods, in the study of the non-linear stability property
+applicable to those methods, in Subsection 357, it was possible to use the
+norm ||u|| = \/(u, u) to measure the drift between two approximately equal
+numerical approximations that takes place in step number n. However, for
+linear k-step methods, each of the k subvectors making up the current state
+vector of each approximate solution has to be taken into account. Hence, we
+need to construct a suitable norm on the vector space R*”.
+
+For U € R*®, denote U;, i= 1,2,...,k for subvectors in R™ . That is,

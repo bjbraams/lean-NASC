@@ -1,0 +1,45 @@
+DIFFERENTIAL AND DIFFERENCE EQUATIONS 23
+10.5 Show that the problem defined by the Hamiltonian
+H(p,q) = 3p" + sin(q)
+is a formulation of the simple pendulum problem.
+
+10.6 Calculate the period of an orbit of the Lotka—Volterra problem which
+passes through the point (3, 2).
+
+11 Differential Equation Theory
+110 Existence and uniqueness of solutions
+
+A fundamental question that arises in scientific modelling is whether a given
+differential equation, together with initial conditions, can be reliably used to
+predict the behaviour of the trajectory at later times. We loosely use the
+expression ‘well-posed’ to describe a problem that is acceptable from this
+point of view. The three attributes of an initial value problem that have to
+be taken into account are whether there actually exists a solution, whether
+the solution, if it exists, is unique and, thirdly, how sensitive the solution is
+to small perturbations to the initial information. Even though there are many
+alternative criteria for answering these questions in a satisfactory manner,
+we focus here on the existence of a Lipschitz condition. This is especially
+convenient because the same type of condition can be used to study the
+behaviour of numerical approximations.
+
+Definition 110A The function f : [a,b] x RY ~+ RY is said to satisfy
+a ‘Lipschitz condition in its second variable’ if there exists a constant L,
+known as a ‘Lipschitz constant’, such that for any x € [a,b] and Y,Z ¢ RY,
+lf, ¥) — f(a, Zyl < LY - ZI.
+
+We need a basic lemma on metric spaces known as the ‘contraction mapping
+principle’. We present this without proof.
+
+Lemma 110B Let M denote a complete metric space with metric p and let
+@: M —+ M denote a mapping which is a contraction, in the sense that
+there exists a number k, satisfying 0 < k <1, such that, for any 7,¢ € M,
+p(o(n), O(0)) < ko(n,¢). Then there exists a unique £ € M such that $(£) = €.
+
+We can now state our main result.
+Theorem 110C Consider an initial value problem
+'(@) = f(x,y(2)), (110a)
+y(@) = yo, (110b)
+
+where f : [a,b] x RNY — R% is continuous in its first variable and satisfies a
+Lipschitz condition in its second variable. Then there exists a unique solution
+to this problem.

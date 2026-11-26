@@ -1,0 +1,45 @@
+120 4. Successive Overrelaxation Iterative Methods
+
+(4.17) (I—wL)x™) = {w+ (1—w)I}x™ +u0D-1k, m>0.
+
+Assuming that the matrix A is a consistently ordered p-cyclic matrix, the
+main result of this section is a functional relationship (4.20) between the
+eigenvalues pz of the block Jacobi matrix
+
+(4.18) B=L+U,
+and the eigenvalues A of the block successive overrelaxation matrix.
+(4.19) Ly = (I - wl)“ {wU + (1 —w)J}.
+
+That such a functional relationship actually exists is itself interesting, but the
+importance of this result* lies in the fact that it is the basis for the precise
+determination of the value of w which minimizes p(L.,).
+
+Theorem 4.5. Let the matrix A of (4.2) be a consistently ordered p-cyclic
+matriz with nonsingular diagonal submatrices Aii,1<i< N. Ifw 0, ifr
+is a nonzero eigenvalue of the matrix L,, of (4.19) and if satisfies
+
+(4.20) (A+w—1)? = PhP,
+
+then pu is an eigenvalue of the block Jacobi matrix B of (4.18). Conversely, if
+p. is an eigenvalue of B and X satisfies (4.20), then A is an eigenvalue of L.,.
+
+Proof. The eigenvalues of £,, are the roots of its characteristic polynomial
+
+(4.21) det{AI — £,,} = 0,
+
+but as (I — wL) is nonsingular, as in the proof of Theorem 3.11, we conclude
+that equation (4.21) is equivalent to
+
+(4.22) det{(A + w — 1)I — AwL — wU} = 0.
+Now, let
+(4.23) P(A) := det{(A + w — 1)I — AWL — WU}.
+
+Upon applying Theorem 4.4 directly to (4.23), we simply obtain
+
+(4.24) (A) = det{(A + w — 1) — APY /Py BH.
+
+Since A is p-cyclic by hypothesis, then the matrix B, and hence
+A®-1)/PWB, is weakly cyclic of index p. Thus we necessarily have, upon ap-
+plying Romanovsky’s Theorem 2.14,
+
+4 Originally due to Young (1950) for the case p = 2.

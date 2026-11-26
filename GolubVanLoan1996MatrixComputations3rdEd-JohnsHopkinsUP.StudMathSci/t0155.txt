@@ -1,0 +1,106 @@
+6.1. Basic CONCEPTS 279
+
+6.1.4 Gaxpy on a Ring
+
+We are now set to develop a ring algorithm for the gaxpy z = y + Az
+(A€ R*®, z,y € R’). For clarity, assume that n = rp where p is the size
+of the ring. Partition the gaxpy as
+
+a n Ay -++ Alp 2)
+: : + : : fof. (6.1.2)
+» Up Ap t+: App Xp
+
+where A,; € RB" and 2;,yi,2; € IR’. We assume that at the start of com-
+putation Proc(y) houses zy, y,, and the uth block row of A. Upon com-
+pletion we set as our goal the overwriting of y,, by z,. From the Proc(j)
+perspective, the computation of
+
+Pp
+Zn = Ya + SO Aurts
+
+rm
+
+involves local data (Ayr, Yp,2,) and nonlocal data (z,, 7 # yu). To make
+the nonlocal portions of x available, we circulate its subvectors around the
+ring. For example, in the p = 3 case we rotate the 71, 2, and 23 as follows:
+
+step | Proc(i) | Proc({2) | Proc(3)
+t 23 2 ZQ
+2 =z zy Eat
+3 Ny xq 23
+
+When a subvector of x “visits”, the host processor must incorporate the
+appropriate term into its running sum:
+
+step Proc(1) Proc(2) Proc(3)
+1 ojiyw=n +Aiszs | we =yrt+ Anz: | ys = 93 + Asaza
+2) [fy =yet Arte | yo = yo + Assets | ys = 3 + Azizi
+3 fmewtAnzi | ye = 92+ Ante | ys = ys + Aastra
+
+In general, the “merry-go-round” of z subvectors makes p “stopa.” For each
+Teceived x-subvector, a processor performs an r-by-r gaxpy.
+
+Algorithm 6.1.1 Suppose A € R°™", z € R", and y € R” are given and
+that z = y+ Az. If each processor in a p-processor ring executes the
+following node program and n = rp, then upon completion Proc(js) houses
+2(1+(p—1)r:pr) in yroc. Assume the following local memory initializationa:
+Pp, # (the node id), left and right (the neighbor id’s), n, row = 14(:—1)r:pr,
+Ajoe = A(row,:), Zioe = Z(row), floc = y(row).
+
+280 CHAPTER 6. PARALLEL MATRIX COMPUTATIONS
+
+for t = l:p
+
+send(Ztoc, right)
+
+recv (toc: left)
+
+T=p-t
+
+ifr<o
+
+T=T+p
+
+end
+
+{ Xtoc = 2(1 + (7 - Lr:tr) }
+
+Vtoc = Ytoe + Atoe(:, 1 + (7 — 1r:7r) Zee
+end
+
+The index r names the currently available z subvector. Once it is com-
+puted it is poesible ta carry out the update of the locally housed portion of
+y. The send-recv pair passes the currently housed x subvector to the right
+and waits to receive the next one from the left. Synchronization is achieved
+because the local y update cannot begin until the “new” 2 subvector ar-
+rives. It is impossible for one processor to “race ahead” of the others or for
+an x subvector to pass another in the merry-go-round. The algorithm is
+tailored to the ring topology in that only nearest neighbor communication
+is involved. The computation is also perfectly load balanced meaning that
+each processor has the same amount of computation and communication.
+Load imbalance is discussed further in §6.1.7.
+
+The design of a parallel program involves subtleties that do not arise in
+the uniprocessor setting. For example, if we inadvertently reverse the order
+of the send and the recv, then each processor starts its node program by
+waiting for a message from its left neighbor. Since that neighbor in turn is
+waiting for a message from its left neighbor, a state of deadlock results.
+
+6.1.5 The Cost of Communication
+
+Communication overheads can be estimated if we model the cost of sending
+and receiving a message. To that end we assume that a send or recv
+involving m floating point numbers requires
+
+t(m) = ag + Bam (6.1.3)
+
+seconds to carry out. Here ag is the time required to initiate the send or
+recv and fz is the reciprocal of the rate that a message can be transferred.
+Note that this model does not take into consideration the “distance” be-
+tween the sender and receiver. Clearly, it takes longer to pass a message
+halfway around a ring than to a neighbor. That is why it is always desirable
+to arrange (if possible) a distributed computation so that communication
+is just between neighbors.
+
+During each step in Algorithm 6.1.1 an r-vector is sent and received and
+2r? flops are performed. If the computation proceeds at R flops per second

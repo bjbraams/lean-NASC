@@ -1,0 +1,77 @@
+344 References
+
+Hille, Einar and Phillips, R. S. (1957) Functional Analysis and Semi-Groups, revised
+ed., Amer. Math. Soc. Colloquium Publ. 31, Amer. Math. Soc., New York, 808 pp.
+[309]
+
+Hoffman, A. J. (1969) Generalization of Gerschgorin’s Theorem: G-generating fam-
+ilies, Lecture notes, University of California at Santa Barbara, 46 pp. /29/
+
+Hoffman, A. J. (1971) Combinatorial aspects of Gerschgorin’s theorem, Lecture
+Notes in Mathematics 186, Springer-Verlag, New York, 173-179. [29]
+
+Hoffman, A. J. (1975/6) Linear G-functions, Linear and Multilinear Algebra 3,
+45-52. [29]
+
+von Holdt, Richard E. (1962) Inversion of triple-diagonal compound matrices, J.
+Assoc. Comput. Mach. 9, 71-83. [222, 233]
+
+Holladay, J. C. and Varga, R. S. (1958) On powers of non-negative matrices, Proc.
+Amer. Math. Soc. 9, 631-634. /[47, 48, 61]
+
+Horn, Roger A. and Johnson, Charles R. (1985) Matrix Analysis, Cambridge Uni-
+versity Press, Cambridge, England. /27, 28, 29, 59]
+
+Hotelling, H. (1943) Some new methods in matrix calculation, Ann. Math. Statist.
+14, 1-33. [181]
+
+Householder, A. S. (1953) Principles of Numerical Analysis, McGraw-Hill Book Co.,
+Inc., New York, 274 pp. [220]
+
+Householder, A. S. (1958) The approximate solution of matrix poblems, J. Assoc.
+Comput. Mach. 5, 204-243. 10, 28, 59, 106, 310]
+
+Hummel, P. M. and Seebeck, C. L. (1949) A generalization of Taylor’s Theorem,
+Amer. Math. Monthly 56, 243-247. [294, 295]
+
+Jacobi, C. G. J. (1845) Uber eine neue Auflésungsart der bei der Methode der
+kleinsten Quadrate vorkommenden linearen Gleichungen, Astr. Nachr. 22, No.
+523, 297-306. [64]
+
+John, Fritz (1952) On integration of parabolic equations by difference methods,
+Comm. Pure Appl. Math 5, 155-211. /311]
+
+Kahan, W. (1958) Gauss-Seidel methods of solving large  sys-
+tems of linear equations, Doctoral Thesis, University of Toronto.
+[66, 81, 82, 101, 104, 105, 190, 139, 142, 148, 304]
+
+Kantorovich, L. V. and Krylov, V. I. (1958) Approximate Methods of Higher Anal-
+ysis, translated from the Russian by Curtis D. Benster, Interscience Publishers,
+Inc., New York, 681 pp. /192, 196, 223, 231, 309]
+
+Karlin, S. (1959a) Positive operators, J. Math. Mech. 8, 907-937. /59/
+
+Karlin, Samual (1959b) Mathematical Methods and Theory in Games, Program-
+ming, and Economics, Addison-Wesley Publ. Co., Reading, MA, 386 pp. /310/
+
+Karlquist, O. (1952) Numerical solution of elliptic difference equations by matrix
+methods, Tellus 4, 374-384. /222, 233]
+
+Karpelevié, F. I. (1951) On the characteristic roots of matrices with nonnegative
+elements (in Russian), Isv. Akad. Nauk SSSR Ser. Mat. 15, 361-383. [61]
+
+Kato, Tosio (1960) Estimation of iterated matrices, with application to the von
+Neumann condition, Numer. Math. 2, 22-29. /104]
+
+Keller, Herbert B. (1958) On some iterative methods for solving elliptic difference
+equations, Quart. Appl. Math. 16, 209-226. /64, 147, 233]
+
+Keller, Herbert B. (1960a) Special block iterations with applications to Laplace and
+biharmonic difference equations, SIAM Rev. 2, 277-287. [147, 233]
+
+Keller, Herbert B. (1960b) The numerical solution of parabolic partial differential
+equations, Mathematical Methods for Digital Computers, edited by A. Ralston
+and H. S. Wilf, John Wiley and Sons, Inc., New York; 135-143. [309]
+
+Kemeny, J. G. and Snell, J. L. (1960) Finite Markov Chains, D. Van Nostrand Co.,
+Inc., Princeton, 210 pp. [29, 55, 60]

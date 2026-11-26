@@ -1,0 +1,49 @@
+194
+
+6. Derivation and Solution of Elliptic Difference Equations
+
+In (6.1), assume that o(x) is any nonnegative function in C{a, b]. Using
+the results of Exer. 9, Sect. 3.5, show that
+
+|A7*]1 = |[A~* loo $ (6 = @)?/8,
+
+where the N x N matrix A is defined in (6.5). Starting with
+y-2z=A™'r(y),
+
+directly establish the result (6.10) of Theorem 6.2, using norm inequal-
+
+ities.
+
+If o(x) = 0 > 0, show directly from (6.5) that
+
+h? h?
+<
+oh? + 4sin2[rh/2(b—a)] — 4sin?[th/2(b — a)]’
+
+|A“"I| =
+
+and establish that ||A~1|| ~ (b — a)?/{m? + o(b — a)”}, ash > 0.
+
+If the vector z has components z;,1 <i < N, it is convenient to define
+the (normalized) vector norms
+
+1 N 1/p
+ll2ll() = ( Yar) , pal.
+i=1
+
+With a = 0 and b = 1, assume that the solution y(x) of (6.1)-(6.2) in
+C40, 1]. With the results of Exers. 4 and 5, show that
+
+Muh! 2
+_ < —
+lly — llc) < sinh /9p O(h?), as h > 0,
+and 12
+Mg — (4)
+_ < = .
+lly -2lla) S 967 Ma mes, ly (a)
+
+How do these results compare with bounds for |ly —z||(2) and
+lly — 2ll(1), computed directly from (6.9)?
+
+From the definition of the discrete functional F(w) in (6.17), verify
+the expressions of (6.18) and (6.19), using (6.5) and (6.6).

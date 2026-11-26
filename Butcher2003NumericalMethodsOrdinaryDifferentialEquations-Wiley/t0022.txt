@@ -1,0 +1,34 @@
+DIFFERENTIAL AND DIFFERENCE EQUATIONS 9
+
+Planar motion is possible; that is, solutions in which ys; = yg = 0 at all
+times. One of these is shown in Figure 102(i), with the values of (y1,y2)
+plotted as the orbit evolves. The heavier mass is at the point (~,0) and the
+lighter mass is at (1 — 4,0), where (0,0) is marked 0 and (1,0) is marked 1.
+For this calculation the value of p = 1/81.45 was selected, corresponding
+to the earth-moon system. The initial values for this computation were
+(41.42.93, 94,¥s,¥6) = (0.994, 0,0, 0, —2.0015851063790825224,0) and the
+period was 17.06521656015796.
+
+aan
+Ke
+
+Figure 102(i) A solution to the restricted three body problem
+
+A second solution, identical except for the initial value (yi, yo, ¥3,Y4, 5, Y6)
+= (0.87978, 0,0,0, —0.3797,0) and a period 19.14045706162071, is shown in
+Figure 102(ii).
+
+103 A problem arising from the method of lines
+
+The second initial value problem we consider is based on an approximation
+to a partial differential equation. Consider the parabolic system
+
+du Ou
+Ot Oa?’
+where we have used ¢ to represent time, x to represent distance and u(z, t) to
+represent some quantity, such as temperature, which diffuses with time. For
+
+this problem it is necessary to impose conditions on the boundaries = 0
+and x = 1 as well as at the initial time t = 0. We may interpret the solution
+
+(x,t) € [0,1] x [0, 00), (103a)

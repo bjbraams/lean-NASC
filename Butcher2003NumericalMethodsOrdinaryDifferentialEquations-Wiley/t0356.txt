@@ -1,0 +1,48 @@
+LINEAR MULTISTEP METHODS 345
+
+Ui
+U2
+U=!| .
+UE
+If U,V € R*® then, given a positive definite symmetric k x k matrix G, we
+can define an inner product (-)g by
+
+k
+UO,V)a = > 913 Ui, Vj),
+
+j=l
+
+with corresponding norm
+
+k
+YS 94; Ui,U;).
+j=l
+The aim of G-stability is to discover, for a given one-leg method, if G exists
+so that, for a problem satisfying (451b),
+
+lle =
+
+ym -z — 2) oe YH _ gln- of (451¢)
+cannot be positive where
+Un Zn
+Yn-1 2n-1
+y= Yn-2 ; Zo”) = 2n—-2 ;
+Yn-k4+1 2n—-kt1
+
+and the y and z sequences are numerical approximations corresponding to two
+different solutions to (451a).
+
+The only inequality at our disposal that could be use to ensure that (451c)
+is not positive, is the dissipativity requirement applied to the only evaluations
+of f that take place in the step. That is, we can use the fact that
+
+(f (DhoBitm-:) - f (LhoBien-i) sho Bs (uni #n-i)) $0. (4514)
+Because
+k
+Yn — 2 Aidnns = (xt i=0 ‘) #( Sofia ‘)
+
+with a similar formula for the z sequence, it follows that
+
+(un — an — Youle ~ 2n~i)s 5A Yn-i — %n- )) $0
+
+i=0

@@ -1,0 +1,103 @@
+2.1. Basic IDEAS FROM LINEAR ALGEBRA 49
+
+2.1.1 Independence, Subspace, Basis, and Dimension
+
+A set of vectors {a1,...,@,} in R™ is linearly independent if 77_, aja; =0
+implies a(1:n) = 0. Otherwise, a nontrivial combination of the a; is zero
+and {a1,..., Gn} is said to be linearly dependent .
+
+A subspace of IR™ is a subset that is also a vector space. Given a
+collection of vectors @),.-.,@n € R™, the set of all linear combinations of
+these vectors is a subspace referred to as the span of {a1,...,an}:
+
+span{a),...,@n} = {>> sa 2 By € R} .
+jul
+If {a;,...,@n} is independent and 6 € span{a),...,a,}, then 5 is a unique
+linear combination of the a;.
+
+Tf S1,..., S¢ are subspaces of IR™, then their sum is the subspace defined
+by S = { a, tag+---+a,: a; € S;, i= 1:k }. G is said to be a direct sum
+if each v € S has a unique representation v = a, +--- +a, with a; € Sj.
+In this case we write S = S; ®--- @5;. The intersection of the S; is also
+a subspace, 5 = 9) S_M---0 Sy.
+
+The subset {a;,,...,@:,} is a maximal linearly independent subset of
+{a1,...,@n} if it is linearly independent and is not properly contained in any
+linearly independent subset of {a1,...,¢n}. If {a;,,...,a:,} is maximal,
+then span{a,,.-.,4n} = span{aj;,,...,a;,} and {a;,,...,a;,} is a basis
+for span{a1,...,@n} . If S C IR™ is a subspace, then it is possible to find
+independent basic vectors a1,...,a, € 9 such that 9 = span{a),...,a,} .
+All bases for a subspace S have the same number of elements. This number
+is the dimension and is denoted by dim(S).
+
+2.1.2 Range, Null Space, and Rank
+
+There are two important subspaces associated with an m-by-n matrix A.
+The range of A is defined by
+
+ran(A) = {y € R™ : y = Az for some z € R"},
+and the null space of A is defined by
+null(A) = {x € R”: Az = 0}.
+If A =[a),...,@,] is a column partitioning, then
+ran(A) = span{a;,...,a@,}.
+The rank of a matrix A is defined by
+rank(A) = dim (ran(A)).
+
+It can be shown that rank(A) = rank(AT). We say that A € R™*" is rank
+deficient if rank(A) < min{m, n}. If A € R™™", then
+
+dim(null(A)) + rank(A) =n.
+
+50 CHAPTER 2. MATRIX ANALYSIS
+
+2.1.3. Matrix Inverse
+
+The n-by-n identity matriz I, is defined by the column partitioning
+i= [e1,---sen]
+
+where eg is the Ath “canonical” vector:
+
+e = (0,...,0,1, 0,...,0)7.
+— ——
+
+k-l a-k
+
+The canonical vectors arise frequently in matrix analysis and if their di-
+mension is ever ambiguous, we use superscripts, i.e., ef”) eR".
+
+If A and X are in IR"“” and satisfy AX = I, then X is the inverse of
+A and is denoted by A~!. If A~' exists, then A is said to be nonsingular.
+Otherwise, we say A is singular.
+
+Several matrix inverse properties have an important role to play in ma-
+trix computations. The inverse of a product is the reverse product of the
+inverses:
+
+(AB)"} = BuHAT), (2.1.1)
+The transpose of the inverse is the inverse of the transpose:
+(A7YP =(AT)7! = ArT. (2.1.2)
+The identity
+B= A! BB AA! (2.1.3)
+
+shows how the inverse changes if the matrix changes.
+The Sherman-Morrison- Woodbury formula gives a convenient expres-
+sion for the inverse of (A+UV™) where A € R°*" and U and V are n-by-k:
+
+(A+ UV")! = AT ATT 4 VT ATU) VTA, (2.1.4)
+
+A rank k correction to a matrix results in a rank & correction of the inverse.
+In (2.1.4) we assume that both A and (f + V7A~'U) are nonsingular.
+
+Any of these facts can be verified by just showing that the “proposed”
+inverse does the job. For example, here is how to confirm (2.1.3):
+
+B(A?~ BO'B- A)A™!) = BA ~(B- AJA =I.
+
+2.1.4 The Determinant
+
+If A = (a) ¢ R'™!, then ita determinant is given by det(A) = a. The
+determinant of A € R°*" is defined in terms of order n — 1 determinants:
+
+det(A) = S7(-1)*4ayjdet( diy).
+
+jal

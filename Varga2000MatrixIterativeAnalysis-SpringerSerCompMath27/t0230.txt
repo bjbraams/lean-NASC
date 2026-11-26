@@ -1,0 +1,42 @@
+222 6. Derivation and Solution of Elliptic Difference Equations
+
+that at most three coefficients are needed per mesh point to completely spec-
+ify the matrix A, so that at most 3N? coefficients suffice to specify A. If
+the functions P, and a are positive, then the method of derivation of Sect.
+6.3 shows that the matrices B; of (6.64) are all irreducible N x N Stieltjes
+matrices, and thus (Corollary 3.24) each entry of B 1 is positive. Because of
+this, each matrix W; of (6.65) would require roughly 4N ? coefficients of stor-
+age, even taking into account the symmetry of W;. Hence, just the storage of
+all the W; would require roughly 3N' 3 coefficients of storage for the general
+case, and because of this, the application of this direct method to the general
+problem of approximating elliptic partial differential equations seems to be
+computationally feasible only for moderate-sized (N? < 500) matrix prob-
+lems. Nevertheless, in rather special cases, such as in the solution of Laplace’s
+or Poisson’s equation with Dirichlet boundary conditions in a rectangle with
+uniform mesh spacings, simplications!? of (6.65)-(6.66) are possible which
+result in substantial reductions both in the total computing effort and in co-
+efficient storage. These simplications stem from the observation that, in the
+special cases mentioned, the matrices B; of (6.64) are all of the form
+
+and that the matrices A; and C; of (6.64) are just N x N identify matrices.
+It is important to add, however, that rounding errors are not as well behaved
+in this generalization as in the original method of (6.61)-(6.62), even for the
+special cases mentioned.
+
+The practical use of the direct method of (6.61)-(6.62) is that it has been
+successfully applied in conjunction with iterative solutions to two- and three-
+dimensional elliptic difference equations in the following way. Specifically, the
+partitioning of the matrix in (6.64) came from considering all mesh points of a
+particular horizontal line as a block. It is then clear that, for five-point approx-
+imations to (6.67), the corresponding matrix A of (6.64) is real, symmetric,
+and positive definite, and that each matrix B;, is an irreducible tridiagonal
+Stieltjes matrix whose nonzero entries give the coupling of a mesh point and
+its immediate neighbors on the same horizontal line. Similarly, the matrices
+A; and C; contain the coupling coefficients of a mesh point respectively to
+the mesh point of the line above and the mesh point of the line below, and
+thus the matrices A; and C; have at most one nonzero entry per row. Since
+the matrices B; are nonsingular, we can form the block Jacobi matrix M as
+
+13 For such simplifications, with emphasis on the numerical solution of elliptic
+partial differential equations, see notably Karlquist (1952), Cornock (1954),
+Schechter (1960),Egervary (1960), and von Holdt (1962).

@@ -1,0 +1,107 @@
+4.1. THe LDMT™ anp LDLT FacrorizaTions 139
+With overwriting this becomes
+
+Algorithm 4.1.2 (LDL™) If AéIR°“" is symmetric and has an LU
+factorization then this algorithm computes a unit lower triangular matrix
+L and a diagonal matrix D = diag(d,...,d,) so A = LDL™. The entry
+ai, is overwritten with &; if i > j and with d, ifi= j.
+
+for j = lin
+{ Compute v(1:7). }
+for i=1:j-1
+
+u(t) = AG, A) AG, 4)
+end
+v(j) = AG, 9) — AG, 1g - 1)v(:j - 1)
+{ Store d(j} and compute L(j + 1:n, 7). }
+AG, 3) = 07)
+A(j + lin, j) =
+(AQ + in, 7) — AG + La, lig — De(dey - 1))/eG)
+end
+
+This algorithm requires n?/3 flops, about half the number of flops involved
+in Gaussian elimination.
+
+In the next section, we show that if A is both symmetric and positive
+definite, then Algorithm 4.1.2 not only runs to completion, but is extremely
+stable. If A is symmetric but not positive definite, then pivoting may be
+necessary and the methods of §4.4 are relevant.
+
+Example 4.1.2
+10 2 W 100 10 0 0 12 93
+A=1|%O 4 8} =; 2 10 0 5 0 014
+3 80 171 3°94 1 0ok ool
+
+and so if Algorithm 4.1.2 is applied, A is overwritten by
+
+10 20 «30
+A= 2 5 #M].
+3 04°21
+
+Problems
+
+P4.1.1 Show that the LDMT factorization of a nonsingular A is unique if it exists.
+
+4.1.2 Modify Algorithm 4.1.1 so that it computes a factorization of the form PA =
+LDM7™, where L and M are both unit lower triangular, D is diagonal, and P is a
+permutation that is chosen so |f;;| < 1.
+
+P4.1.3 Suppose the n-by-n symmetric matrix A = (aj) is stored in a vector c as
+followa: c = (011,471,-.-,0~1,022,---,2n2)---.2an). Rewrite Algorithm 4.1.2 with A
+stored in this fashion. Get as much indencng outside the inner loops as possible.
+
+140 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+
+P4.1.4 Rewrite Algorithm 4.1.2 for A stored by diagonal. See §1.28.
+
+Notea and References for Sec. 4.1
+
+Algorithm 4.1.1 is related to the methods of Crout and Doolittle in that outer product
+updates are avoided. See Chapter 4 of Fax (1964) or Stewart (1973,131-149). An Algol
+procedure may be found in
+
+H.J. Bowdler, R.S. Martin, G. Peters, and J.H. Wilkinson (1966), “Solution of Real and
+Complex Systems of Linear Equations,” Numer. Math. 8, 217-234.
+
+Sea also
+
+G.E. Forsythe (1960). *“Crout with Pivoting,” Comm. ACM 3, 507-08.
+W.M. McKeeman (1962). “Crout with Equilibration and Iteration,” Comm. ACM 5,
+553-55.
+
+Just as algorithms can be tailored to exploit structure, so can error analysis and pertur-
+bation theory:
+
+M. Arioli, J. Demmel, and I. Duff (1989). “Selving Sparse Linear Systems with Sparse
+Backward Error,” SIAM J. Matriz Anal. Appl. 10, 165-190.
+
+J.R. Bunch, J.W. Demmel, and C.F. Van Loan (1989). “The Strong Stability of Algo-
+rithms for Solving Symmetric Linear Systems,” SIAM J. Matriz Anal. Appl. 10,
+494-499,
+
+A. Barrlund (1991). “Perturbation Bounds for the EDLT and LU Decompositions,”
+BIT 31, 358-363.
+
+D.J. Higham and N.J. Higham (1992). “Backward Exror and Condition of Structured
+Linear Systems,” SIAM J. Matriz Anal. Appl. 13, 162-175.
+
+4.2 Positive Definite Systems
+A matrix A € R"*" is positive definite if x7 Ax > 0 for all nonzero z € IR".
+
+Positive definite systems constitute one of the most important classes of
+special Ar = } problems. Consider the 2-by-2 symmetric case. If
+
+Az G11 412
+@21 G22
+
+is positive definite then
+
+z = (1,0)? => xzTAzr = ay,>0
+z = (0,1)? => azTAzr = a2>0
+ze = (1,17 = 2TAr = ay, +2a12+02>0
+z= (1,-1)7 = zTAr = a4, —2ay+an>0.
+
+The last two equations imply |ai2| < (11 + 422)/2. From these results we
+see that the largest entry in A is on the diagonal and that it is positive. This
+turns out to be true in general. A symmetric positive definite matrix has
+a “weighty” diagonal. The mass on the diagonal is not blatantly obvious

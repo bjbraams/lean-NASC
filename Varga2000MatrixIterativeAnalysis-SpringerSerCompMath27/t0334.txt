@@ -1,0 +1,35 @@
+9.2 Application of Isoperimetric Inequalities 327
+
+Bibliography and Discussion
+
+9.1
+
+9.2
+
+The first application of the Perron-Frobenius theory to the problem
+of finding rigorous upper and lower bound estimates of p(B) or w»
+was given by Varga (1957b). As pointed out in the text, this is one of
+many methods which have been proposed. Other methods, based on
+results derived from the vector iterates of the nonhomogeneous matrix
+problem, Ax = k, have been suggested by Carré (1961), Forsythe
+and Ortega (1960), and Kulsrud (1961). See also Forsythe and Wasow
+(1960), p. 368.
+
+The first application of the Perron-Frobenius theory to the problem
+of estimating eigenvalue bounds for the alternating-direction implicit
+methods was given by Wachspress and Habetler (1960). Their proce-
+dure differs from that given in the text.
+
+As stated in the text, the material for this section was inspired by
+Garabedian (1956). Garabedian, however, connected the successive
+overrelaxation iterative method with hyperbolic partial differential
+equations to derive his asymptotic estimate of w» for small mesh spac-
+ings. The fact that his estimate, for small h, is an upper bound for wp
+apparently is new, as is the measure of the efficiency of his estimate
+in (9.45). It should be mentioned that his original argument contained
+an application to the 9-point formula approximating uz: + Uyy = f.
+
+Similar ideas for relating the rates of convergence of eigenvalues to the
+Helmholtz equation have been given by Parter (1961b), and Henrici
+(1960), and both have extended this useful notion to biharmonic prob-
+lems.

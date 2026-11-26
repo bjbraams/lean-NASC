@@ -1,0 +1,58 @@
+50 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+so that the total error should be about 0.40825h. This very crude argument
+leads to a prediction that is incorrect by a factor of only about 10%. In the
+solution of practical problems using the Euler method, or indeed a different
+method, it is not really feasible to estimate the total accumulated error, but it
+is important to know the asymptotic form of the error in terms of h. This will
+often make it possible to gauge the quality of approximations, by comparing
+the values for differing A values. It will also often make it possible to make
+realistic decisions as to which of various alternative numerical methods should
+be used for a specific problem, or even for a large class of problems.
+
+It is equally straightforward to solve problems in more than one dependent
+variable using the Euler method. Given the problem of inverse-square law
+attraction in two dimensions
+
+1
+
+"© =—F@F
+
+Y(z), (201c)
+
+where ||Y|| = ,/Y? + YZ, it is necessary to first write the problem as a system
+of first order equations. This is done by writing yi and yo for the space
+coordinates Y; and Y2, and writing ys and y4 for the velocity coordinates,
+given as the first derivatives of Yj and Y2. With this reformulation, the system
+of differential equations is written in the form
+
+dyn
+
+de = Ys;
+
+“ = Ya,
+
+dys _ n (201d)
+dz (y? + 33/2”
+
+dye
+
+dz (yt + 93)9?°
+
+The initial value, written as a vector y(0) = [1,0,0, 1]", defines the solution
+y(z) = [cos(x), sin(z), — sin(xz), cos(x)]". The first step of the Euler method
+gives a numerical result y(h) ~ [1, h, —h, 1]"; this differs from the exact result
+by approximately [—}h?,-2h°, 2h3,—5A?]'. Rather than look at all the
+components of the error vector individually, it is often convenient to compute
+the norm of this vector and consider its behaviour as a function of h.
+
+It will be interesting to perform many steps, sufficient to complete, for
+example, half of one orbit and to compare the (Euclidean) norm of the error
+for differing values of h. For various values of h, decreasing in sequence by a
+factor i, some calculations are presented for this experiment in Table 201(II).
+The approximate halving of the error, when A is halved, is easily observed in
+this table.
+
+If the same problem is solved using initial values corresponding to an elliptic,
+rather than a circular, orbit, a similar dependence of the error on A is observed,
+but with errors greater in magnitude. Table 201(III) is for an orbit with

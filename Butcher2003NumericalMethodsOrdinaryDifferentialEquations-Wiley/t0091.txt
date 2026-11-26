@@ -1,0 +1,44 @@
+78 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+0.05 -
+
+0.01
+
+0.001
+
+0.0001
+
+~0.0001
+
+—0.001
+
+—0.01 -
+
+—0.05
+
+Figure 218(ii) Accumulation of rounding errors in low accuracy calculations
+with sophisticated Euler, showing y: (dashed line) and y+z: (solid line); also, for
+comparison, crude Euler (dotted line)
+
+Exercises 21
+
+21.1 For the differential equation y’ = y, y(0) = 1, find the function 9%,
+given by (212a), where n = 4 and [9, 21,72, 23,24] = [0, i, 3, 3, 1] and
+y(0) = y(0).
+
+21.2 For the same problem as in 21.1, but with n an arbitrary positive integer
+and z, = k/n, for k = 0,1,2,...,n, find the value of (1) — y(1) and
+show that this converges to 0 as n + oo.
+
+21.3 Prove (211a), using integration by parts.
+21.4 Assuming that L = 0, prove (212f), using induction on k.
+
+21.5 Repeat the calculation in Subsection 218, but making the correction in
+the Gill-Mgller algorithm only every second step.
+
+22 Generalizations of the Euler Method
+220 Introduction
+
+As we have seen, in our discussion of the Euler method in Sections 20 and 21,
+this simplest of all numerical methods enjoys many desirable properties but,
+at the same time, suffers from some limitations. In the present section, we

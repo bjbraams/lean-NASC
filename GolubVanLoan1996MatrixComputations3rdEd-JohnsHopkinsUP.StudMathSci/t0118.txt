@@ -1,0 +1,98 @@
+4,7. TOEPLITZ AND RELATED SYSTEMS 205
+
+M. Stewart and P. Van Dooren (1996). “Stability Iasues in the Factorization of Strac-
+tured Matrices,” SIAM J. Matriz Anal. Appl. 18, to appear.
+
+The original references for the three algorithms described in this section are:
+
+J. Durbin (1960). “The Fitting of Time Series Models,” Rev. Inst. Int. Stat. 28 233-43.
+
+N. Levinaon (1947). “The Weiner RMS Error Criterion in Filter Design and Prediction,”
+J. Math. Phys. 25, 261-78.
+
+W.F, Trench (1964). “An Algorithm for the Inversion of Finite Toeplitz Matrices,” J.
+SIAM 12, 515-22.
+
+A more detailed description of the nonsymmetric Trench algorithm is given in
+
+S. Zohar (1969). “Toeplitz Matrix Inversion: The Algorithm of W.F. Trench,” J. ACM
+16, 582-601. - -
+
+Fast Toeplitz system solving haa attracted an enortnous amount of attention and a sam-
+pling of interesting algorithmic ideas may be found in
+
+G. Ammar and W.B. Gragg (1988). “Superfast Solution of Real Positive Definite
+Toeplitz Systems,” SIAM J. Matrix Anal. Appl. 9, 61-76.
+
+T.F. Chan and P. Hansen (1992). “A Look-Ahead Levinson Algorithm for Indefinite
+‘Toeplita Systems,” SIAM J. Matriz Anal Appl. 13, 490-506.
+
+D.R. Sweet (1993). “The Use of Pivoting to Improve the Numerical Performance of
+Algorithms for Toeplitz Matrices,” SIAM J. Matriz Anal. Appl. 14, 468-493.
+
+T. Kailath and J. Chun (1994). “Generalized Displacement Structure for Block-Toeplitz,
+Toeplitz-Block, and Toeplitz-Derived Matrices,” SIAM J. Matrix Anal. Appl. 15,
+114-128.
+
+T. Kailath and A.H. Sayed (1995). “Displacement Structure: Theory and Applications,”
+SIAM Review 37, 297-386.
+
+Important Toeplitz matrix applications are discussed in
+
+J. Makhoul (1975). “Linear Prediction: A Tutorial Review,” Proc. IEEE 63(4), 561-80.
+
+J. Markel and A. Gray (1976). Linear Prediction of Speech, Springer-Verlag, Berlin and
+New York.
+
+A.V. Oppenheim (1978). Applications of Digital Signal Processing , Prentice-Hall, En-
+glewood Cliffs.
+
+Hankel matrices are constant slong their antidiagonals and arise in several important
+arena.
+
+G. Heinig and P. Jankowski (1990). “Parallel and Superfast Algorithma for Hankel
+Systems of Equations,” Numer. Math. 58, 109-127.
+
+R.W. Freund and H. Zha (1993). “A Look-Ahead Algorithm for the Solution of General
+Hankel Systems," Numer. Math. 64, 295-322,
+
+The DFT/Toeplits/circulant comection is discussed in
+
+C.F. Van Loan (1992). Computational Frameworks for the Fast Fourier Transform,
+SIAM Publications, Philadelphia, PA.
+
+Chapter 5
+
+Orthogonalization and
+Least Squares
+
+§5.1 Householder and Givens Matrices
+
+85.2 The QR Factorization
+
+85.3. The Full Rank LS Probiem
+
+85.4 Other Orthogonal Factorizations
+
+§5.5 The Rank Deficient LS Problem
+
+§5.6 Weighting and Iterative Improvement
+§5.7 Square and Underdetermined Systems
+
+This chapter is primarily concerned with the least squares solution of
+overdetermined systems of equations, i.e., the minimization of || Ax — 6 ||,
+where A € R™*" with m > n and 6¢ R™. The most reliable solution pro-
+cedures for this problem involve the reduction of A to various canonical
+forms via orthogonal transformations. Householder reflections and Givens
+rotations are central to this process and we begin the chapter with a discus-
+sion of these important transformations. In §5.2 we discuss the computation
+of the factorization A = QR where Q is orthogonal and 2 is upper trian-
+gular. This amounts to finding an orthonormal basis for ran(A). The QR.
+factorization can be used to solve the full rank least squares problem as we
+show in §5.3. The technique is compared with the method of normal equa-
+tions after a perturbation theory is developed. In §5.4 and §5.5 we consider
+methods for handling the difficult situation when A is rank deficient (or
+nearly so). QR with column pivoting and the SVD are featured. In §5.6 we
+discuss several steps that can be taken to improve the quality of a computed
+
+onk

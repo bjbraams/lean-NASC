@@ -1,0 +1,38 @@
+406 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+we see that v is the eigenvector corresponding to A. Now compare the first
+components of Av and Xv and it is found that
+
+Avn + O4Un-1 +-+- + On =0
+and contains all the terms with non-negative exponents in the product
+Un(l tar“! +++ Fad”).
+Replace A by z~! and the result follows. oO
+
+We are especially interested in choices of a and f such that X has a single
+n-fold eigenvalue, so that
+
+a(z)B(z) = (1 — dz)” + O(2"*). (545c)
+
+In this case it is possible to write down the similarity that transforms X to
+Jordan canonical form.
+
+Theorem 545B Let the doubly companion matrix X be chosen so that (545c)
+holds. Also let @(A) denote the vector given by (545b) and S the matrix given
+by
+
+s=[ oP) we P POA) HA) 90) ].
+Then
+
+A 0 0 0 0
+1 0 0 0
+Soxg={0 1 A 0 0
+00 0 1X
+Proof. Denote by J the matrix
+000 00
+100 0 0
+J=|01 0 00
+000 1 0
+
+so that
+
+X$(z) = (T+ ADG(z). (545d)

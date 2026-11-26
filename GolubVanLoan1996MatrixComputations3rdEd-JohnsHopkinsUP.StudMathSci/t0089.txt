@@ -1,0 +1,102 @@
+4.2, Positive DEFINITE SYSTEMS 149
+r=0
+for k=1:n
+Find q (k Sq <n) s0 A(q,q) = max {A(k, ), .. A(n,n)}
+if A(q,q) > 0
+r=rt+l
+pin(k) =¢
+A(k,:) ++ A(q,:}
+
+AC, k) + AG, g)
+A(k, k) = /A(k, &)
+A(k + lin, k) = A(k + Lin, k)/A(k, )
+for j=k+1:n
+A(jn, J) = A(ien, 7) — ACen, K)A(s, &)
+end
+end
+end
+
+In practice, a tolerance is used to detect small A(k, *). However, the sit-
+uation is quite tricky and the reader should consult Higham (1989). In
+addition, §5.5 has a discussion of tolerances in the rank detection problem.
+Finally, we remark that a truly efficient implementation of Algorithm 4.2.4
+would only access the lower triangular portion of A.
+
+4.2.10 The Polar Decomposition and Square Root
+Let A =U,5,V" be the thin SVD of A € R"*" where m > n. Note that
+A=(U.V7)(VE\V") = ZP (4.2.12)
+
+where Z = U,VT and P = VE,V". Z has orthonormal columns and P is
+symmetric positive semidefinite because
+
+a? Px = (VTz)TZ\(VTx) = } ony 20
+k=l
+where y = V7z. The decomposition (4.2.12) is called the polar decom-
+position because it is analogous to the complex number factorization z =
+e*9r9(7)|2|, See §12.4.1 for further discussion.
+
+Another important decomposition is the matrix square root. Suppose
+A€ R"™” is symmetric positive semidefinite and thet A = GGT is its
+Cholesky factorization. If G = UZVT is G’s SVD and X = UXUT, then
+X is symmetric positive semidefinite and
+
+A=GGT = (UEVT)\(UEVT)? = UE?UT = (UEUT)(UEU") = X?*.
+
+Thus, X is a square root of A. It can be shown (most easily with eigen-
+value theory) that a symmetric positive semidefinite matrix has a unique
+symmetric positive semidefinite square root.
+
+150 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+
+Problems
+
+P4.2.1 Supposs that H = 4+48 is Hermitian and positive definite with A, B € R"**.
+This means that x” Hz > 0 whenever z # 0. (a) Show that
+
+e-{% a
+
+is symmetric and positive definite. (b) Formulate an algorithm for solving (A+i2)(z+ty)
+= (b+ 1c), where 6, c, x, and y are in R". it should involve &n3/3 flops. How much
+storage is required?
+
+P4.2.2 Suppose A € A" is symmetric and positive definite. Give an algorithm for
+computing an upper triangular matrix A € R°*" such that A = ART.
+
+P4.2.3 Let A € ROX" be positive definite and set T = (A+A7)/2 and S = (A—AT)/2.
+(a) Show that (| Aq! lla < {| 7—! fla and 27 A-'x < zTT-!2z for all z € R". (b) Show
+that if A= LDMT, then 4, > 1/1] T~? lla for k = in
+
+P4.2.4 Find a 2-by-2 real matrix A with the property that +7 Az > 0 for all real nonzero
+2-vectors but which is not positive definite when regarded as a member of cr,
+P4.2.5 Suppose A € R**" has a positive diagonal. Show that if both A and AT are
+strictly diagonally dominant, then A is positive definite.
+
+P4.2.6 Show that the function f(x) = (27 Az)/2 is a vector norm on R® if and only if
+A is positive definite.
+
+P4.2.7 Modify Algorithm 4.2.1 so that if the square root of a negative number is
+encountered, then the algorithm finds a unit vector z so z7 Ar < 0 and terminates.
+
+P4,2.8 The numerical range W(A) of a complex matrix A is defined to be the set
+W(A) = {2" Az: x¥ x = 1}. Show that if 0 ¢ W(A), then A has an LU factorization.
+
+P4.2.9 Formulate an m <n version of the polar decomposition for A € R™*”.
+
+P 4.2.10 Suppose A = I +uuT where A € RO%" and |{ u fa = 1. Give explicit formulae
+for the diagonal and subdiagonal of A's Cholenky factor.
+
+P4,2.11 Suppose A € R"*" is symmetric positive definite and that its Cholesky factor
+is available, Let e, = In(:,k). For 1 Si <j $a, let ai; be the smallest real that makes
+Ava(eel +eseP) singular. Likewise, let aj; be the smallest real that makes (A+axie?)
+singular. Show how to compute these quantities using the Sherman-Morrison- Woodbury
+formula. How many flops are required to find all the a;;?
+
+Notes and References for Sec. 4.2
+
+The definitenesa of the quadratic form x7 Az can frequently be established by considering
+the mathematics of the underlying problem. For example, the discretization of certain
+partial differential operatora gives rise to provably positive definite matrices. Aspects of
+the unsymmetric positive definite problem are discussed in
+
+A. Buckley (1974). “A Note on Matrices A = I + H, H Skew-Symmetric,” Z. Angew.
+Math. Mech, 54, 125-26.

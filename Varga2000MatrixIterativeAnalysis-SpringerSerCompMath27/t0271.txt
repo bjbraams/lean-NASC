@@ -1,0 +1,51 @@
+264 7. Alternating-Direction Implicit Iterative Methods
+
+7.4 Variants of the Peaceman-Rachford Iterative
+Method
+
+The Peaceman-Rachford iterative method, which we have investigated, is just
+one particular iterative method of the class of alternating-direction implicit
+iterative methods. To generate other related methods, we consider the first
+equation of (7.11) defining the auxiliary vector iterate u(™+1/2):
+
+(7.70) (Ait rmoif)urt’?) = (mail —Vi)u™ +k, m>0.
+
+The second equation defining the Peaceman-Rachford iterative method is
+given by
+
+(7.71) (Ytrmert)u™*) = (rmyil — Hy)ul™?) +k, m>0.
+
+However, it is clear that we can write (7.71) in a form in which the matrix H;
+does not appear explicitly.® In fact, substituting for Hyu°"+/?) from (7.70)
+gives
+
+(7.72) (Vitrmgit)u™t) = (Vi-tmaiDu™ + 2rmpul™t/), m>0,
+which could be heuristically derived from the simple identity
+
+(7.73) (Yit+rmol)u = (Vi -—rmyiD)u + 2rmiiu
+
+by inserting iteration indices. The Douglas-Rachford iterative method
+of Douglas and Rachford (1956) is defined by (7.70) and
+
+(7.74) (Vit tmsr Dur) = Vu + ypu),
+More generally, let us consider the iterative method defined from (7.70) and
+
+(VittmeTurt) = (Yj -(1 —w)rmyiDu™
+
+(7.75) +(2-—w)rmyiul™t/2), m>0,
+
+where w is a fixed scalar. For w = 0 we have the Peaceman-Rachford it-
+erative method, whereas for w = 1 we have the Douglas-Rachford itera-
+tive method. Combining (7.70) and (7.75), we can write this generalized
+alternating-direction implicit method as
+
+(7.76) ult) — yw,
+
+Tm4+1
+
+(wu) + g(rmyi1,w), m2>0,
+
+where
+
+8 Wachspress and Habetler (1960) make use of this observation to economize on
+arithmetic operations for the Peaceman-Rachford iterative method.

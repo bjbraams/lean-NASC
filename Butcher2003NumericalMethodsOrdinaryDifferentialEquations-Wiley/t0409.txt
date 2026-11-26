@@ -1,0 +1,65 @@
+GENERAL LINEAR METHODS 399
+
+Write the coefficients of z and z? in separate columns and we deduce that
+
+10 - 1 — Vio + Qa Vi2 #(1 — Vie)
+
+11 2-Viz — 021 +G21Vi2 2-21 —4Vi2 |’
+
+Be 3—gVietanVig  3(1— Vio) ;
+—$ViotaaVi2  2-ae1-4Vi2
+
+To achieve RK stability, impose the requirement that the stability function
+V + 2zB(I — zA)~! has zero determinant and it is found that ag, = 2 and
+
+B
+
+so that
+
+Vio = .
+This gives the method
+0 oO | 1 0
+Alu 2 0/0 1
+= 542b
+a/v : aiid ony)
+3 -1f/2 2
+4 q/2 3
+To derive a type 2 method with RK stability, carry out a similar calculation
+but with
+AK d 0
+aa Xr
+In this case, the method is
+X 0 1 0
+Alu wa » 0 1
+Bly | >| Seer eek |
+3-244 20\7+8A5 = —14+10A—12)?-8A5 | 1 +r 2d
+4+8X 448 2 3
+or, with A = 1— 4,72, for L-stability,
+1-¥ 0 1 0
+Alu]_| 3% 1-2] 0 1
+B | V T= stv ERE 3-2 wa .
+2
+sr—t83 s/das 3-V2 vant
+2
+
+Type 3 and type 4 methods do not exist with RK stability, and will not be
+explored in detail in this Section. We do, however, give a single example of
+each. For the type 3 method we have
+
+[ale
+
+Bl|Vv
+
+(542c)
+
+{
+|
+|
+
+wo ale] Oo Oo
+
+Biya! SO O
+
+mle wie] Oe
+aITAIN SS Oo
+

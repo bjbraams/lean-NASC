@@ -1,0 +1,50 @@
+RUNGE-KUTTA METHODS 243
+
+For an N-dimensional differential equation system, this amounts to a system
+of sN non-linear equations.
+
+We consider how to solve these equations using a full Newton method. This
+requires going through the following steps:
+
+1. Compute approximations to Yi, Y2,..., Y; using information available at
+the start of the step. Denote these ‘predicted’ values by yy", i=1,2,...,s.
+
+2. Carry out a sequence of iterations leading to approximations yl), for
+k=1,2,...,4=1,2,...,8. These are given by the formulae
+
+ylal = yle-1] ~Aj
+i i >
+
+where
+8
+
+YomgAj =H, = 1,2,...58, (360a)
+
+j=l
+with
+
+8
+6: = YP — yp hk >> ais fie")
+j=l
+and
+mag = 6iy1 — hai f' (VY).
+3. Test for convergence and terminate when each of ||Ai||, ||Agll, ---, ||Aell
+
+are sufficiently small. Suppose that this happens in the computation of
+iteration number k.
+
+4. Assign Y!"! to Yj, for each i =1,2,...,8.
+
+In a practical calculation, it is usual to simplify this computation in various
+ways. Most importantly, the solution of (360a), preceded by the evaluation
+of the elements of m,j which depend on f’ evaluated at each stage and in
+each iteration, requires a large number of algebraic operations; these are to
+be avoided whenever possible.
+
+A typical simplification is to replace the value of f’ wt) by a constant
+approximation to this Jacobian matrix. This approximation is maintained at
+a fixed value over every iteration and over each stage, and possibly over many
+steps. This means that the (sN) x (sN) matrix with elements built up from
+the submatrices m,j can be replaced by a matrix of the form
+
+I, @Iy —hA® J, (360b)

@@ -1,0 +1,110 @@
+3.5. IMPROVING AND ESTIMATING ACCURACY 123
+
+A. Edelman and W. Mascarenhas (1995). “On the Complete Pivoting Conjecture for 5
+Hadamard Matrix of Order 12,° Linear and Multilinear Algebra 38, 181-185.
+
+‘The designers of sparse Gaussian elimination codes are interested in the topic of element
+growth because multipliers grenter than unity are sometimes tolerated for the sake of
+minimizing fill-in. See
+
+LS. Duff, A.M. Erisman, and J.K. Reid (1986). Direct Methods for Sparse Matrices,
+Oxford University Press.
+
+The connection between small pivots and near singularity is reviewed in
+
+T.F. Chan (1985). “On the Existence and Computation of LU Factorizations with small
+pivots,” Math. Comp. 48, 535-548.
+
+A pivot strategy that we did not discuss is pairwise pivoting. In this approach, 2-by-2
+Gauss transformations are used to zero the lower triangular portion of A. The technique
+is appealing in certain multiprocessor environments because only adjacent rows are com-
+bined in each step. See
+
+D. Sorensen (1985). “Analysis of Pairwise Pivoting in Gaussian Elimination,” [EEE
+Trans. on Computers C-34, 274-278.
+
+As a sample paper in which a class of matrices is identified that require no pivoting, see
+
+S. Serbin (1980). “On Factoring a Class of Complex Symmetric Matrices Without Piv-
+oting,” Math. Comp. 35, 1231-1234.
+
+Just as there are six “conventional” versions of acalar Gaussian elimination, there are
+also six conventional block formulations of Gaussian elimination. For a discussion of
+these procedures and their implementation see
+
+K. Gallivan, W. Jalby, U. Meier, and A.H. Sameh (1988). “Impact of Hierarchical Mem-
+ory Syatems on Linear Algebra Algorithm Design,” Int J. Supercomputer Applic.
+2, 12-48,
+
+3.5 Improving and Estimating Accuracy
+
+Suppose Gaussian elimination with partial pivoting is used to solve the n-
+by-n system Az = b. Assume i-digit, base 6 floating point arithmetic is
+used. Equation (3.4.6) essentially says that if the growth factor is modest
+then the computed solution < satisfies
+
+(A+E)E=6, [Ello ules, u=p0". (3.5.1)
+
+In this section we explore the practical ramifications of this result. We begin
+by stressing the distinction that should be made between residual size and
+accuracy. This is followed by a discussion of scaling, iterative improvement,
+and condition estimation. See Higham (1996) for a more detailed treatment
+of these topics.
+
+We make two notational remarks at the outset. The infinity norm is used
+throughout since it is very handy in roundoff error analysis and in practical
+
+124 CHAPTER 3. GENERAL LINEAR SYSTEMS
+
+error estimation. Second, whenever we refer to “Gaussian elimination” in
+this section we really mean Gaussian elimination with some stabilizing pivot
+strategy such as partial pivoting.
+
+3.5.1 Residual Size Versus Accuracy
+
+The residual of a computed solution £ to the linear system Ar = 5 is the
+vector b — Az. A small residual means that AZ effectively “predicts” the
+right hand side 6. From (3.5.1) we have |[b- Az || * ull A flooll € Ilo
+and so we obtain
+
+Heuristic I. Gaussian elimination produces a solution ¢ with a relatively
+small residual.
+
+Small residuals do not imply high accuracy. Combining (3.3.2) and (3.5.1),
+we see that
+2 = = loo
+Il = lleo
+This justifies a second guiding principle.
+
+Rt URo0(A). (3.5.2)
+
+Heuristic II. If the unit roundoff and condition satisfy u + 10-¢ and
+Keo(A) * 10%, then Gaussian elimination produces a solution < that
+has about d — g correct decimal digits.
+
+If ux,.(A) is large, then we say that A is ill-conditioned with respect to
+the machine precision.
+As an illustration of the Heuristics I and II, consider the system
+
+986 579] [ z] _ [ .235
+
+409.237 xq} | .107
+in which «,,(A) = 700 and x = (2, —3)7. Here is what we find for various
+machine precisions:
+
+: . 2-2 lho | b-Az lle
+
+t =. =: =
+8 1 2 | Tele | TATeol a leo
+10 13 2.11 -3.17 5-107? 2.0- 10-7
+10 | 4 1.986 | -2.975 8-10-79 15-1074
+10} 5] 2.0019 | -3.0032 1-1073 2.1-10-8
+10 | 6 | 2.00025 | -3.00094 3.1074 42-1077
+
+Whether or not one is content with the computed solution 2 depends on
+the requirements of the underlying source problem. In many applications
+accuracy is not important but small residuals are. In such a situation, the
+produced by Gaussian elimination is probably adequate. On the other
+hand, if the number of correct digits in = is an issue then the situation
+is more complicated and the discussion in the remainder of this section is
+relevant.

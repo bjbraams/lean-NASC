@@ -1,0 +1,49 @@
+LINEAR MULTISTEP METHODS 339
+
+where, for i = 1,2,...,n
+dy = 2OMtD _22n~1)____—8(n~)
+ar esl %—-1 ~  @+HQi-1)’
+
+so that dz; < 0 for i = 1,2,...,2—1 and do, = 0. Equate the coefficients of
+22” in (441d) and we find that
+
+Codan—2 + Cadan_4 +--+ + Con—2do
+dp <
+
+We are now in a position to prove the Dahlquist barrier result.
+
+Con = 0. im}
+
+Theorem 441C Let [a, 8] denote a stable linear mutistep method with order
+p. Then
+
+< k+1, k odd,
+~ | k+2, k even.
+
+Proof. Consider first the case k odd and evaluate the coefficient of z*+? in
+(441b). This equals
+
+OnC2 + Ak—2C4 + +++ + G1CK41
+
+and, because no term is positive, the total can be zero only if each term is zero.
+However, this would mean that a, = 0, which is inconsistent with stability.
+In the case k even, we evaluate the coefficient of z*+? in (441b). This is
+
+Qp—104 + AR-3Cg + -++- + G1CK+2-
+
+Again, every term is non-positive and because the total is zero, it again follows
+that a, = 0 which contradicts the assumption of stability. im
+
+There is some interest in the methods with maximal order 2k + 2, for k
+even. For these methods, a@ has all its zeros on the unit circle. This evidently
+gives the methods a symmetry that suggests it might be advantageous to use
+them for problems whose behaviour is dominated by linear terms with purely
+imaginary eigenvalues. Against this possible advantage is the observation that
+the stability regions necessarily have empty interiors.
+
+442 Order stars for linear multistep methods
+
+In their historic paper, Wanner, Hairer and Ngrsett (1978) introduced order
+stars on Riemann surfaces. Suppose that &(w, z) is a polynomial function of
+two complex variables, w € W and z € Z. We assume that Z = W = C.
+The subset Ra of W x Z defined by the relation @(w,z) = 0 is a Riemann

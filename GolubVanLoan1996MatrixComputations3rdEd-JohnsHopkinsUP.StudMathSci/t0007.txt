@@ -1,0 +1,87 @@
+Software
+
+LAPACK
+
+Many of the algorithms in this book are implemented in the software pack-
+age LAPACK:
+
+E. Anderson, Z. Bai, C. Bischof, J. Demmel, J. Dongarra, J. DuCroz,
+A. Greenbaum, S. Hammarling, A. McKenney, S. Ostrouchov, and D.
+Sorensen (1995). LAPACK Users’ Guide, Release 2.0, 2nd ed., SIAM
+Publications, Philadelphia.
+
+Pointers to some of the more important routines in this package are given
+at the beginning of selected chapters:
+
+Chapter 1. Level-1, Level-2, Level-3 BLAS
+
+Chapter 3. General Linear Systems
+
+Chapter 4. Positive Definite and Band Systems
+
+Chapter 5. Orthogonalization and Least Squares Problems
+Chapter 7. The Unsymmetric Eigenvalue Problem
+Chapter 8. The Symmetric Eigenvalue Problem
+
+Our LAPACK references are spare in detail but rich enough to “get you
+started.” Thus, when we say that _TRSV can be used to solve a triangular
+system Az = 6, we leave it to you to discover through the LAPACK manual
+that A can be either upper or lower triangular and that the transposed
+system ATz = b can be handled as well. Moreover, the underscore is a
+placeholder whose mission is to designate type (single, double, complex,
+etc).
+
+LAPACK stands on the shoulders of two other packages that are mile-
+stones in the history of software development. EISPACK was developed in
+the early 1970s and is dedicated to solving symmetric, unsymmetric, and
+generalized eigenproblems:
+
+B.T, Smith, J.M. Boyle, Y. Ikebe, V.C. Klema, and C.B. Moler (1970).
+Matriz Eigensystem Routines: EISPACK Guide, 2nd ed., Lecture Notes
+in Computer Science, Volume 6, Springer-Verlag, New York.
+
+xiv SOFTWARE
+
+B.S. Garbow, J.M. Boyle, J.J. Dongarra, and C.B. Moler (1972). Matrix
+Ejigensystem Routines: EISPACK Guide Extension, Lecture Notes in
+Computer Science, Volume 51, Springer-Verlag, New York.
+
+LINPACK was developed in the late 1970s for linear equations and least
+squares problems:
+
+EISPACK and LINPACK have their roots in sequence of papers that feature
+Algol implementations of some of the key matrix factorizations. These
+papers are collected in
+
+J.H. Wilkinson and C. Reinsch, eds. (1971). Handbook for Automatic
+Computation, Vol. 2, Linear Algebra, Springer-Verlag, New York.
+
+NETLIB
+
+A wide range of software including LAPACK, EISPACK, and LINPACK is
+available electronically via Netlib:
+
+World Wide Web: http: //www.netlib.org/index. html
+Anonymous ftp: ttp://ftp.netlib.org
+
+Via email, send a one-line message:
+
+mail netlibddorni. gov
+send index
+
+to get started.
+MatiaB®
+
+Complementing LAPACK and defining a very popular matrix computation
+enviroument is MATLAB:
+
+MatLaB User’s Guide, The MathWorks Inc., Natick, Massachusetts.
+M. Marcus (1993). Matrices and MATLAB: A Tutorial, Prentice Hall, Up-
+per Saddle River, NJ.
+
+R. Pratap (1995). Getting Started with MATLAB, Saunders College Pub-
+lishing, Fort Worth, TX.
+
+Many of the problems in Matriz Computations are best posed to students
+as MATLAB problems. We make extensive use of MATLAB notation in the
+Presentation of algorithms.

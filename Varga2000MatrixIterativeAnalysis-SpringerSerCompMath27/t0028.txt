@@ -1,0 +1,55 @@
+20 1. Matrix Properties and Concepts
+
+is brought out precisely in the following theorem, whose proof is left as an
+exercise.
+
+Theorem 1.17. Ann xn compler matrix A is irreducible if and only if its
+directed graph G(A) is strongly connected.
+
+It is obvious, from either equivalent formulation of irreducibility, that all
+the off-diagonal entries of any row or column of a matrix cannot vanish if the
+matrix is irreducible.
+
+With the concept of irreducibility, we give the sharpened result of Theo-
+rem 1.11, due to Taussky (1948).
+
+Theorem 1.18. Let A = [a;,;] be an irreducible n x n complex matrix, and
+assume that X, an eigenvalue of A, is a boundary point of the union of all
+the disks |z — a;,;| < Aj. Then, all the n circles |z — a;,;| = Aj pass through
+the point A, i.e., |\—aii| = Ai, for alll <i<n.
+
+Proof. If X is an eigenvalue of the matrix A and if x is a nonzero eigenvector
+
+of A corresponding to A, where |x,| = 1 > |z;| for all 1 <i < n, then as in
+the proof of Theorem 1.11 we know that
+
+n n
+|A = arr] < lars] ‘les S lars = 4,.
+j=l g=1
+ier ier
+But as X is assumed to be a boundary point of the union of all the disks
+|z —a;,i| < Ai, we necessarily have that |\ — a,,-| = A,, and therefore
+
+n
+|A = rr] = Ylarsl + |x| = Ar.
+jae
+Consequently, for all a, 4 0 with £4 r, we must have that |z;| = 1. Since
+A is irreducible, there exists at least one p # r for which a,,p # 0, and we
+
+conclude that |z,| is also unity. Repeating the above argument with r = p,
+we now have that
+
+n
+|X — appl S Slaps |x; | = Ap.
+3ap
+
+Making use once again of the hypothesis that \ is a boundary point of the
+union of all the disks |z — a; ;| < Aj, then again |x;| = 1 for all ap; 4 0
+with j # p. From Theorem 1.17, we can find a sequence (directed path) of
+nonzero entries of the matrix A of the form ay,p,@p,r95°**;@rm_—1,j for any
+integer j,1 < j <n, which permits us to continue the argument; thus we
+conclude that
+
+|A—ajj|=A;, for alll <j <n,
+
+proving that all the n circles |z — a;,;| = A; pass through the point ). i

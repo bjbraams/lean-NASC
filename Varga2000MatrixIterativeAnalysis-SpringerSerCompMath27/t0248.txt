@@ -1,0 +1,51 @@
+7.1 The Peaceman-Rachford Iterative Method 241
+
+from which it follows that
+
+3 {Be lau(xs ni} = oi(a1; V0)
+
+(7.24)
+_ Ymit2-2, —1—(a1/22)'/?
+~ J@1%2+ 71 ~Y + (x1 /z2)1/2"
+
+To minimize the spectral radius p(T;) of (7.22) as a function of r > 0, we
+now simply set
+
+x = 4sin” (sy) and x = 4sin” | = 4cos” (=x) ;
+
+and thus, with # := 4sin(m/2N)cos(1/2N) = ./11%2, we have from (7.22)
+that
+
+1 —tan(n/2N)\?
+1 Saea
+
+_ (_cos(n/N) 2
+~\d+sin(a/N)) ¢
+But this expression is actually quite familiar to us. Indeed, as shown in Sect.
+
+6.5, the spectral radius p(B) of the point Jacobi matrix B for the model
+problem is
+
+min (Te) = (Te) = (
+(7.25)
+
+p(B) = cos (=) ;
+
+and as this matrix B is a convergent and cyclic matrix of index 2 with real
+eigenvalues, it follows from the case p = 2 of (4.35) of Theorem 4.7 and
+from (4.30) that, for any consistent ordering of the mesh points of the model
+problem, the spectral radius p(£,,) for the corresponding point successive
+overrelaxation matrix L,, satisfies
+
+2
+(7.26) la) = ln) =a —1= ( o(8) ).
+
+1+ /1- p?(B)
+Now, with p(B) = cos(m/N), it can be verified that the two final terms of
+(7.25) and (7.26) are equal, and thus,
+
+(7.27) min p(Zr) = p(T+) = min p(Li) = p(Lu).
+
+The conclusion we reach is that, as optimized one-parameter iterative meth-
+ods, the Peaceman-Rachford iterative method and the point successive over-
+relaxation iterative method have identical asymptotic rates of convergence for

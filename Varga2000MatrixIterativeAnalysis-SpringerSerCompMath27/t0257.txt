@@ -1,0 +1,51 @@
+250 7. Alternating-Direction Implicit Iterative Methods
+
+nice connection with the Gauss arithmetic-geometric mean of two positive
+numbers. (There is a complete analysis of the solution of (7.40) for general
+m, due to W. B. Jordan, and this can be found in Wachspress (1963) and
+Wachspress (1966). As this analysis, for general m, involves the intricacies
+of complete elliptic integrals, a topic rarely seen now in graduate courses in
+mathematics, we concentrate below on the special cases m = 2*.)
+
+To describe how the optimal parameters {7;}%, of (7.41) in the case m =
+2* are determined, we first establish the following consequence of Theorem
+7.5.
+
+Corollary 7.6. Let 71,+--,m be the (unique) set of parameters, in increas-
+ing order, which solve the min-max problem of (7.40). If *; is a parameter of
+this set, then so is a/F;. Moreover,
+
+(7.42) lm(es(F) 991 = om (2: (63321)
+
+Proof. Let y = a/z. It then follows from the definition of gm (x; {r;}721) in
+(7.39) that
+
+(7.43) 9m (5 {F5}F21) = (1) 9m (¥ {F} ) ,
+
+Is j=1
+
+But as0<a<z< #, then y satisfies the same inequalities, and thus
+
+From the uniqueness of the parameters 7; in Theorem 7.5, the result then
+follows. ll
+
+max, lgm(a {Fi }5e1)| = max,
+
+For the case m = 1, note that it necessarily follows from Corollary 7.6 that
+the single parameters 7, satisfies 7, = a8/71, which again gives 7, = op.
+
+Suppose now that we can algebraically determine the m optimum parame-
+ters which solve the min-max problem of (7.40) for any positive interval. This,
+as Gastinel (1962) and Wachspress (1962) have shown, leads to a precise de-
+termination of the 2m parameter problem. If 71 < 72 < -+- < fom are the
+parameters which solve the min-max problem for the interval 0 <a <z< B,
+then using Corollary 7.6 above, we can write
+
+2m /~ m = x
+_ 7j,-2\| 7; -2\ (aB/F;-—z
+dam|cr 4] = aseep II (2 =) ~ cece Ul (= 72) (Se =) ,
+
+jal
+
+Note that the absolute value of the product is unchanged if x is replaced by
+a3/x. Thus, we can reduce the interval over which the maximum is taken to

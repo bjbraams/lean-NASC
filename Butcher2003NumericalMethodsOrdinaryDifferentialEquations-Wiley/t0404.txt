@@ -1,0 +1,43 @@
+394. NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+ys" = yn-1 + ha f (tn—2 + her, yr) + hog f (tn—2 + hea, ¥e""))
++ han f (tn—1 + her, YE") + have f (an—1 + hes, ¥2"),
+Yn = Yn-1 + hbi f (tn—2 + hey, ¥P71) + Abe f (tn—2 + hee, yer)
++ bi f (tna + her, Yi") + hbo f (tna + hee, Ys"),
+
+is sometimes known as a ‘two-step Runge-Kutta method’. Find
+conditions for this method to have order 4.
+
+53.2 Find an explicit fourth order method (a; = G12 = @22 = 0) of the form
+given by Exercise 53.1.
+
+53.3 Find an A-stable method of the form given by Exercise 53.1.
+
+54 Methods with Runge-Kutta stability
+540 Design criteria for general linear methods
+
+We consider some of the structural elements in practical general linear
+methods,which are not available together in any single method of either linear
+multistep or Runge-Kutta type. High stage order is a desirable property, but it
+is inconsistent with a diagonal-implicitness, which is also a desirable property
+from the point of view of achieving low implementation costs.
+
+541 The types of DIMSIM methods
+
+‘Diagonally implicit multistage integration methods’ or ‘DIMSIMs’ were
+introduced in Butcher (1995a). A DIMSIM is loosely defined as a method
+in which the four integers p (the order), q (the stage order), r (the number
+of data vectors passed between steps) and s (the number of stages), are all
+approximately equal. To be a DIMSIM, a method must also have a diagonally
+implicit structure. This means that the s x s matrix A has the form
+
+» 0 0 - 0
+aq «(OX OO -.- O
+A=| %1 a2 A +: O
+Qi Ae2 eg -*> «XN
+
+where A > Q. The rationale for this restriction on this coefficient matrix, is that
+the stages can be computed sequentially, or in parallel if the lower triangular
+part of A is zero. This will lead to a considerable saving over a method in which
+A has a general implicit structure. For Runge-Kutta methods, where r = 1,
+this sort of method is referred to as explicit if A = 0 or as DIRK (sometimes

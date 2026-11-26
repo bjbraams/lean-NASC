@@ -1,0 +1,108 @@
+5.5. THE RANK DEFICIENT LS PROBLEM 263
+
+LS Algorithm Flop Count
+Normal Equations mn? +n3/3
+Householder Orthogonalization | 2mn? - 2n3/3
+Modified Gram Schmidt 2mn?
+Givens Orthogonalization 3mn? — n3
+Householder Bidiagonalization | 4mn? — 4n3/2
+R-Bidiagonalization Imn? + 2n3
+Golub-Reinsch SVD 4mn? + 8n3
+RSVD 2mn? + Lin?
+
+Problems
+
+P5.5.1 Show that if
+A= T $s r
+~ 0 0 mor
+rao-r
+where r = rank(A) and T is nonsingular, then
+T 9 r
+x= [ o a } nor
+rome-r
+
+satisfies AXA = A and (AX)T = (AX). Ip this cane, we say that X is a (1,3) pseudo-
+inverse of A. Show that for general A, zp = Xb where X is a (1,3) paeudo-inverse of A.
+
+P5.5.2 Define B(A) € RO*X™ by B(A) = (ATA + AI)~!A7, where A > 0. Show
+
+A
+W BQ) - At fla = alAle(Aye eal r= rank(A)
+
+and therefore that B(A) —- At as A — 0.
+P5.5.3 Consider the rank deficient LS problem
+
+ex i> olfs}-[all
+
+yer? o oflz 4 |i,
+
+z€R"—-"
+where RE R™', SE RE**®-", y E RY, and ze R°~*. Assume that 2 is upper triangu-
+lar and nonsingular. Show how to obtain the minimum norm solution to this problem
+by computing an appropriate QR factorization without pivoting and then solving for the
+appropriate y and 2.
+P5.5.4 Show that if Ay + A and Af — A+, then there exists an integer ko such that
+rank(A;,) is constant for all k > ko.
+PS5.5.5 Show that if A €¢ F"™" bas rank n, then so does A+ F if we have the inequality
+1 Dell A¥ Ie <1.
+
+Notes and References for Sec. 5.5
+The pacudo-inverse literature ia vast, as evidenced by the 1,775 references in
+
+264 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+M.Z. Nasbed (1976). Generniized Inverses and Applications, Academic Press, New York.
+The differentiation of the pseudo-inverse is further discussed in
+
+C.L. Lawson and R.J. Hanson (1969). “Extensions and Applications of the Householder
+Algorithm for Solving Linear Least Squares Problems,” Math. Comp. £3, 787-612.
+
+G.H. Golub and V. Pereyra (1973). “The Differentiation of Psendo-Inverses and Nonlin-
+ear Least Squares Problems Whose Variables Separate,” SIAM J. Num. Anal 10,
+413-32.
+
+Survey treatments of LS perturbation theory may be found in Lawson and Hanson
+(1974), Stewart and Sun (1991), Bjérck (1996), and
+
+P.A. Wedin (1973). “Perturbation Theory for Pseudo-Inverses,” BIT 13, 217-32.
+
+G.W. Stewart (1977). “On the Perturbation of Pseudo-Inverses, Projections, and Linear
+Least Squares,” SIAM Review 19, 634-62.
+
+Even for full rank problems, column pivoting seems to produce more accurate solutions.
+
+Tho error anslysis in the following paper attempts to explain why.
+
+L.S. Jennings and M.R. Osborne (1974). “A Direct Error Analysis for Least Squares,”
+Numer. Math. 22, 322-32.
+
+Various other aspects rank deficiency are discussed in
+
+J.M. Varah (1973). “On the Numerical Solution of Il-Conditioned Linear Systems with
+Applications to Ill-Posed Problems,” SIAM J. Num. Anal. 10, 257-67.
+
+G.W. Stewart (1984). “Rank Degeneracy,” SIAM J. Sct. and Stat. Comp. §, 403-413.
+
+P.C. Hansen (1987). “The Truncated SVD as a Method for Regularization,” 8/T 27,
+534-553.
+
+G.W. Stewart (1987). “Collinearity and Least Squares Regression,” Statistical Science
+2, 68-100.
+
+‘We have more to say on the subject in §12.1 and §12.2.
+5.6 Weighting and Iterative Improvement
+The concepts of scaling and iterative improvement were introduced in the
+
+Chapter 3 context of square linear systems. Generalizations of these ideas
+that are applicable to the least squares problem are now offered.
+
+5.6.1 Column Weighting
+Suppose G ¢ IR°™” is nonsingular. A solution to the LS problem
+
+min ||Ar—6|2 AER", be R™ (5.6.1)
+can be obtained by finding the minimum 2-norm solution yz5 to
+min || (AG)y — b lp (5.6.2)
+
+and then setting tg = Gyzs. If rank(A) =n, then t¢ = tps. Otherwise,
+xq is the minimum G-norm solution to (5.6.1), where the G-norm is defined
+by {lz Ilg = 1 G7 lla

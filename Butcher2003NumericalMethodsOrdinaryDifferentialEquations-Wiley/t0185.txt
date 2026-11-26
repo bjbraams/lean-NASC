@@ -1,0 +1,57 @@
+RUNGE-KUTTA METHODS 173
+
+O Alona O
+OS vir ale
+
+1
+
+4
+-i
+
+8
+
+o
+ain}e[H wie
+eo}
+ol }Bl
+
+| -8 8
+and it is an easy matter to check that all the fourth order conditions are
+satisfied for any choice of the non-zero parameter 2.
+
+-i
+3
+
+324 Methods of order five
+
+We shall see in Theorem 370B that for orders greater than 4, s = p is
+impossible. Hence, we assume that s = 6. We assume the D(1) condition and
+the C(2) condition applied to all stages except the second. We also need to
+assume the subsidiary conditions b2 = veg b;(1—c;)ajg = 0. These conditions
+dispose of all conditions except those associated with the trees
+°> u Vv, Y, vy, :
+
+The second and third of these turn out to be consequences of the D(1) and
+C(2) conditions, and we find that some of the elements in the final row can be
+evaluated in two different but consistent ways. The condition associated with
+
+can be replaced by the difference of this condition and the automatically
+
+satisfied condition associated with Y; see (324h) below. This last modification
+of the order conditions we actually solve has the advantage that it removes the
+last row of the A matrix from the calculation until, at the end, we compute
+this row using the D(1) condition.
+
+Collecting these comments together, we summarize the defining equations
+for a fifth order method. Where we write ‘choose’ one of the coefficients, we
+mean that it can be set to an arbitrary value, excluding only a finite set of
+possibilities. We do not state in detail what constitute the exceptional cases,
+but these can be identified with little difficulty:
+
+ce = 1, (324a)
+Choose ¢2, €3, 4, C5, (324b)
+Sct ts =i k=1,2,...,5, (324c)
+i Choose azo, (324d)
+Saye; = 5 a, i=3,4,5, (324e)
+
+j=2

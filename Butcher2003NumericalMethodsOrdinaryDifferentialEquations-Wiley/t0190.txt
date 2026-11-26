@@ -1,0 +1,55 @@
+178 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+0
+2 2
+a] 9 4
+5 0 5
+2 169 110 _ _65
+9 1458 729 1458
+& | _ Ad — 38 6 336
+15 675 135 351 325
+0 2L 0 — 105. — 324 AB
+108 689 689 106
+y | — 2517 _ 55 10615 567 7245-2597
+4864 38. 31616 7904 4864-2432
+0 0 1375 6561 3375. 53 19
+4992 20384 12544 768 294
+
+326 Methods of orders greater than six
+
+Methods with order 7 must have at least 9 stages. It is possible to construct
+such a method using the principles of Subsection 323, extending the approach
+used in Subsection 325. The abscissa vector is chosen as
+
++
+c=[0 dea ey C4 C5 Cg C7 «(COO 1| 5
+
+and the orders of stages numbered 4,5,---,9 are forced to be 3. To achieve
+consistency of the conditions
+
+So bi(1 = cx) aazazncn (ce — c4)(ce ~ es) =
+
+1 ca + ¢ C4C
+ates, _C40s
+
+45-6-7 3-4-5-6 | 23-45’
+So bi(1 = cs) aige5 (ey — c4) (Cs — ¢5)(5 — 6) =
+1 _ Cat C5 +6  C4C5 + C406 + C5C6 _ C4C5C6
+5-6-7 4-5-6 3-4-5 2-3-4’
+Yo i(1 — es)ezaazes (ey — c4)(0g — 05) =
+1 c4 + C5 C405
+
+46-7 3-5-6 | 2-4-5’
+it is found that
+
+u—12u + Tuv
+3 — 12u + 24v + 14u2 — 70uv + 105v?’
+
+where u = c4 + C5 and v = c4cs. The value of c7 is selected to ensure that
+
+=
+
+1
+[ a(1 — 2)(a — c4)(ar — ¢5)(2 — ¢5)(« ~ ex)d = 0.
+
+The tableau for a possible method derived along these lines is

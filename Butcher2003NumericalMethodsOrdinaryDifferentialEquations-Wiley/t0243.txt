@@ -1,0 +1,41 @@
+RUNGE-KUTTA METHODS 231
+
+Proof. If b; < 0 then choose Z = —tdiag(e;), for t positive. The value of
+R(Z) becomes
+
+R(Z) = 1 - th; + O(¢?),
+
+which is greater than 1 for ¢ sufficiently small. Now consider Z chosen with
+purely imaginary components
+
+Z = idiag(vt),
+where v has real components and ¢ is a small positive real. We have
+
+R(Z) =1+ ith" diag(v)1 — ¢b" diag(v) Adiag(v)1 + O(4?)
+=1+ ith’ v — tu" diag(b) Av + O(),
+
+so that
+|R(Z)/? = 1- uv" Mv + O(8).
+
+Since this cannot exceed 1 for ¢ small and any choice of v, M is positive
+semi-definite. o
+
+Since there is no practical interest in reducible methods, we might look
+at the consequences of assuming a method is irreducible. This result was
+published in Dahlquist and Jeltsch (1979):
+
+Corollary 356D Under the same conditions of Theorem 356C, with the
+additional assumption that the method is DJ-irreducible,
+
+bj >0, j=1,2,...,8.
+
+Proof. Suppose that for i < 3, b; > 0 but for i > 5, bj = 0. In this case, M
+can be written in partitioned form as
+
+M= M N
+N' 0
+and this cannot be positive semi-definite unless N = 0. This implies that
+
+aij =0, whenever i <3 < j,
+
+implying that the method is reducible to a method with only § stages.

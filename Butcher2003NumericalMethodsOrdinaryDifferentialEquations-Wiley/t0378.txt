@@ -1,0 +1,52 @@
+368 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+using the matrix
+
+10 0 0
+01 +0 0
+P=} oa _ 1
+4 4
+oe -b 4
+
+Note that this converts the method into Nordsieck form.
+
+50.2 Write the general linear method given by (502a) in transformed form
+using the matrix
+
+T=
+
+me ole
+
+50.3 Write the implicit Runge-Kutta method
+
+0
+1
+
+NIK oO
+Jie
+
+vie
+nie
+
+as a general linear method with r = 2, s = 1, by taking advantage of
+the FSAL property.
+
+50.4 Show that it is possible, by using a suitable transformation, to reduce the
+general linear method derived in Exercise 50.3 to an equivalent method
+with r = s = 1. Show that this new method is equivalent to the implicit
+mid-point rule Runge-Kutta method.
+
+50.5 Write the PEC predictor-corrector method based on the order-2 Adams—
+Bashforth method and the order-2 Adams—Moulton method in general
+linear form.
+
+50.6 The following two methods were once popular, but are now regarded as
+flawed because they are ‘weakly—stable’.
+
+Yn = Yn-2 + 2h (Ln—1,Yn—-1)s
+Yn = Yn-3 + 3h(f(@n-1,Yn-1) + F(€n-2,Yn—2))-
+
+This means that, although the methods are stable, the polynomial a for
+each of them has more than one zero on the unit circle. Show how to
+write them as a cyclic composite pair, using general linear formulation,
+and that they no longer have such a disadvantage.

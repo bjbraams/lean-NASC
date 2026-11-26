@@ -1,0 +1,51 @@
+1.3 Norms and Spectral Radii 9
+
+is the spectral norm of the matrix A.
+Basic properties of the spectral norm of a matrix, analogous to those
+obtained for the Euclidean norm of the vector x, are given in
+
+Theorem 1.5. If A and B are two n x n complex matrices, then
+
+||Al] > 0, unless A =O, the null matriz;
+if a is a complex scalar , |\~A\| = |a| - || All;
+
+(1.22) A+ Bll < All + [Blk
+
+A- Bll <(IAll- BI
+Moreover,
+(1.23) Axil < |All [bell
+
+for all vectors x, and there exists a nonzero vector y in ©" for which
+
+(1.24) \|Ayl] = IAI lly.
+
+Proof. The results of (1.22) and (1.23) follow directly from Theorem 1.2 and
+Definition 1.4. To establish (1.24), observe that the ratio ||Ax||/||x||, for any
+x # 0, is unchanged if x is replaced by ax, where a is a nonzero scalar.
+Hence, we can write that
+
+All = sup || Axl].
+Wpxl|=1
+
+But as the set of all vectors x with ||x|| = 1 is compact in ©”, and as Ax is
+a continuous function defined on this set, then there exists a vector y with
+\ly]| = 1 such that
+
+All = Faria \| Axl] = ILAy'l,
+
+which completes the proof. i
+
+To connect the spectral norm and spectral radius of Definition 1.3 and
+Definition 1.4, we have the
+
+Corollary 1.6. For an arbitrary n x n compler matrix A,
+
+(1.25) \All > oA).
+
+Proof. If \ is any eigenvalue of A, and if x is a nonzero eigenvector associated
+with the eigenvalue A, then Ax = Ax. Thus, from Theorems 1.2 and 1.5,
+
+IAl {lal = Axl] = [Axl] <All [el
+
+from which we conclude that ||Al| > |A| for all eigenvalues of A, which proves
+(1.25).

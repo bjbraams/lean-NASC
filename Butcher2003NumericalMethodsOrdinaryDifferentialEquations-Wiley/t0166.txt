@@ -1,0 +1,42 @@
+154 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+y(tn—1) y(n)
+
+y(tn— Ay
+
+As
+
+es
+
+~e on —2 An-2
+Yn-F ~~ gOn—1 An-1
+Yn- ~~ Bon
+
+Zo vy £2 3 In—-2  &n-1 En
+
+Figure 319(i) Growth of global errors from local errors referred to the
+computed solution
+
+from (110c) on how much a perturbation in the exact solution can grow. If
+we were basing our global error bound on Figure 319(i) then this would be
+exactly what we need. However, we use Figure 319(ii), and in this case we
+obtain the same growth factor but with L replaced by L*. The advantage
+of using an argument based on this figure, rather than on Figure 319(i), is
+that we can then use local truncation error defined in the standard way, by
+comparing the exact solution at step value x, with the numerically computed
+result over a single step with initial value y(a,_1).
+
+Theorem 319B Let ho and L* be such that the local truncation error at step
+number k = 1,2,...,n is bounded by
+
+be SCHPYT, Sho
+then the global truncation error is bounded by
+exp(L* (—z0))—1 Che, L*>0
+_ < TF > >
+lly(tn) — yall < { (E—1)Ch?, L*=0.
+
+Proof. Use Figure 319(ii) and obtain the estimate
+
+a
+lly(2n) — yall < ChE + AL*)*.
+k=1

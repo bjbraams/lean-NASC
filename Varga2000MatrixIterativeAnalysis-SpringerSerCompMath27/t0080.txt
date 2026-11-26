@@ -1,0 +1,54 @@
+72 3. Basic Iterative Methods and Comparison Theorems
+
+where p is the largest order of all diagonal submatrices J, of the Jordan
+normal form of A with p(J-) = p(A).
+
+Proof. Let S be a nonsingular n x n matrix such that A = SJS~!, where J
+is the Jordan normal form of the matrix A. We can suppose that the Jordan
+matrix J is such that its diagonal submatrices Jj,1 <1 <r, which have the
+form given in (3.35), are arranged in order of nondecreasing spectral radius,
+and J,, the final diagonal submatrix, is such that |A| = p(J-) = p(A), and the
+order of J; is not exceeded by any other submatrix J; where p(Ji) = p(A). If
+the order of J, is p, then the matrix
+
+om
+(pr) [e(A)}™-@-)
+
+tends to the n x n matrix M all of whose entries are zero, except for the
+certain entries of modulus unity, such as in the (n — p+ 1)st row and nth
+column. Precisely, the total number of such entries of modulus unity of M is
+equal to the number of diagonal submatrices J; for which p(J;) = p(A) and
+the order of Jj is equal to the order of J,. Thus,
+
+a
+(oui) [oA OD)
+
+Now, A” = SJ™S-1. Hence, with v := ||S|| - ||S~1]], so that ° v > 1, we
+have, on applying norms, that
+
+(3.40)
+
+—lasm-— oo.
+
+(3.41) Am] = SI™S7*] < SI "S74 = vil,
+
+and using the result of (3.40) gives the desired final inequality of (3.39). Ina
+similar fashion, applying norms to J™ = S~1A™S and using (3.40) give the
+desired first inequality of (3.39).
+
+To illustrate the last result, consider the matrix A of (3.31). In this case,
+p = 2,a = p(A), and it can be verified that the choice
+
+40
+=[oi]
+is such that A = SJS~! where J is a proper Jordan normal form of A, as
+required in Theorem 3.3. As |||] = 4, |S71|| = 1, then v := ||S||-||$~1|] =4
+for this example.
+
+Returning to the topic of rates of convergence, we see from (3.36) that
+if a matrix A is convergent, then the spectral norms of all sufficiently high
+powers of the matrix are monotone decreasing. In fact, from (3.39) we can
+actually prove
+
+8 Since |x|] = [|S - S~!x|] < ||SI] - |S71|| - |x|] for any x # 0, then the constant
+v := |{|S||-||S~1|| > 1. This constant is called the condition number of the matrix

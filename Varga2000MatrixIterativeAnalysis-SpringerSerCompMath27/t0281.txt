@@ -1,0 +1,47 @@
+274
+
+74
+
+7. Alternating-Direction Implicit Iterative Methods
+
+We have considered the Douglas and Rachford (1956) alternating-
+direction implicit iterative method as a variant of the Peaceman-
+Rachford iterative method. Other variants, such as the use of a positive
+diagonal matrix F and various splittings of the matrix 2’, are due to
+Wachspress and Habetler (1960). The generalization of the Peaceman-
+Rachford iterative method to higher dimensions is due to Douglas
+(1962).
+
+For numerical results comparing the Peaceman-Rachford iterative
+method an variants of the successive overrelaxation iterative method,
+see Young and Ehrlich (1960) and Price and Varga (1962). Young and
+Ehrlich give an example in which complex eigenvalues occur. Price
+and Varga give an example in which divergence is obtained for two
+acceleration parameters used cyclically. In general, these numerical re-
+sults indicate that the Peaceman-Rachford iterative method is highly
+successful for sufficiently fine mesh problems.
+
+Alternating-direction implicit methods have also been applied to the
+numerical solution of biharmonic problems. See Conte and Dames
+(1958) and Conte and Dames (1960) and Heller (1960). There, Heller
+considers more generally the application of these methods to (2p)th
+order elliptic difference equations. Attempts to combine alternating-
+direction implicit methods with successive overrelaxation iterative
+method, forming a two-parameter iterative method, have been con-
+sidered by Evans (1960) and Varga (1960b). For numerical results of
+such combined methods, see Evans (1960).
+
+Our discussion of alternating-direction implicit methods has cen-
+tered on two-dimensional elliptic differential equations. Whereas Dou-
+glas and Rachford (1956) proposed a variant to be useful in three-
+dimensional problems, Douglas (1962) has discovered what might be
+called a three-dimensional variant of the Peaceman-Rachford method
+that would appear to be more efficient in practice than the original
+method proposed in Douglas and Rachford (1956). The analogue of
+Theorem 7.1, however, fails in higher dimensions, i.e., three dimen-
+sional mesh regions can be exhibited for which the Douglas-Rachford
+method (7.70)-(7.74) and the method of (7.92) diverge even for certain
+fixed r > 0.
+
+For applications of alternating-direction implicit iterative methods to
+mildly nonlinear elliptic differential equations, see Douglas (1961a).

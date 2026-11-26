@@ -1,0 +1,18 @@
+330 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+No confusion is possible as to which part of the complex plane divided by
+the boundary locus is the inside and which is the outside because, using an
+argument based on the Cauchy-Riemann equations, we note that the inside
+is always to the left of the path traced out as w increases from 0 to 2z. If
+we had used (431d) in place of (431c) then, of course, the path would have
+been traced in the opposite direction and the inside of the stability region
+would have been on the right. Note that in Algorithm 432a, the third and
+fourth order cases are traced in the reverse direction. The stability region of
+the third Adams-Bashforth method, as computed by this algorithm is given
+as the unshaded region of Figure 432(i).
+
+Figure 432(i) Stability region for the third order Adams—Bashforth method
+
+nore
+
+Figure 432(ii) Stability region for the fourth order Adams—Bashforth method

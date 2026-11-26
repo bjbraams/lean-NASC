@@ -1,0 +1,35 @@
+88 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+233 Third order methods
+
+It is possible to construct methods with three stages, which have order 3
+numerical behaviour. These have the form
+
+where @21 = C2 and a3; + @32 = cs. The conditions for order 3 can be shown
+to be
+
+by + bp +b3 = 1, (23a)
+boca + b3c3 = 4 (233b)
+boc} + dsc = ; (233c)
+
+b3a32¢2 = ; (233d)
+
+Two possible solutions to these equations, together with reference numbers,
+are given by the tableaux
+
+2
+RK31: 3 , (233e)
+t
+4
+RK32: (2336)
+
+234 Introduction to order conditions
+
+As the order being sought increases, the algebraic conditions, on the
+coefficients of the method, become increasingly complicated. The pattern
+behind these conditions is known and, in this brief introduction to the
+order conditions, we state the results without any justification and show, by
+examples, how they are used.
+
+Let T denote the set of all ‘rooted trees’. These are simple combinatorial
+graphs, which have the properties of being connected, having no cycles, and

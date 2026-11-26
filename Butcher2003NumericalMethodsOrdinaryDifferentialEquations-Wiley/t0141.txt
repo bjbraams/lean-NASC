@@ -1,0 +1,41 @@
+RUNGE-KUTTA METHODS 129
+
+when U is the empty set, we can successively compute the value of this
+expression when U = {t1,t2,...,tn} using (302d) as
+
+n
+O1(U) + O2(U)a +--+ = TP — 2). (302e)
+k=1
+Now assume that t1, t2, ... consist of all trees of orders up to some integer p,
+and we can write (302e) as
+
+01(U) + O2(V)a +--+ = Il (L—ak)-%,
+k=
+Since 0,(U) = 6; if i < p +1, we obtain the result by replacing [[{_, by
+Thea: Oo
+
+The values of 6,, computed using Theorem 302B, are shown in Table 302(I)
+up to order 10. Also shown are the total numbers of trees up to a given order,
+and two further functions equal to the totals of the a(t) and S(t) values for
+each order.
+
+The entries in last two columns of Table 302(I) are important in classical
+combinatorics, although their roles in our work is only incidental. The sum of
+the A(t) for r(t) = n is the number of fully labelled rooted trees with n vertices,
+whereas the corresponding sum for a(t) is the number of monotonically
+labelled rooted trees. It is easy to guess a formula for each of these totals,
+and we now verify these.
+
+Table 302(I) Various enumerations of rooted trees up to order 10
+
+mn! On dir % Leen lt) Lewin Bl)
+1 1 1 1 1
+2 1 2 1 2
+3 2 4 2 9
+4 4 8 6 64
+5 9 17 24 625
+6| 20 37 120 7776
+7| 48 85 720 117649
+8 | 115 200 5040 2097152
+9 | 286 486 40320 43046721
+10 | 719 1205 362880 1000000000

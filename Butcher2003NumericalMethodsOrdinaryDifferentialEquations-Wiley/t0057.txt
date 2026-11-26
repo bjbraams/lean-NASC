@@ -1,0 +1,39 @@
+44. NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+as follows:
+co 7G
+Z(uxv)(z)= > > ujyj—jz*
+
+i=0 j=0
+oo ft
+
+= DES (45279) (01-5294)
+#=0 j=0
+oO oO
+
+= > uz? Sone7*,
+j=0 k=0
+
+where we have written k =i—j.
+
+Exercises 13
+
+13.1 Find a constant C such that ||A"|loo < C, for all n =0,1,..., where
+
+|:
+
+13.2 For what values of the complex number @ is the matrix A stable, where
+
+[2]
+
+13.3 Use Z-transform methods to solve the system of difference equations
+
+_|o 1 4| 2" _ {0
+Yoti = 10 Yn 1 ’ Yo = ol:
+
+Ra
+It
+ee |
+!
+co) topes
+cobe tole

@@ -1,0 +1,55 @@
+RUNGE-KUTTA METHODS 163
+
+conditions simplifies each of these elements to a zero value. In summary, the
+product of P and @Q is
+
+2 3 0
+PQ=|3 1 of,
+0 0 0
+
+so that the conditions of Lemma 322A are satisfied. The conclusion is that the
+last row of P or the last column of Q is zero. In particular, this means that
+either Dy}_, biaig — ba(1 — ca) = 0 or DY5_, aajej — 4c} = 0. These simplify to
+ba(1 — c4) = 0 or to $c3 = 0, respectively. It is impossible that c2 = 0 or that
+bg = 1, and hence c, = 1 and the D(1) condition holds.
+
+Since D(1) holds, the set of additional equations we need to satisfy reduce
+
+to those associated with the trees.,?, V and “Yas well as with the tree v The
+order condition associated with the last of these is 7 bicjaijyey = a It turns
+out to be more convenient to use, instead of this condition, the difference
+
+between this and with the condition associated with f that is > bjaije; = 2,
+which is a consequence of other assumptions and of the D(1) condition. Hence
+we assume )) bj(1 — e)aize; = 3.
+
+The steps we need to carry out to derive one of these methods are
+
+(a) Choose cp and c3 noting that c, = 0 and cy = 1.
+
+({b) Choose 61, be, b3, b4 to satisfy ye bch} = 1/k for k = 1,2,3,4.
+(c} Choose ag2 so that b3(1— c3)ag2co = #y-
+
+(d) Choose @41, @42, @43, SO that yy bai = 6;(1 _ cj) for j = 1,2,3.
+
+Carrying out this programme might present some difficulties. For example,
+if in step (a), the c; are not distinct, then there might not exist a solution in
+step (b). It might also happen that the value of b4, found in step (b), is zero,
+and this will make it impossible to carry out either step (c) or step (d). Even
+if a solution exists for the sub-problem that arises in each step, the solution
+might not be unique, and there could turn out to be a family of solutions.
+The general solution, which is valid except in these exceptional cases, is given
+by the following coefficients:
+
+G21 = C2,
+_ c3(¢3 + 43 _ 3c)
+~~ 2e9(2e2 — 1)
+32 = — ales — ca) ,
+2c2(2c2 — 1)
+
+tg, mW E268R t I2CRCS + 4G ~ Gen + W5ene5 — 12cher +2 + Ach ~ Bes
+as 2c203(—4c3 + 6c3¢2 + 3 — 4c2) ,
+_ (cg - 1)(4¢3 ~ 5e3 + 2 ~ ce)
+
+42 Qea(es — €2)(—4e5 + 6e3cq + 3 — 4c)’
+

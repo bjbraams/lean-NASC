@@ -1,0 +1,37 @@
+214 6. Derivation and Solution of Elliptic Difference Equations
+
+The point here is that extensions of Gerschgorin’s Theorem 6.2 make use of
+this bound.
+
+We have paid particular attention to the self-adjoint problem of (6.37),
+but several extensions of our derivation are useful in practice. First, consider
+in place of (6.37) and (6.38)
+
+(6.56) —{Puz}z—{Puy}ytou=f, (x,y) eR,
+
+with, for simplicity,
+
+(6.57) u(z,y)= (2,9), (ty) ET,
+
+where the coefficient P,o, and f are only piecewise continuous in R, resulting
+from physical internal interfaces 7, as shown in Fig. 6.11, where we assume
+that these internal interfaces are composed of horizontal and vertical line
+segments that do not terminate in R. Analogous to the continuity condition
+(6.24), we ask that u(zx, y) be continuous in R, and that
+
+Fig. 6.11.
+
+du(z, y)
+On
+
+The derivation we have given, based on integration, can be extended, and the
+essential idea is to integrate over the four separate parts of r;,; in Fig. 6.7(a).
+Because of (6.58), all interior line integrals vanish, and we can exactly use
+the approximation of (6.47). In (6.46), however, the value g;,; is merely re-
+placed by the average of g(z,y) in the region r;,;. Summarizing, the results
+of Theorem 6.5 apply equally to such problems with physical interfaces.
+The extension of these derivations of finite difference approximations to
+second-order elliptic partial differential equations in three dimensions is now
+almost obvious for seven-point formulas. The essential steps are to replace R
+
+(6.58) P(z,y) be continuous across any segment of +.

@@ -1,0 +1,51 @@
+LINEAR MULTISTEP METHODS 321
+
+h are restricted in some appropriate way. In this sense we can regard these
+‘B-series’ as formal Taylor series.
+
+What we really want, is not 7 satisfying (422a) but the mapping ® say which
+corresponds to it. If exponentiation of ® is taken to denote compositions, or
+for negative powers, compositions of the inverse mapping, then we want to be
+able to define ® by
+
+id — a, 37! — a2B-? —--»- a -*
+
+— hBof — hBi(f 0B) — hfa(f 0B) —--- — hBe(f 0 B*) =0.
+Because the corresponding member of Gi can be evaluated, up to any
+required order of tree, it is regarded as satisfactory to concentrate on this
+representation.
+
+(422b)
+
+Theorem 422A For any preconsistent, stable linear multistep method [a, 8],
+there exists a member of the group G satisfying (422a).
+
+Proof. By preconsistency, a a; = 1. Hence, (422a) is satisfied in the case
+of t = Q, in the sense that if both sides are evaluated for the empty tree, then
+they each evaluate to zero. Now consider a tree ¢ with r(t) > 0 and assume
+that
+
+Lu) — ain” (u) — aang? (u) — -- — ag *(u)
+
+— BoD(u) — an" D(u) — Bon? D(u) — ---— Ben *D(u) = 0,
+is satisfied for every tree u satisfying r(u) < r(t). We will prove that there
+exists a value of 7(t) such that this equation is also satisfied if u is replaced by
+t. The coefficient of 4(¢) in n—*{) is equal to i(—1)" and there are no other
+terms in n~‘(t) with orders greater than r(¢) — 1. Furthermore, all terms on
+the right hand side contain only terms with orders less than r(t). Hence, to
+satisfy (422a), with both sides evaluated at t, it is only necessary to solve the
+equation
+
+k
+(1071 iain(t) = C,
+i=1
+where C' depends only on lower order trees. The proof by induction on r(¢) is
+now complete, because the coefficient of (¢) is non zero, by the stability of
+the method. oO
+
+Definition 422B Corresponding to a linear multistep method [a, 8], the
+member of G, represents the ‘underlying one-step method’.
+
+As we have already remarked, the mapping © in (422b), if it exists in more
+than a notional sense, is really the object of interest and this really is the
+underlying one-step method.

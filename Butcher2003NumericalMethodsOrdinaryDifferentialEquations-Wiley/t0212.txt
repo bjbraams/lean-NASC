@@ -1,0 +1,47 @@
+200 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+vectors c and b™ are known. In the case s = 2 we can explore the possibility
+of choosing the only free parameters that remain, to satisfy four additional
+order conditions. Surprisingly, this can be done. Write the tableau in the form
+
+1
+Ly v8] 14% _ ay 22 . (342i)
+| r T
+2 2
+
+For the trees.,!, V, ‘V, the order conditions are satisfied. These are just the
+B(4) conditions introduced in Subsection 321. The remaining trees and the
+conditions that result from substituting the values from (342j) and simplifying
+are
+
+j @11 = 422,
+¥ (1 V8)an + (1+ VB)am = 5,
+Y @i1 = G22,
+{ (1+ V8)an1 + (1 — V3)ao9 + 2V3(a?, — a2.) = B
+
+These are all satisfied by a11 = ago = 4.
+
+We also notice that C(2) and D(2) are satisfied by these values, and
+it is natural to ask if it is possible, in general, to satisfy both C(s) and
+D(s) assuming that the 6’ and c vectors have been chosen to satisfy the
+quadrature conditions. A crucial link in the chain connecting these conditions
+is E(s, s), given by (321c), and we present a result which expresses the essential
+connections between them. It will be convenient to write G(n) to represent
+the fact that a given Runge-Kutta method has order 7).
+
+Theorem 342C
+
+G(2s) => B(2s), (342j)
+
+G(2s) > E(s, 8), (342k)
+
+B(2s) A C(s) A D(s) > G(2s), (3421)
+B(2s) AC(s) > E(s, ), (342m)
+
+B(2s) A E(s,s) > C(s), (342n)
+B(2s) A D(s) > E(s, 3), (3420)
+
+B(2s) A E(s,s) > D(s). (342p)
+
+Proof. The first two results (342j), (342k) are consequences of the order
+conditions. Given that C(s) is true, all order conditions based on trees

@@ -1,0 +1,51 @@
+7.2 The Commutative Case 249
+
+the positive interval [a, (], it is evident from the definition of gm (x; {rj }%21)
+in (7.39) that only nonnegative r;’s need to be considered in minimizing
+MaXa<2<p |9m(z; {7j}721)|. Also, we may for convenience assume that the
+1;’s are in increasing order, i.e.,
+
+O<ri S1r25:++S Tm.
+
+Thus, we seek
+
+SrisStm (astss
+
+(7.40) dala, 8] = o< min { max |9m(z; geal}.
+
+We now state the solution of this min-max problem, based on the Cheby-
+shev principle (see Achieser (1956), p. 51), which was first sketched by
+Wachspress (1957).3
+
+Theorem 7.5. There exist unique distinct constants {7;}71, in increasing
+order, for which
+
+(7) dra [a 6] = max, dm (ti {75}
+The function gm(z; {7;}721) 1s completely characterized by the property that
+9m (x; {Fj} 721) takes on tts marimum absolute value dm[a, fh), with alternating
+
+sign, in exactly m+1 points {z; mil where
+
+Q=21 <P, < 22 <7 < +++ < fm <Imqi = 8B.
+
+To illustrate this, recall the discussion in Sect. 7.1 of the minimization
+problem for gi(z;r) involving a single acceleration parameter r. In this case,
+* = Va minimized (7.40), and
+
+(4,7) = —91(B,F) = dila, 6],
+
+which takes on its maximum value, with alternating signs, in its two end-
+points.
+
+Unlike the corresponding mtin-max problem of (5.18) in Sect. 5.1 for poly-
+nomials, a precise formula, for the positive numbers 71,-:-, 7m that give rise
+to the solution of the min-max problem of (7.40), is more complicated, as
+can be imagined, since the min-max problem in (7.40) involves rational func-
+tions, as opposed to polynomial functions in the min-max problem of (5.18).
+Nevertheless, there is a theoretically and numerically elegant procedure for
+finding the optimal parameters {7;}"1, in (7.41), discovered, essentially si-
+multaneously, by Gastinel (1962) and Wachspress (1962), for the special case
+m = 2*, k a nonnegative integer. As we shall see, their procedure has a very
+
+3 See also Wachspress (1966). The result of Theorem 7.5 can also be established
+from results of Rice (1960) and Rice (1961), concerning unisolvent functions.

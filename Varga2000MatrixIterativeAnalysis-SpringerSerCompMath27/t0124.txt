@@ -1,0 +1,52 @@
+116 4. Successive Overrelaxation Iterative Methods
+
+any block tri-diagonal matrix of the form (4.6) is a consistently ordered 2-
+cyclic matrix.
+
+While not all p-cyclic matrices A are consistently ordered (see Exer. 4),
+it is not difficult to find an n x n permutation matrix P which permutes the
+entries of A by blocks such that PAP? is p-cyclic and consistently ordered.
+In fact, from Definition 2.13, there exists a permutation matrix P which
+permutes the entries of the block Jacobi matrix B by blocks such that PBPT
+is weakly cyclic of index p and of the form (4.7), and is thus consistently
+ordered. We point out, however, that such permutation matrices P giving
+rise to consistent orderings are not unique.
+
+The basic reason for introducing the concepts of a p-cyclic matrix, and
+consistent orderings for such matrices, is that the knowledge of these ma-
+trix properties greatly facilitates the theoretical analysis of the successive
+overrelaxation iterative method, which will be treated in Sect. 4.2 and Sect.
+4.3. Fortunately, as we shall see in Chap. 6, these matrix properties are not
+difficult to determine.
+
+The distinction between consistent and inconsistent orderings is theoreti-
+cally important when one considers, as in Sect. 4.4, the effect that orderings
+have on asymptotic rates of convergence. The nature of consistent orderings
+will be more fully explored for the case p = 2 in Sect. 4.4, where again we
+will find graph theory to be both convenient and instructive.
+
+The final result of this section is a type of determinantal invariance for
+consistently ordered, weakly cyclic matrices of index p.
+
+Theorem 4.4. Let B = L+U be a consistently ordered, weakly cyclic matrix
+of index p. Then, for any complex constants a, GB, and +,
+
+(4.12) det{yI — aL — BU} = det{yI — (a?-18)/?(L + U)}.
+
+Proof. This is almost an immediate consequence of Definition 4.3. As is
+known, for any complex constants a, 3, and y, we can write
+
+n
+det{yI — (aL + BU)} = [[ (7-0),
+(4.13) =1
+det {I — (o?-18/"(L+U)} = [](v¥- 7),
+i=1
+where the o’s and 7’s are, respectively, eigenvalues of the matrices aL + GU
+and (a?-1)!/?(L + U). We proceed now to show that the sets
+
+{oye and {7m}
+
+are identical. If either a or ( is zero, then aL + AU is strictly triangular,
+which implies that each o; is zero. For this case, it is obvious that each 7;
+is also zero, and thus the two sets {o;}7_, and {7j}7%_, are equal, as are the
+two determinants of (4.13). If a and G are both different from zero, let

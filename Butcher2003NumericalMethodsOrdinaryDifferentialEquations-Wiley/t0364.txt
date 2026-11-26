@@ -1,0 +1,52 @@
+LINEAR MULTISTEP METHODS 353
+
+Table 461(I) Coefficients, yo, 71, ...; ‘Yp, for Nordsieck methods
+
+p=2 p=3 p=4 p=5 p=6 p=T7 p=8
+T ry 3 251. 95. 19087 5257
+Yo} 2 12 5 720 288 60480 «117280
+‘1 1 1 1 1 1 1 1
+1 3 sy a 863
+Y1 3 4 12 24 120 40 380
+1 1 35-5 2034898
+3 6 3 7 8 270 «= 540
+tT 5 a 49 967
+v4 24 8 96 192 ©3880
+es ee rr 2
+% 72 70 14a 20
+a1 7 23
+Ye 720 4©=6 1440S 8160
+1 1
+Vr 5040 «= 1260
+1
+8 70320
+
+where we find the values 72 = 3, 3 = 3 Stability is determined by products
+
+of matrices of the form
+1,2 3,2
+1,3 1,3 |?
+grr
+
+and for r > 1.69562, this matrix is no longer power-bounded.
+
+Gear’s pragmatic solution was to prohibit changes for several further steps
+after a stepsize change had occurred. An alternative to this remedy will be
+considered in the next subsection.
+
+462 Variable stepsize for Nordsieck methods
+
+The motivation we have presented for the choice of 1, yo, --. in the
+formulation of Nordsieck methods, was to require a certain matrix to have
+zero spectral radius. Denote the vector -y and the matrix V by
+
+123 p
+. 013 ++  4p(p-1)
+2
+y=| 0], v=] 0 1 ++ gp@-1@~-2 |,
+Md 000 -. 1
+and denote by ej the basis row vector e] = [ 10-0 |. The
+
+characteristic property of y is that the matrix
+
+(I-yeq)V, (462a)

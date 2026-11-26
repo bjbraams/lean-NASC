@@ -1,0 +1,107 @@
+5.2. THE QR FACTORIZATION 229
+
+for i= lim
+d(i) =1
+
+end
+
+for j = l:n
+
+for i=m:~liy+l
+(a, 8, type] = fast.givens(A(i — 1:1, 7), d(i — 1:7)
+
+if type = t
+A(é — 1, jin) = 4 | 46 — 1: j:n)
+else
+A(i— Li, jen) = | a * Jae —1si, jin)
+end
+
+end
+
+This algorithm requires 2n?(m — n/3) flops. As we mentioned in the pre-
+vious section, it is necessary to guard against overflow in fast Givens algo-
+rithms such as the above. This means that M, D, and A must be periodi-
+cally scaled if their entries become large.
+
+If the QR factorization of a narrow band matrix is required, then the
+fast Givens approach is attractive because it involves no square roots. (We
+found LDL? preferable to Cholesky in the narrow band case for the same
+reason; see §4.3.6.) In particular, if A € R™*" has upper bandwidth g and
+lower bandwidth p, then Q7 A = R has upper bandwidth p+ q. In this
+case Givens QR requires about O(np(p + q)) flops and O(np) square roots.
+Thus, the square roots are a significant portion of the overall computation
+if pq €n.
+
+5.2.6 Properties of the QR Factorization
+
+The above algorithms “prove” that the QR factorization exists. Now we
+relate the columns of Q to ran(A) and ran(A)* and examine the uniqueness
+question.
+
+Theorem 5.2.1 If A = QR is a QR factorization of a full column rank
+AER™" and A= [ai,...,an] and Q =[41,...,¢m] are column parti-
+tionings, then
+
+span{a,...,¢,} = span{q,...,gx} k=kn.
+In particular, if Q1 = Q(Lim, kin) and Q2 = Q(1:m,n+ lim) then
+
+ran(A) ran(Q1)
+ran(A)~ = ran(Qz)
+
+and A= Qift, with Ry = R(Ln, lin).
+
+230 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+Proof. Comparing kth columns in A = QR we conclude that
+
+k
+oe = Sree € span{qi,--..de} - (5.2.2)
+i=
+Thus, span{ai,..-,¢,} © span{g:,...,gk} - However, since rank(A) =
+n it follows that span{a,,...,@,} has dimension & and so must equal
+span{qi,-.-,@e} The rest of the theorem follows trivially. 0
+
+The matrices Q1 = Q(1:m, lin) and Qz = Q(1:m,n + 1:m) can be easily
+computed from a factored form representation of Q.
+
+If A= QRis a QR factorization of A € R™*" and m > n, then we refer
+to A = Q(;, lin) R(L:n, lin) as the thin QR factorization. The next result
+addresses the uniqueness issue for the thin QR factorization
+
+Theorem 5.2.2 Suppose A€ R™*" has full column rank. The thin QR
+factorization
+
+A=Qkh
+is unique where Q, € IR™*" Aas orthonormal columns and R, is upper tri-
+angular with positive diagonal entries. Moreover, R, = G? where G is the
+lower triangular Cholesky factor of AT A.
+
+Proof. Since ATA = (Q,Ri)"(QiR1) = RE R, we see that G = RT is the
+Cholesky factor of ATA. This factor is unique by Theorem 4.2.5. Since
+Qi = AR! it follows that Q, is also unique. O
+
+How are Q; and R affected by perturbations in A? To answer this
+question we need to extend the notion of condition to rectangular matrices.
+Recall from §2.7.3 that the 2-norm condition of a square nonsingular matrix
+is the ratio of the largest and smallest singular values. For rectangular
+matrices with full column rank we continue with this definition:
+
+Omaz(A)
+
+@min(A)
+
+If the columns of A are nearly dependent, then «2(A) is large. Stewart
+(1993) has shown that O(e) relative error in A induces O(€x(A)) relative
+error in A and Q.
+
+Aeé R™*, rank(A) =n => n(A) =
+
+5.2.7 Classical Gram-Schmidt
+
+We now discuss two alternative methods that can be used to compute the
+thin QR factorization A = QiR; directly. If rank(A) = n, then equation
+(5.2.2) can be solved for gy:
+
+kn}
+% = (« - eo) /r-
+imi

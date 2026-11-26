@@ -1,0 +1,87 @@
+3.3. ROUNDOFF ANALYSIS OF GAUSSIAN ELIMINATION 105
+
+That is, Z solves a “nearby” system exactly. Moreover, if uxoo(A) < $
+(say), then by using Theorem 2.7.2, it can be shown that
+
+lz - 2 lloo
+1 lloo
+
+The bounds (3.3.1) and (3.3.2) are “best possible” norm bounds. No general
+oo-norm error analysis of a linear equation solver that requires the storage of
+A and 6 can render sharper bounds. As a consequence, we cannot justifiably
+criticize an algorithm for returning an inaccurate if A is ill-conditioned
+relative to the machine precision, e.g., UXo9(A) = 1.
+
+€ 4urco(A). (3.3.2)
+
+3.3.1 Errors in the LU Factorization
+
+Let us see how the error bounds for Gaussian elimination compare with
+the ideal bounds above. We work with the infinity norm for convenience
+and focus our attention on Algorithm 3.2.3, the outer product version.
+The error bounds that we derive also apply to Algorithm 3.2.4, the gaxpy
+formulation.
+
+Our first task is to quantify the roundoff errors associated with the
+computed triangular factors.
+
+Theorem 3.3.1 Assume that A is an n-by-n matrix of floating point num-
+bers. If no zero pivots are encountered during the execution of Algorithm
+3.2.3, then the computed triangular matrices L and U satisfy
+
+LU = A+H (3.3.3)
+|Z] < 3(n-}u (1A + 12101) + Ou). (3.3.4)
+
+Proof. The proof'is by induction on n. The theorem obviously holds for
+n= 1. Assume it holds for all (n — 1)-by-(n — 1) floating point matrices. If
+a wt 1
+A= vo B n-1
+
+la-l
+
+then 2 = fl(v/a) and A, = fi(B — zwT) are computed in the first step of
+the algorithm. We therefore have
+
+a=iv+s Wis
+
+wt (3.3.5)
+and
+
+Ay = B—iw™+F  |F| < 2u([Bl + |élwi™) +0(u2). (3.3.6)
+
+106 CHAPTER 3. GENERAL LINEAR SYSTEMS
+
+The algorithm now proceeds to calculate the LU factorization of Ay. By
+induction, we compute approximate factors £, and 0; for A, that satisfy
+
+£0, = A+ Ay (3.3.7)
+[Hil $ 3(n—2)u(JAy] + HE!!!) + Ou). (8.3.8)
+Thus,
+we [ells Gl
+= aslo mur | = A+4H.
+
+From (3.3.6) it follows that
+|Ai} < (1+ 2u) ([B| + {2[}wl?) + O(u?),
+and therefore by using (3.3.7) and (3.3.8) we have
+Hy + F| < {nm —1)u (BI + lelhwl™ + 12i10i1) + O(n?)
+
+Since |af| < ulv| it is easy to verify that
+
+IAs xm—tyaf lta dal ( ‘oa J} ror
+
+thereby proving the theorem. 0
+
+We mention that if A is m-by-n, then the theorem applies with n in (3.3.4)
+replaced by the smaller of n and m .
+
+3.3.2 Triangular Solving with Inexact Triangles
+
+We next, examine the effect of roundoff error when £ and U are used by the
+triangular system solvers of §3.1.
+
+Theorem 3.3.2 Let £ and U be the computed LU factors of the n-by-n
+floating point matriz A obtained by either Algorithm 3.2.3 or 3.2.4. Suppose
+the methods of §9.1 are used to eee the computed solution 9 to Ly =b
+and the computed solution 2 to Ux = y. Then (A+ E)2=b with
+
+[El <nu (3i4l +5|£01) + O(u?). (3.3.9)

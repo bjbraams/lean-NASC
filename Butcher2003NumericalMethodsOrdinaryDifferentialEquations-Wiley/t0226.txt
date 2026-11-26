@@ -1,0 +1,33 @@
+214. NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+\ + 407
+
+a
+
+a 50
+
++ —401
+
+Figure 350(i) A(q) stability region for the method (350b)
+
+so that
+det (I + 2(1b" — A)) = R(z)det(Z — 2A). oO
+Now write the stability function of a Runge-Kutta method as the ratio of
+two polynomials
+
+— N@)
+
+RA) = D0)
+
+and define the E-polynomial by
+Ey) = D(iy)D(—ty) — N (iy) N(—iy).
+
+Theorem 351B A Runge-Kutta method with stability function R(z) =
+N(z)/D(z) is A-stable if and only if (a) all poles of R (that is, all zeros
+of D) are in the right half plane and (b) E(y) > 0, for all real y.
+
+Proof. The necessity of (a) follows from the fact that if z* is a pole then
+lim,,z+ |R(z)| = 00, and hence |R(z)| > 1, for z close enough to z*. The
+necessity of (b) follows from the fact that E(y) < 0 implies that |R(iy)| > 1,
+so that |R(z)| > 1 for some z = —e + iy in the left half plane. Sufficiency of
+these conditions follows from the fact that (a) implies that R is analytic in

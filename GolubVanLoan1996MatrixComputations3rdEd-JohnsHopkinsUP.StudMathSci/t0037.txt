@@ -1,0 +1,86 @@
+1.4. VECTORIZATION AND Re-Use Issues 45
+
+A manipulation shows that
+4 2
+3n? + Woe 3+ 22
+MY =n y M
+
+— > .
+Ta Qn? + 2n3/ 8 2+ 273) jn
+
+The key quantity here is n?/M, the ratio of matrix size (in floating point
+words) to cache size. As this ratio grows the we find that
+
+nh
+Ty V¥3M
+
+showing that the second blocking strategy is superior from the standpoint
+of data motion to and from the cache. The fundamental conclusion to be
+reached from all of this is that blocking effects data motion.
+
+1.4.8 Block Matrix Data Structures
+
+We conclude this section with a discussion about block data structures. A
+programming language that supports two-dimensional arrays must have a
+convention for storing such a structure in memory. For example, Fortran
+stores two-dimensional arrays in column major order. This means that the
+entries within a column are contiguous in memory. Thus, if 24 storage
+locations are allocated for A € IR’*®, then in traditional store-by-column
+format the matrix entries are “lined up” in memory as depicted in Fic.
+1.4.4. In other words, if A € R™*” is stored in v(1:mn), then we identify
+
+1 | 4 L {J
+a “| S12 a13 aa S15 16
+aa. a2 az3 au a5 226
+31 a32 a33 34 035 ag
+aay 42 Gag Gag 45 aa
+| | |
+
+Fic. 1.4.4 Store by Column (4-by-6 case)
+
+A(i, 7) with v((j — 1)m +4). For algorithms that access matrix data by
+column this is a good arrangement since the column entries are contiguous
+in memory.
+
+46 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+} } } ii }
+ayy a2 413 a4 M15 16
+321 an az an 25, 26
+CI CJ tC
+pm! Yt [~—}
+dar 232 G33 a34 a35 236
+Gar 42 G43 aaa Gas 46
+I Lc [ I
+
+Fic. 1.4.5 Store-by-Blocks (4-by-6 case with 2-by-2 Blocks)
+
+In certain block matrix algorithms it is sometimes useful to store matri-
+ces by blocks rather than by column. Suppose, for example, that the matrix
+A above is a 2-by-3 block matrix with 2-by-2 blocks. In a store-by-column
+block scheme with store-by-column within each block, the 24 entries are
+arranged in memory as shown in Fic. 1.4.5. This data structure can be
+attractive for block algorithms because the entries within a given block are
+contiguous in memary.
+
+Problems
+
+P 1.4.1 Consider the matrix product D = ABC where Aé R™*" , Be RX" and
+CéR'™*. Assume that ail the matrices are stored by column and that the time required
+to execute a unit-stride saxpy operation of length & is of the form t(k) = (L+k)y where L
+is a constant and y is the cycle time. Based on this model, when is it more economical to
+compute D as D = (AB)C instead of as D = A(BC)? Asaume that all matrix multipliea
+are done using the jki, (gaxpy) algorithm.
+
+P1.4.2 What is the total time spent in ji variant on the saxpy operations assuming
+that all the matrices are stored by column and that the time required to execute s unit-
+stride saxpy operation of length k is of the form i(k) = (L +k) where L ia a constant
+and js is the cycle time? Specialize the algorithm so that it efficiently handles the case
+when A and & are n-by-n and upper triangular. Does it follow that the triangular
+implementation is six times faster as the flop count suggests?
+
+P1.4.3 Give an algorithm for computing C = AT BA where A and B are n-by-n and
+B is symmetric. Arrays should be accessed in unit stride feshion within ail innermost
+loops.
+
+P 1.4.4 Suppose A € R™*" is stored by column in A.col(1:mn}. Assume that m = 2M

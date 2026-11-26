@@ -1,0 +1,110 @@
+4.4, SYMMETRIC INDEFINITE SYSTEMS 165
+
+Thus, L(j + 2:n,j + 1) is a scaling of v(j + 2:n). Since L is unit lower
+triangular we have from (4.4.6) that
+
+oj +1) =AG +1)
+
+and so from that same equation we obtain the following recipe for the
+(7 + 1}-st column of L:
+
+Lj + 2:n,j +1) = v(7 + 2:n)/v(7 +1).
+Note that L(j + 2:n,j + 1) is a scaled gaxpy.
+We next develop formulae for a(j) and §(j). Compare the (j,j) and
+(j #1,3) entries in the equation H = TL’. With the convention (0) = 0
+we find that A(j) = AG - 1)L(j,j — 1) + a(j) and A(j + 1) = v(j +1) and
+
+so
+ACJ) — BG - 1I)EG,9 - 1)
+
+a()
+
+8G)
+
+With these recipes we can completely describe the Aasen procedure:
+
+u
+
+vif +1).
+
+for j=1mn
+
+Compute A(1:j) where h = TL e;.
+
+ifj=1Vj=2
+adj) = A(z)
+aj) = h(j) ~ BF - 1)LG, 5 - 1)
+
+end
+
+ifj<n-1 (4.4.7)
+v(j + Lin) = AGG + Lin, 7) — Lj + Ln, Ley) A(1:7)
+BG) = eG +1)
+
+end
+
+fj<n-2
+L(j + 2:n,j +1) = v(j + 2in)/v(j + 1)
+
+else
+
+end
+end
+
+To complete the description we must detail the computation of A(1:7).
+From (4.4.5) it follows that
+A(1:9, J) = E(1:j, leg) a(1:3) « (4.4.8)
+
+This lower triangular system can be solved for h(1:j) since we know the first
+j columns of ZL. However, a much more efficient way to compute H(1:j, 7)
+
+166 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+
+is obtained by exploiting the jth column of the equation H = TL. In
+particular, with the convention that §(0)L(j,0) = 0 we have
+
+A(k) = B(k — LG, k ~ 1) + a(K)LG,) + B(A)LG,# +1).
+
+for k = 1:7, These are working formulae except in the case k = j because
+we have not yet computed a(j) and 6(j). However, once h(1:j—1) is known
+we can obtain /(;) from the last row of the triangular system (4.4.8), ie.,
+
+i
+
+AG) = AGI) - SO LG, A)A).
+
+k=l
+
+Collecting results and using a work array £(1:n) for L(j, 1:7) we see that
+the computation of h(1:7) in (4.4.7) can be organized as follows:
+
+ify=1
+AQ) = A(1,1)
+elseif j = 2
+A(1) = B(1); A(2) = A(2, 2) (4.4.9)
+else
+£(0) = 0; &(1) = 05 &(2:j - 1) = LG,2:3 - 1); €G) = 1
+A(j) = AG, 3)
+for k = 1:7-1
+h(k) = B(k — 1)e(k — 1) + aK) e(k) + GK) E(k + 1)
+A(3) = h(3) — e(k)A(k)
+end
+end
+
+Note that with this O(j) method for computing h(1:j), the gaxpy calcula-
+tion of v(j + 1:n) is the dominant operation in (4.4.7). During the jth step
+this gaxpy involves about 27(n — j) flops. Summing this for j = 1:n shows
+that Aasen’s method requires n3/3 flops. Thus, the Aasen and Cholesky
+algorithms entail the same amount of arithmetic.
+
+4.4.3 Pivoting in Aasen’s Method
+
+As it now stands, the columns of L are scalings of the v-vectors in (4.4.7).
+Tf any of these scalings are large, ie, if any of the v(j + 1)’s are small,
+then we are in trouble. To circumvent this problem we need only permute
+the largest component of u(j + 1:n} to the top position. Of course, this
+permutation must be suitably applied to the unreduced portion of A and
+the previously computed portion of L.
+
+Algorithm 4.4.1 (Aasen’s Method) If A ¢ R"™" is symmetric then
+the following algorithm computes a permutation P, a unit lower triangular

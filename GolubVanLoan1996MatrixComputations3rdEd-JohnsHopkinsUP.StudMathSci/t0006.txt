@@ -1,0 +1,69 @@
+Preface to the Third Edition
+
+The field of matrix computations continues to grow and mature. In
+the Third Edition we have added over 300 new references and 100 new
+problems. The LINPACK and EISPACK citations have been replaced with
+appropriate pointers to LAPACK with key codes tabulated at the beginning
+of appropriate chapters.
+
+In the First Edition and Second Edition we identified a small number
+of global references: Wilkinson (1965), Forsythe and Moler (1967), Stewart
+(1973), Hanson and Lawson (1974) and Pariett (1980). These volumes are
+as important as ever to the research landscape, but there are some mag-
+nificent new textbooks and monographs on the scene. See The Literature
+section that follows.
+
+We continue as before with the practice of giving references at the end
+of each section and a master bibliography at the end of the book.
+
+The earlier editions suffered from a large number of typographical errors
+and we are obliged to the dozens of readers who have brought these to our
+attention. Many corrections and clarifications have been made.
+
+Here are some specific highlights of the new edition. Chapter 1 (Matrix
+Multiplication Problems) and Chapter 6 (Parallel Matrix Computations)
+have been completely rewritten with less formality. We think that this
+facilitates the building of intuition for high performance computing and
+draws a better line between algorithm and implementation on the printed
+page.
+
+In Chapter 2 (Matrix Analysis) we expanded the treatment of CS de-
+composition and included a proof. The overview of floating point arithmetic
+has been brought up to date. In Chapter 4 (Special Linear Systems) we
+embellished the Toeplitz section with connections to circulant matrices and
+the fast Fourier transform. A subsection on equilibrium systems has been
+included in our treatment of indefinite systems.
+
+A more accurate rendition of the modified Gram-Schmidt process is
+offered in Chapter 5 (Orthogonalization and Least Squares). Chapter 8
+(The Symmetric Eigenproblem) has been extensively rewritten and rear-
+ranged so as to minimize its dependence upon Chapter 7 (The Unsymmet-
+tic Eigenproblem). Indeed, the coupling between these two chapters is now
+so minimal that it is possible to read either one first.
+
+In Chapter 9 (Lanczos Methods) we have expanded the discussion of
+
+xi
+
+xu PREFACE 10 THe HIRD DULLiON
+
+the unsymmetric Lanczos process and the Arnoldi iteration. The “unsym-
+metric component” of Chapter 10 (Iterative Methods for Linear Systems)
+has likewise been broadened with a whole new section devoted to various
+Krylov space methods designed to handle the sparse unsymmetric linear
+system problem.
+
+In §12.5 (Updating Orthogonal Decompositions) we included a new sub-
+section on ULV updating. Toeplitz matrix eigenproblems and orthogonal
+matrix eigenproblems are discussed in §12.6.
+
+Both of us look forward to continuing the dialog with our readers. As
+we said in the Preface to the Second Edition, “It has been a pleasure to
+deal with such an interested and friendly readership.”
+
+Many individuals made valuable Third Edition suggestions, but Greg
+Ammar, Mike Heath, Nick Trefethen, and Steve Vavasis deserve special
+thanks.
+
+Finally, we would like to acknowledge the support of Cindy Robinson
+at Cornell. A dedicated assistant makes a big difference.

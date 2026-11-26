@@ -1,0 +1,57 @@
+NUMERICAL DIFFERENTIAL EQUATION METHODS 119
+
+In each case, the coefficients of the general linear formulation are presented
+in the (s +r) x (¢ +r) partitioned matrix
+
+[lr]
+
+The Euler method and implicit Euler methods are, respectively,
+
+The Runge-Kutta methods (232a) and (233f) and (235i) are, respectively,
+
+0 00 0 Of1
+0 of1 1 4 0 0 Oj1
+1 0/1 and 1 and 0% 0 O71
+ili : 001 0/1
+é Iii iaify
+63 3 6
+The second order Adams~Bashforth and Adams~Moulton and PECE methods
+
+based on these are, respectively,
+
+© Wik [role roloo
+
+3
+2
+3
+2
+0
+1
+
+Oo OneFDNIRF ©
+
+Qo
+ray
+
+where for each of the Adams—Bashforth and PECE methods, the output
+quantities are approximations to y(tn), Ay’(tn) and hy'(an_1), respectively.
+
+Finally, we re-present two methods derived in this section. The first
+is the pseudo Runge-Kutta method (261a), for which the general linear
+representation is
+
+20 BOR en o
+
+OF Cobh CO
+
+Rr Oo CAFO Co
+
+oo ofhloose
+i
+
+oo Owe Ooo
+|
+
+oo OFFlo Oo Oo
+
+eo 0 Bele ee

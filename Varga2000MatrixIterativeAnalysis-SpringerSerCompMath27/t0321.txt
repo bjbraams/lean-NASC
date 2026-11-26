@@ -1,0 +1,53 @@
+314 9. Estimation of Acceleration Parameters
+
+computations one needs but one or two eigenvalue estimates, would be overly
+optimistic. Those who have had even limited experience in solving such ma-
+trix problems by iterative methods have learned (often painfully) that small
+changes in the estimates of these key eigenvalues can sometimes drastically
+affect rates of convergence.! In this section, we shall show that further use
+can be made of the Perron-Frobenius theory of nonnegative matrices in esti-
+mating these key eigenvalues.
+
+We assume now that the n x n block Jacobi matrix B of the successive
+overrelaxation variants is nonnegative, irreducible, and further that B is a
+consistently ordered weakly cyclic matrix of index 2. These assumptions are
+satisfied (Theorems 6.3 and 6.5) for a large class of discrete approximations
+to boundary-value problems, as we have seen. What is sought are estimates
+of the spectral radius p(B) of B, and the discussion in Sect. 4.3 tells us that
+we seek preferably estimates not less than p(B). If we write B = L +U,
+where L and U are respectively strictly lower and strictly upper triangular
+matrices, the associated block Gauss-Seidel matrix £L, := (I—L)~1U is also a
+nonnegative matrix, and as B is a consistently ordered weakly cyclic matrix
+of index 2, we then have (from Corollary 4.6)
+
+(9.4) p(L1) = p(B).
+
+From this expression, we then can reduce our problem to one of estimating the
+spectral radius of £;. Let x) be any vector in IR” with positive components,
+and define
+
+(9.5) x™) = 61x, m>0.
+
+It can be shown (Exer. 7 of Sect. 3.3) that all the vectors x") have positive
+components. Because of this, we can define the positive numbers
+
+emt) _ gmt)
+— 1 a — 7
+(9.6) An = aia, | er dm = Bex, | oa | m > 0,
+v 7
+
+and from an extension (Exers. 2 and 3 of Sect. 2.3) of the min-max charac-
+terization (Theorem 2.9) of the spectral radius of a nonnegative irreducible
+matrix, we can deduce that
+
+(9.7) Am S Am+1 S P(L1) S$ Amti S Am, m>0.
+
+Moreover, familiar arguments show” that
+
+(9.8) plim Am = lim Am = p(L1).
+
+Summarizing, we have
+
+1 See Exer. 1. For more complete numerical results, see Young (1955) and Stark
+(1956).
+? See Exer. 2 of this section.

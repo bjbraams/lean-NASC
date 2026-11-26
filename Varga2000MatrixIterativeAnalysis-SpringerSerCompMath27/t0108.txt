@@ -1,0 +1,49 @@
+100 3. Basic Iterative Methods and Comparison Theorems
+
+method and any block Gauss-Seidel iterative method, in the sense of Sect.
+3.4, are convergent. As long as one diagonal submatrix A;,; of the partitioned
+matrix A of (3.68) contains a nonzero entry from above the main diagonal
+of A, the block Gauss-Seidel iterative method must have a larger asymptotic
+rate of convergence than that of the point Gauss-Seidel iterative method.
+Practically speaking, we must then ascertain that the work involved in di-
+rectly solving smaller matrix equations does not overbalance the gain made
+in asymptotic rates of convergence. Such practical topics will be considered
+in Chap. 6.
+
+We finally point out that the example given in Exer. 1 of Sect. 3.4, where
+a block iterative method was slower than a point method, was such that the
+associated matrix A was neither a Stieltjes matrix nor an M-matrix.
+
+Some of the comparisons of asymptotic rates of convergence which we have
+previously given can be proved in special cases as direct applications of this
+regular splitting theory. For example, take the Stein-Rosenberg Theorem 3.8.
+If A = I — B, where B is a nonnegative, irreducible, and convergent matrix
+with zero diagonal entries, then writing B = L+U, where L and U are
+respectively strictly lower and strictly upper triangular matrices, we define
+
+M =T; N,=L+U,
+My =I-L; Np =U.
+
+It is obvious that these are both regular splittings of A, and A~! > O. But
+as N, > Ng > O, equality excluded, we conclude directly from Theorem 3.32
+that
+
+0<p{(I-L)'U} <p(L+U) <1,
+
+which is statement 2 of the Stein-Rosenberg Theorem 3.8! But a more inter-
+esting application is
+
+Theorem 3.38. Let A= I — B, where B= L+U is a nonnegative, irre-
+ducible, and convergent n x n matrix, and L and U are respectively strictly
+lower and strictly upper triangular matrices. Then, the successive overrelaz-
+ation matrix L,, of (3.46) is convergent for all 0 < w < 1. Moreover, if
+0 <u, <u2 <1, then
+
+(3.96) 0 < plLun) < p(Lur) <1,
+
+and consequently
+
+*Reo(Lur) < Roo(Lw2)-
+Proof. Defining A = M,, — N.,, where
+
+My := = (I~ wl) and N, := = {w+ (1-w)I},

@@ -1,0 +1,37 @@
+GENERAL LINEAR METHODS 395
+
+Table 541(I) Types of DIMSIM and related methods
+
+Type A Application Architecture
+fo oO 0 07
+an 0 0 0
+1 a31 32 0 0 Nonstiff Sequential
+L G&si  &s2_ hg 0]
+fA 0 0 07
+ao xr 0 0
+2 @31 O32 X 0 Stiff Sequential
+L Gs1 G52 G53 Ad
+fo o 0 07
+0 oO 0 0
+3 6 0 9 0 Nonstiff Parallel
+Lo oO 0 04
+fA O 0 07
+0 A OO 0
+4 0 0 xX 0 Stiff Parallel
+LO 0 O + AY
+
+the name SDIRK is used). While these Runge-Kutta methods suffer from
+the disadvantages associated with low stage order, there is no such difficulty
+associated with general linear methods.
+
+For nonstiff problems, it seems to be advantageous to choose A = 0, whereas
+for stiff problems, it is necessary that A > 0, if A-stability is to be achieved.
+Furthermore, as we have already remarked, parallel evaluation of the stages
+is only possible if A is a diagonal matrix; specifically this would be the zero
+matrix in the nonstiff case. From these considerations, we introduce the ‘types’
+of a DIMSIM method, and we retain this terminology for methods with a
+similar structure.
+
+The four types, together with their main characteristics, are shown in Table
+541(I). The aim in DIMSIM methods has been to find methods in which each
+of p, g, r and s are equal, or approximately equal, and at the same time to

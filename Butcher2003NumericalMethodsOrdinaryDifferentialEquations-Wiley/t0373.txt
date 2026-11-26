@@ -1,0 +1,51 @@
+GENERAL LINEAR METHODS 363
+
+23 4 5
+
+Un =Yn-1 + aShf (tn-1,Yn-1) _ hf (fn—-2,Yn—2) + aohf(tn-s, Yn-3),
+12 3 12
+5 2 1
+
+Yn = Yn-1 + gs (ens Yn) + ght @n—1Yn-1) ~ 7ahtd (@n—2,Yn-2)-
+
+As a two-stage general linear method, we write Yj = y*% and Y2 = yn.
+The r = 4 input approximations are the values of yn—1, hf(€n—-1,Yn-1)s
+hf (fa-2, Yn—2) and hf (tn—z, yn—3). The (s +1) x (s +1) coefficient matrix is
+now
+
+o oj1 8 -} §
+B O|l 3 -§} 0
+iy O/t 3 -m 0 (503a)
+0 1/0 0 oO 0
+0 ojo 1 oO 0
+0 o/o o 1 0
+
+The one-leg methods, introduced by Dahlquist (1976) as counterparts
+of linear multistep methods, have their own natural representations as
+general linear methods. For the method characterized by the polynomial pair
+[a(z), 8{z)|, the corresponding one-leg method computes a single stage value
+Y, with stage derivative F’, using the formulae
+
+k k
+Yn = > ain + (> n) AF, (503b)
+
+i=1 i=0
+where
+Dike Bivn—é
+Y= ny (503c)
+Yio B;
+
+This does not fit into the standard representation for general linear methods
+but it achieves this format when Y and yp, are separated out from the two
+expressions (503b) and (503c). We find
+
+k -1 k
+¥=6nF+ (SOA) D(boas + Buns
+
+i=0 t=1
+
+Yn = (= 6s) AF + ait
+
+i=0 i=1
+
+As a general linear method, it has the form

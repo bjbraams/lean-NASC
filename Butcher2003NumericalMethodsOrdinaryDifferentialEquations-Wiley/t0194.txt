@@ -1,0 +1,36 @@
+182. NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+of the parameter, much of the effect of the errors can be eliminated so that
+improved accuracy results. In numerical quadrature, for example, the method
+of Romberg (1955) is based on calculating an integral J = [ re o(z)dx using
+the trapezoidal rule with a stepsize h equal to an integer divisor of b— a. For
+a single choice of h the result computed can be expanded by an asymptotic
+formula of the form
+
+T(h) =I + Cyn? +Coht $---,
+
+so that, using a sequence h = H,27!H,2-?H,... we arrive at the
+approximations Ty = T(H), T, = T($H), T2 = T(}H), ... with expansions
+
+Ty =1+ C,H? +C2H* +---,
+Ti =1+4C,H? + GCoH* +---,
+Tz =14+ GOH? + AjCoH*+---,
+
+By forming
+
+we obtain an ‘improved’ sequence in which the C,H? terms are eliminated
+from the asymptotic expansions so that convergence towards the exact result
+J is more rapid as terms in the sequence are calculated. Similarly, a second
+sequence of improved approximations can be found from
+
+16 1
+Torz = 7p 22 - Tel
+
+16 1
+Ti23 = 75223 - areata
+
+This idea has an application to Runge-Kutta methods for ordinary
+differential equations on the small scale of a single step, repeated with
+two steps and half the original value of h. Let y,—-1 denote an incoming
+approximation for y(2p_1) and y, the solution computed as an approximation
+to y(@n) = y(fn-1 + A) using a Runge-Kutta method with tableau

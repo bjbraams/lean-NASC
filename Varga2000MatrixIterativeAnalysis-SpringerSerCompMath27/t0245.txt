@@ -1,0 +1,54 @@
+238 7. Alternating-Direction Implicit Iterative Methods
+
+horizontal mesh lines, and then, for the second equation of (7.11), we solve
+along vertical mesh lines.
+
+We remark that the vector u(™+!/?) is treated as an auxiliary vector
+which is not retained from one complete iteration to the next. In contrast to
+the variants of the successive overrelaxation technique, it is also interesting
+to note from (7.11) that one does not always make use of components of the
+latest iterate of the vector u in this iterative procedure.
+
+We combine the two equations of (7.11) into the form
+
+(7.12) au) — 7, u™Mig. i(k), m>0,
+where
+
+(7.13) Tp = (VY +r1)(rl — Wi)(Ai +1)“ (rI - V4),
+(7.14) gr(k) = (Vit rl)“ 1{(rI — W1)(Ai + r1)7} +: I}k.
+
+We call the matrix T, the Peaceman-Rachford matric. If €™ := u™ —u
+is the error vector associated with the vector iterate u(™, then e(™+)) =
+
+Trm4i€™, and in general
+m
+
+(7.15) e™ = (7, }, m>1,
+j=l
+
+where
+
+m
+[ts = Tem Temi Tr:
+j=l
+
+Similar to the Chebyshev semi-iterative method of Chap. 5, we see here that
+the acceleration parameters rm can be varied from one iteration to the next.
+To indicate the convergence properties of (a Tr), we first consider
+
+the simple case where all the constants rj are equal to the fixed constant
+r > 0. In this case, the matrix T;., defined as
+
+(7.16) T= (YUtrDT-(Yi+r1)7},
+
+is similar to T,, and thus has the same eigenvalues as T,. With (7.13), it
+follows that we can express T; as
+
+(7.17) T, = {(rI — Wy)(A +r1)71}- {(rI - VW) trl) }.
+
+With our knowledge of matrix norms and spectral radii from Chap. 1, it is
+evident that
+
+o(Tr) = e(Er) < Fell < |] (PT — Ha)(Ha +r2)~"II
+
+(7.18) Wel - Vy + rt)".

@@ -1,0 +1,53 @@
+132. NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+at r fi
+2 2
+a f
+a= » f=] . 4,
+aM f%
+
+then the linear operator f’(a) is represented by the matrix of partial
+derivatives
+
+fila) f(a) +> fila) | oft
+
+a8
+ae
+
+Re) fo fo | | oF be Bp
+fiay=| 2 WO) | bat BaF Be
+: : : 5p 5p 5p
+fe) fq) -- fy | [9 9G .. Sh,
+
+Second and higher derivatives are bilinear and multilinear operators. In the
+tensor representation
+ar fi
+Oj, Baj. +++ Oa;, ,
+the argument (a) is omitted, for convenience, if its value is understood.
+Finally, in this subsection, we remark that evaluation of the result of
+
+Faia (a) =
+
+operating with the order k derivative a ja---j,» 88 a k-linear operator, on the
+collection of k arguments v1, v2,--., v4 € R™, gives the expression
+3p Sap ee eee (304a)
+
+Rislje=1l  ja=l
+
+The complicated appearance of (304a) can be alleviated by omitting all
+the summation symbols and regarding them as implied. This is the well-
+known ‘summation convention’, and we use this notational simplification
+freely throughout this book. Thus we write, instead of (304a),
+
+a ee
+305 Taylor’s theorem
+We start from the identity,
+f(a +6) = f(a) + f'(a)() + HF"(@)(6, 6) +
+
+et FIO 65...,5) + Bay
+where the ‘remainder’ R,, is given by
+
+(305a)
+
+Baas [po (a + €6)(6,6,...,6)(1- 6)"
+a= ap ff POM a GO) 5, A) (I~ BYU.

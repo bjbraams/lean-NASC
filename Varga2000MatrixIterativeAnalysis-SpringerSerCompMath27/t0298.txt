@@ -1,0 +1,39 @@
+8.3 Matrix Approximations for exp(—tS) 291
+
+Proof. The result of (8.44) follows by direct computation. For the backward
+difference matrix approximation (I + AtS)~, the eigenvalues of this matrix
+are (1 + At);)~!. Since the real part of (1 + AtA,) is greater than unity for
+all At > 0, then this matrix approximation is unconditionally stable. The
+proof for the Crank-Nicolson matrix approximation follows similarly. (See
+Exer. 7.)
+
+One might ask how the approximations of exp(—AtS), which we have dis-
+cussed, as well as other approximations, are generated. This is most simply
+described in terms of Padé rational approximations?” from classical com-
+plex analysis. To begin, let f(z) be any analytic function in the neighborhood
+of the origin:
+
+(8.45) F(z) = a9 +a1z + 4927 +++.
+We consider approximations to f(z) defined by
+
+f(z) : Np,q(2)
+
+dp,q(z)’
+
+with np,q(z) and dp,q(z) respectively polynomials of degree q and p in z, and
+we assume that dp(0) # 0. We now select, for each pair of nonnegative
+integers p and q, those polynomials npg(z) and dp,g(z) such that the Tay-
+lor’s series expansion of np,q(z)/dp,q(z) about the origin agrees with as many
+leading terms of f(z) of (8.45), as is possible. Since the ratio np,q(z)/dp,q(z)
+contains p+ q+ 1 essential unknown coefficients, it is evident that the ex-
+pression
+
+(8.46) dp,q(z) (2) — Np,q(z) = O(|z/P*741), Jz] 4 0,
+
+gives rise to p + q+ 1 linear equations in these essential unknowns, whose
+solution determines these unknown coefficients. In this way, one can generate
+the double-entry Padé table for f(z). It can be verified!® that the first few
+entries of the Padé table for f(z) = exp(—z) are given by:
+
+17 Due to Padé (1892). See, for example, Wall (1948), Chap. XX.
+18 See Exer. 3.

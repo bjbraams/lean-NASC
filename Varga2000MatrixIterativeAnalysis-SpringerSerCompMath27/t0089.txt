@@ -1,0 +1,46 @@
+3.4 The Ostrowski-Reich Theorem 81
+
+5.
+a. Let
+0-2 2
+B:=|-1 0-1
+—2-2 0
+Show that p(B) <1 while p(L;) > 1.
+b. Let
+1 01-1
+B:==|-2 0-2
+2} 11 0
+
+Show that p(B) > 1 while p(£1) < 1. (Collatz (1942b)).
+c. Construct similar examples using 4 x 4 matrices.
+
+6. Let B = L+U be a nonnegative irreducible n x n Jacobi matrix,
+n > 2. Prove that the spectral radius of the Gauss-Seidel matrix £, =
+(I — L)-1U is positive and that its associated eigenvector has positive
+components.
+
+7. Let B=L+U bea nonnegative irreducible nxn Jacobi matrix, n > 2.
+Prove that the Gauss-Seidel matrix £; = (I — L)~1U is reducible.
+Moreover, show that there is but one diagonal submatrix of the reduced
+normal form of £ with spectral radius p(C1). Finally, show that £1x >
+O whenever x > 0.
+
+8. If the n x n Jacobi matrix B = L +U > O is such that p(B) > 0,
+prove that
+m(x) < m(xy) < ym(z)
+
+for alla >0,y>1.
+
+*9. If the n x n Jacobi matrix B = L+U > O is such that p(B) > 0,
+prove, only using Theorem 3.8, that n(c) is unbounded as o — +00.
+Similarly, prove that m(c) is unbounded as 0 — +00 (Kahan (1958)).
+
+10. Ifthe n x n matrix B = L +U is nonnegative and irreducible, prove
+that the curves y; = m(c) and yp = intersect in a unique point with
+a positive abscissa.
+
+3.4 The Ostrowski-Reich Theorem
+
+In the previous section, the Jacobi and Gauss-Seidel iterative methods were
+compared in terms of their spectral radii in only the nonnegative case, and
+we saw how the matrix property of being strictly or irreducibly diagonally

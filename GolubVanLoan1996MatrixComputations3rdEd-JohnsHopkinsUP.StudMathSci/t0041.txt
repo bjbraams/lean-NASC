@@ -1,0 +1,107 @@
+2.2. VECTOR NORMS 53
+A unit vector with respect to the norm || - |[ is a vector x that satisfies
+(iz =1.
+
+2.2.2 Some Vector Norm Properties
+A classic result concerning p-norms is the Holder inequality:
+
+11
+iz7yl < zipivl, <+-=1 (2.2.2)
+Pog
+A very important special case of this is the Cauchy-Schwartz inequality:
+Iz7yl < [lz [lolly lle (2.2.3)
+All norms on RR” are equivalent , i.e., if |] - ||, and || - [|g are norms on
+
+RR", then there exist positive constants, c, and c; such that
+alti Siti, Seallzl. (2.2.4)
+
+for all z € IR". For example, if z € IR", then
+
+Ith < ith s vaicle (2.2.5)
+Itt. < Ith < valzie (2.2.6)
+lz. < Utlh < allel. (2.2.7)
+
+2.2.3 Absolute and Relative Error
+
+Suppose @ € IR" is an approximation to z € IR". For a given vector norm
+I» |] we say that
+
+faba = | 2-2]
+is the absolute error in @. If z ¥ 0, then
+
+ea = bez
+a Tel
+
+Prescribes the relative error in ¢. Relative error in the oo-norm can be
+translated into a statement about the number of correct significant digits
+in Z. In particular, if
+l@-zH.
+2 Hoo
+then the largest component of @ has approximately p correct significant
+digits.
+
+Example 2.2.1 [fz = (1.234 .05674)7 and # = (1.235 .05128)7, then {| 2 — = [igo /ll = Heo
+= 0043 = 10, Note than 2) has about three significant digits that are correct while
+only one significant digit in 22 is correct.
+
+= 10°",
+
+54 CHAPTER 2. MATRIX ANALYSIS
+
+2.2.4 Convergence
+We say that a sequence {x*)} of n-vectors converges to = if
+
+lim || 2® -z||=0.
+ko
+
+Note that because of (2.2.4), convergence in the a-norm implies convergence
+in the @-norm and vice versa.
+
+Problems
+
+P2.2.1 Show thet if z € R, then limy—oo {fz Il, = Hz lloo-
+
+P2.2.2 Prove the Cauchy-Schwarts inequality (2.2.3) by considering the inequality
+0 < (ax + by)? (az + by) for suitable scalars a and 6.
+
+P2.2.3 Verify that {[ - |], ll « ila, and If - ||. are vector norms.
+
+P2.2.4 Verify (2.2.5)-(2.2.7). When is equality achieved in each result?
+
+P2.2.5 Show that in R", 2) — 2 if and only if 2 — t, for k= lin.
+
+P2.2.6 Show that any vector norm on MR” is uniformly continuous by verifying the
+inequality | lz] -llvii<iz—vll-
+
+P2.2.7 Let || - || be » vector norm on R™ and amume A € R™** | Show that if
+rank(A) =n, then jz ||, = || Az |] is a vector norm on R”.
+
+P2.2.8 Let 2 and y be in R” and define y:R — R by y(a) = |i z — ay [lz. Show that
+is minimized when a = 27 y/yTy.
+
+P2.2.9 (0) Verify that || z lly = (lzil?-+---+ lanl)? is vector norm on €". (b) Show
+that if z € ©” then jz Ip Se (it Re{z) |], + il Im(z} ll,)- (c) Find a constant cp, such
+that cn (|] Re(x) [lz + || Im(z) liz) < I] 2 lz for all x EC".
+
+P2.2.10 Prove or disprove:
+
+1+ Jn
+VER = fjulyllvileo < Ltvey
+
+SH lle.
+
+Notes and References for Sec. 2.2
+
+Although 4 vector norm is “just” a generalization of the absolute value concept, there
+are some noteworthy subtleties:
+
+J.D. Pryce (1984). “A New Measure of Relative Error for Vectors,” SIAM J. Num.
+Anal, 21, 202-21.
+
+2.3. Matrix Norms
+
+The analysis of matrix algorithms frequently requires use of matrix norms.
+For example, the quality of a linear system solver may be poor if the ma-
+trix of coefficients is “nearly singular.” To quantify the notion of near-
+singularity we need a measure of distance on the space of matrices. Matrix
+norms provide that measure.

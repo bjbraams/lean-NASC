@@ -1,0 +1,54 @@
+8.2 Essentially Positive Matrices 281
+
+a(x; t)
+B(x; t)
+
+8. To show that choices other than diagonal matrices are possible for the
+matrix C of (8.11), consider the problem
+
+b. whenever ((x;t) > 0, then
+
+is time-independent.
+
+Ou(z,t) _ 6u(z,t)
+
+at sC
+
+where u(0;t) = a1, u(1;t) = a2 and u(z;0) = g(x), for0 <2 <1,
+
+with a, and a scalars. Letting 2; = ih where h = 1/(N +1) for
+0<i<N+1 and u(z;;t) := u,(t), show that
+
+0<2<1,t>0,
+
+§, | Fy llowlt) + usa) wins OH
+
+= tinal) ~ a) Fun) . 5(),
+
+1<i<N, where7;(t) = O(h*) ash — 0 for0 <t < T if u(z,t)/Ox®
+is continuous and bounded in 0 < x < 1,0 <t < T. In this case, the
+matrix C is tridiagonal.
+
+O\|F
+
+9. Let B:= Le 5 . Show that
+
+sinh(t,/FF*)
+h(tV FP F* ——— ] iF
+exp(B) = | 7 a iP)
+
+sin! *
+—_——_ ] tF* h(t./F*F
+( WPF } cosh(ty FF)
+
+(Note that if cosh(/z) := p29 z*/(2k)! and if sinh(./z)/Vz :=
+ey 2*/(2k + 1)!, then cosh(/z) and sin(V/2)/./z are entire func-
+tions of z, i.e., they are analytic functions of z in all of C. Hence, from
+Exer. 1, Sect. 3.5, the matrices cosh VA and sinh(VA)/VA are defined
+for any square complex matrix A.)
+
+8.2 Essentially Positive Matrices
+
+The exponential matrix exp(—tC~1!A), which resulted from the semi-discrete
+approximations of the previous section, has interesting matrix properties. We
+begin with

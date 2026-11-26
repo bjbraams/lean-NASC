@@ -1,0 +1,118 @@
+3.4. PIVOTING 109
+
+3.4 Pivoting
+
+The analysis in the previous section shows that we must take steps to ensure
+that no large entries appear in the computed triangular factors £ and U.
+The example
+
+0001 1 1 O}f 01 1
+a=| 1 1} = [10.000 1 | [ °% _ sooo | = 22
+
+correctly identifies the source of the difficulty: relatively small pivots. A
+way out of this difficulty is to interchange rows. In our example, if P is the
+
+permutation
+01
+p= [ro]
+then
+
+1 1 1 oyf1 3
+PA=[ coor 1] = | ooo | Lo ose | = 22:
+
+Now the triangular factors are comprised of acceptably small elements.
+
+In this section we show how to determine a permuted version of A that
+has a reasonably stable LU factorization. There are several ways to do
+this and they each correspond to a different pivoting strategy. We focus
+on partial pivoting and complete pivoting. The efficient implementation
+of these strategies and their properties are discussed. We begin with a
+discussion of permutation matrix manipulation.
+
+3.4.1 Permutation Matrices
+
+The stabilizations of Gaussian elimination that are developed in this sec-
+tion involve data movements such as the interchange of two matrix rows.
+In keeping with our desire to describe all computations in “matrix terms,”
+it is necessary to acquire a familiarity with permutation matrices. A per-
+mutation matrix is just the identity with its rows re-ordered, e.g.,
+
+P=
+
+oOooem
+
+0
+a
+1
+a
+
+geoor
+
+0
+1
+0
+0
+
+An n-by-n permutation matrix should never be explicitly stored. It is much
+more efficient to represent a general permutation matrix P with an integer
+n-vector p. One way to do this is to let p(k) be the column index of the
+sole “1” in P’s kth row. Thus, p = (413 2] is the appropriate encoding of
+the above P. It is also possible to encode P on the basis of where the “1”
+oceurs in each column, e.g., p = [2 43 1].
+
+110 CHAPTER 3. GENERAL LINEAR SYSTEMS
+
+If P is & permutation and A is a matrix, then PA is a row permuted
+version of A and AP is a column permuted version of A. Permutation
+matrices are orthogonal and so if P is a permutation, then P-} = PT. A
+product of permutation matrices is a permutation matrix.
+
+In this section we are particularly interested in interchange permuta-
+tions, These are permutations obtained by merely swapping two rows in
+the identity, e.g.,
+
+B=
+
+Yr ooeg
+eore
+oroeo
+ooo-r
+
+Interchange permutations can be used to describe row and column swap-
+ping. With the above ¢by-4 example, EA is A with rows 1 and 4 inter-
+changed. Likewise, AE is A with columns 1 and 4 swapped.
+
+If P = E,,--- Ey and each E, is the identity with rows k and p(k)
+interchanged, then p(1:n) is a useful vector encoding of P. Indeed, z € IR”
+can be overwritten by Px as follows:
+
+for k =1:n
+
+2(k) — 2(p(k))
+
+end
+
+Here, the “++” notation means “swap contents.” Since each £, is symmetric
+and PT = Ey --- En, the representation can also be used to overwrite x with
+Pr:
+
+for k=n:-1:1
+
+x(k) — 2(p(k))
+
+end
+
+It should be noted that no floating point arithmetic is involved in a permu-
+tation operation. However, permutation matrix operations often involve the
+irregular movement of data and can represent a significant computational
+overhead.
+
+3.4.2 Partial Pivoting: The Basic Idea
+
+We show how interchange permutations can be used in LU computations to
+guarantee that no multiplier is greater than one in absolute value. Suppose
+
+3°17 «#10
+A=|[2 4 -2].
+
+6 18 -12

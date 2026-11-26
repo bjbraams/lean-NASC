@@ -1,0 +1,23 @@
+6.3 Derivation of Finite Difference Approximations in Higher Dimensions 217
+
+where A(e) is a 4x 4 matrix. If B(e) is the associated 4 x 4 point Jacobi
+matrix derived from A(e), find p[B(e)]. Prove that
+
+lim p[B(@)] = 1.
+Also, find Roo[B(0.0001)]/Roo[B(3)]-
+3. Consider the regular hexagonal mesh in Fig. 6.14. Derive, by means of
+
+integration, a four-point difference approximation to
+
+-Vutou=f
+
+<)
+
+Fig. 6.14.
+
+4. Consider the regular triangular mesh in Fig. 6.15. Derive, by means of
+integration, a seven-point difference approximation to
+
+-Vutousf.
+
+Fig. 6.15.

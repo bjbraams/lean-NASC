@@ -1,0 +1,46 @@
+GENERAL LINEAR METHODS 379
+
+which leads to
+
+8 r
+Sie — hoLlaze)n < » [Ujxl max ae” -y" |
+
+k=1
+and to
+I?) — Vill < hey max Fe — Yell
+Substitute this bound into (515d) and we obtain the required result. Oo
+
+To complete the argument that stability and consistency imply convergence,
+we estimate the global error in the computation of y(%) by carrying out n steps
+from an initial value y(zo) using a stepsize equal to h = (% — x9)/n.
+
+Lemma 515C Using notations already introduced in this subsection, together
+with
+
+4 q
+
+- Yo — ¥:
+gBll=| *  ? | 4 =0,1,2,...,n,
+
+or — yt!
+
+for the accumulated error in step number i, we have the estimate
+
+jer] < exp(aC( — 29))|E)|| + BE (exp(aC(& - xo))~1), @>9,
+
+~ | exp(aC(% — 20))||E"ll| + BC(z — xo)h, a=0,
+where C = supj-o,1,... ||[V*lloo and the norm of El" is defined as the mavimum
+of the norms of its r subvectors.
+
+Proof. The result of Lemma 515B can be written in the form
+EO = (Ve nE EK) + Ki,
+
+from which it follows that
+
+El = (vi @ NEM + svi @NKit-A,
+and hence that =
+i) < CHE) 4 CR,
+Insert the known bounds on the terms on the right-hand side, and we find
+\|E"l| < akc > ||B")|| + CiBh? + C\\EM)|.
+
+j=0

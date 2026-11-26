@@ -1,0 +1,42 @@
+56 2. Nonnegative Matrices
+
+(2.48) G@,): GB):
+
+R B R B
+
+It is easy to deduce by inspection of the above directed graphs that these
+matrices are irreducible, with the exception of Bo.
+
+‘We now apply the result of Theorem 2.22 to the particular matrices
+Bi, B3, and By of (2.45) and (2.46). For the matrix B,, inspection of the
+graph G(B;) of (2.47) shows that
+
+ky = g.c.d. {4, 8, 12,---} = 4,
+
+so that By, is cyclic of index 4. For the matrix B3, we find closed directed
+paths connecting P, to itself of lengths 3 and 4, whose greatest common
+divisor is unity. Thus, kg = 1 and we conclude that B3 is primitive. For the
+matrix Bg, it is obvious that there is a loop, a closed directed path of length
+one, connecting P; to itself, so that kj = 1, and thus By is also primitive.
+
+With Theorem 2.22, it is convenient now to introduce the almost obvious
+notions of cyclic and primitive finite directed graphs. For this we make the
+following
+
+Definition 2.23. If G is a strongly connected finite directed graph, then G
+is a cyclic graph of index k > 1, or a primitive graph if the greatest
+common divisor of all the length of its closed paths is, respectively, k > 1 or
+k=1.
+
+These simple results from our excursion into graph theory will be very use-
+ful to us in Chap. 4 and 6. In Chap. 6 for example, we consider approximating
+differential equations by difference equations. These difference equations, a
+system of linear equations, have an associated directed graph, and the ex-
+amination of this directed graph will be helpful in deciding when particular
+theoretical results for various iterative methods are rigorously applicable.
+
+Exercises
+
+1. Construct the directed graph for the matrix A of Exer. 1, Sect. 2.3.
+In the normal form for this reducible matrix, determine whether the
+non-null diagonal submatrices R;,; are cyclic or primitive.

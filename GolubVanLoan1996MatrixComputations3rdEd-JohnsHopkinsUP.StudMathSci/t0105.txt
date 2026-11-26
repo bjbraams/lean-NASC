@@ -1,0 +1,115 @@
+4.5. Buiock SysTems 18
+
+It follows that solving a Kronecker product system,
+(BOC)z=d
+
+is equivalent to solving the matrix equation CXBT = D for X where
+x = vec(X) and d = vec(D). This has efficiency ramifications. To illustrate,
+suppose B,C ¢ R"*" are symmetric positive definite. If A= B@C is
+treated as a general matrix and factored in order to solve for z, then O(n°)
+flops are required since B @C € m’~*"_ On the other hand, the solution
+approach
+
+1. Compute the Cholesky factorizations B = GGT and C = HH™.
+2. Solve BZ = DT? for Z using G.
+3. Solve CX = Z7 for X using H.
+4, 2 = vee(X).
+invalves O(n3) flops. Note that
+B@C =GG" @ HHT =(G@H\GeH)
+
+is the Cholesky factorization of B @C because the Kronecker product of a
+pair of lower triangular matrices is lower triangular. Thus, the above four-
+step solution approach is a structure-exploiting, Cholesky method applied
+to B@C.
+
+We mention that if B is sparse, then B®C has the same sparsity at the
+block level. For example, if B is tridiagonal, then B@C is block tridiagonal.
+
+Problems
+
+P4.6.1 Show that a block disgonaily dominant matrix is nonsingular.
+P4.5.2 Verify that (4.5.6) implies (4.5.7) and (4.5.8).
+
+P4.5.3 Suppoe block cyclic reduction is applied with D given by (4.5.12) and F = —Iy.
+What can you say about the band structure of the matrices F) and Dl) that arise?
+
+P4.5.4 Suppose A € R"** is nonsingular and that we have solutions to the linear
+systems Az = 6 and Ay = g where b,g € R® are given. Show how to solve the system
+
+(* 2]{z]-[s]
+
+in O(n) flops where a, A € R and h € R” are given and the matrix of coefficients Ay is
+nonsingular. The advisability of going for such « quick solution is a complicated issue
+that depends upon the condition numbers of A and A, and other factors.
+
+P4.5.5 Verify (4.5.16)-(4.5.19).
+P4.S.7 Show how to construct the SVD of 3 @C from the SVDs of 8 and C.
+P4.3.8 If A, B, and C ara matrices, then it can be shown that (A@B)@C = A@(BOC)
+
+182 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+
+and so we just write A@ 8B @C for this matrix. Show how to solve the linear system
+(A@ B@C)z = d assuming that A, B, and C are symmetric positive definite.
+
+Notes and References for Sec. 4.5
+
+The following papers provide insight into the various nuances of block matrix computa-
+tions:
+
+JM. Varah (1972). “On the Solution of Block-Tridiagonal Systems Arising from Certain
+Finite-Difference Equations,” Math. Comp. 26, 859-68.
+
+JA. George (1974). “On Block Elimination for Sparse Linear Systems,” SIAM J. Num.
+Anal. if, 585-603.
+
+R. Fourer (1984). “Staircase Matrices and Systems,” SIAM Review £6, 1-71.
+
+M.L. Merriam (1985). “On the Factorization of Block Tridiagonals With Storage Con-
+strainta,” SIAM J. Sci. and Stat. Comp. 6, 182-192.
+
+Tha property of block diagonal dominance and its various implications is the central
+theme in
+
+D.G. Feingold and R.S. Varga (1962). “Block Disagonally Dominant Matrices and Gen-
+eralizations of the Gershgorin Circle Theorem,” Pacific J. Math. 12, 1241-50,
+
+Early methods that involve the idea of cyclic reduction are described in
+
+RW. Hockney (1965). “A Fast Direct Solution of Poisson's Equation Using Fourier
+Analysis, "J. ACM 18, 95-115.
+
+B.L. Busbee, G.H. Golub, aad C.W. Nielson (1970). “On Direct Methoda for Solving
+Poisson’s Equations,” SIAM J. Num. Anal. 7, 627-56.
+
+The accumulation of the right-hand aide must be done with great care, for otherwise
+there would be a significant lom of accuracy. A stable way of doing thia is described in
+
+O. Buneman (1969). “A Compact Non-Iterative Poisson Solver,” Report 294, Stanford
+University Institute for Plasma Research, Stanford, California.
+
+Other literature concerned with cyclic reduction includes
+
+F.W. Dorr (1970). “The Direct Solution of the Discrete Poisson Equation on a Rectan-
+gle,” SIAM Review 12, 248-63.
+
+B.L. Buzbee, F.W. Dorr, J.A. George, and G.H. Golub (1971). “The Direct Solution of
+the Discrete Poisson Equation on Irregular Regions,” SIAM J. Num. Anal. 8, 722-36.
+
+F.W. Dorr (1973). “The Direct Solution of the Discrete Poison Equation in O(n?)
+Operations,” SIAM Review 15, 412-415.
+
+P. Concus and G.H. Golub (1973). “Use of Fast Direct Methods for the Efficient Nu-
+merical Solution of Nonseparable Elliptic Equations,” SIAM J. Num. Anal. 10,
+1103-20.
+
+B.L. Buzbee and F.W. Dorr (1974). “The Direct Solution of the Biharmonic Equation
+on Rectangular Regions and the Poisson Equation on irregular Regions,” SIAM J.
+Num. Anal. 11, 753-63.
+
+D. Heller (1976). “Some Aspects of the Cyclic Reduction Algorithm for Block Tridiagonal
+Linear Systems,” SIAM J. Num. Anal. 13, 484-96.
+
+Various generalizations and extensions to cyclic reduction have been proposed:
+
+P.N. Swarztrauber and R.A. Sweet (1973). “The Direct Solution of the Discrete Poisson
+Equation on a Disk,” SIAM J. Num. Anal. 10, 900-907.

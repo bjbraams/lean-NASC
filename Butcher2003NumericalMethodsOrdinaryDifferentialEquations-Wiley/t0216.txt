@@ -1,0 +1,61 @@
+204. NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Proof. Let P and Q be arbitrary polynomials of degrees less than 7 and less
+than ¢ respectively. By using the standard polynomial basis, we see that B(n),
+C(n), D(n) and E(n, ¢) are equivalent respectively to the statements
+
+5 1
+> 4;P(e;) = [ P(x)dz, (343h)
+j=l o
+
+8 C5
+SraijP(cj) = [ P(a)dz, i=1,2,...,8, (343i)
+j=l 9
+
+3 1
+Sob: P(ei)aiy = bj | P(a)dr, 7 =1,2...,8, (3435)
+ey
+
+i=1
+s
+
+WPlaayQles)= [ * P(e) ([ eceyar) ae. (343k)
+
+(3431)
+
+i,j=
+
+In each part of the result B(n) holds with 7 > 1, and hence we can assume
+that Vier b; = 1. Hence the reflected tableau can be assumed to be
+
+l—q | bi-—ai b2-a12 +++ by — Gis
+
+1— cg | bi —~aq1 bg —Gg2 +++ by — Gas
+
+l—c, | by—Gs1 be—Ge2 ++: by — Gee
+| by be vee bg
+
+To prove (343d) we have, using (343h)
+
+& 1 1
+dara —o)= [ P(l-2)de = [ P(a)dz.
+
+To prove (343e) we use (343i) to obtain
+
+1 Ci
+326 - ais)P(1- 6) = [ P(2)da — [ P(1—2)dz
+
+™ 1 1
+= | P(a)de- [  P(a)dz
+0
+
+lc
+
+1-e;
+= [ P(a)dz.
+ci}
+Similarly, we prove (343f) using (343)):
+
+J :PUI — e4)(b5 — 045) = 0, f P(x)de ~ b; f P(1—2)dz
+
+i=1

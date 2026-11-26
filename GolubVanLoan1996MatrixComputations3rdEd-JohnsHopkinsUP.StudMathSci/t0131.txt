@@ -1,0 +1,104 @@
+5.2. THE QR FACTORIZATION 231
+
+Thus, we can think of g, as a unit 2-norm vector in the direction of
+
+k-1
+% = a — rag
+
+i=l
+where to ensure 2, € span{qi,...,@,-1}+ we choose
+Tie = Gray t=1k-1.
+
+This leads to the classical Gram-Schmidt (CGS) algorithm for computing
+A=Q:2,.
+
+R(1,1) = | AG, 1) fly
+
+Q6,1) = AG, 1)/ RG, 1)
+
+for k = 2:n
+R(1:k ~1,k) = Q(L:m, tk —1)TA(Lem, k)
+z = A(l:m,k) - Q(1:m, Lk - 1) R(1:k - 1,4) (5.2.3)
+R(k,k) = |Lz lle
+
+Q(lim, k) = 2/R(k,k)
+end
+
+In the kth step of CGS, the kth columns of both Q and 2 are generated.
+
+5.2.8 Modified Gram-Schmidt
+
+Unfortunately, the CGS method has very poor numerical properties in that
+there is typically a severe loss of orthogonality among the computed q;.
+Interestingly, a rearrangement of the calculation, known as modified Gram-
+Schmidt (MGS), yields a much sounder computational procedure. In the
+kth step of MGS, the kth column of Q (denoted by g,) and the kth row of
+R (denoted by r7) are determined. To derive the MGS method, define the
+matrix AM) ¢€ RMX (n-k+1) by
+
+ki n
+A-Soad = Yar? = [0a]. (5.2.4)
+part ink
+It follows that if
+A®lo{s B|
+1 n-k
+then reg = i] 2 lla, de = 2/ree and (regsi---Tin) = gf B. We then
+
+compute the outer product Alt!) = B — ay (rigyi-+-fin) and proceed
+to the next step. This completely describes the kth step of MGS.
+
+Algorithm 5.2.5 (Modified Gram-Schmidt) Given A ¢ R™*" with
+rank(A) = n, the following algorithm computes the factorization A = Q,R
+where Q, € R™*" has orthonormal columns and A; € R"*" is upper tri-
+angular.
+
+232 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+for k= 1:n
+Rik, k) = || A(1:m, &) [la
+Q(L:m, k) = A(L:m, k)/R(k, k)
+for j=k+ in
+Rk, 7) = Q(Lm, k)7 Aim, 3)
+A(L:m, j) = A(L:m, j) — Q(L:m, k) R(k, #)
+end
+end
+
+This algorithm requires 2mn? flops. It ia not possible to overwrite A with
+both Q, and R21. Typically, the MGS computation is arranged so that A is
+overwritten by Q, and the matrix A, is stored in a separate array.
+
+5.2.9 Work and Accuracy
+
+If one is interested in computing an orthonormal basis for ran(A), then
+the Householder approach requires 2mn? — 2n3/3 flops to get Q in fac-
+tored form and another 2mn? — 2n3/3 flops to get the first n columns of
+Q. (This requires “paying attention” to just the first n columns of Q in
+(5.1.5).) Therefore, for the problem of finding an orthonormal basis for
+ran(A), MGS is about twice as efficient as Householder orthogonalization.
+However, Bjérck (1967) has shown that MGS produces a computed Qi; =
+[41,.--.4n } that satisfies
+
+QTd: = 1+ Emes — || Emas lz uxo(A)
+
+whereas the corresponding result for the Householder approach is of the
+form
+
+QQ. = 1+ Ew En lau.
+Thus, if orthonormality is critical, then MGS should be used to compute
+orthonormal! bases only when the vectors to be orthogonalized are fairly
+independent. .
+
+We also mention that the computed triangular factor R produced by
+MGS satisfies || A — QR || * ul A || and that there exists a Q with perfectly
+orthonormal columns such that || A — QR || ~ ulj A]. See Higham (1996,
+p.379).
+
+Example 5.2.1 If modified Gram-Schmidt is applied to
+
+1 1
+Az] 107?) Oo xq(A) = 14-10?
+0 103
+1.00000 0 |
+
+[hh da] -| 001 -.707107
+0 -707100

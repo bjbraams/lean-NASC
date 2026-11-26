@@ -1,0 +1,44 @@
+6.4
+
+6.5 Asymptotic Convergence Rates for the Model Problem 233
+
+Although we have only briefly treated the derivation of finite difference
+approximations to boundary-value problems with physical interfaces,
+the accurate solution of such problems is quite important in practice.
+Sheldon (1958) considers the approximation of such problems with
+general curved internal interfaces, and the convergence of such dis-
+crete approximations has been studied by Downing (1960). Generally
+speaking, higher-order methods, such as described in Sect. 6.2, have
+not been practically applied in two-and higher-dimensional problems
+with interfaces, although there is some evidence by Mann, Bradshaw,
+and Cox (1957) that such applications are worthwhile. See also Nohel
+and Timlake (1959).
+
+The direct method of (6.61)-(6.62), although known as a special case
+of Gaussian elimination, was apparently advocated first for practi-
+cal use for computers by J. von Neumann and L. H. Thomas, and
+later by Bruce, Peaceman, Rachford, and Rice (1953). The stability
+of this procedure with respect to rounding errors has been considered
+by Douglas (1959) and Wilkinson (1961). A closely related procedure
+was suggested by Cuthill and Varga (1959), mainly to increase the
+efficiency of the line successive overrelaxation iterative method. The
+rounding error analysis of Douglas has been extended by Blair (1960)
+for this procedure.
+
+The extensions of the direct inversion of tridiagonal matrices to the
+direct inversion of block tridiagonal matrices has been considered more
+widely by Karlquist (1952), Cornock (1954), Meyer and Hollingsworth
+(1957), Nohel and Timlake (1959), Schechter (1960), Egervary (1960)
+and von Holdt (1962). Rounding errors are more serious in this appli-
+cation. Unfortunately, numerical experience with these methods is not
+extensive.
+
+Line successive overrelaxation (SLOR), on the other hand, has been
+used much more extensively in the United Stated, and has been treated
+theoretically by Arms, Gates, and Zondek (1956), and Keller (1958),
+and Keller (1960a). Two-line successive overrelaxation (S2LOR), first
+suggested by Heller (1960), has been investigated for efficient use by
+Parter (1959) and Varga (1960a). For second order equations, see Price
+and Varga (1962) for numerical results of the use and comparison of
+these different methods, as well as Appendix B. For applications of
+S2LOR to biharmonic problems, see Parter (1961c).

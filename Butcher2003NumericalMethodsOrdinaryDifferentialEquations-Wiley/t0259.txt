@@ -1,0 +1,53 @@
+RUNGE-KUTTA METHODS 247
+
+for which the computed results satisfy
+Y =yn11 + hA(L(Y —G) 4G’),
+Yn =Yn-1 + hb™ (L(Y — G) +").
+Eliminate Y, and we find
+tn = (1+ AEbT(I—ALA)“'1) ya + hb" (I - hLA)-“(G" = LG),
+
+where the coefficient of yn—1 is seen to be the stability function value
+R(AL) =1+hLb' (I —hLA)“1.
+By rearranging this expression we see that
+
+Yn = R(AL) (Yat - g(tn-s)) + g(tn—1) + Ab™G"
++ hLb" (I — hLA)“(hAG" — (G — 9(an-1)))
+
+= R(KL)(yn-1 — g(tn-1)) + (tn) ~ €0 — HLb"(I — hLA)~*e,
+
+where
+
+1 8
+co=h | 9 (@n—1 + hE)dE — b> big! (Gai + hes)
+0
+
+i=l
+is the nonstiff error term given approximately by (362d) and « is the vector
+of errors in the individual stages with component number ¢ given by
+
+CE 8
+af G' (Gar + h€)dé — hb aij! (G1 + hej).
+0
+
+j=
+If L has a moderate size, then hLb™ (I — hLA)~1¢ can be expanded in the
+form
+
+ALOT (I+ hLA+ WL? A? +--Je
+
+and error behaviour of order p can be verified term by term.
+On the other hand, if AL is large, a more realistic idea of the error is found
+using the expansion
+
+1,, 12
+het Ee
+
+and we obtain an approximation to the error, g(tn) — yn, given by
+
+(I -hLA)") = Ao,
+
+g(tn) — Yn = R(AL) ((en-1) - Yn-1) + €
+—bT Ae — IL Ae — OL OTA See,
+Even though the stage order may be low, the final stage may have order p.
+This will happen, for example, if the final row of A is identical to the vector
+6". In this special case, the term 6° A~e will cancel eg.

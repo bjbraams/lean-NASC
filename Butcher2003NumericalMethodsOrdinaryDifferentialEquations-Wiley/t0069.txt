@@ -1,0 +1,47 @@
+56 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+minimum stepsize ratios that will be permitted. Typically Af = 2,m = $
+and S = 0.9, and we adopt these values. Fortunately, this experiment of using
+variable stepsize is successful, as is seen from Figure 203(ii).
+
+There is a loss of efficiency, in that unstable behaviour typically results
+in wide variations of stepsize, in sequences of adjacent steps. However, there
+are relatively few steps rejected, because of excessive error estimates. For the
+special choice of the tolerance T = 0.02, 38 successful steps were taken, in
+addition to 11 failed steps. The value of the stepsize h as a function of the
+value of x, at the beginning of each of the steps, is shown in Figure 203(iii).
+
+The phenomenon experienced with this example goes under the name of
+‘stiffness’. To understand why this problem is stiff, and why there seems to
+be a value of h such that, for values of the stepsize above this, it cannot
+be solved by the Euler method, write v;(x) and v2(z) for the deviations of
+yi(z) and y2(2x) from the exact solution. That is, y:(z) = cos(x) + v1 (a) and
+y2(x) = sin(x) + v(x). Because the system is linear, it reduces in a simple
+way to
+
+du,
+ad |_| -16 12 v1 2
+= . 03b
+dvz 12-9 v2 (203b)
+dz
+To simplify the discussion further, find the eigenvalues, and corresponding
+eigenvectors, of the matrix A occurring in (203b), where
+
+A= -16 12 ;
+12 -9
+The eigenvalues of A are \; = 0 and 2 = —25 and the eigenvectors are the
+columns of the matrix
+
+we find that
+
+dun .
+
+“dz _ 0 0 Wi
+
+dw. | | 0 -25 || we |"
+
+in J
+
+The components of w each have bounded solutions, and thus the original
+
+differential equation is stable. In particular, any perturbation in we will
+

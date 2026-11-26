@@ -1,0 +1,48 @@
+RUNGE-KUTTA METHODS 251
+
+Table 363(II) Zeros of Laguerre polynomials for degrees s = 1,2,...,8
+
+1,005 bs
+1.0000000000
+
+0.5857864376  3.4142135624
+0.4157745568  2.2942803603  6.2899450829
+0.3225476896  1.7457611012  4.5366202969 9.3950709123
+
+0.2635603197 1.4134030591 3.5964257710 7.0858100059
+12.6408008443
+
+6 0.2228466042 1.1889321017 2.9927363261 5.7751435691
+9.8374674184 15.9828739806
+
+7 0.1930436766 1.0266648953 2.5678767450 4.9003530845
+8.1821534446 12.7341802918 19.3957278623
+
+8 0.1702796323 0.9037017768  2.2510866299 4.2667001703
+7.0459054024 10.7585160102 15.7406786413 22.8631317369
+
+oo ® WO NH RI] ®
+
+The key to the efficient implementation of singly-implicit methods is the
+similarity transformation matrix that transforms the coefficient matrix to
+lower triangular form. Let T denote the matrix with (i, j) element
+
+tig = Dja(&), 4,9 =1,2,...,8.
+The principal properties of T and its relationship to A are as follows:
+Theorem 363A The (i,j) element of T—' is equal to
+
+&
+7 8? Ds_4 (5
+Let A denote T—'AT, then
+
+LialG). (363d)
+
+1 090 0 0
+-1 10 0 0
+~ 0-11: O90
+A=A . .. a (363e)
+0 0 0 1
+0 0 0 -1 1
+
+Proof. To prove (363d), use the Christoffel-Darboux formula for Laguerre
+polynomials in the form

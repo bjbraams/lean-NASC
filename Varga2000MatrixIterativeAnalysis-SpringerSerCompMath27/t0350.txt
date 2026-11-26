@@ -1,0 +1,77 @@
+References 345
+
+Kjellberg, G. (1961) On the successive over-relaxation method for cyclic operators,
+Numer. Math. 3, 87-91. [147]
+
+Koch, Timo and Liesen, Jiirgen (1999) The conformal “bratwurst” map and asso-
+ciated Faber polynomials,, Numer. Math. (to appear). /182/
+
+Kénig, D. (1950) Theorie der endlichen und unendlichen Graphen, Chelsea Pub-
+lishing Co., New York, 258 pp. /[19, 29]
+
+Kontovasilis, K., Plemmons, R. J. and Stewart, W. J. (1991) Block cyclic SOR
+for Markov chains with p-cyclic infinitesimal generators, Linear Algebra Appl.
+154-156, 145-223. [178]
+
+Kotelyanskii, D. M. (1952) Some properties of matrices with positive elements, Mat.
+Sb. 31, (73), 497-506. [107]
+
+Krautstengl, Alan and Varga, Richard S. (1995) Minimal Gerschgorin sets for par-
+titioned matrices II. The spectral conjecture, Elec. Trans. Numer. Anal. 3, 66-82.
+
+29]
+
+kala! M. G. and Rutman, M. A. (1948) Linear operators leaving invariant a cone
+in a Banach space, Uspehi Mat. Nauk 3, (23), 3-95. /59/
+
+Kreiss, Heinz-Otto (1959a) Uber Matrizen die beschrankte Halbgruppen erzeugen,
+Math. Scand. 7, 71-80. 286, 310]
+
+Kreiss, Heinz-Otto (1959b) Uber die Differenzapproximation hoher Genauigkeit
+bei Anfangswertproblemen fiir partielle Differentialgleichungen, Numer. Math.
+1, 186-202. /311]
+
+Kulsrud, H. E. (1961) A practical technique for the determination of the optimum
+relaxation factor of the successive over-relaxation method, Comm. Assoc. Com-
+put. Mach. 4, 184-187. [327]
+
+Kuznetsov, Yu A. (1984) Matrix iterative methods in subspaces, Proceeding of the
+International Congress of Mathematicians, Warszawa, August 16-24, 1983. North
+Holland, Amsterdam. /84, 87, 106]
+
+Laasonen, P. (1949) Uber eine Methode zur Lésung der Warmeleitungsgleichung,
+Acta Math. 81, 309-317. /310]
+
+Lanczos, Cornelius (1950) An iteration method for the solution of the eigenvalue
+problem of linear differential and integral operators, J. Res. Nat. Bur. of Stan-
+dards 45, 255-282. / 180]
+
+Lanczos, Cornelius (1952) Solution of systems of linear equations by minimized
+iterations, J. Res. Nat. Bur. of Standards 49, 33-53. / 180]
+
+Lanczos, Cornelius (1956) Applied Analysis, Prentice Hall, Inc., Englewood Cliffs,
+NJ, 539 pp. /180, 181]
+
+Lanczos, Cornelius (1958) Iterative solution of large-scale linear systems, J. Soc.
+Indus. Appl. Math. 6, 91-109. /180/
+
+Lax, P. D. and Richtmyer, R. D. (1956) Survey of stability of linear finite difference
+equations, Comm. Pure Appl. Math. 9, 267-293. /292, 311]
+
+Lederman, W. (1950) Bounds for the greatest latent roots of a positive matrix, J.
+London Math. Soc. 25, 265-268. [60]
+
+Lees, Milton (1959) Approximate solution of parabolic equations, J. Soc. Indust.
+Appl. Math 7, 167-183. [911]
+
+Lees, Milton (1960) A priori estimates for the solutions of difference approximations
+to parabolic partial differential equations, Duke Math. J. 27, 297-311. /309]
+Lees, Milton (1961) Alternating direction and semi-explicit difference methods for
+parabolic partial differential equations, Numer. Math. 3, 398-412. /277, 309]
+Lees, Milton (1962) A note on the convergence of alternating direction methods,
+
+Math. of Comp. 16, 70-75. [272]
+
+Levinger, B. W. and Varga, R. S. (1966) Minimal Gerschgorin sets II, Pacific J.
+
+Math 17, 199-210. /29]

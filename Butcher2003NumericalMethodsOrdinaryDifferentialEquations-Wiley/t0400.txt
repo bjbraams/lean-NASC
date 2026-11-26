@@ -1,0 +1,45 @@
+390 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Theorem 531A Let M = (A,U,B,V) denote a general linear method and
+let € denote the algebraic representation of a starting method S. Assume that
+(53le) and (531f) hold in G/H,. Denote
+
+e=E€-BnD-Vé, inG.
+Then the Taylor expansion of S(y(xo + h)) — M(S(y(xo))) és
+Y Grow ees). (5818)
+
+r(t)>p a(t)
+
+Proof. We consider a single step from initial data given at zo and consider the
+Taylor expansion of various expressions about x9. The input approximation,
+computed by S has Taylor series represented by £. Suppose the Taylor
+expansions for the stage values are represented by 7 so that the stage
+derivatives will be represented by 7D and these will be related by (531le). The
+Taylor expansion for the output approximations is represented by ByD + VE
+and this will agree with the Taylor expansion of S(y(zo + h)) up to h? terms
+if (531f) holds. The difference from the target value of S(y(ao + h)) is given
+by (531g). Oo
+
+5382 An example of the algebraic approach to order
+
+We will consider the modification of a Runge-Kutta method, given by
+(502c). Denote the method by M and a possible starting method by S.
+Of the two quantities passed between steps, the first is clearly intended to
+approximate the exact solution and we shall suppose that the starting method
+for this approximation is the identity method, denoted by 1. The second
+approximation is intended to be close to the scaled derivative at a nearby point
+and we will assume that this is represented by 0: T# —+ R, where 6(0) = 0,
+O(r) = 1. The values of 6(¢) for other trees we will keep as parameters to
+be chosen. The question is: ‘are there possible values of these parameters for
+which M has order p = 4, relative to S?’
+
+We will start with & = 1 and & = @ and compute in turn m, mD, no,
+m™mD, 73, 73D and finally the representatives of the output approximations,
+which we will write here as £; and ). The order requirements are satisfied
+if and only if values of the free@ values can be chosen so that & = E& and
+&, = Ef. Reading from the matrix of coefficients for the method we see that
+
+m=&, m =& — 42+ 3mD,
+ns = & + &2 — 2mD + 2mD, .
+& =&+ §mD+ imD +t jmD, &=mD.
+The details of these calculations are shown in Table 532(I). Comparing the

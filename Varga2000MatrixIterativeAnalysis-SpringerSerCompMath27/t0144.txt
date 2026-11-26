@@ -1,0 +1,29 @@
+136 4. Successive Overrelaxation Iterative Methods
+
+R B
+A
+6):
+R B
+Fig. 4.7.
+
+As there is a closed path of G[Bg] with an unequal number of major and
+minor arcs, we see graphically that the matrix By is inconsistently ordered.
+This graph-theoretic interpretation of consistent orderings will be useful to us
+in Chap. 6, where we derive difference equations from differential equations.
+
+We now come to the major problem of finding bounds for p(L3g,.,) for any
+matrix B € S. Since
+
+ma(c) = p(B)o/hg(ing),
+
+where 1 < hg(c) < cosh(a/2) for all real a # 0, these inequalities for hg(a)
+allow us to conclude the following upper and lower bounds for mag(c):
+
+(4.61) p(B)o/? < ma(o) < p(B) ¢ ; *) , 0<o, of],
+
+which we have pictured in Fig. 4.8. Note that these curves are tangent to one
+another at o = 1.
+
+Fig. 4.8.
+
+Let 2 be an arbitrary eigenvalue of Lg, with

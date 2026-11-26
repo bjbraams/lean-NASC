@@ -1,0 +1,47 @@
+346 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+and this will imply that (451c) has the correct sign if G can be selected so
+that the (k + 1) x (k +1) matrix M is positive semi-definite, where
+
+G0 0 0
+M=agT Th 451
+aB' + Ba ie ele[s al: (451e)
+where, in this context, a and @ are the vectors
+
+1 Bo
+—O Ay
+a=} —% |, B= Bo
+ak Br
+
+Let mi, i,j = 0,1,2,...,k, denote the elements of M. For any vector
+U € R&+) | the fact that M is positive semi-definite implies that
+
+k
+> miz (Ui, U;) > 0.
+
+i,j=0
+Choose the vector
+Un — 2n
+Yn—-1 — 2Zn-1
+Yn-2 — 2n-2
+
+U= . ,
+
+Yn—k+1 — 2n—k+1
+Yn-k — 2%n-k
+and we have the identity
+
+Vhjno Miz (Yn—i — Zn-is Yn—j — %n—j) =
+2 (Yn = tn — Yok i (Yai — 2m—a)s Dg BilYn—i — zn-i)) +
+I[¥er—Y — ZOD |B, — YO — Z|.
+If the left-hand side is non-negative, and the first term on the right is non-
+positive, it follows that
+
+yo _ Zig < fye-v _ ZO-Yig,
+
+The positive semi-definiteness of M was recognized by Dahlquist (1976) as
+just the right condition to identify methods that behave stably for the type
+of non-linear problem we are considering. Accordingly we state
+
+Definition 451A A one-leg method [a, A] is ‘G-stable’ if M given by (451e)
+is positive semi-definite.

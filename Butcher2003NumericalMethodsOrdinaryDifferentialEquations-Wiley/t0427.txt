@@ -1,0 +1,73 @@
+418 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Gustafsson K. (1991) Control theoretic techniques for stepsize selection in explicit
+Runge-Kutta methods, ACM Trans. Math. Software, 17: pp. 533-544.
+
+Gustafsson K., Lundh M. and Séderlind G. (1988) A PI stepsize control for the
+numerical solution of ordinary differential equations, BIT, 28: pp. 270-287.
+
+Hairer E, (1978) A Runge-Kutta method of order 10, J. Inst. Math. Appl., 21: pp.
+47-59.
+
+Hairer E. and Leone P. (2000) Some properties of symplectic Runge-Kutta methods,
+NZ J. Math., 29: pp. 169-175.
+
+Hairer E., Lubich C. and Roche M. (1989) The numerical solution of differential-
+algebraic systems by Runge-Kutta methods, Lecture Notes in Math., 1409,
+Springer, Berlin.
+
+Hairer E., Lubich C. and Wanner G. (2002) Geometric Numerical Integration:
+Structure-preserving Algorithms for Ordinary Differential Equations, Springer-~
+Verlag, Berlin.
+
+Hairer E., Norsett S. P. and Wanner G. (1993) Solving Ordinary Differential
+Equations I: Nonstiff Problems, Springer-Verlag, Berlin.
+
+Hairer E. and Wanner G. (1974) On the Butcher group and general multi-value
+methods, Computing, 13: pp. 1-15.
+
+Hairer E. and Wanner G. (1981) Algebraically stable and implementable Runge—
+Kutta methods of high order, SIAM J. Numer. Anal., 18: pp. 1098-1108.
+
+Hairer E. and Wanner G. (1982) Characterization of non-linearly stable implicit
+Runge-Kutta methods. In Numerical Integration of Differential Equations and
+Large Linear Systems, Lecture Notes in Mathematics No. 968, Springer, Berlin,
+pp. 207-219.
+
+Hairer E. and Wanner G. (1991) Solving Ordinary Differential Equations II: Stiff
+and Differential-Algebraic Problems, Springer-Verlag, Berlin.
+
+Henrici P. (1962) Discrete Variable Methods in Ordinary Differential Equations,
+Wiley, New York.
+
+Henrici P. (1963) Error Propagation for Difference Methods, Wiley, New York.
+Heun K. (1900) Neue Methoden zur approximativen Integration der Differential-
+gleichungen einer unabhangigen Veranderlichen, Z. Math. Phys., 45: pp. 23-38.
+Higham N. J. (1993) The accuracy of floating point summation, SIAM J. Sci.
+
+Comput., 14: pp. 783-799.
+
+Hundsdorfer W. H. and Steininger B. I. (1991) Convergence of linear multistep and
+one-leg methods for stiff nonlinear initial value problems, BIT, 31: pp. 124-143.
+Huta A. (1956) Une amélioration de la méthode de Runge~Kutta-Nystrém pour
+la résolution numérique des équations différentielles du premier ordre, Acta Fac.
+
+Nat. Univ. Comenian. Math., 1: pp. 201-224.
+
+Huta A. (1957) Contribution & la formule de sixitme ordre dans la méthode de
+Runge-Kutta-Nystrém, Acta Fac. Nat. Univ. Comenian. Math., 2: pp. 21-24.
+Iserles A., Munthe-Kaas H. Z., Ngrsett S. P. and Zanna A. (2000) Lie-group methods,
+
+Acta numer., 9: pp. 215-365.
+
+Iserles A. and Ngrsett S. P. (1991) Order stars, Chapman & Hall, London and New
+York.
+
+Kahan W. (1965) Further remarks on reducing truncation errors, Comm. ACM, 8:
+pp. 40.
+
+Kirchgraber U. (1986) Multistep methods are essentially one-step methods, Numer.
+Math., 48: pp. 85-90.
+
+Kutta W. (1901) Beitrag zur naherungsweisen Integration totaler Differential-
+gleichungen, Z. Math. Phys., 46: pp. 435-453.

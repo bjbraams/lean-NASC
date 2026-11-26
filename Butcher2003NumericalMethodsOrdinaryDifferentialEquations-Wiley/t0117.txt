@@ -1,0 +1,52 @@
+104 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+In the Bashforth stage of the calculation we compute
+
+kt
+Yn =Yn-1a th SBT an—is Yn-i) (244a)
+i=l
+
+and in the Moulton stage:
+
+k
+Yn = Yn-1 + hBof(ansya) +h > Bif (@n—isYn—i)- (244b)
+i=1
+
+Methods of this type are referred to as ‘predictor-corrector’ methods
+because the overall computation in a step consists of a preliminary prediction
+of the answer followed by a correction of this first predicted value. The use of
+(244a) and (244b) requires two calculations of the function f in each step of
+the computation. Such a scheme is referred to as being in ‘Predict-Evaluate-
+Correct-Evaluate’ or ‘PECE’ mode. An alternative scheme in which the second
+evaluation is never performed is said to be in ‘Predict-Evaluate-Correct’ or
+‘PEC’ mode. In this mode, every occurrence of f(tn_:,¥n—1;) would need to
+be replaced by f(tn-i,y%_;), and would represent the value of a derivative
+evaluated in a previous step but based on the predicted approximation to
+
+y(@n~i) in that step. Thus, (244a) and (244b) would be replaced by
+
+e
+YR = Una th>. BIS (Gna yh-a)
+i=l
+
+and
+
+k
+Yn =Yn—1 + hBof (en, yn) +h >> Bif (ener):
+i=1
+In addition to PEC and PECE modes it is also possible to have PECEC
+and PECECE and, more generally P(EC)* and P(EC)*E, modes, in which
+corrections and evaluations are done repeatedly. Using this same type of
+terminology, P(EC)® indicates iteration to convergence.
+
+245 The Milne device
+
+A feature of predictor-corrector methods is that two approximations to y(xp)
+are found in each step and each of these possesses different error constants,
+even though they might have the same order p. For the Adams—Bashforth
+p-step method, denote the error constant as given in Table 244(I) by Cj and
+the corresponding error constant for the (p—1)-step Adams—Moulton method,
+as given in Table 244(II) by Cp_1. This means that the error in y*, assuming
+that previous step values are exact, is equal to
+
+yt = y(@n) — RP Cty) (2,) + O(AP*?). (245a)

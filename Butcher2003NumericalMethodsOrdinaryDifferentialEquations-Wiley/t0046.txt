@@ -1,0 +1,49 @@
+DIFFERENTIAL AND DIFFERENCE EQUATIONS 33
+122 The Fibonacci difference equation
+The initial value difference equation
+
+Yn = Yn-1 + Yn-2, y=0, w=, (122a)
+
+is famous because of the mathematical, biological and even numerological
+significance attached to the solution values
+
+1, 2, 3, 5, 8, 18, 21, 34, 55, 89, 144,....
+To find the general solution, solve the polynomial equation
+W-r-1=0,
+to find the terms AT and 3, where
+1 1
+A= 50+ V5), 2= gl - v5) =—A7".
+
+To find the coefficients A and B in the general solution
+
+’ =4(2%8)" 4 5(-4) °
+n= 2
+
+2 ,
+substitute n = 0 and n = 1, to find A = —B = 5~1/? and therefore the
+specific solution to the initial value problem (122a),
+
+n= ((ja+v9)" - (-ja+v9)") .
+
+123 Three quadratic problems
+
+We consider the solutions to the problems
+
+Yn = wa (123a)
+Yn = YR_-1 — 2; (123b)
+Yn = Yn-1Yn—2- (123c)
+
+If 2p = In(yn) in (123a), then z, = 2z,—1 with solution zp = 2”2. Hence, the
+general solution to (123a) is
+
+Un =Ve -
+To solve (123b), substitute yn = zn + z,', so that
+
+mtt=2,+4
+
+ate n—1 2 ,
+and this is satisfied by any solution to z, = z2_,. Hence, using the known
+solution of (123a), we find
+
+= 2" —2"
+Yn =% +2%

@@ -1,0 +1,51 @@
+3.4 The Ostrowski-Reich Theorem 85
+
+Air Aig <: Ain
+
+Agi Ag2 -: Aan
+(3.68) A=|. |,
+
+An, An ++: ANn,n
+
+where the diagonal blocks A;;,1 <i < N, are square and nonvoid.!3 From
+this partitioning of the matrix A, we define the matrices
+
+Ais 0 0 --0
+Ag,2 Ax: O +O
+(3.69) D:= , Ex=-|. od
+
+ANn,N Ay, An +: O
+
+O Aj ++: Ain
+
+O O + Aan
+
+F:=-|., : : ,
+O O .:-- O
+
+where the matrices E and F are respectively strictly lower and strictly upper
+triangular matrices, and A = D ~— E — F. Assuming A to be Hermitian, it
+follows that D is also Hermitian, and E* = F. If we further assume that D
+is positive definite, then, from the form of the matrices D and E, it follows
+that D — wE is nonsingular for all values of w. If the column vectors x and
+k of the matrix problem Ax = k are partitioned relative to the partitioning
+of (3.68), then the matrix problem can be written as
+
+Ai Ai +++ Ain X ky
+A2g,1 A22 +++ A2,n X2 Ke
+(3.70) ; f=. 4,
+Ay, An,2°:: An,w| [Xn Kn
+or equivalently
+N
+(3.71) So AisXj = Ki, 1Si<N,
+j=l
+
+Since D is nonsingular, each diagonal submatrix A;,; is nonsingular, and we
+can define the associated block!4 (or partitioned) successive overrelazation
+iterative method to be
+
+(3.72) Aigo) = Ai!
+
+13 By nonvoid, we mean that each submatrix Aji is an 7; X 7; matrix where 7; > 1.
+14 Tf each diagonal submatrix Ai,i of (3.68) is a 1 x 1 matrix, this “block” iterative
+method reduces to what we have previously called a point iterative method.

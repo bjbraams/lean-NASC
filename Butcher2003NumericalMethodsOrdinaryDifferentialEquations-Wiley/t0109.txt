@@ -1,0 +1,32 @@
+96 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+little difference between the accuracy achieved and a representative of each
+order — in fact the slightly more accurate method was chosen in each case —
+is sufficient to illustrate the phenomenon of h? dependence. In Figure 239(i),
+methods RK22, RK31, RK42 are RK5 are denoted by 2, 3, 4 and 5.
+
+ZI
+10o-® ~— 1074
+
+1078
+
+19710
+
+1.
+10-* 10-8 107?
+
+Figure 239(i) Orbital calculations for various Runge-Kutta methods
+
+El
+1o-® ~— 10-4
+
+10-8
+
+10720
+
+L
+10-4 10-3 10-7
+
+h
+
+Figure 239(ii) Runge-Kutta methods with cost corrections

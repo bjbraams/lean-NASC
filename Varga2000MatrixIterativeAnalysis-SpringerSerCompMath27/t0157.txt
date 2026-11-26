@@ -1,0 +1,39 @@
+5. Semi-Iterative Methods
+
+5.1 Semi-Iterative Methods and Chebyshev Polynomials
+
+In our previous investigations concerning the acceleration of basic iterative
+methods, we would, in the final analysis, consider the convergence properties
+and rates of convergence of an iterative procedure of the form
+
+(5.1) x) — Mx™ +g, m>0,
+
+where M is a fixed n x n matrix with p(M) < 1, and x) is some given
+vector. Such an iterative procedure converges to the unique solution vector
+x of
+
+(5.2) (I- M)x=g.
+In particular, we defined
+
+(5.3) ef := x _x, m>0,
+
+as the error vector for the mth iterate of (5.1) and, as we have previously
+seen, we could relate the error vector €”) to the initial error vector €)
+through the equation
+
+(5.4) &™ =M™, m>0.
+
+With the use of vector and matrix norms from Chap. 1,
+
+(5.5) WJeO™ |] = me |] < .M™|]- lle], m>0,
+and we defined
+— m™m
+pow) = Me
+™m
+
+as the average rate of convergence for m iterations, provided that ||M™|| < 1,
+
+and it was shown in Sect. 3.2 that, for any positive integer m for which
+|Mn| <1,
+
+R(M™) < Ro(M) = —Inp(M),

@@ -1,0 +1,48 @@
+180
+
+5. Semi-Iterative Methods
+
+Bibliography and Discussion
+
+5.1
+
+The descriptive term semi-iterative method for the procedure of (5.6)
+was introduced by Varga (1957a). But the idea of considering poly-
+nomials in the matrix M of (5.1) to accelerate convergence goes back
+some years. For example, Forsythe (1953) call (5.6) linear accelera-
+tion. Von Neumann, also, had earlier considered such an approach.
+See Blair, Metropolis, Neumann, Taub, Tsingou (1959).
+
+Closely related to this is the formation of polynomials in the matrix
+A, where one seeks to solve the matrix problem Ax = k. See Exer. 6.
+Originally considered by Richardson (1910), the optimization of this
+procedure by means of Chebyshev polynomials to solve systems of lin-
+ear equations has been discussed by many authors and is sometimes
+called Richardson’s method. See Young (1954b) and Young (1956a),
+Shortley (1953), Lanczos (1952), Lanczos (1956), Lanczos (1958), and
+Milne (1953), p. 187. Matrix Chebyshev polynomials have also been
+used in eigenvalue problems. See Flanders and Shortley (1950), Lanc-
+zos (1950), Lanczos (1956), and Stiefel (1956). For other orthogonal
+polynomials and norms and their applications to matrix theory, see
+Stiefel (1958). Richardson’s method, as developed by Young (1954b)
+and Young (1956a), does not make use of the three-term recurrence
+relationship (5.20) for Chebyshev polynomials. Compared with the
+Chebyshev semi-iterative method, Richardson’s method has the ad-
+vantage of requiring less machine storage. On the other hand, it has
+the disadvantage of being numerically unstable.
+
+The origin of Theorem 5.1 goes back to Markoff (1892), but the
+proof we have given was formulated by Flanders and Shortley (1950).
+Achieser (1956) considers the more general problem of approximation
+by rational functions.
+
+The particular form (5.23) defining the Chebyshev semi-iterative
+method is also closely related to what is called the second-order
+Richardson iterative method. See Frankel (1950), Riley (1954), and
+Wachspress, Stone and Lee (1958). In terms of norms and average
+rates of convergence, it is proved in Golub and Varga (1961a) that the
+Chebyshev semi-iterative method is superior to this latter iterative
+method.
+
+The determination of the matrix norms of (5.26) was formulated by
+Golub (1959), and Golub and Varga (1961a).

@@ -1,0 +1,48 @@
+7.2 The Commutative Case 253
+
+As an example of the above, consider the model problem of Chap. 5,
+with a uniform mesh spacing h = 1/N in both the x and y directions of
+the unit square. The eigenvalues of the associated (N — 1)? x (N — 1)? ma-
+trices H and V then all lie, from (7.20), in the common positive interval
+[4sin?(1/2N), 4cos?(m/2n)]. For N = 100, these bounds are
+
+Qo := 0.000986849 and Jo := 3.999013121,
+
+and the associated numbers (a, 3¢) from (7.46) are tabulated below, along
+with (dox[a0, Bo])? of (7.50) and —2(In das [a0, Bo])/2* of (7.50).
+
+Table 7.1.
+k Ok Bre (dyx [00 Bo])” | —2(In dys [0.0 Bo])/2*
+0 | 0.000986879 | 3.999013120 | 0.939091668 0.062842191
+1 | 0.062821518 | 2.000000000 | 0.488464275 0.358244471
+2 | 0.354461614 | 1.031410759 | 0.068042936 0.671904090
+3 | 0.604644956 | 0.692936186 | 0.001160147 0.844901016
+4 | 0.647286930 | 0.648790571 | 3.364858(-7) 0.931544372
+5 | 0.648038314 | 0.648038751 | 2.842(-14) 0.974866071
+
+The numbers in Table 7.1 show four things: i) there is indeed rapid con-
+vergence of the a,’s and (,’s to the Gauss arithmetic-geometric mean p,
+which, to six decimal digits, is 4 = 0.648038; ii) the fifth column above is
+strictly increasing (see Exer. 5); iii) the fourth column has strictly decreasing
+entries (see Exer. 5); and iv) as the fourth column in Table 7.1 bounds above,
+
+from (7.49), the norms of Te, T;,, the very small size of its last two entries
+indicates that, for ordinary accuracy requirements in terminating such itera-
+tions, little is to be gained in using more than 2 or 2° optimal parameters in
+the Peaceman-Rachford iterative method for this particular model problem.
+
+It should also be mentioned, recalling (7.27), that the first entry (k = 0) in
+the final column of Table 7.1 is precisely the asymptotic rate of convergence
+of the optimal successive overrelaxation R(L,,) for this model problem, and
+the ratio of the last to the first entries in this final column gives that
+
+32
+RI [[t
+j=l
+
+a 5155,
+Roo(Lus)
+
+indicating a sizeable improvement in convergence rates of the optimized
+Peaceman-Rachford iterative method over the successive overrelaxation
+method, for this model problem.

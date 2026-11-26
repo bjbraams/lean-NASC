@@ -1,0 +1,83 @@
+Chapter 3
+
+General Linear Systems
+
+§3.1 Triangular Systems
+
+§3.2 The LU Factorization
+
+§3.3 Roundoff Analysis of Gaussian Elimination
+§3.4 Pivoting
+
+§3.5 Improving and Estimating Accuracy
+
+The problem of solving a linear system Az = 6 is central in scientific
+computation. In this chapter we focus on the method of Gaussian elimi-
+nation, the algorithm of choice when A is square, dense, and unstructured.
+When A does not fall into this category, then the algorithms of Chapters
+4, 5, and 10 are of interest. Some parallel Az = 6 solvers are discussed in
+Chapter 6.
+
+- We motivate the method of Gaussian elimination in §3.1 by discussing
+the ease with which triangular systems can be solved. The conversion of
+a general system to triangular form via Gauss transformations is then pre-
+sented in §3.2 where the “language” of matrix factorizations is introduced.
+Unfortunately, the derived method behaves very poorly on a nontrivial class
+of problems. Our error analysis in $3.3 pinpoints the difficulty and moti-
+vates §3.4, where the concept of pivoting is introduced. In the final section
+we comment upon the important practical issues associated with scaling,
+iterative improvement, and condition estimation.
+
+Before You Begin
+
+Chapter 1, §§2.1-2.5, and §2.7 are assumed. Complementary references
+include Forsythe and Moler (1967), Stewart (1973), Hager (1988), Watkins
+
+38 CHAPTER 3. GENERAL LINEAR SYSTEMS
+
+(1991), Ciarlet (1992), Datta (1995), Higham (1996), Trefethen and Bau
+(1996), and Demmel (1996). Some MATLABfunctions important to this
+chapter are lu, cond, rcond, and the “backslash” operator “\”. LAPACK
+connections include
+
+LAPACK: Triangular Systems
+-TRSV Solves Az = 6
+~TRSH Solves AX = B
+-TRCON | Condition estimate
+
+TARFS | Solve AX = B, ATX = B with error bounds
+TRTRS | Solve AX = B, ATX =B
+-trTRI | Av!
+
+LAPACK: General Linear Systems
+TaESV Solve AX = B
+-GECON | Condition estimate via PA = LU
+-GERFS | Improve AX = B, ATX = B, AMX = B solutions with error bounds
+=GESVX | Solve AX = 8, ATX = B, A X = B with condition estimate
+
+GETRF | PA=LU
+
+GETRS Solve AX = 8B, ATX = B, AN X = Bvia PA= LU
+GeTR1 | aq?
+
+GEEQU Equilibration
+
+3.1 Triangular Systems
+Traditional factorization methods for linear systems involve the conversion
+of the given square system to a triangular system that has the same solution.
+This section is about the solution of triangular systems.
+3.1.1 Forward Substitution
+Consider the following 2-by-2 lower triangular system:
+dy 0 a | _ fb
+fa fa | | 2 bo | °
+If £1142) # 0, then the unknowns can be determined sequentially:
+Hm = bf
+Eo (bg ~ £2121) / 22.
+
+This is the 2-by-2 version of an algorithm known as forward substitution.
+The general procedure is obtained by solving the ith equation in Lz = 6
+
+for z,:
+ix
+y= (s Sees) |
+j=l

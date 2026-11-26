@@ -1,0 +1,59 @@
+8.1 Semi-Discrete Approximation 279
+
+To solve the ordinary matrix differential equation of (8.13), we make use
+of the exponential of a matrix:
+M2
+
+exp(M) :=I+M+>- 4-55
+
+which is convergent}! for any n x n matrix M. With this definition, it follows
+that}?
+
+u(t) = exp(—tC~1A)u(0) + exp(—tC-1.A)
+
+(8.15) [ewocayonsa) + r0)}a, t>0,
+0
+
+with u(0) := g, is the solution of (8.11)-(8.12).
+
+For convenience of exposition of the remaining sections, we now assume
+that the source term S(z, y;t) of (8.1) is time-independent. Because of this,
+the vector s of (8.11) is also time-independent, and the solution of (8.11) and
+(8.12) takes the simpler form
+
+u(t) = A~!s + exp(—tC71A){u(0) — A7!s}
+t
+(8.16) +exp(-te-¥4) | exp(AC71A)r(A)dA, t > 0.
+0
+
+Neglecting the term involving the vector T(t), the previous equation gives
+rise to the vector approximation
+
+(8.17) v(t) = A7's + exp(—tC7!A){v(0) — A71s},
+where
+
+(8.18) v(0) :=g.
+
+Note that v(t) of (8.17)-(8.18) is just the solution of
+
+(8.19) oX = —Av(t)+s, fort >0, with v(0) =g.
+
+Using (8.16) and (8.17), it follows that
+t
+
+(8.20) -u(t)—v(t) = / exp[-(t- A)C~14]r(A) dd, 40,
+0
+
+which can be used to estimate ||u(t) — v(t)||. (See Exer. 6.)
+
+By analogy with the physical problem, the expression of (8.17) suggests
+that the terms of the right side respectively correspond to the steady-
+state solution of (8.19) and a transient term. The matrix properties of
+exp(—tC~1A), which correctly establish this, will be developed in the next
+section.
+
+1) See Exer. 1 of Sect. 3.5.
+
+B B
+2 By | g(x)dx, we mean a vector with components i gi(x)da.
+a a

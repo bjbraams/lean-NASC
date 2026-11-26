@@ -1,0 +1,41 @@
+6.1 A Simple Two-Point Boundary-Value Problem 191
+
+continuous piecewise linear functions w(x), where w(a) = a and w(b) = B.
+With w},---,wwy as arbitrary real numbers, define
+
+Wis — U5
+ule) =v + (SHEE) (a2), ty SEL Tz, OSISN,
+
+as shown in Fig. 6.5.
+
+bal % Na
+
+Fig. 6.5.
+
+In this case, the functional F(w) = F(w1,we,-::,wn) of (6.14) is a
+
+quadratic form in the parameters w1,:--,wy, which can be minimized as
+a function of these parameters by solving
+OF (w
+(w) =0, 1<i<N.
+Ow;
+
+This results (Exer. 8) in the system of linear equations
+
+i—1
+
+Dita
+= / f(x)ti(x)dz, 1<i<N,
+Zi-1
+
+(6.20) (
+
+where t;(x) is the continuous piecewise linear function defined by
+ti(2;) = {8 wae O<j<N4L
+, j#i
+We express these N linear equations in N unknowns as the matrix equation
+(6.21) Aw =k.
+
+Of course, if a(x) = 0, on [a,b], we see from (6.20) that the matrix (1/h)A
+above is identical with the matrix A of (6.5). In general, A will differ from A,
+but all the essential properties possessed by A, such as being real, symmetric,

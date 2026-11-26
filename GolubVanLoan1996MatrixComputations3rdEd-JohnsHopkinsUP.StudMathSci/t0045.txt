@@ -1,0 +1,96 @@
+2.4. FINITE PRECISION MATRIX COMPUTATIONS 61
+and the operator fl: G— F by
+
+fita) = {
+
+nearest c € F to z with ties handled
+by rounding away from zero.
+
+The fl operator can be shown to satisfy
+f(z) =2(1 +6) lel su (2.4.3)
+where u is the unit roundoff defined by
+
+us Lait, (2.4.4)
+2
+Let a and 6 be any two floating point numbers and let “op” denote any
+of the four arithmetic operations +, -, x, +. [fa op 6 € G, then in our
+model of floating point arithmetic we assume that the computed version of
+(a op 5) is given by fl{a op b). It follows that fi(a op b) = (a op 6)(1 + €)
+with |e| < u. Thus,
+
+[fi(a op b) ~ (a op 5)}
+aan ToT i aopb #0 (2.4.5)
+
+showing that there is small relative error associated with individual arith-
+metic operations'. It is important to realize, however, that this is not
+necessarily the case when a sequence of operations is involved.
+
+Example 2.4.1 If 6 = 10, ¢ = 3 floating point arithmetic is used, then it can be shown
+that fi{fi(10-* + 1) — 1] = 0 implying a relative error of 1. On the other hand the
+exact answer is given by fi[fi(10~* + fl(1 — 1)] = 10-4. Floating point arithmetic is
+not always amociative
+
+If a op 6 ¢ G, then an arithmetic exception occurs. Overflow and
+underflow results whenever |a op b| > M or 0 < |a op dj < m respectively.
+The handling of these and other exceptions is hardware/system dependent.
+
+2.4.3 Cancellation
+
+Another important aspect of finite precision arithmetic is the phenomenon
+of catastrophic cancellation. Roughly speaking, this term refers to the ex-
+treme loss of correct significant digits when smal! numbers are additively
+computed from large numbers. A well-known example taken from Forsythe,
+Malcolm and Moler (1977, pp. 14-16) is the computation of e~¢ via Tay-
+lor series with @ > 0. The roundoff error associated with this method is
+
+1'There are important examples of machines whose additive floating point operations
+satisfy fi(a +b) = (1+ e1)a + (1+ €g)b where jer], |e2] <u. In such an environment,
+the insquality |fi(a + 0) — (a + 5)} < ula + of need not bold.
+
+62 CHAPTER 2. MATRIX ANALYSIS
+
+approximately u times the largest partial sum. For large a, this error can
+actually be larger than the exact exponential and there will be no correct
+digits in the answer no matter how many terms in the series are summed.
+On the other hand, if enough terms in the Taylor series for e* are added and
+the result reciprocated, then an estimate of ¢—° to full precision is attained.
+
+2.4.4 The Absolute Value Notation
+
+Before we proceed with the roundoff analysis of some basic matrix calcu-
+lations, we acquire some useful notation. Suppose A € IR™*" and that we
+wish to quantify the errors associated with its floating point representation.
+Denoting the stored version of A by fi(A), we see that
+
+[Fi(A)]iy = Fl(aig) = alte) leg] su (2.4.6)
+
+for all { and j. A better way to say the same thing results if we adopt two
+conventions. If A and B are in R™*", then
+
+B= {Al > 5; =jajl,i=hm,j=im
+B<A => 0b; $ aj,t= Lm, j=ln.
+With this notation we see that (2.4.6) has the form
+|fi(A) - Al < ufAl.
+A relation such as this can be easily turned into a norm inequality, e.g.,
+f(A) -Al}, S$ ull All|. However, when quantifying the rounding errors
+
+in & matrix manipulation, the absolute value notation can be a lot more
+informative because it provides a comment on each (i, j) entry.
+
+2.4.5 Roundoff in Dot Products
+
+We begin our study of finite precision matrix computations by considering
+the rounding errors that result in the standard dot product algorithm:
+
+s=0
+for k= 1:n
+
+S=S+IRYE (2.4.7)
+end
+
+Here, z and y are n-by-1 floating point vectors.
+
+In trying to quantify the rounding errors in this algorithm, we are
+immediately confronted with a notational problem: the distinction be-
+tween computed and exact quantities. When the underlying computations
+are clear, we shall use the /I(-) operator to signify computed quantities.

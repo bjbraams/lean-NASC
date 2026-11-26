@@ -1,0 +1,84 @@
+6.2. MATRIX MULTIPLICATION 293
+
+then upon completion C is overwritten by D = C + AB. Assume the
+following initializations in each local memory: n, r, k, p and py (the node
+id).
+for j = u:p:kp
+{Compute D;.}
+Bioe = B(1:97,1 + (§ — Ureir}
+Cre = CC, 1 + (F -— Yrir)
+for r = 1:j
+col = 1+ (r —Ajrirr
+Aloc = A(:, col)
+Choe = Choe + AjocBtoe(col, :)
+end
+C(,1+ (9 -Mryr) = Cra
+end
+Let us examine the degree of load balancing as a function of the parameter
+k. For Proc(z), the number of flops required is given by
+
+k
+
+kp\ 2n3
+F(u) = YS fave-ne = (su + >) Be
+im)
+
+The quotient F(p)/F(1) is a measure of load balancing from the flop point
+of view. Since
+
+F(p) — et kp/2 =1+ Ap—1)
+
+F(1) k+ kp/2 2+kp
+we see that arithmetic balance improves with increasing k. A similar anal-
+ysis shows that the communication overheads are well balanced as & in-
+creases.
+
+On the other hand, the total number of global memory reads and writes
+associated with Algorithm 6.2.1 increases with the square of k. If the start-
+up parameter a, in (6.1.5) is large, then performance can degrade with
+increased k.
+
+The optimum choice for k given these two opposing forces is system
+dependent. If communication is fast, then smaller tasks can be supported
+without penalty and this makes it easier to achieve load balancing. A mul-
+tiprocessor with this attribute supports fine-grained paralleksm. However,
+if granularity is too fine in a system with high-performance nodes, then it
+may be impossible for the node programs to perform at level-2 or level-3
+speeds simply because there just is not enough local linear algebra. Again,
+benchmarking is the only way to clarify these issues.
+
+6.2.2 Torus
+
+A torus is a two-dimensional processor array in which each row and col-
+umn is a ring. See Ficune 6.2.1. A Processor id in this context is an
+
+294 CHAPTER 6. PARALLEL MATRIX COMPUTATIONS
+
+ordered pair and each processor has four neighbors. In the displayed exam-
+
+Lena Proc(1,2)}——Proc(1,3)}—4Proc(1,4)
+
+Proc(2,1) Proc(2,2) Proc(2,3) Proc(2,4)
+
+Proc(3,1) Proc(3,2) Proc(3,3) Proe(3,4)
+
+= Proc(4,2)}—~|Proc(4,3) pets
+
+FIGURE 6.2.1 A Four-by-Four Torus
+
+ple, Proc(1,3) has west neighbor Proc(1,2), east neighbor Proc(1,4), south
+neighbor Proc(2,3), and north neighbor Proc(4,3).
+
+To show what it is like to organize a toroidal matrix computation, we
+develop an algorithm for the matrix multiplication D = C + AB where
+A,B,C é¢R°*", Assume that the torus is p,-by-m and that n = rp.
+Regard A = (Ajj), B = (By), and C = (Cij) a8 pi-by-py block matrices
+with r-by-r blocks. Assume that Proc(i,j) contains A,j, Bij, and Cj; and
+that its mission is to overwrite Ci; with
+
+2)
+Diy = Cig + D> Aw Bry.
+k=l
+
+We develop the general algorithm from the py = 3 case, displaying the torus
+in cellular form as follows:

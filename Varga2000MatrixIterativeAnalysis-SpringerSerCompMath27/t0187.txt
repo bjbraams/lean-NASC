@@ -1,0 +1,13 @@
+5.5 Semi-Iterative Methods Applied to the SOR Method 179
+
+(5.101) o(B?) c [0,77] U {67} (with 7 < A).
+
+A careful study of optimal semi-iteration, applied to C,,, with the above
+additional assumption of (5.101), was also carried out in Eiermann and Varga
+(1993a), where again conformal mappings came into play, and this study did
+indeed verify the claims of Dancis, subject to (5.101), in a more precise way. A
+subsequent paper by Eiermann and Varga (1993b) similarly studied optimal
+semi-iterative methods applied to L,,, with the spectral assumption (the so-
+called mized case) that
+
+(5.102) o(B?) c [-a?, 6?] with 0<a<ooand0 <6 <1.

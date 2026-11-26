@@ -1,0 +1,102 @@
+4.3. BANDED SYSTEMS 157
+
+and D = diag(d;,...,d,) we deduce from the equation A = LDL? that:
+
+an = di
+Qe. = Ce—-1de2 k=2n
+Okk = dt ef_ dea = dy + €e-10%k—-1 k=2:n
+
+Thus, the d; and e; can be resolved as follows:
+
+dj =a
+for k = 2:n
+
+Opt = Ok k—-1/dk-1j dk = Okk ~ Ck-18k,k-1
+end
+
+To obtain the solution to Ar = 6 we solve Ly = b, Dz = y, and L’z =z.
+With overwriting we obtain
+
+Algorithm 4.3.6 (Symmetric, Tridiagonal, Positive Definite Sys-
+tem Solver) Given an n-by-n symmetric, tridiagonal, positive definite
+matrix A and 6 € IR”, the following algorithm overwrites 5 with the solu-
+tion to Az = 6. It is assumed that the diagonal of A is stored in d(1:n) and
+the superdiagonal in e(1:n — 1).
+
+for k = 2:n
+t = e(k —1); e(fk —1) =t/d(k — 1); d(k) = d(k) - te(k ~ 1)
+end
+for k = 2:n
+(kK) = b(k) — e(k — 1)b(k — 1)
+end
+
+b(n) = b(n) /d(n)
+for k=n—1:-1:1
+b(k) = b(k)/d(k) — e(k)b(k + 1)
+
+end
+
+This algorithm requires 8n flops.
+
+4.3.7 Vectorization Issues
+
+The tridiagonal example brings up a sore point: narrow band problems and
+vector/pipeline architectures do not mix well. The narrow band implies
+short vectors. However, it is sometimes the case that large, independent
+sets of such problems must be solved at the same time. Let us look at how
+such 3 computation should be arranged in light of the issues raised in §1.4.
+
+For simplicity, assume that we must solve the n-by-n unit lower bidiag-
+onal systems
+
+AMs®) = 9) k= dim
+
+158 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+
+and that m -> n. Suppose we have arrays E(1:n — 1, 1:m) and B(1:n, l:m)
+with the property that E(1:n — i,k} houses the subdiagonal of A‘) and
+B(1:n, k) houses the kth right hand side b) . We can overwrite b™ with
+the solution z“) as follows:
+
+for k = l:m
+for i = 2:n
+B(i,k) = BG, k) - EG -1,k) Bis — 1,k)
+end
+end
+
+The problem with this algorithm, which sequentially solves each bidiagonal
+system in turn, is that the inner loop does not vectorize. This is because
+of the dependence of B(i,k) on B(i — 1,k). If we interchange the k and i
+loops we get
+
+for i= 2:n
+for k = lim
+Bi, k) = B(i,k) — E(i— 1, k)B(i — 1,4) (4.3.1)
+end
+end
+
+Now the inner loop vectorizes well as it involves a vector multiply and a
+vector add. Unfortunately, (4.3.1) is not a unit stride procedure. However,
+this problem is easily rectified if we store the subdiagonals and right-hand-
+sides by row. That is, we use the arrays E(1:m,1:n—1) and Bl: ‘m, l:in-1)
+and store the subdiagonal of A\*) in E(k, 1:n - 1) and B®)” in B(k, 1:n).
+The computation (4.3.1) then transforms to
+
+for i = 2:n
+for k = 1:m
+B(k,i) = B(k, i) — E(k,t — 1I)B(k,i - 1)
+end
+end
+
+illustrating once again the effect of data structure on performance.
+
+4.3.8 Band Matrix Data Structures
+
+The above algorithms are written as if the matrix A is conventionally stored
+in an n-by-n array. In practice, 4 band linear equation solver would be or-
+genized around a data structure that takes advantage of the many zeroes
+in A. Recall from §1.2.6 that if A has lower bandwidth p and upper band-
+width q it can be represented in a (p + ¢ + 1)-by-n array A.band where
+band entry a,; is stored in A.band(i—j+q+1,j). In this arrangement, the
+nonzero portion of A’s jth column is housed in the jth column of A.band.
+Another possible band matrix data structure that we discussed in §1.2.8

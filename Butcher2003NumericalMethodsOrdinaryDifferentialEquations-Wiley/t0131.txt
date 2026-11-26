@@ -1,0 +1,50 @@
+118 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+author (Butcher, 1966). However, the formulation we present, while formally
+different, is equivalent in terms of the range of methods it can represent, and
+was introduced in Burrage and Butcher (1980).
+
+Suppose that r quantities are passed from step to step. At the start of
+step number n, these will be denoted by yn, yf, wo, yh, and that
+after the step is completed, the corresponding quantities available for use in
+the subsequent step will be yl, yt, .., yk”. During the computation of the
+step, s stage values Y;, Yo, ..., Ys, are computed, along with the corresponding
+stagederivatives F, F), ..., F,. For convenience of notation, we can create
+
+super vectors containing either r or s sub vectors as follows:
+
+wt um Yi F
+
+n-1 in]
+
+yous] [ya]? |, ¥= “ , F= *
+ye yl” Y, F,
+
+Just as for Runge-Kutta methods, the stages are computed making use
+of linear combinations of the stage derivatives but, since there are now a
+collection of input approximations, further linear combinations are needed
+to express the dependence on this input information. Similarly, the output
+quantities depend linearly on both the stage derivatives and the input
+quantities. All in all, four matrices are required to express all the details
+of these computations, and we denote these by A = [ai], ,, U = [wij],
+B= [bis], and V = [eis] er
+
+The formulae for the stage values and the output values are
+
+& vr
+Yi= Do hay ky + Doug, #=1,2,.-.58,
+j=l j=l
+
+8 r
+yl = > Abi F; + > vy, 4=1,2,...,7,
+jal jal
+
+or, using Kronecker product notation for an N-dimensional problem,
+
+Y =h(A@In)F + (U @ In)y™4,
+yl = A(B @ In) F + (V @ Iy)y-".
+
+We devote Chapter 5 to a detailed study of general linear methods but,
+for the present, we illustrate the all-encompassing nature of the methods
+included in this family by presenting a number of sample methods written
+in this terminology.

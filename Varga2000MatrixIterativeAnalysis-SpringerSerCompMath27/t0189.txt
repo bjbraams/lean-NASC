@@ -1,0 +1,53 @@
+5.2
+
+5.3
+
+5.4
+
+5.5 Semi-Iterative Methods Applied to the SOR Method 181
+
+The idea of essentially doubling the order of a matrix problem in or-
+der to obtain a weakly cyclic (of index 2) iteration matrix goes back
+to Lanczos (1956), (p. 190) and Aitken (1950). Their basic purpose,
+however, was to obtain Hermitian matrices. The remaining material
+of this section is taken from Golub and Varga (1961a).
+
+The material covered in this section is basically taken from Golub and
+Varga (1961b). See also Golub (1959), Sheldon (1959), and Sheldon
+(1960). The distinction that has been made in Sect. 5.2 and 5.3 between
+the weakly cyclic case and the general Hermitian case is theoretically
+important. In earlier papers, such as Varga (1957a) and Young (1956a),
+this distinction was not made, and the results comparing asymptotic
+rates of convergence of the successive overrelaxation iteration method
+and the Chebyshev semi-iterative method of (5.23) naturally favored
+the successive overrelaxation iterative method.
+
+Numerical results comparing the cyclic Chebyshev semi-iterative
+method and the successive overrelaxation iterative method with op-
+timum relaxation factor are given in Golub and Varga (1961b). For
+recent numerical results for the Chebyshev semi-iterative method of
+(5.23), see W. Frank (1960).
+
+The application of Chebyshev polynomials to accelerate the Gauss-
+Seidel iterative method has been considered by Wachspress (1955),
+Varga (1957a), Sheldon (1959), and Sheldon (1960). For the applica-
+tion of semi-iterative methods to the successive overrelaxation matrix
+L., for w > 1, see Varga (1957a).
+
+The idea of directly squaring an iteration matrix to produce faster
+iterative methods is certainly not new. For example, it is mentioned
+by Geiringer (1949), who in turn refers to Hotelling (1943). Schréder
+(1954) however, was apparently the first one to couple the weakly cyclic
+nature of the matrix M of (5.76) with the complete reducibility of M?
+for Laplace-type elliptic difference equations. For M symmetric and
+irreducible, he also pointed out that M? had positive diagonal entries,
+and that this could possibly lead to improved convergence rates for
+point iterative methods. But if M is also nonnegative, our development
+shows, using the regular splitting theory, that such improvements must
+exist. Extensions of the cyclic reduction method to block methods and
+numerical results have been given by Hageman and Varga (1964).
+
+The result that the Chebyshev semi-iterative method, applied to the
+cyclically reduced equation (5.83), gives precisely the same sequence
+of spectral norms as does the cyclic Chebyshev semi-iterative method,
+is apparently new.

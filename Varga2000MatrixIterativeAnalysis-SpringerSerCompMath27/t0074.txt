@@ -1,0 +1,46 @@
+66 3. Basic Iterative Methods and Comparison Theorems
+
+(3.18) (D—wE)x(™) = {(1-w)D+wF}x™ +uk, m>0,
+
+and as D —wE is nonsingular for any choice of w, then with L := D~1E, and
+U := D-'F, this takes the form
+
+(3.19) xO") = (I —w)71{(1 —w)I + WU} x™ 4 w(I — wl)! Dk.
+
+It would be more precise to call this iterative method the point successive
+over- or underrelaxation iterative method to show its dependence on the relax-
+ation factor w, but for brevity we simply call this method the point successive
+overrelaxation iterative method‘ and we call the matrix
+
+(3.20) Lu = (I —wL)-! {(1 —w)I + WU}
+
+the point successive overrelaxation matrix. Selecting w = 1 shows that this
+iterative method reduces exactly to the point Gauss-Seidel iterative method,
+and the matrix C defined in (3.14) is thus equal to £;. As yet, we do not
+know what effect the relaxation parameter w has on the spectral radius or
+spectral norm of the matrix L,,.
+
+To each of the three iterative methods described, we can associate error
+vectors e(™) defined by
+
+(3.21) e™ = x(™ _x, m>0,
+
+where x is the unique vector solution of (3.2), and from the very definition of
+each iterative method, such as (3.19), we can express the error vectors e(™)
+in each case as
+
+(3.22) e(™ = Me™) —...=M™, m>0,
+
+where M is the corresponding iteration matrix for the specific method. As
+we know (Theorem 1.10), the error vectors e”) of these iterative methods
+tend to the zero vector for all choices of €) if and only if the spectral radius
+p(M) of the matrix M is less than unity.
+
+To illustrate two of these various iterative methods, we now consider a
+simple numerical example based on the 4 x 4 real, symmetric and positive
+definite matrix A derived in Sect. 1.2. Specifically, we seek to solve the matrix
+equation Ax = k, where
+
+4 This iterative method is also called the accelerated Liebmann method by Frankel
+(1950) and many subsequent authors. Kahan (1958) calls it the extrapolated
+Gauss-Seidel method. It is often called the method of systematic overrelazation.

@@ -1,0 +1,52 @@
+3.5 Stieltjes Matrices, M-Matrices and H-Matrices 93
+
+off-diagonal entries are all nonpositive. If D denotes the diagonal matrix de-
+rived from M(A), then on writing D-!M(A) =: I — B, it follows that I—- B
+is nonsingular with B > O. It can be verified that M(A), being strictly diag-
+onally dominant or irreducibly diagonally dominant, implies that p(B) < 1,
+ie., B is convergent. Applying Theorem 3.18 gives that (M(A))~1 > O, so
+that M(A) is an M-matrix. Hence, the matrix A, from Definition 3.26, is an
+H-matrix.
+
+Exercises
+
+1.
+
+Prove the following generalization of Theorem 3.15. If all the eigen-
+values of an n x n complex matrix A lie in the interior of the circle of
+convergence of the power series
+
+g(z) = Socnz*
+k=0
+
+then the matrix power series
+
+co
+
+(A) := ce A*
+
+k=0
+
+converges. (Hint: Assume that A is in its Jordan normal form.) As a
+consequence, conclude that
+
+2
+
+A
+exp(A) I+ Ata te
+
+is defined for any n x n complex matrix A.
+In Theorem 3.16, show that the following property of Fan (1958) is
+
+equivalent to properties 1 and 2 of Theorem 3.16:
+There exists a vector u > 0 such that (aI — A)u>0.
+
+Prove Theorem 3.17.
+In Theorem 3.18, show that the following property is equivalent to
+properties 1 and 2 of Theorem 3.18:
+If d is any eigenvalue of A, then Red > 0.
+Prove Theorem 3.19.
+An n xX n matrix A is monotone (Collatz (1952)) if for any vector
+
+r, Ar > 0 implies r > 0. If the off-diagonal entries of A are nonpositive,
+show that A is monotone if and only if A is an M-matrix.

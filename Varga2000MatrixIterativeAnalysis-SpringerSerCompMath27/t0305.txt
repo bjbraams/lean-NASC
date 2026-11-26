@@ -1,0 +1,57 @@
+298 8. Matrix Methods for Parabolic Partial Differential Equations
+
+Tha — At;)I + At;B}
+
+i=1
+
+is the polynomial j,,(B) of Sect. 5.1. In other words, we can generate the
+Chebyshev semi-iterative method with respect to the Jacobi method simply
+by taking proper nonuniform time increments At;.
+
+The Point Successive Overrelazation Iterative Method.
+With A = D— E- F and C := D, consider the matrix approximation
+
+(8.58)  exp(—AtS) = (I — AtL)~1{AtU + (1 — At)I} =: Te(At).
+
+For At > 0 sufficiently small, the expansion of T2(At) agrees through lin-
+ear terms with the expansion of exp(—AtS). Thus, T2(At) is a consistent
+approximation of exp(—AtS). The matrix T2(At) gives rise to the iterative
+method
+
+w((n + 1)At) = (I — AtL)“1{AtU +(1 — At) I}w(nAt)
++At(I — AtL)-!D-'s.
+
+It is clear why this is called the point successive overrelaxation iterative
+method, since the matrix T)(At) is precisely the point successive overrelax-
+ation matrix Laz of (3.20). Note that the relaxation factor w corresponds
+exactly to the time increment At. Again, the application of block techniques
+to successive overrelaxation iterative methods can be similarly realized in
+terms of consistent approximations for an exponential matrix.
+
+Again, let A = D— E — F and C := D. Now, we suppose that S =
+C-!A=I1-—B is such that B is weakly cyclic of index 2 and has the form
+
+O|H
+B= | 2 3 .
+
+(8.59)
+
+If we take the consistent Padé matrix approximation E,2(AtS), then
+
+2
+(8.60) exp(—AtS) =I — AtS + oe 5 =: T(At),
+
+where
+
+t?
+
+2
+1-145) 14 5am tH —?H
+
+’
+
+(8.61) T(t) =
+tH* — t?H*
+
+? ?
+(i-e+ 5) r+ Saw

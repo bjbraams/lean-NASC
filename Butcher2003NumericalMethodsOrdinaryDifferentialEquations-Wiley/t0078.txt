@@ -1,0 +1,45 @@
+NUMERICAL DIFFERENTIAL EQUATION METHODS 65
+
+1 1 L i L
+10> 10-* 10-* 10-? 10-*
+h
+
+Figure 214(i) Error versus stepsize for problem (214a) at two alternative
+output points
+
+which is approximately equal to the integral
+= cos(x) — sin(x)
+
+1 a
+- 3P cos(Z) [ costa)
+This vanishes when exp(Z) cos(#) = 1.
+
+For comparison, results are given also for a similar sequence of h values,
+but at the output point % = 7/4. This case is unsurprising, in that it shows
+typical order one behaviour.
+
+Finally, we present a problem for which an order, even as high as one, is
+not observed. The initial value problem is
+
+y'(z)=--~45, (0) =1, (2140)
+
+1-2?’
+
+c= — st cos(%)(% + In cos(#)).
+
+with exact solution y = /1— 22. The solution is sought at = 1 and the
+numerical results are shown in Table 214(II). It is seen that, as the number
+of steps doubles, the error reduces by a factor of approximately 2~!/2. Thus,
+the order seems to have been reduced from 1 to 3. The reason for the loss of
+order for this problem is that the Lipschitz condition does not hold at the end
+of the trajectory (at x = 1, y = 0). As for any initial value problem, the error
+in the approximate solution at this point develops from errors generated at
+every time step. However, in this case, the local truncation error in the very
+last step is enough to overwhelm the contributions to the error inherited from
+all previous steps. In fact the local truncation error for the final step is
+
+y(1) — yh) — AFA ~ hyy(1— A) =
+
+— VIHA + nd — ATG
+
+“T= hP”

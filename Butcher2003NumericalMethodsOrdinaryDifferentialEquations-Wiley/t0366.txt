@@ -1,0 +1,29 @@
+LINEAR MULTISTEP METHODS 355
+
+error but to the error in the predictor, assuming this has the lower order.
+Nevertheless, stepsize control based on this approach often gives reliable and
+useful performance.
+
+To allow for a possible increase in order, estimation is also needed for the
+scaled derivative one order higher than the standard error estimator. It is
+very difficult to do this reliably, because any approximation will be based on
+a linear combination of hy’(x) for different « arguments. These quantities in
+turn will be of the form hf(x,y(x) + Ch?+) + O(h?*?)), and the terms of the
+form Ch?+! + O(h?+?) will distort the result. obtained. However, it is possible
+to estimate the scaled order p+ 2 derivative reliably, at least if the stepsize has
+been constant over recent steps, by forming the difference of approximations
+to the order p+1 derivative over two successive steps. If the stepsize has varied
+moderately, the approximation this approximation will still be reasonable. In
+any case, if the criterion for increasing order turns out to be too optimistic for
+any specific problem, then after the first step with the new order, a rejection is
+likely to occur, and the order will either be reduced again or else the stepsize
+will be lowered while still maintaining the higher order.
+
+Exercises 46
+
+46.1 Show how to write y(z,+rh) in terms of y(zp), hy’ (an) and hy’(tn—h),
+to within O(h3). Show this approximation might be used to generalize
+the order 2 Adams-Bashforth method to variable stepsize.
+
+46.2 How should the formulation of Subsection 461 be modified to represent
+Adams-Bashforth methods.

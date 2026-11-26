@@ -1,0 +1,97 @@
+5.3. THe FuLL RANK LS PROBLEM 241
+
+neighborhood of 1/,/u. (See Example 5.3.2.) Hence the claim in Lawson
+and Hanson (1974, 126-127) that for a fixed machine precision, a wider
+class of LS problems can be solved using Householder orthogonalization.
+
+5.3.5 A Note on the MGS Approach
+
+In principle, MGS computes the thin QR factorization A = Q,2;. This is
+enough to solve the full rank LS problem because it transforms the normal
+equations (A7A)z = AT} to the upper triangular system Rix = QTD.
+But an analysis of this approach when QTd is explicitly formed intro-
+duces a (A)? term. This is because the computed factor Q, satisfies
+{| Q7Q1 — In ll,  ux2(A) as we mentioned in §5.2.9.
+However, if MGS is applied to the augmented matrix
+
+Ay = [48] = (0s or] | 4 ;|:
+
+then z = Q7b. Computing Qfb in this fashion and solving Ritzs = z
+produces an LS solution Zs that is “just as good” as the Householder QR.
+method. That is to say, a result of the form (5.3.4)-(5.3.6) applies. See
+Bjérck and Paige (1992).
+
+It should be noted that the MGS method is slightly more expensive
+than Householder QR because it always manipulates m-vectors whereas
+the latter procedure deals with ever shorter vectors.
+
+5.3.6 Fast Givens LS Solver
+
+The LS problem can also be solved using fast Givens transformations. Sup-
+pose MTM = D is diagonal and
+
+MTA = [c| n
+0 mon
+
+is upper triangular. If
+Ty ¢ n
+Mib= [3] m-n
+then
+
+2
+Ar ~043 =| D-VPMT(az—H) 12 =]o-”7([ | 2-| § ])
+
+2
+
+for any + € IR". Clearly, zp¢ is obtained by solving the nonsingular upper
+triangular system 5)2 =c.
+
+The computed solution #5 obtained in this fashion can be shown to
+solve a nearby LS problem in the sense of (5.3.4)-(5.3.6). This may seem
+
+242 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+surprising since large numbers can arise during the calculation. An entry
+in the scaling matrix D can double in magnitude after a single fast Givens
+update. However, largeness in D must. be exactly compensated for by large-
+ness in M, since D-'/2M is orthogonal at all stages of the computation.
+It is this phenomenon that enables one to push through a favorable error
+analysis.
+
+5.3.7 The Sensitivity of the LS Problem
+
+We now develop a perturbation theory that assists in the comparison of
+
+the normal equations and QR approaches to the LS problem. The theorem
+
+below examines how the LS solution and its residual are affected by changes
+
+in A and 6. In so doing, the condition of the LS problem is identified.
+Two easily established facts are required in the analysis:
+
+| Allg (A? A)"1AT [lp = 2(A)
+
+(5.3.7)
+AMR (ATA) IL, = 2A)?
+These equations can be verified using the SVD.
+Theorem 5.3.1 Suppose z, r, =, and? satisfy
+| Az—b]], = min r=b-Az
+|| (A + bA)2 — (b+ 68) ||, = min fF = (b+ 6b) ~ (A+ dA)Z
+
+where A and 6A are in R™*" with m > n ond 0 # b and 5b are in R™. If
+
+<= mex {! 5A, ee < ont)
+
+HAlla ’ Wl oi{A)
+and . — PLS
+sin(6} = ith #1
+
+where pis = || Atis — bl, then
+
+l@—-2z} 2na(A) 2
+
+——— — e? 3.
+
+isi <* {26 + tan()«2(A) } + O(c?) (5.3.8)
+pork S (1+ 2n9(A)) min(1,m—n) + Of). (5.3.9)
+2

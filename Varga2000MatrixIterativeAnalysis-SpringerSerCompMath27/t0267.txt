@@ -1,0 +1,51 @@
+260 7. Alternating-Direction Implicit Iterative Methods
+
+It is appropriate to point out now that, although the results of this section
+are essentially negative results for the Peaceman-Rachford iterative method,
+the positive result of Theorem 7.1 that proved the convergence of this method
+for a fixed acceleration parameter r > 0 was established without the assump-
+tion that H,V, = V,Hj. For further positive results that tie in with the
+development of the Peaceman-Rachford iterative method with our previous
+concepts of cyclic and primitive matrices, we again focus our attention on the
+case where the acceleration parameters r,, are all equal to a fixed positive
+real number r. From the definition of the Peaceman-Rachford method, we
+have from (7.11)
+
+(759) WOME = (Ha +r) ~ Va) + (Hy +r),
+
+OS alm) = (Vy + rl) (rl — Hy)ul/) + (Y+rt) 1k, m2>0,
+where we assume that H; and V; are n x n Hermitian and nonnegative
+definite, and at least one of these matrices is positive definite. On the other
+
+hand, employing the device of Sect. 5.2, we can write the matrix equation
+(A, + V,)u = k as the pair of equations
+
+(Hy + rI)x = (rI —Vi)y +k,
+(Vi +rDy = (ri- H,)x +k,
+
+and as neither (H; +rJ) nor (V; +r) is singular, we write this equivalently
+as
+
+where
+
+(7.60)
+
+(7.62) C,:=(MitrI) (rl -W), Dp :=(Vi+rI)7 (rl — M1).
+
+However, this can also be written
+
+(7.63) z=J,2+h,
+
+where
+
+(7.64) z= [F. Jj, = Paci
+
+It is now obvious that the 2n x 2n matrix J, is a consistently ordered weakly
+cyclic matrix of index 2 from its very definition. Moreover, it is clear that
+p(J2) = p(T;). As we already know (Theorem 7.1) that T; is a convergent
+matrix, then J, is also a convergent matrix. Thus, there is a unique solution
+vector z of the matrix equation of (7.63), and evidently its components x and
+y are equal.
+
+The block Gauss-Seidel iterative method applied to the matrix equation
+(7.63), with the particular partitioning of (7.64), is given by

@@ -1,0 +1,51 @@
+158 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+some sort of central role. Since these special conditions will be of varying
+complexity, depending on the orders to which we apply them, they will be
+parameterized by one or more positive integers. For example, E(7,¢) is a set
+of assumptions about a method that holds for all positive integers k < 7 and
+1<¢.
+
+The first of these conditions will be denoted by B(y), and simply states
+that the conditions )7¢_, bef? = &-? holds for k = 1,2,...,7. For a method
+to be of order p, it is necessary that B(p) holds, because this condition simply
+restates the order condition for the trees
+
+-Ivyv
+
+To motivate condition C(), consider pairs of trees t; and t2, with the same
+order, that differ in only one small respect. Suppose they are labelled with
+identical vertex sets and that the edge sets, say E, and E2, respectively, differ
+only in that E, contains the edges [#,j] and [j,4], and that 7 and k do not
+occur in any of the other ordered pairs in E,, whereas E2 contains the edge
+{i, k] instead of [j, k]. This will mean that the elementary weight corresponding
+to t; will have a factor a;;cj, whereas t2 will have a corresponding factor é.
+Furthermore, the densities are also closely related in that y(t1) = 2y(t2).
+Hence, the equations
+
+1 1
+O(t;) = —{ and = ®(t2) = —~
+(t1) 7h) (t2) om)
+will be equivalent if
+ave c?, for alli =1,2,. (321a)
+
+We illustrate this by looking at some pairs of trees and noting the form of
+the equations
+
+1
+
+&(t1) = and of ple) = ay
+
+He (th)
+
+These are displayed in Table 321(I).
+
+It is clear that, if it were possible, for (321a) to hold for alli € {1,2,...,s},
+then we could simply remove the order equations associated with the t,
+trees from consideration, because they will automatically be satisfied if the
+conditions &(t) = 1/+(t) are satisfied for the t2 trees. However, it is not
+possible in the case i = 2 because this gives the equation 13 = 0 which
+implies co = 0. It will then follow in turn that cz = 0, cy = 0,... and all c
+components equal to zero will not be consistent even with the order condition
+Lac = 3. While we cannot make use of the simplification of assuming
+(321a), in the case of explicit methods, we make extensive use of this and

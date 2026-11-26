@@ -1,0 +1,54 @@
+316 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+When k = 3 we have A(z) = 1- $(z-1) + B(z— 1)? = 3B - 424 32? £0
+that, for the Adams~Bashforth method with order p = 3, we have 6; = 38,
+Bo = —4, Bs =
+
+Values of the ‘Kdams—Bashforth and Adams--Moulton coefficients have been
+previously given in Tables 244(I) and 244(I]), respectively.
+
+412 Backward difference methods
+
+Instead of choosing a specific a polynomial, we consider the choice 3 = Bo,
+where fo is to be chosen for consistency. From Theorem 410D we have
+
+a(1 +z) = —Bpo log(1 + z) + O(2*").
+
+Expand fo log(1 + z) to terms in z*, for order p = k and then substitute z—1
+in place of z. It is found that
+
+ale) = Bo (=) + Fle = Fe 4),
+
+and o is chosen so that a(0) = 1. For k = p = 1, we have a(z) = Bo(1 — z),
+so that 69 = 1 and a; = 1. Fork = p=2,
+
+a(z) = Bo (a —2)+ xa - ?) = Bo G ~ 224 7)
+
+giving Bo = 2 and
+_4 _ iil
+a= 3° ag= 73
+The coefficients for these methods are given up to p = k = 7 in Table 412(I),
+where the error constant C is found to be Bo/(p + 1).
+Note the method with p = k = 7 is of no practical value, in terms of the
+criteria for convergence, because it is not stable. This remark also applies to
+
+methods with k > 7.
+
+Table 412(I) Coefficients of the Backward Difference Methods up to order 7
+
+kl ay a2 a3 a4 as a6 az | Bo Cc
+1
+1} 1 5
+4 1 2 2
+2) 3 3 3 9
+3/8 -2 2 & | 3
+11 it 11 iI 22
+4| 48 _36 16 3 42 | 42
+25 25 25 25 25 | 125
+5 | 300 300 2000 75 12 60 | 10
+137 137-137 137 187 137 | 137
+6} 120 _150 400 _75 240 _ 10 20 | 20,
+49 49° «147 49 49 147 49 | 343
+7 | 980 _490 4900 _ 1225 196 _ 490 20 | 140 | 35.
+363 121 1089 3630121 1089 363 | 363 | 726
+

@@ -1,0 +1,97 @@
+3.5. IMPROVING AND ESTIMATING ACCURACY 125
+3.5.2 Scaling
+Let § be the machine base and define the diagonal matrices D, and D. by
+D, = diag(f... 6%)
+D, = diag(6™...8%).
+
+The solution to the n-by-n linear system Az = 6 can be found by solving
+the scaled system (D,'ADz)y = Dy'b using Gaussian elimination and
+then setting x = Day. The scalings of A, b, and y require only O(n?) flops
+and may be accomplished without roundoff. Note that D scales equations
+and D, scales unknowns.
+
+It follows from Heuristic II that if 2 and # are the computed versions of
+z and y, then :
+
+Dy '(@~=) flee _ W9-vileo “14
+[Ds'elo Wyle ePE AP) (53)
+
+Thus, if keo(Dy7!AD2) can be made considerably smaller than ,,(A), then
+we might expect a correspondingly more accurate Z, provided errors are
+measured in the “D2” norm defined by || z Ip, = || Dy'z lloo- This is the
+objective of scaling. Note that it encompasses two issues: the condition
+of the scaled problem and the appropriateness of appraising error in the
+Do-norm.
+
+An interesting but very difficult mathematical problem concerns the
+exact minimization of x,(D;!ADz) for general diagonal D; and various
+p. What results there are in this direction are not very practical. This is
+hardly discouraging, however, when we recall that (3.5.3) is heuristic and
+it makes little sense to minimize exactly a heuristic bound. What we seek
+is a fast, approximate method for improving the quality of the computed
+solution 2.
+
+One technique of this variety is simple row scaling. In this scheme Dp is
+the identity and D; is chosen so that each row in D;‘A has approximately
+the same oo-norm. Row scaling reduces the likelihood of adding a very
+small number to a very large number during elimination—an event that
+can greatly diminish accuracy.
+
+Slightly more complicated than simple row scaling is row-column equi-
+libration. Here, the object is to choose D, and Dz so that the oo~-norm
+of each row and column of D> 'ADy belongs to the interval (1/8, 1] where
+8 is the base of the floating point system. For work along these lines see
+McKeeman (1962).
+
+It cannot be stressed too much that simple row scaling and row-column
+equilibration do not “solve” the scaling problem. Indeed, either technique
+can render a worse £ than if no scaling whatever is used. The ramifications
+of this point are thoroughly discussed in Forsythe and Moler (1967, chap-
+ter 11). The basic recommendation is that the scaling of equations and
+
+126 CHAPTER 3. GENERAL LINEAR SYSTEMS
+
+unknowns must proceed on a problem-by-problem basis. General scaling
+strategies are unreliable. It is best to scale (if at ail) on the basis of what the
+source problem proclaims about the significance of each a;;. Measurement
+units and data error may have to be considered.
+
+Example 3.5.1 (Forsythe and Moler (1967, pp. 34, 40}) . If
+10 100,000 z _ 100, 000
+1 I 23 ~ 2
+and the equivalent row-scaled problem
+0001 1}fa) _ [1
+1 1 = a 2
+are each solved using @ = 10,t = 3 arithmetic, then solutions @ = (0.00, 1.00)7 and
+
+2 = (1.00, 1.00)” are respectively computed. Note that z = (1.0001..., 9999. ..)T is
+the exact solution.
+
+3.5.3 Iterative Improvement
+
+Suppose Az = 6 has been solved via the partial pivoting factorization PA =
+LU and that we wish to improve the accuracy of the computed solution 2.
+If we execute
+
+r=b-Az
+Solve Ly = Pr. (3.5.4)
+Solve Uz = y.
+
+Inew =E+2
+
+then in exact arithmetic At,.. = A£+Az = (6—r)+r = 6. Unfortunately,
+the naive floating point execution of these formulae renders an pew that is
+no more accurate than ¢. This is to be expected since # = fl(b — AZ) has
+few, if any, correct significant digits. (Recall Heuristic I.) Consequently,
+= fl(A—'r) ~ A-)- noise = noise is a very poor correction from the
+standpoint of improving the accuracy of 2. However, Skeel (1980) has done
+an error analysis that indicates when (3.5.4) gives an improved tnew from
+the standpoint of backwards error. In particular, if the quantity
+
+T = (IA[|A7 lle) (max GAllz)s /rmin (Allee)
+
+is not too big, then (3.5.4) produces an Znew such that (A+ E)qnew = b
+for very small E. Of course, if Gaussian elimination with partial pivoting
+is used then the computed ¢ already solves a nearby system. However,
+this may not be the case for some of the pivot strategies that are used to
+preserve sparsity. In this situation, the fired precision iterative improvement

@@ -1,0 +1,50 @@
+NUMERICAL DIFFERENTIAL EQUATION METHODS 7
+
+the role of ¥Q), to provide, along with ¥?) = Yo, the derivatives in step
+number 1 required to complete step number 2. Thus the starting step is based
+on the Runge-Kutta method
+
+0
+
+afoa
+
+i! 4 2
+
+7] 9 3
+
+1} 0 O01
+
+1f-5 § 0 0
+1 1 i211
+
+é 3 3 6 0
+
+262 Generalized linear multistep methods
+
+These methods, known also as hybrid methods or modified linear multistep
+methods, generalize linear multistep methods, interpreted as predictor-
+corrector pairs, by inserting one or more additional predictors, typically at off-
+step points. Although many examples of these methods are known, we give just
+a single example for which the off-step point is 7; 8 of the way through the step.
+That i is, | the first predictor computes an approximation to y(@,-1 + 75 2h) =
+
+y(tn — #h). We denote this first predicted value by the symbol ¥,-7/15 and
+the corresponding derivative by Sr-7)1 = fltr-—<% Lh, Yn—7/15)- Similarly,
+the second predictor, which gives an initial approximation to y(tn), will
+be denoted by #, and the corresponding derivative by fn = f(fn,9n)-
+This notation is in contrast to y, and f,, which denote the corrected
+step approximation to y(@,) and the corresponding derivative f(tn,Yn),
+respectively. The relationships between these quantities are
+
+~ 529 3904 4232 1472
+Yn-7/15 = 33975971 + 3375002 + BA gore Sai + 33757"?
+~ 152 127 189 ~ 1118
+yn = 25 “Fn Yn-1 — 25 ae yn-2th (= 92 fr—7/1s — safant ~ 375 see Sn 2),
+25 3375 = 19
+Yn =Yn-1 th (Feh+ Biggin—z/is + 96!" ~1- sgh).
+
+263 General linear methods
+
+To obtain a general formulation of methods that possess the multivalue
+attributes of linear multistep methods, as well as the multistage attributes of
+Runge-Kutta methods, general linear methods were introduced by the present

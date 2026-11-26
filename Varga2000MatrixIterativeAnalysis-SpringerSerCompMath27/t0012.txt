@@ -1,0 +1,49 @@
+4 1. Matrix Properties and Concepts
+
+A?
+
+&, 82
+s &
+u u
+8 . 84
+Uy, uz
+80 8;
+x
+§ >
+&, 8, 8
+Fig. 1.1.
+
+square. Although there are a number of different ways (Chap. 6) of finding
+such approximations of u(z, y), one simple procedure begins by expanding the
+function u(z,y) in a Taylor’s series in two variables. Assuming that u(z, y)
+is sufficiently differentiable, then
+
+u(ao + h, yo) = (so, Yo) thus (to, Yo) + Es "7 Yaz (0590)
+
+(1.3)
++h Usax(Zo, Yo) + ri t Ueera(T0, yo) +-
+
+u(xo, yo + h) = u(zo, yo) +huy(z0, Yo) + "Fay (00, Wo)
+
+(1.4)
++4 1 tbyyy (o> Yo) + Sruyyyy(to, Yo) + -
+
+where the point zo, yo and its four neighboring points (ro +h, yo), (zo, yo+h)
+are points of the closed unit square. We find then that
+
+Fr {u(zo +h, yo) +u(z0 — h, yo) + u(z0, yo +h)
++u(x0, yo — h) — 4u(zo, yo)}
+= {uz2(v0, 40) + Uyy(z0, Yo)}
++4; {uezex(Zo, Yo) + Uyyyy (Lo, Yo) } tee
+
+(1.5)
+
+From (1.1), the first term of the right side of (1.5) is zero, and if we neglect
+terms with coefficients h? or higher, we have approximately
+
+u(zo, Yo) = t{u( xo + h, yo) +u(xo — h, yo)
+
+(1.6) +u(zo, yo + h) + u(zo, yo — h)}.
+If we let
+uy = UZ, 3), u2:= (2,4), ug = u(s, ab and
+ua 2= U(3, 3);

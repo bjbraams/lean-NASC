@@ -1,0 +1,48 @@
+40 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+(i) A is stable,
+(ii) The minimal polynomial of A has all its zeros in the closed unit disc
+and all its multiple zeros in the open unit disc,
+(tit) The Jordan canonical form of A has all its eigenvalues in the closed
+unit disc with all eigenvalues of magnitude 1 lying in 1 x 1 blocks,
+
+(iu) There exists a non-singular matrix S such that ||S~1AS||oo < 1.
+
+Proof. We prove that (i) > (ii) > (iii) > (iv) > (i). If A is stable but
+(i) is not true, then either there exists A and v # 0 such that |\j > 1 and
+Av = Av, or there exists A, u # 0 and v such that |A| = 1 and Av = Av + u,
+with Au = Xu. In the first case, A"v = Av and therefore ||.A"|| > |A\”
+which is not bounded. In the second case, A"v = A”v +nA"—1u and therefore
+||A”|| > nl|ull/llel| -— 1, which also is not bounded. Given (ii), it is not possible
+that the conditions of (i#i) are not satisfied, because the minimal polynomial
+of any of the Jordan blocks, and therefore of A itself, would have factors that
+contradict (iz). If (#7) is true, then S can be chosen to form J, the Jordan
+canonical form of A, with the off-diagonal elements chosen sufficiently small
+so that ||J loo < 1. Finally, if (év) is true then A” = S(S-1AS)"S—! so that
+Ai] < [ISI] SASH - SI < [ISI STI. o
+
+Theorem 132D Let A denote an m x m matriz. The following statements
+are equivalent
+
+(i) A is convergent,
+
+(ii) The minimal polynomial of A has all its zeros in the open unit disc,
+
+(iti) The Jordan canonical form of A has all its diagonal elements in the
+open unit disc,
+
+(iu) There exists a non-singular matrix S such that ||S~!AS||oo <1.
+
+Proof. We again prove that (i) > (i) > (iit) > (iv) => (i). If Ais convergent
+but (#7) is not true, then there exists A and u # O such that A > 1 and Au = Au.
+Hence, A"u = A”u and therefore ||A"|| > {A|", which does not converge to
+zero. Given (i), it is not possible that the conditions of (iii) are not satisfied,
+because the minimal polynomial of any of the Jordan blocks, and therefore
+of A itself, would have factors that contradict (ii). If (ii) is true, then S can
+be chosen to form J, the Jordan canonical form of A, with the off-diagonal
+elements chosen sufficiently small so that ||Jlloo < 1. Finally, if (iv) is true
+then A” = S(S-1AS)"S7! so that ||A”|| < {|S|| -||S7+|| -||S7+AS||" + 0. O
+
+While the two results we have presented here are related to the convergence
+of difference equation solutions, the next is introduced only because of its
+application in later chapters.

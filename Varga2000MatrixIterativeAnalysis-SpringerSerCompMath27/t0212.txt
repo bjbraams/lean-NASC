@@ -1,0 +1,53 @@
+204
+
+10.
+
+11.
+
+12.
+
+6. Derivation and Solution of Elliptic Difference Equations
+
+With q(x) = 0 and p(x) > 0 in (6.22), derive from (6.22), by means of
+integration, the exact result
+
+dyi1j2 _ 1
+Pi-1/2 da f....
+[ apoe)
+Fa
+
+i-1
+
+and use this in (6.29) to obtain an eract expression which resembles
+(6.30) (Tikhonov and Samarskii (1956)).
+
+Let D be the m x m diagonal matrix obtained by setting all the off-
+diagonal entries of the matrix A of (6.35) to zero. For all mesh spacings
+sufficiently small, show that A:= D-C is a regular splitting of A
+(see (Sect. 3.6). From this, directly prove that p(D~!C) < 1.
+
+Using the notation of the previous exercise, let A = D-C, where
+A is the matrix of (6.35), with g(x) = 0 in (6.22). Show that the
+point Jacobi matrix G derived from A is such that D+!/2BD-1/2 is
+an element of the set S of Sect. 4.4.
+
+Consider the problem of (6.22)-(6.23), where p(z) = 1,q(z)
+0,o(z) > 0, and a = 1,6; = 0 fori = 1, 2. If, for any € with
+0 <e<b—a, we have h; := h(e) for alli # j, and hj :=€, OS i < N,
+where (N — 1)h(e) + € = b—a, let B(e) be the associated point Jacobi
+matrix of Theorem 6.3. While Theorem 6.3 tells us that p(B(e)) <1
+prove that for N fixed,
+
+tim p(B(e)) =
+
+«0
+
+6.3 Derivation of Finite Difference Approximations in
+Higher Dimensions
+
+The different methods, introduced in Sect. 6.1 for deriving finite difference ap-
+proximations to ordinary differential equations, can also be applied in deriv-
+ing finite difference approximations to second-order self-adjoint elliptic par-
+tial differential equations in two or more spatial variables, and it would be
+quite accurate to say simply that higher-dimensional forms of Theorems 6.1
+and 6.3 are valid. Yet, the associated geometric detail in higher-dimensional

@@ -1,0 +1,48 @@
+4.4 Extensions of the 2-Cyclic Theory of Matrices 139
+
+The importance of this result is that it shows that consistent orderings,
+when they exist, are optimal. Thus, in keeping with our goal of maximizing
+the asymptotic rate of convergence Lg,.,, we have also determined which
+orderings ¢ give the greatest asymptotic rate of convergence, relative to the
+
+set S.
+
+Exercises
+
+1.
+
+*5.
+
+For the matrix B2 of (4.46), show that
+
+1 ay) 1/2
+hp, (a) = oa {1 + cosh ($)} .
+Similarly, find hg,(a), where Bs is defined in (4.47).
+
+From the derivation of (4.64), it is clear that
+
+A+w-1
+w
+
+| < ma(\A))
+
+where w # 0, and X is any eigenvalue of £g,,. With the explicit
+knowledge of hg,(a) and hg,(a) from the previous exercise, deter-
+mine sharper upper bounds than a» — I for p(Lz,,u,), 4 = 2,3.
+
+Let A be an n x n Stieltjes matrix (see Sect. 3.5), and arbitrarily
+partition A in the form (4.2). If D is the corresponding block diagonal
+matrix of (4.3), form the matrix
+
+B:=1-DUPAp 2.
+If B is irreducible, show that B € S.
+Prove the second part of Lemma 4.12.
+
+Prove (Kahan (1958)) that for any B € S,Inmg is a convex function
+of Ino, i.e.,
+
+Inmp(e**") + Inmp(e*~")
+
+Inmap(e®) < 2
+
+for any real a, and h > 0. (Hint: Extend the result of Lemma 4.12).

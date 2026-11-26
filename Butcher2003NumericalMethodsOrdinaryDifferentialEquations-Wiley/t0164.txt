@@ -1,0 +1,49 @@
+152. NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Another approach would be to assume a bound M on ||f||, a bound L on
+the linear operator ||f’||, and further bounds to make up the sequence
+
+Ilfll < M4,
+Ifill < Z,
+2
+
+\if"ll< w
+
+"ls a
+
+IFPI s ge.
+
+This will mean that for any tree of order p + 1, ||F'(t)(yo)|| < Z?M and that
+
+ay | ~ =] WFO < DM.
+
+«5:
+We pti of) We =p +l w5 1
+
+In studying the behaviour of a particular method of order p when used
+to solve a particular initial value problem, we wish to assume that the local
+truncation error is bounded asymptotically by some constant multiplied by
+hP+!. This assumption will hinge on smoothness of the solution and the
+differentiability, sufficiently many times, of f.
+
+3819 Global truncation error
+
+We consider the cumulative effect of errors in many steps leading to an error in
+a final output point. Suppose that n steps are performed to carry the solution
+from an initial point zo to a final point @. If a constant stepsize is used, this
+would need to be equal to (¥ — z9)/n to exactly reach the final point. Denote
+the approximations computed by a Runge-Kutta method by yi, ye, ---, Yn:
+with yo = y(xo). If the error committed in each of the n steps is bounded by
+Ch?*1 then the total contribution to the error would seem to be
+
+nChP*) = C(E — ao)h?.
+
+We attempt to make this argument more precise by noting that an error
+in the initial value input to a step will lead to an error in the output value
+consisting of two terms. The first of these is the perturbation to the output
+due to the error in the input, and the second is the truncation error due to
+the method itself.
+
+In the statement of a preliminary lemma that we need, |A| and |b"| will
+denote the matrix A and the vector 6", respectively, with every term replaced
+by its magnitude.

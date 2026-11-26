@@ -1,0 +1,21 @@
+name = "LeanNASC"
+version = "0.1.0"
+defaultTargets = ["NASC"]
+buildDir = ".lake/build-NASC"
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[lean_lib]]
+name = "NASC"
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.36.0"
+
+[[require]]
+name = "TauCeti"
+git = "https://github.com/TauCetiProject/TauCeti"
+rev = "v4.36.0"

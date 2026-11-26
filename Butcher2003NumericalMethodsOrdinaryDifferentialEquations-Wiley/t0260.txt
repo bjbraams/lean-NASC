@@ -1,0 +1,52 @@
+248 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+In other cases, the contributions from b' A~1« might dominate 9, if the
+stage-order is less than the order.
+Define
+
+Mm =€o +hLb'(I—RLA)"e, n>O0,
+
+with 7 defined as the initial error g(zo) — yo. The accumulated truncation
+error after n steps is equal to
+
+n n
+DRL): & YT Roo)”.
+i=0 i=0
+There are three important cases which arise in a number of widely use
+methods. If R(oo) = 0, as in the Radau IA, Radau IIA and Lobatto ITIC
+methods, or for that matter in any L-stable method, then we can regard the
+global truncation error as being just the error in the final step. Thus, if the
+local error is O(h?+") then the global error would also be O(h?+1). On the
+other hand, for the Gauss method with s stages, R(oo) = (—1)*. For the
+methods for which R(co) = 1, then we can further approximate the global
+error as the integral of the local truncation error multiplied by 4~!. Hence,
+a local error O(h?+1) would imply a global error of O(h7). In the cases for
+which R(oo) = —1 we would expect the global error to be O(h2+"), because
+of cancellation of n; over alternate steps.
+We explore a number of example methods to see what can be expected for
+both local and global error behaviour.
+For the Gauss methods, for which p = 2s, we can approximate €) by
+
+2841 &
+hy ( 1 _ > nat) gtd (an—1) + O(n?st?),
+i=1
+
+Qa! \Qs41
+which equals
+p2stt git
+(28-+1) 2642
+@s)Qs + 1)9 (@n-1) + O(h*™*). (362e)
+Now consider the term —b! A~'e. This is found to equal
+Ast1g!
+(s+1) st2
+Qs)e+ 19 (tn-1) + O(RS**),
+
+which, in the case that |hL| is large, dominates (362e).
+We also consider the important case of the Radau IIA methods. In this case
+€9 is approximately
+
+nes 1 - e—1 (2s) 2s+1
+@s—D! \ 2s ~ > bic} ge? (@n-1) + OWE) =
+= _ Wsl(s — 1)!
+
+Was ways gna) + OW).

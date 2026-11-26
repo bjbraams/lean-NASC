@@ -1,0 +1,48 @@
+388 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+output quantities computed by the method, yl”)
+S; applied to y(zp), for i = 1,2,...,r.
+
+We refer to the sequence of r generalized Runge-Kutta methods
+S1,52,...,5, as a ‘starting method’ for the general linear method under
+consideration and written as S. It is possible to interpret each of the output.
+quantities computed by the method, on the assumption that 9 is used as a
+starting method, as itself a generalized Runge-Kutta method with a total
+of s + 3; + 8 +-:- + 8, stages. It is, in principle, a simple matter to
+calculate the Taylor expansion for the output quantities of these methods
+and it is also a simple matter to calculate the Taylor expansion of the result
+found by shifting the exact solution forward one step. We write SM for the
+vector of results formed by carrying out a step of M based on the results of
+computing initial approximations using S. Similarly, E'S will denote the vector
+of approximations formed by advancing the trajectory forward a time-step h
+and then applying each member of the vector of methods that constitutes S
+to the result of this.
+
+A restriction is necessary on the starting methods that can be used in
+practice. This is that at least one of 51, S2,..., S,, has a non-zero value for
+the corresponding of, If of = 0, for all i = 1, 2, ..., r, then it would not
+be possible to construct preconsistent methods or to find a suitable finishing
+procedure F say, such that SF becomes the identity method.
+
+Accordingly, we focus on starting methods that are non-degenerate in the
+following sense.
+
+, are close approximations to
+
+Definition 530A A starting method S defined by the generalized Runge—
+Kutta methods (530a), fori=1, 2, ..., r is ‘degenerate’ if al) =0, fori =1,
+2,..., r, and ‘non-degenerate’ otherwise.
+
+Definition 530B Consider a general linear method M and a non-degenerate
+starting method S. The method M has order p relative to S if the results found
+from SM and ES agree to within O(?t).
+
+Definition 530C A general linear method M has order p if there exists a
+non-degenerate starting method S such that M has order p relative to S.
+
+In using Definition 530C, it is usually necessary to construct, or at least to
+identify the main features of, the starting method S which gives the definition
+a practical meaning. In some situations, where a particular interpretation
+of the method is decided in advance, Definition 530B is used directly. Even
+though the Taylor series expansions, that are needed to analyse order, are
+straightforward to derive, the details can become very complicated. Hence,
+we will build a framework for simplifying the analysis.

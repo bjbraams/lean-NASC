@@ -1,0 +1,58 @@
+220 6. Derivation and Solution of Elliptic Difference Equations
+
+shall now examine, both theoretically and practically, numerical methods for
+solving these matrix equations.
+Let us first look at the matrix equation
+
+(6.59) Az =k,
+
+where A is a given nonsingular n xn tridiagonal matrix with nonzero diagonal
+entries, and k is a given column vector in ©”, of the form
+
+by C1 ky
+
+oe . ko
+
+(6.60) A=|® - k=l].
++ Cn-1 .
+
+Qn by Kn
+
+This matrix problem can be directly solved by the following simple algorithm.
+Defining
+
+C1, _—_ CG
+
+-= = st KC n-1
+wy bi Wi by tayuen’ <i<n-l,
+(6.61) k ‘
+1 — UGJi-1 .
+=; = 2<i<
+n by’ aan bj — ajyw;_1’ stsm
+
+the components z; of the solution vector z are then given recursively by
+
+(6.62) In =Gni %=Gi-Wiziz1, L<i<n-1.
+
+With the calculation of the quantities w; and g;, the above procedure is
+equivalent to the reduction by Gaussian elimination! of the matrix equation
+to a new matrix equation, the new matrix being upper-triangular with unit
+diagonal entries. Thus, (6.62) is just the backward substitution determining
+the vector solution z. In terms of arithmetic calculations, the above method
+requires at most five multiplications and three additions per unknown z,
+assuming for simplicity that divisions are roughly as time-consuming on dig-
+ital computers as multiplications. On the other hand, the point successive
+overrelaxation iterative method applied to (6.59) can be written as
+
+amt) _ 2) tw TH mt) + Te 2m)
+b; B
+(6.63) + () _ an}
+db;
+
+m>0.
+
+Assuming that the coefficients a;/b;,ci/b;, and k;/b; have been computed
+once and stored, it is apparent for w different from zero or unity that this
+
+12 See, for example, either Householder (1953), p. 69 or Faddeev and Faddeeva
+(1963), p. 79.

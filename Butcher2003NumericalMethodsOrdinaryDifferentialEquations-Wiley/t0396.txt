@@ -1,0 +1,40 @@
+386 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Figure 521(i) Order arrows for the [23, 0,2] and (24, 0, 2] generalized Padé
+approximations
+
+In Butcher and Chipman (1992), the search for possible » corresponding
+to A-stable methods was focused on the cases 2v) — p € {0,1,2}. For k = 1,
+that is the one-step case, this is necessary and sufficient for A-stability.
+It seems to be the case that, even for k > 1, those methods for which
+2v9 — p > 2 cannot be A-stable. This proposition, which has become known
+as the ‘Butcher-Chipman conjecture’, has been proved in Butcher (2002) for
+the cases 2v) — p = 3,4,7,8,11,12,....
+
+If the conjecture can be proved in general, it is likely that order stars, or
+some very similar technique, will play a role in the proof. Because examples
+exist, namely the cases [23, 0, 2] and [24, 0, 2], for which poles lie in unbounded
+fingers, G. Wanner has pointed out that the use of order stars in such a proof,
+will run into complications. On the other hand, it is possible that order arrows
+might provide an alternative approach. Order arrows for these two apparently
+difficult cases are shown in Figure 521(i).
+
+Exercises 52
+
+52.1 Find the stability matrix and stability function for the general linear
+method
+
+i
+2
+4
+
+aie Bobi
+
+or|lR
+|
+
+© wlesfotor wie
+
+mr BIS
+
+Show that this method A-stable.

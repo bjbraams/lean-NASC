@@ -1,0 +1,54 @@
+148
+
+4.4
+
+4.5
+
+4.6
+
+4. Successive Overrelaxation Iterative Methods
+
+As Exer. 2 indicates, one can use the function equation
+(At+w—1)? = \?lwPpP
+
+to determine an optimum relaxation factor w even when the eigenval-
+ues of B? are not nonnegative real numbers. For such generalizations,
+which rely on conformal mapping arguments, see Young (1954a) and
+Varga (1959a).
+
+The geometrical determination for the case p = 2 of the optimum
+relaxation factor is suggested by results of Kahan (1958) and Varga
+(1959b).
+
+Many of the results given in this section do not depend upon the
+symmetry and irreducible character of the matrices B € S, and more
+general results can be found in Kahan (1958). The approach taken in
+this section, however, is due to the closely related, but independent
+papers of Kahan (1958) and Varga (1959b).
+
+The graph-theoretic interpretation of a consistently ordered 2-cyclic
+matrix might be called new, although Young (1950) has given a similar
+discussion based on “circulation” for the numerical solution of the
+Dirichlet problem. See also Forsythe and Wasow (1960).
+
+The result (Varga (1959b)) of Theorem 4.17 contains the proof of a
+conjecture by Young (1950) that, among all orderings of a cyclic of
+index 2 matrix B € S, only the consistent orderings give the great-
+est asymptotic rate of the convergence of the Gauss-Seidel iterative
+method. With respect to Theorem 4.16, Kahan (1958) first obtained
+these bounds for p(£g,.), but without a discussion of when equality
+is valid.
+
+The particular result of Theorem 4.18, given by Varga (1959b), sub-
+stantiates an empirical observation due to Shortley and Weller (1938).
+In the paper of Garabedian (1956), theoretical results are obtained for
+estimating the optimum relaxation factor in the numerical solution of
+the Dirichlet problem for small meshes for both the 5-point and 9-
+point approximations. In terms of the point successive overrelaxation
+scheme, the latter approximation gives rise to a primitive Jacobi iter-
+ation matrix, for which no ordering is consistent.
+
+In this section, the generalizations of consistent orderings called
+CO(q,r) and GCO(q,r) by Young (1971), Chap. 13, are connected
+succinctly to block-partitioned matrices which are weakly cyclic of in-
+dex p.

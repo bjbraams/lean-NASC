@@ -1,0 +1,37 @@
+RUNGE-KUTTA METHODS 277
+
+Table 386(I) The function for trees of orders 1 to 5
+
+t r(t) (a, t)
+. T 17
+! TT 2 TF +a(r)F
+Vv TT 3 FPP 4+ 2a(r)FF + a(t /P?F
+} TTT 3 FTF +a(t)FF + a(rT)F
+Woo (rr-t)r 4 (FF-F)F + 30(7)FF-F + 30(7)? FF + (7 BT
+3 mtT A TET + a(r)TT-T + a(r)T TFT +
+(a(r)? + a(rr))FF + a(r)a(rr)F
+Y r(rtT) 4 F(FF-F) + 2a(r)F-FF + a7)? FF + (rT -T)F
+i (rr) 4 FFF) + a(r)F-TF + alrr)TF + a(t -tr)F
+SY (rr-r)r-r 5 (FF-T)F-F + 4a(r)(FF-F)F + 607)? TF -F+
+4a(r)3FF + a(r)4F
+oy (rr-r)-tr OB (FF-F)-FT + 2a(r)TF-TF + a(7)(TT-F)T+
+2a(r)?FF-F + (alr)? + a(rr))FF-F+
+(a(r)? + 2a(r)a(r7))FF + a(r)?a(rr)F
+Sore (rrer) 5 FF FFF) + 2a(r)FF-FF + aT )F FF F)+
+alr)°7P-F + 2alr)?F-FF+
+(a(r)? + a(tr-7))FF + a(r)a(rr-r)T
+gf Tr (rtt) 5 FPGFA) + al nFFFF + alr) RFFA)+
+a(rr)tt-F + a(r)?t-7F+
+(a(r)a(rr) + a(7-77))FF + a(r)a(r-Tr)F
+YU (r-tr)-tr 5 (F-TF)-PF + alr) PF-TF + (7 )P TF Ft
+Qa(rr)F-FF + 2a(r)a(rr)FT + a(t )yP?F
+Yoor(rren)r 5 PFFFYF + Ba(r)FFFA) + Bar)? FFP
+a(r)?tF + a((r7-7)T)F
+4 t(tT-7T) 5 F(FF-TF) + a(r)F(FF-F) + (7) F(F-TF)+
+(a(r)? + a(rr))F-TF + a(r)a(rr)FF + a(tr-rr)F
+Yo rrlrrt) 5 FFGFA) + alr )RF-FA) + alr R FF
+a(rr-T)TF + a(r(rr-r))F
+Tt(rtT) 5 FF FT) + (rT (FTF) + a(t) FFT +
+
+a(r-T7r)tF + a(t(r-tr))F
+

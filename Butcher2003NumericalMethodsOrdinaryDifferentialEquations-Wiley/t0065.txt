@@ -1,0 +1,55 @@
+52 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+eccentricity e = 3. The starting value corresponds to the closest point on
+the orbit to the attracting force, and the exact value at the end of a half
+period are
+
+l-~e 3 -l-e -3
+
+0 0 0 0
+
+y(0) = 0 = 0 , y(m) = 0 = 0
+viz] Lvs ~Viise “vi
+
+When the eccentricity is further increased to e = 3, the loss of accuracy in
+carrying out the computation is even more pronounced. Results for e = $
+are given in Table 201(IV), where we note that, in this case, y(7) =
+
+[-1,0,0,-1/V7]".
+
+202 Calculations with stepsize control
+
+The use of the Euler method, with constant stepsize, may not be efficient for
+some problems. For example, in the case of the eccentric orbits, discussed in
+the previous subsection, a small step should be taken for points on the orbit,
+close to the attracting force, and a larger step for points remote from the
+attracting force. In deciding how we might attempt to control the stepsize
+for a general problem, we need to consider how the error committed in each
+step can be estimated. First, however, we consider how the stepsize in a step
+should be chosen, to take account of this error estimate.
+
+Because the total error is approximately the sum of the errors committed in
+the individual steps, at least for a limited number of steps, we look at a simple
+model in which the interval of integration is divided up into m subintervals,
+with lengths 61, 462,...,dm. We assume that the norms of the errors in steps
+carried out in these intervals are Cih?, C2h2,...,Cmh?,, respectively, where
+hy, ho,..-,hm are the constant stepsizes in these subintervals. Assume that a
+total of N steps of integration by the Euler method are carried out and that a
+fraction ¢; of these are performed in subinterval number i = 1,2,...,m. This
+means that ¢;N steps are carried out in subinterval i and that h; = N~16;/t:.
+The total error committed, which we assume, in the absence of further
+information, to be the sum of the individual errors, is approximately
+
+E= Sec, ( z fn)" = ue (202a)
+
+i=1
+where 6,/t;N is the stepsize used for every step i in subinterval number 7. By
+
+the Cauchy—-Schwarz inequality, the minimum value of (202a) is achieved by
+6iVC;
+Dyer VC;
+
+and it follows that optimality occurs when C;h? is maintained constant over
+every subinterval. We interpret this result to mean that the estimated values
+
+i=

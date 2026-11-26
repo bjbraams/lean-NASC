@@ -1,0 +1,27 @@
+224 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Figure 354(i) Order star for the (1,3) Padé approximation to exp
+
+to Iserles and Nersett (1991) for fuller information and applications of order
+stars.
+
+The order star for a particular rational approximation to the exponential
+function disconnects into ‘fingers’ emanating from the origin, which may be
+bounded or not, and similar remarks apply to ‘dual fingers’ which are the
+connected components of the dual star. The following statements summarize
+the key properties of order stars for applications of the type we are considering.
+Because we are including only hints of the proofs, we refer to them as Remarks
+rather than as Lemmas or Theorems. Note that S denotes the order star for
+a. specific ‘method’ and I denotes the imaginary axis.
+
+Remark 354A A method is A-stable iff S has no poles in the negative half-
+plane and SUI = @, because the inclusion of the exponential factor does
+not alter the set of poles and does not change the magnitude of the stability
+function on I,
+
+Remark 354B There exists po > 0 such that, for all p > po, functions
+01(p) and 62(p) exist such that the intersection of S with the circle |z| = p
+is the set {pexp(i0) : 0. < @ < 62} and where limp. 61(p) = 2/2
+and limp-+soo 02(p) = 3x/2, because at a great distance from the origin, the
+behaviour of the exponential function multiplied by the rational function on
+which the order star is based is dominated by the exponential factor.

@@ -1,0 +1,101 @@
+4.2. Positive DEFINITE SYSTEMS 145
+
+Algorithm 4.2.2 (Cholesky: Outer product Version) Given a sym-
+metric positive definite A € R"™*, the following algorithm computes a lower
+triangular G € IR"*™ such that A = GG. For all i > j, G(i, j) overwrites
+Ali, 7).
+
+for k= ln
+A(k,k) = \/A(k, k)
+A(k + Ain, k) = A(k + lin, k)/A(k, k)
+for j=k+1:n
+A(g-n, j) = A(g-n, j) — AGGn, K)AG, &)
+end
+end
+
+This algorithm involves n?/3 flops. Note that the j-loop computes the lower
+triangular part of the outer product update
+
+A(k+in,k+in) = A(k+lin,k + lin) — A(k + Lin, k)A(k + Ln, k)*.
+
+Recalling our discussion in §1.4.8 about gaxpy versus outer product up-
+dates, it is easy to show that Algorithm 4.2.1 involves fewer vector touches
+than Algorithm 4.2.2 by a factor of two.
+
+4.2.6 Block Dot Product Cholesky
+
+Suppose A € R"*" is symmetric positive definite. Regard A = (Aj;;) and its
+Cholesky factor G = (G,;) as N-by-N block matrices with square diagonal
+blocks. By equating (i,j) blocks in the equation A = GGT with i > j it
+follows that
+
+i
+Ay = > GuG4,.
+ken
+
+Defining
+joi
+S = Ay- 3° GuGh,
+kewl
+we see that G4,G7, = Sift =j7 and that GyGT, = Sifi> j. Properly
+sequenced, these equations can be arranged to compute all the Gy:
+
+Algorithm 4.2.3 (Cholesky: Block Dot Product Version) Given a
+symmetric positive definite A € IR", the following algorithm computes a
+lower triangular G € R°™” such that A = GGT. The lower triangular part
+of A is overwritten by the lower triangular part of G. A is regarded as an
+N-by-N block matrix with square diagonal blocks.
+
+146 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+
+for j=1:N
+for i= 7:N
+jr)
+S = Ay —- > GuGh,
+kal
+ifi=j
+Compute Cholesky factorization S$ = Gj;GT,.
+else
+Solve GijGT, = S for Guy
+end
+Overwrite Aj; with Gj;.
+end
+end
+
+The overall process involves n3/3 flops like the other Cholesky procedures
+that we have developed. The procedure is rich in matrix multiplication
+assuming a suitable blocking of the matrix A. For example, if n = rN and
+each Aj; is r-by-r, then the level-3 fraction is approximately 1 — (1/N’ 2,
+
+Algorithm 4.2.3 is incomplete in the sense that we have not specified how
+the products Gi4G x are formed or how the r-by-r Cholesky factorizations
+S = G,j;GT, are computed. These important detaila would have to be
+worked out carefully in order to extract high performance.
+
+Another block procedure can be derived from the gaxpy Cholesky algo-
+rithm. After r steps of Algorithm 4.2.1 we know the matrices G;, € R'*~"
+
+and Go: € Re-)* in
+Gu ol, 0 [a ay"
+Gy In-r oA Gy In-r .
+
+We then perform r more steps of gaxpy Cholesky not on A but on the
+reduced matrix A = Az2:— G21G2, which we ezplicitly form exploiting
+symmetry. Continuing in this way we obtain a block Cholesky algorithm
+whose kth step involves r gaxpy Cholesky steps on a matrix of order n —
+(k — 1)r followed a level-3 computation having order n ~— kr. The level-3
+fraction is approximately equal to 1 - 3/(2N) ifn rN.
+
+An 4 | =
+An Ax
+
+4.2.7 Stability of the Cholesky Process
+
+In exact arithmetic, we know that a symmetric positive definite matrix
+has a Cholesky factorization. Conversely, if the Cholesky process runs to
+completion with strictly positive square roots, then A is positive definite.
+Thus, to find out if a matrix A is positive definite, we merely try to compute
+its Cholesky factorization using any of the methods given above.
+
+The situation in the context of roundoff error ia more interesting. The
+numerical stability of the Cholesky algorithm roughly follows from the in-

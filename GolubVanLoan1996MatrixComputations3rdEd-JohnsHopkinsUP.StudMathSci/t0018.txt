@@ -1,0 +1,95 @@
+1.1. Basic ALGORITHMS AND NOTATION 7
+
+then we are choosing to think of A as a collection of rows with
+P=[1 2], rF=(3 4], and rP=[5 6].
+
+With the row partitioning (1.1.1) Algorithm 1.1.3 can be expressed as fol-
+lows:
+
+for i = 1:m
+y= rts + y(t)
+end
+
+Alternatively, a matrix is a collection of column vectors:
+AER™" <> Asl[ei,...,on}, ceER™. (1.1.2)
+
+We refer to this as a column partition of A. In the 3-by-2 example above, we
+thus would set c, and cz to be the first and second columns of A respectively:
+
+With (1.1.2) we see that Algorithm 1.1.4 is a saxpy procedure that accesses
+A by columns:
+
+for j =1:n
+yrzeaty
+end
+
+In this context appreciate y as a running vector swn that undergoes re-
+peated saxpy updates.
+
+1.1.8 The Colon Notation
+
+A handy way to specify a column or row of a matrix is with the “colon”
+notation. If A € IR™*", then A(k, :) designates the kth row, ie.,
+
+A(k,:) = fani,..-,@kn]
+The kth column is specified by
+Gk
+A(:,k) =
+Omk
+With these conventions we can rewrite Algorithms 1.1.3 and 1.1.4 as
+
+for i = lim
+y(t) = Ali, :)z + y(i)
+end
+
+8 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+and
+
+for j = lin
+
+y=a()AG,j)+y
+end
+
+respectively. With the colon notation we are able to suppress iteration
+details. This frees us to think at the vector level and focus on larger com-
+putational issues.
+
+1.1.9 The Outer Product Update
+
+As a preliminary application of the colon notation, we use it to understand
+the outer product update
+
+A=A+ay™, AER™" ceR™, yeR".
+
+The outer product operation zy? “looks funny” but is perfectly legal, e.g.,
+
+1 45
+j2] s1=[ 8 |
+3 12 15
+
+This is because xy? is the product of two “skinny” matrices and the number
+of columns in the left matrix x equals the number of rows in the right matrix
+y7. The entries in the outer product update are prescribed by
+
+for i= 1:m
+for 7 = lin
+Og = iz + Tiy;
+end
+end
+
+The mission of the j loop is to add a multiple of y™ to the i-th row of A,
+iLe.,
+
+for i= lim
+A(i,:) = A(i,:) + 2(i)y™
+end
+
+On the other hand, if we make the ¢-loop the inner loop, then its task is to
+add a multiple of x to the jth column of A:
+
+for j = lin
+AGI) = AGI) + yG)z
+end
+
+Note that both outer product algorithms amount to a set of saxpy updates.

@@ -1,0 +1,50 @@
+7.4 Variants of the Peaceman-Rachford Iterative Method 265
+
+W,(w) = (Vi +rt)7} (Hy +r)?
+
+(7.77) {MV + (w-Iyr(H +V)4r7I},
+and
+(7.78) g(r,w) = (2—w)r(VYi + r1)71 (HM, + rI)~'k.
+
+By direct verification, we can show that
+
+(7.79) W,(w) = 5 {ul + (2-w)Ts},
+
+where T; is the Peaceman-Rachford matrix of (7.13). But it is easy to bound
+the spectral radius of the matrix W,(w), relative to that of the Peaceman-
+Rachford matrix T,, since
+
+1
+(7.80) pW,(w)) < swt Q-w)plT)}, OSw <2.
+Thus, from Theorem 7.1, we immediately conclude
+
+Theorem 7.16. Let H; and Vi be nxn Hermitian nonnegative definite ma-
+trices, where at least one of the matrices H; and V, is positive definite. Then,
+for any r > 0, and for any w with 0 < w < 2, the generalized alternating-
+direction implicit matrix W,(w) of (7.77) is convergent.
+
+Corollary 7.17. With the hypotheses of Theorem 7.16, the Douglas-
+Rachford iterative method (7.70) and (7.74) is convergent for any fixed r > 0
+and any initial vector u.
+
+In the commutative case HjV; = Vi Hj, the relationship (7.79) between
+the eigenvalues of the Douglas-Rachford matrix W,(1) and the Peaceman-
+Rachford matrix T;, allows one to show (Exer. 2) that
+
+1> min p(W,(1)) > min p(T),
+
+so that as optimized one-parameter iterative methods, the Peaceman-
+Rachford iterative method is always superior to the Douglas-Rachford it-
+erative method. One of the claims stated for the Douglas-Rachford iterative
+method is that it can also be used to solve three-dimensional elliptic prob-
+lems.9
+
+A second important variant of these alternating-direction implicit meth-
+ods has been given by Wachspress and Habetler (1960). Clearly, the identity
+matrix as used in (7.70) and (7.71) could be replaced by any positive real
+diagonal matrix F. This neither affects the algorithm for the direct solution
+of matrix equations, such as
+
+(Hi + Tmo Fal l/2) =h,
+
+° This was pointed out in the original paper of Douglas and Rachford.

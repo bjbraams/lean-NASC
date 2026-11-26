@@ -1,0 +1,46 @@
+198 6. Derivation and Solution of Elliptic Difference Equations
+
+Making these approximations in (6.29) gives us
+
+_n. Yit1 — Yi ; YT VYi-1 + ( Yit1 Yi
+Pi+1/2 ( hi ) +nan( hia ) +a ( 2 )
+
+UR ~ hi thi
+(6.30) +qr Yi wt 1 +Yy; O; se
+
+_ (fc hinrt firhi Air thi\
+=( : + (Math) 5,
+
+which, upon omitting the final term, will be the linear equation for our dis-
+crete approximation to (6.22) for the mesh point z;. The quantity 7; again can
+be estimated in terms of higher derivatives of y(x) and the given functions.
+(See Exers. 1 and 2.)
+
+For boundary conditions, if 8; = 0, then from (6.23), yo = y1/ai is a
+specified value. On the other hand, if 6; > 0, then yo is unknown. In this
+case, directly substituting the boundary condition of (6.23) in (6.27) for the
+case i = 0 and making similar discrete approximations result in
+
+4
+1 = Yo o1Yyo — V1 1 — Yo % Yoho
+ra (2) +06 ( B ) eat (45 \+ SS
+(6.31) 0 \ bs
+
+ho , h
+= fim 4 Ao.
+
+The analogous treatment of the right-hand boundary is evident. Thus, these
+various expressions can be written in the form
+
+hia + hi
+(6.32) Diy: — Liyi-1 — Uiyinr = ki + (=) Tm, 1<i<N,
+where
+La Pie 4 Gq. U, vx Pike ae
+Ai 2g 2’
+op hy_y tooth
+(6.33) D;:=1;+U;+ a
+~h; +h.
+kw tA cic,
+
+2 >
+Again, if 6; > 0 in (6.23), then

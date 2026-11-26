@@ -1,0 +1,43 @@
+408 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+with \ > 0 and V is of the form
+
+1 vt
+v=[) > | (546a)
+
+where a?) = 0, with p denoting spectral radius. We assume that p = q and
+that s > p and r > p. We mainly consider the case r = p+ 1, but note that
+the last columns of U and V could possibly vanish, thus making it possible
+for r to be reduced to r = p. We also assume for the present that s = p+ 1.
+
+Definition 546A A general linear method (A,U, B,V) is ‘inherently Runge-
+Kutta stable’ if V is of the form (546a) and the two matrices
+
+BA-XB and = BU-XV+4+VX,
+are zero except for their first rows, where X is some matric.
+The significance of this definition is expressed in the following.
+
+Theorem 546B Let (A,U,B,V) denote an inherently RK stable general
+linear method. Then the stability matrix
+
+M(z)=V4+2zB(I~2zA)1U
+
+has only a single non-zero eigenvalue.
+
+Proof. Calculate the matrix
+
+(I —2X)M(z)(1 -2zX)7},
+which has the same eigenvalues as M/(z). We use the notation = to denote
+equality of two matrices, except for the first rows. Because BA = XB and
+
+BU = XV -VX, it follows that
+
+(I - 2X)B = B(I—zA),
+([-2zX)V =V(I-— 2X) — 2BU,
+
+so that
+(I - 2X)M(z) =V(I - 2X).
+Hence (f — zX)M(z)(I — zX)7} is identical to V, except for the first row. 0
+
+Since we are adopting, as standard, r = p+1, and a stage-order gq = p, it is
+possible to insist that the vector-valued function of z, representing the input

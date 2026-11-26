@@ -1,0 +1,49 @@
+228 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Theorem 355F A Runge-Kutta method is A-stable only if all poles of the
+stability function R(z) lie in the right half-plane and no up arrow of the order
+web intersects with or is tangential to the imaginary axis.
+
+Proof. The requirement on the poles is obvious. If an up arrow intersects or
+is tangential to the imaginary axis then there exists y such that
+
+|R(iy) exp(—ty)| > 1.
+
+Because | exp(—iy)| = 1, it follows that |R(iy)| > 1 and the method is not
+A-stable. im
+
+We are now in a position to prove the result formerly known as the Ehle
+Conjecture (Ehle, 1973), but which we will also refer to as the ‘Ehle barrier’.
+
+Theorem 355G Let R(z) denote the stability function of a Runge-Kutta
+method. If R(z) is a (n,d) Padé approzimation to exp(z) then the Runge-
+Kutta is not A-stable unless d <n-+ 2.
+
+Proof. If d>n+3 and p=n +d, it follows that d > 4(p +3). By Theorem
+355E, at least d up arrows terminate at poles. Suppose these leave zero in
+directions between —9 and +0 from the positive real axis. Hence,
+
+> 2n(d—-1) =
+
+2a71 7
+
+and at least one up arrow, which terminates at a pole, is tangential to the
+imaginary axis or passes into the left half-plane. If the pole is in the left half-
+plane, then the stability function is unbounded in this half-plane. On the other
+hand, if the pole is in the right half-plane, then the up arrow must cross the
+imaginary axis. In either case, the method cannot be A-stable, by Theorem
+355F. oO
+
+26
+
+356 AN-stability
+
+Linear stability analysis is based on the linear test problem
+y' (2) = gy(z),
+
+so that
+Yn = R(z)yn—-1,
+
+where z = hq. Even though this analysis provides useful information about
+the behaviour of a numerical method when applied to a stiff problem, even
+more is learned from generalizing this analysis in two possible ways. The first

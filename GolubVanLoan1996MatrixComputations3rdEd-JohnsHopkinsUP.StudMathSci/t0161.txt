@@ -1,0 +1,119 @@
+6.1. Basic Concepts 291
+
+B.N. Datta (1989). “Parallel and Large-Scale Matrix Computations in Control: Some
+Ideas,” Lin. Alg. and Its Applic. 121, 243-264.
+
+A. Edelman (1993). “Large Dense Numerical Linear Algebra in 1993: The Parallel
+Computing Influence,” Int'l J. Supercomputer Appl 7, 113-128.
+
+Managing and modelling communication in « distributed memory environment is an im-
+portant, difficult problem. See
+
+L. Adams and T. Crockett (1984). “Modeling Algorithm Execution Time on Processor
+Arrays,” Computer 17, 38-43.
+
+D. Gannon and J. Van Rosendale (1984). “On the Impact of Communication Complexity
+on the Design of Parallel Numerical Algorithms,” [EEE Trana. Comp. C-33, 1180-
+1194,
+
+S.L. Johnsson (1987). “Communication Efficient Basic Linear Algebra Computations on
+Hypercube Multiprocessors,” J. Parallel and Distributed Computing, No. 4, 133-172.
+
+Y. Saad and M. Schultz (1989). “Data Communication in Hypercubes,” J. Dist. Parallel
+Comp. 6, 115-135.
+
+Y. Saad and M.H. Schultz (1989), “Data Communication in Parallel Architectures,” J.
+Dist. Parallel Comp. t1, 131-150.
+
+For snapshots of basic linear algebra computation on 4 distributed memory system, see
+
+OQ. McBrysn and E.F. van de Velde (1987). “Hypercube Algorithms and Implementa-
+tions,” SIAM J. Sct. and Stat. Comp. 8, 3227-6287.
+
+§.L. Johnsson and C.T. Ho (1988). “Matrix Transposition on Boolean a-cube Configured
+Ensemble Architectures,” SIAM J. Matriz Anal. Appl. 9, 419-454.
+
+T. Dehn, M. Eiermann, K. Giebermann, and V. Sperling (1995}. “Structured Sparse
+Matrix Vector Multiplication on Massively Parallel SIMD Architectures,” Parallel
+Computing 21, 1867-1894.
+
+J. Choi, J.J. Dongarra, and D.W. Walker (1995). “Parallel Matrix Transpose Algorithms
+on Distributed Memory Concurrent Computers,” Parullel Computing 21, 1387-1406.
+
+L. Colombet, Ph. Michallon, and D. Trystram (1996). “Parallel Matrix-Vector Product
+on Rings with a Minimum of Communication,” Parallel Computing 22, 288-310.
+
+The implementation of s parallel algorithm is usually very challenging. It is important
+to have compilers and related tools that are able to handle the details. See
+
+D.P. O'Leary and G.W. Stewart (1986). “Assignment and Scheduling in Parallel Matrix
+Factorization,” Lin. Aly. and Its Applic. 77, 275-300.
+
+J. Dongarra and D.C. Sorensen (1987). “A Portable Environment for Developing Parallel
+Programs,” Parnllel Computing 5, 175-186.
+
+K. Connolly, J.J. Dongarra, D. Sorensen, and J. Patterson (1988). “Programming
+Methodology and Performance Issues for Advanced Computer Architectures,” Par-
+allel Computing 5, 41-58.
+
+P. Jacobaon, B. Kagstrom, and M. Rannar (1992). “Algorithm Development for Dis-
+tributed Memory Multicomputers Using Conlab,” Scientific Programming, 1, 185~
+203.
+
+C. Ancourt, F. Coelbo, F. Irigoin, and R. Keryeli (1993). “A Linear Aigebra Framework
+for Static HPF Code Distribution,” Proceedings of the 4ih Workshop on Compilers
+for Parailel Computers, Delft, The Netherlands.
+
+D. Bau, 1. Kodukula, V. Kotlyar, K. Pingali, and P. Stodghill (1993). “Solving Alignment
+Using Elementary Linear Algebra,” in Proceedings of the 7th International Workshop
+on Languages and Comptiers for Parallel Computing, Lecture Notes in Computer
+Science 892, Springer-Verlag, New York, 46-60.
+
+M. Wolfe (1996). High Performance Compilers for Parallel Computers, Addison-Wesley,
+Reading MA.
+
+292 CHAPTER 6. PARALLEL MATRIX COMPUTATIONS
+
+6.2. Matrix Multiplication
+
+In this section we develop two perallel algorithms for matrix-matrix multi-
+plication. A shared memory implementation is used to illustrate the effect
+of blocking on granularity and load balancing. A torus implementation is
+designed to convey the spirit of two-dimensional data flow.
+
+6.2.1 A Block Gaxpy Procedure
+
+Suppose A, B,C € R°*" with B upper triangular and consider the compu-
+tation of the matrix multiply update
+
+D=C+4AB (6.2.1)
+
+on a shared memory computer with p processors. Assume that n = rkp
+and partition the update
+
+[Dy,...sDep] = [Cry---Cep]+[Ars---s Ate] [B1,--+, 5p] (6.2.2)
+where each block column has width r = n/(kp). If
+
+By
+B; = Bis > BER,
+0
+then j
+D; = Cy+ABy = Cy + >) ArByy. (6.2.3)
+rmi
+
+The number of flops required to compute D; is given by
+
+2n3
+
+2. .
+
+fy = owt = (Bs) a
+
+This is an increasing function of 7 because B is upper triangular. As we
+discovered in the previous section, the wrap mapping is the way to solve
+load imbalance problems that result from triangular matrix structure. This
+suggests that we assign Proc(j) the task of computing D,; for 7 = u:p:kp.
+
+Algorithm 6.2.1 Suppose A, B, and C are n-by-n matrices that reside
+in a global memory accessible to p processors. Assume that B is upper
+triangular and = rkp. If each processor executes the following algorithm,

@@ -1,0 +1,51 @@
+NUMERICAL DIFFERENTIAL EQUATION METHODS 99
+
+To obtain a simple criterion for a given order, we can write all terms in
+
+y(2n) —y(@n—1) — h(Boy' (an) + Bry (@n—1) + Boy’ (@n—2) +--+ + Bey'(2n-z))>
+(241c)
+as Taylor series about, for example, z,. This gives an expression of the form
+
+Cy hy! (tn) + Cah? y" (an) +--+ + CphPy®) (an) + O(KP**),
+
+and the conditions for order p will be that C) = C2 = =C, =0.
+
+It can be shown that an equivalent criterion is that (2410) vanishes whenever
+y is a polynomial of degree not exceeding p.
+
+We will use these criteria to derive Adams—Bashforth methods with p = k
+for k = 2,3,4, and Adams—Moulton methods with p = k + 1 for k = 1,2, 3.
+
+For k = 4, the Taylor expansion of (241c) takes the form
+
+hy'(an)(1 — Bo - ‘a — Bz — Bs — Ba)
++h?y" (tn) (-3 3 + Bi + 282 + 363 + 461)
++h3y®) (aq) G - 2x + 4f2 + 983 + 16f1))
++hty (an) (—3y + $(Pi + 882 + 278s + 6464)) + OCF),
+so that
+
+C1 =1— Bo — Bi — Ba — Bs — Ba,
+Cr = 5 +P + 2s +366 + 48s,
+
+1 #1
+Ca=5- 3h + 482 + 983 + 1664),
+
+C= -a + 5h + 860 + 2783 + 64f4).
+For the Adams—Bashforth methods the value of fo is zero; for k = 2 we also
+have 83 = 84 = 0 and we must solve the equations C; = Cy = 0. This gives
+A= 3 and $2 = 3. For k = 3 we allow (3 to be non-zero and we require that
+Cy = Cy = Cz = 6. The solutions of these equations is 6, = 3, fb, = a
+Ben Ms Tak ag fe sare Ot = Gs = Cz = Oy = 0 to find f, = 3,
+Bo = —33, Bs = oy Ba =
+
+For the Adams—Moulton methods we allow {o to be non-zero. For k = 1 and
+p = 2 we have fo = 83 = 64 = 0 and Cy = C2 = 0; this gives Bo = 61 =i
+In a similar manner we find the methods for k = 2, p = 3: By = “a = 2
+Bo = —j5; and for k = 3, p= 4: By = 3, fr = 18g, = -5, ps= a
+
+te
+
+242 General form of linear multistep methods
+
+Even though Adams methods are amongst the most commonly used classes of
+linear multistep methods, they are very specialized in that the dependence of

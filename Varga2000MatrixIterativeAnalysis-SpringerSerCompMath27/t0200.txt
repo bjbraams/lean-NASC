@@ -1,0 +1,37 @@
+192 6. Derivation and Solution of Elliptic Difference Equations
+
+positive definite, and tridiagonal, are also shared by A (see Exer. 8). Because
+the entries of A and the components of k depend on various integrals of (x)
+and f(x), it must be mentioned that the practical derivation of the matrix
+equation of (6.21), for such one-dimensional problems, requires somewhat
+more in the way of initial calculations.
+
+To summarize, the three different methods of deriving finite difference ap-
+proximations (6.1)-(6.2), based on Taylor’s series, integration, and the varia-
+tional formulation of this problem, can be used to produce (with the exception
+of the Ritz form of the variational method) identical matrix equations, and
+it would appear difficult to choose among these three methods of derivation.
+Yet, each has distinct advantages. The Taylor’s series method seems indis-
+pensable in deducing the order of approximation of the discrete methods, and
+is applicable to differential equations in general. Although it is not apparent
+from the formulation above, the variational principle is especially attractive
+in that nonessential boundary conditions appear as a direct consequence of
+the minimum property of the functional equation. Next, from (6.17) we see
+that the quadratic form w7 Aw of the discrete functional F(w) in (6.18) can
+be expressed as a sum of squares, and this is often useful in establishing the
+positive definite character of the matrix of the discrete approximation. Un-
+fortunately, the variational method is based on the self-adjoint property of
+the differential equation (6.1), and thus is not applicable to general differ-
+ential equations. The integration technique, on the other hand, is applicable
+in the general case, and gives particularly simple discretizations to problems
+with internal interfaces and nonuniform meshes, which we will discuss next
+in Sect. 6.2.
+
+To illustrate more clearly these different discretization methods, such as
+the Ritz form of the variational method, we have included numerical results
+for a sample one-dimensional problem in Appendix A. The reader will find
+it instructive to derive these different matrix discretizations.
+
+® This is treated at some length in Collatz (1960), p. 205, Kantorovich and Krylov
+(1958), p. 244, and Forsythe and Wasow (1960), p. 182. See also Exer. 8 of Sect.
+6.2.

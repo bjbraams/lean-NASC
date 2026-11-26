@@ -1,0 +1,53 @@
+310
+
+8.2
+
+8.3
+
+8. Matrix Methods for Parabolic Partial Differential Equations
+
+The terms essentially positive, subcritical, critical, and supercritical
+were introduced by Birkhoff and Varga (1958) in the study of the nu-
+merical solution of the time-dependent multigroup diffusion equations
+of reactor physics, and the results of this section are largely drawn
+from this reference. For generalizations to more general operators, see
+Birkhoff (1961) and Habetler and Martino (1961), and references given
+therein.
+
+Essentially positive matrices, as defined in this section, are also called
+input-output matrices and Leontieff matrices in problems arising from
+economic considerations. For a detailed discussion of such matrices
+and their economic applications, see Karlin (1959b), and references
+cited there. See also Beckenbach and Bellman (1961), (pp. 83 and 94),
+where the result of Theorem 8.3, for example, is given in a slightly
+weaker form.
+
+From Theorem 8.5, we deduce that the norms || exp(tQ)|| of a subcrit-
+ical essentially positive matrix are uniformly bounded for all t > 0.
+More generally, one can deduce, from Lemma 8.4, necessary and suffi-
+cient conditions that || exp(tQ)|| be bounded for all ¢ > 0 for a general
+nxn complex matrix. For such extensions, see Bellman (1953), p. 25,
+and Kreiss (1959a), as well as Exers. 5 and 9. It should also be stated
+that the result of Exer. 9 is clearly related to the Hille-Yosida theorem
+of semigroup theory. See Phillips (1961).
+
+The analyses of the forward difference, backward difference, and
+Crank-Nicolson methods for numerically approximating the solution
+of parabolic partial differential equations have received a great deal
+of attention. For excellent bibliographical coverage, see Todd (1956),
+Richtmyer (1957), Young (1961), and Douglas (1961b).
+
+The initial works of Courant, Friedrichs, and Lewy (1928), von Neu-
+mann (see O’Brien, Hyman, and Kaplan (1951)), Laasonen, P. (1949),
+Crank and Nicolson (1947), and many subsequent articles, give anal-
+yses of these finite difference methods for uniform mesh spacings, and
+generally one finds in the literature that Fourier series methods are
+a commonly used tool. Although the goal in this section, following
+Varga (1961), has been to show the relevance of these basic numeri-
+cal methods to particular Padé matrix approximations of exp(—tA),
+the stability analysis of these Padé approximations in Theorem 8.10
+for M-matrices is applicable under fairly wide circumstances, since
+non-homogeneous, nonrectanglar problems with internal interfaces and
+non-uniform spatial meshes do not require special treatment. See also
+Householder (1958) for a related use of norms in studying stability
+criteria.

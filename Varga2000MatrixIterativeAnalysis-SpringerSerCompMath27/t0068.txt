@@ -1,0 +1,50 @@
+60 2. Nonnegative Matrices
+
+n n
+> G4,jUj y i,j U5
+j=1 j=l
+
+. ji
+min |————-] <x< max
+
+I<i<n Ui 1<i<n wi
+
+contains at least one eigenvalues of A. For further results on inclu-
+sion theorems for p(A), where A > O is an irreducible n x n matrix
+with improved upper- and lower-bound estimates, see Brauer (1957a),
+Lederman (1950), and Ostrowski (1952) and Ostrowski (1961), and Os-
+trowski and Schneider (1960). For an extension of Collatz’s inclusion
+theorem for p(A) for more general operators, see Mewborn (1960).
+
+Another min-max characterization of the spectral radius of a nonneg-
+ative irreducible matrix has been given by Birkhoff and Varga (1958).
+See Exer. 7.
+
+Nonnegative square matrices A = {a;,;] satisfying
+n
+Yo aig =o, 1<i<n,
+j=l
+
+as in (2.19) of Lemma 2.8, are called generalized stochastic ma-
+trices for o > 0. In the special case when o = 1, these matrices
+are called stochastic matrices. Such matrices have applications in
+several branches of mathematics. See Romanovsky (1936), Bellman
+(1960), and Kemeny and Snell (1960).
+
+The min-max characterization of (2.23) of Theorem 2.9, of the spectral
+radius p(A) of an irreducible nonnegative n x n matrix A, has recently
+been extended by Rump (1997) to real n x n matrices without sign
+restrictions, in the following way. First, an n x n signature matrix S
+is a diagonal matrix with diagonal entries +1 or —1, and the collection
+of all such n x n signature matrices is denoted by S,. Next, for a given
+real n x n matrix A, it real spectral radius is defined by
+
+po(A) := max {|A| : \ is a real eigenvalue of A},
+
+where po(A) := 0 if A has no real eigenvalues. Then, the sign-real
+spectral radius of a real n x n matrix A is defined by
+
+Sn —
+Po" (A) := max po(SA).
+
+The following is a result from Rump (1997).

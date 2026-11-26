@@ -1,0 +1,41 @@
+244
+
+7. Alternating-Direction Implicit Iterative Methods
+
+Derive a five-point difference approximation to the Dirichlet problem
+for the uniform mesh problem of Fig. 7.3 below, where the boundary
+values are all unity. With A = H + V, show that
+
+2- v3
+
+2+ V3
+
+(Hint: Apply (7.30).) Also, compute HV —VH.
+
+min p(T,) <
+
+Fig. 7.3.
+
+Let H, and V, be any n x n positive definite Hermitian matrices.
+Show that the Peaceman-Rachford matrix T, of (7.13) has positive
+real eigenvalues for all
+
+a. r > max{p(H1);p(Vi)}, and
+
+‘ 1.1
+b. O<r<min{ Gh; abn}.
+
+Let H, and V; be any n x n positive definite Hermitian matrices.
+
+m
+
+Extend Theorem 7.1 by showing that p (iI n.) <1 when r; > r2>
+i=1
+
++++ >Tm > 0, and
+
+TiaTm < 1
+
+2 pV")
+
+(See also Pearcy (1962).)

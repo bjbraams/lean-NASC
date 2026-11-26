@@ -1,0 +1,46 @@
+224 6. Derivation and Solution of Elliptic Difference Equations
+
+Our interest in passing from point to block iterative methods is motivated
+by our desire to obtain improved asymptotic rates of convergence. With our
+results of Sect. 3.6 on regular splitting of matrices, we can definitely say the
+block Jacobi iterative method is asymptotically iteratively faster than the
+point Jacobi method if at least one of the Stieltjes matrices B; of (6.64) is
+irreducible and of order n > 2. Now to complete the picture, we ask if there
+has been any increase in arithmetic effort in passing from point to line succes-
+sive overrelaxation. Cuthill and Varga (1959) have shown that it is possible to
+normalize the equation in such a way that they both require eractly the same
+arithmetic computations per mesh point. Also, Blair (1960) has shown that
+this normalized method is stable with respect to the growth of rounding er-
+rors. In summary then, successive line overrelaxation is rigorously applicable,
+it is asymptotically faster than point overrelaxation and is numerically very
+stable with respect to rounding errors. Moreover, it can be performed in such
+a way so as to be no more costly arithmetically than point overrelaxation.
+There seems to be little reason! for not using such improved iterative meth-
+ods for the numerical solution of the general problem of (6.67). For numerical
+results, see Appendix B.
+
+Encouraged by the theoretical as well as practical results of direct inver-
+sion of tridiagonal matrices as an integral part of block iterative methods,
+effort has been expended in increasing the size of the blocks of A in (6.64),
+which will be directly inverted. Of course, the theory for such extensions is
+fairly well established. Based on an idea by Heller (1960), we can consider
+other partitionings of the matrix A which leave A in block tridiagonal form.
+For example, consider the particular ordering of the mesh points in Fig. 6.17,
+and partition the matrix A in this case so that mesh points of two successive
+horizontal mesh lines are mesh points of successive blocks. Then, for a five-
+point formula,!® the matrix A is block tridiagonal, and the block directed
+graph of A is shown in Fig. 6.18.
+
+The results here are not special to second-order elliptic equations. In
+fact, Heller (1960) has shown that, by choosing the number of horizontal
+mesh lines per block sufficiently large, matrix problems arising from discrete
+approximations to elliptic partial differential equations of order 2n,n > 1,
+can be partitioned to be block tridiagonal.
+
+14 Again, for the special cases already enumerated, point successive overrelaxation
+in two dimensions is itself quite attractive for binary machines, in that its arith-
+metic requirements in these special cases can be reduced to additions, shifts, and
+at most one multiplication per mesh point.
+
+15 Tt is easy to see that if the matrix A arises from a nine- or thirteen-point formula,
+this block tridiagonal feature is unchanged.

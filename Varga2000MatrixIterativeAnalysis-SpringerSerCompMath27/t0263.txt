@@ -1,0 +1,49 @@
+256 7. Alternating-Direction Implicit Iterative Methods
+
+—(K. (x, y)Uz)e -(K: (z, y)u dy
+(7.52) to(e,y)u(a,y) = S(2,y), (ty) €R,
+
+defined for a (connected) bounded region R, with boundary conditions
+
+(7.53) u(z,y) =7(2,y), (zy) ET,
+
+where +(z,y) is a prescribed function on I’, the external boundary of the
+region R. With R denoting the closure of R, we assume that
+
+Ki(a,y), Ko(z,y), and o(z,y) are continuous in R,
+Ki(z,y)>0, Ke(z,y)>0, o(z,y)>0in R.
+
+For the discrete case, which leads to a definition of the matrices H, and
+V,, a mesh of horizontal and vertical line segments is imposed on R, and
+for convenience, we assume a uniform mesh of length h.4 We denote the
+set of the interior mesh points of R by Ap, corresponding to unknowns in
+the discrete case, and the discrete mesh points of I by I),. Considering only
+five-point discrete approximations to (7.52), we arrive typically at three-point
+difference expressions for the matrices H and V. Although there are a variety
+of such approximations, we consider here the more usual central difference
+approximations:
+
+(7.54)
+
+h
+[Hul(z,y) = -k, rt u(x +h,y)
+(7.55) -K,(2- Sy u(x —h,y)
+
++ [k: (2+ 4) +K; (= - 5) ulz,y), (ay) € An,
+
+[Vul(z,y) = —K2(2,y+
+(7.56) —K2 (x,y -
+
++ [xs (20+ 5) +Ko (av- 5) u(a,y), (2,y) € An,
+
+(7.57) [Lu] (x,y) = h7o(z,y)u(z,y), (e,y) € An,
+
+which could also be deduced from the derivations of Sect. 6.3. If any of the
+mesh points (x + h,y +h) are points of the boundary Ap, the corresponding
+terms in the definitions of the matrices above are set equal to zero. Since the
+region R is connected, it is intuitively clear that the matrix A:= H+V+JZ
+will be irreducible® for all h sufficiently small, and we henceforth assume
+
+4 The case for nonuniform mesh spacings offers no additional difficulty. Similarly,
+mixed boundary conditions can also be treated. See Birkhoff and Varga (1959).
+5 One needs only to consider the directed graph of A for this to become apparent.

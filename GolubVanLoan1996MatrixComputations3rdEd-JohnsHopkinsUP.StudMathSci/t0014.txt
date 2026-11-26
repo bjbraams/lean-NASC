@@ -1,0 +1,31 @@
+REFERENCES xxvii
+
+R. Beauwens and P. de Groen, eds. (1992). Iterative Methods in Linear
+Algebra, Elsevier (North-Holland), Amsterdam.
+
+R.J. Plemmons and C.D. Meyer, eds. (1993). Linear Algebra, Markov
+Chains, and Queuing Models, Springer-Verlag, New York.
+
+M.S. Moonen, G.H. Golub, and B.L.R. de Moor, eds. (1993). Linear
+Algebra for Large Scale and Real-Time Applications, Kluwer, Dordrecht,
+The Netherlands.
+
+J.D. Brown, M.T. Chu, D.C. Ellison, and R.J. Plemmons, eds, (1994). Pro-
+ceedings of the Cornelius Lanczos International Centenary Conference,
+SIAM Publications, Philadelphia, PA.
+
+R.V. Patel, A.J. Laub, and P.M. Van Dooren, eds. (1994). Numerical
+Linear Algebra Techniques for Systems and Control, IEEE Press, Pis-
+cataway, New Jersey.
+
+J. Lewis, ed. (1994). Proceedings of the Fifth SIAM Conference on Applied
+Linear Algebra, SLAM Publications, Philadelphia, PA.
+
+A. Bojanczyk and G. Cybenko, eds. (1995). Linear Algebra for Signal
+Processing, IMA Volumes in Mathematics and Its Applications, Springer-
+Verlag, New York.
+
+M. Moonen and B. De Moor, eds. (1995). SVD and Signal Processing II:
+Algorithms, Analysis, and Applications. Elsevier, Amsterdam.
+
+Matrix Computations

@@ -1,0 +1,27 @@
+160 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+The D(k) conditions interrelate three trees t;, t2 and ts for which the
+corresponding elementary weights differ only in that ®(t,) has a factor
+bck 4:5, ®(t2) has a factor b; and ®(t;) has a factor b;c¥. This means that
+these trees have forms like those shown in Figure 321(ii).
+
+Figure 321(ii) The D(k) condition relating >>; dich" ais (left-hand tree) to
+bych~* (centre tree) and bc} (right-hand tree). The underlying tree is a Kauri
+Agathis australis. Although the immature tree shown is only a few metres tall, the
+most famous Kauri tree, Tane Mahuta (Lord of the Forest), has a height of 40m and
+a diameter, 1.5m above ground level, of 5.21m
+
+We illustrate this further, for the case k = 1 in Table 321(II). Note that if
+D(1) holds, then the truth of ®(t) = 1/y(t:) follows from ®(t2) = 1/7(t2)
+and ®(t3) = 1/7(ts3). For explicit methods, D(2) cannot hold, for similar
+reasons to the impossibility of C(2). For implicit methods D(s) is possible, as
+we shall see in Section 342.
+
+Table 321(II) Sets of three related trees illustrating D(1)
+
+1
+‘ (4) = wat y ? H(t) = ae)” (6s) = Ta) )
+$  biaize; = 3 1 bye; = 5 Vio Loyej = 5
+Y Shay?=h Vo Cyd=b VY Yod=l
+{ Y biajajnce = & } Vi djajncn =} v Di bjejajncn = §
+

@@ -1,0 +1,119 @@
+5.2. THe QR FACTORIZATION 233
+
+5.2.10 A Note on Complex QR
+
+Most of the algorithms that we present in this book have complex ver-
+sions that are fairly straight forward to derive from their real counterparts.
+(This is not to say that everything is easy and obvious at the implementa-
+tion level.) As an illustration we outline what a complex Householder QR
+factorization algorithm looks like.
+
+Starting at the level of an individual Householder transformation, sup-
+pose 0 # x € €” and that z; = re where r,9 ER. v= ct el x Il2e1
+and P = J, — Buv*, 8 = 2/v%v, then Pr = Fell x |[ge1. (See P5.1.3.)
+The sign can be determined to maximize || v ||2 for the sake of stability.
+
+The upper triangularization of A € R™*", m > n, proceeds as in Algo-
+rithm 5.2.1. In step j we zero the subdiagonal portion of A(j:m, j):
+
+for j =1:n
+z= A(jim, 7)
+v=z+tell x lle, where x, = re.
+B=2/v7 fv
+AGjm, fn) = Um—j41 — Boo ACjem, j:n)
+end
+
+The reduction involves 8n?(m - n/3) real flops, four times the number
+required to execute Algorithm 5.2.1. If Q = P,--- Py is the product of the
+Householder transformations, then Q is unitary and Q7A = Re R™*" is
+complex and upper triangular.
+
+Problems
+
+P5.2.1 Adapt the Householder QR algorithm so that it can efficiently handle the case
+when A € R™*® has lower bandwidth p and upper bandwidth q.
+
+P5.2.2 Adapt the Househokder QR aigorithm so that it computes the factorization
+A= QL where L is lower triangular and @ is orthogonal. Assume that A is square. This
+involves rewriting the Houseboider vector function v = house(z) #0 that (J—2vv7 /uT v)z
+is zero everywhere but its bottom component.
+
+P5.2.3 Adapt the Givens QR factorization algorithm go that the zeros are introduced by
+diagonal. That is, the entries are zeroed in the order (m, 1), (m—1, 1), (m, 2), (m—2, 1),
+(m ~ 1,2}, (m4, 3) , ete.
+
+P5.2.4 Adapt the fast Givens QR factorization algorithm a0 that it efficiently handles
+the case when A is n-by-n and tridiagonal. Assume that the subdiagonal, diagonal, and
+superdiagonal of A are stored in e(1:n — 1), a(1:n), f(1: — 1) respectively. Design your
+algorithm so that these vectors are overwritten by the nonzero portion of T.
+
+P5.2.5 Suppose L € R™*" with m > n is lower triangular. Show how Householder
+matrices H,...H»n can be used to determine a lower triangular L, € R**" so that
+
+Hy HL = [ ha |
+
+234 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+Hint: The aecond step in the 6-by-3 cane invoives finding Hz so that
+oO
+
+Ha
+
+xXKRK XM
+xx MK XK
+OQOoxon
+tt
+xKM RM KM
+SO2o0xxe
+eooxoo
+
+with the property that rows 1 and 3 are left alone.
+P5,2.6 Show that if
+e k
+b= [s] mak
+
+Row k
+A= [ oo l m~—k
+kuw-k
+and A has full coluran rank, then min {] Az — 61/2 = [{d][2 - (v7 a/]| vl)’.
+P5.2.7 Suppose A € R"™*" and D = ding(di, ...,d,) € R°“". Show how to construct
+an orthogonal Q such that Q7 A — DQ? = R is upper triangular. Do not worry about
+eficiency—this is just an exercise in QR manipulation.
+P5.2.8 Show how to compute the QR factorization of the product A = Ap--- AzA)
+without explicitly multiplying the matrices 4),...,Ap together. Hint: In the p =
+3 case, write QA = QT AsQ2Q7 AaQiQ7 Ai and determine orthogonal Q, so that
+QF (A:Qs—1) ia upper triangular. (Qo = 1).
+P5.2.9 Suppose 4 € R°** and let E be the permutation obtained by reversing the
+order of the rows in Jn. (This is just the exchange matrix of §4.7.} (a) Show that if
+Re R°** ig upper triangular, then L = ERE is lower triangular. (b) Show how to
+compute an orthogonal Q € R°** and a lower triangular L € R™*" so that A = QL
+assuming the availability of a procedure for computing the QR factorization.
+P5.2.10 MGS applied to A € R™*" is numerically equivalent to the first step in House-
+holder QR applied to
+: On
+a= [2]
+
+where O,, is the n-by-n zero matrix. Verify that this statement is true after the first
+step of each method is completed.
+
+P5.2.11 Reverse the loop orders in Algorithm 5.2.5 (MGS QR) so that R is computed
+column-by-columa.
+
+P5.2.12 Develop a compiex version of the Givens QR factorization. Refer to P5.1.5.
+where complex Givens rotations are the thema. Is it possible to organize the calculations
+so that the diagonal elements of A are nonnegative?
+
+Notes and References for Sec. 5.2
+The idea of using Householder transformations to solve the LS problem was proposed in
+
+A.S. Householder (1958). “Unitary Triangularization of a Nonsymmetric Matrix,” J.
+ACM. 5, 339-42.
+
+The practical detaila were worked out in
+
+P. Businger and G.H, Golub (1965). “Linear Least Squares Solutions by Householder
+‘Transformations,” Numer. Math 7, 269-76. See asleo Wilkinson and Reinsch
+(1971,111-18).
+
+G.H. Golub (1965). “Numerical Methods for Solving Linear Least Squares Problems,”
+Numer. Math, 7, 206-16.

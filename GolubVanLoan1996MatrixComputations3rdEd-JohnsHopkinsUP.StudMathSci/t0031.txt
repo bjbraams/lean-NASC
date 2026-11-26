@@ -1,0 +1,107 @@
+1.3. BLOCK MATRICES AND ALGORITHMS 33
+If d=0, ie., we recur on down to the 1-by-1 level, then
+
+ne
+$= (3) = Tt = lta py 2807
+Thus, asymptotically, the number of multiplications in the Strassen proce-
+dure is O(n?-°7), However, the number of additions (relative to the number
+of multiplications) becomes significant as nmin gets small.
+
+Example 1.3.1 If n = 1024 and nmin = 64, then strags involves (7/8)!9-6 sy .6 the
+arithmetic of the conventional algorithm.
+
+Problems
+
+P 1.3.1 Generalize (1.3.3) so that it can handie the variable block-size problem covered
+by Theorem 1.3.3. *
+P1.3.2 Generalize (1.3.4) and (1.3.5) so that they can handle the variable block-size
+case.
+
+P1.3.3 Adapt strass so that it can handle square matrix multiplication of any order.
+Hint: If the “current” A has odd dimension, append a zero row and column.
+
+P1.3.4 Prove that if
+
+Ano: Air
+Asp oto. of
+Ag Age
+is a blocking of the matrix A, then
+AR Aa
+Abs :
+A AB
+
+P1.3.5 Suppose n is even and define the following function from R" to R:
+nj2
+Ha) = 2(:2m)Ta(2in) = Sza—az25
+i=
+(a) Show that if z,y € R® then
+n/t
+ay = Sena + uaen + ya-1) ~ 2) - Ay)
+i=l
+{b) Now consider the n-by-n matrix multiplication C = AB. Give an algorithm for
+computing this product that requires n3/2 multiplies once f is applied to the rows of A
+and the columns of 8. See Winograd (1968) for details.
+P1.3.6 Prove Lemma 1.3.2 for general s. Hint. Set
+
+Py =P tee + Pyad y=ihatl
+and show that
+
+5 Pied
+
+a= > > Sinds;.
+
+yal keeps $1
+
+34 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+P1.3.7 Use Lemmas 1.3.1 and 1.3.2 to prove Theorem 1.3.3. In particular, set
+Ay
+Ay=} : and = By =[ By «> Bor |
+Agr
+and note from Lemma 1.3.2 that
+
+c= AqBy.
++=1
+
+Now analyze each A,B. with the help of Lemma 1.3.1.
+
+Notes and References for Sec. 1.3
+
+For quite some time fast methods for matrix multiplication have attracted a lot of at-
+tention within computer science. See
+
+S. Winogred (1968). “A New Algorithm for Inner Product,” IEEE Trans. Comp. C-17,
+693-694.
+
+V. Strassen (1969). “Gaussian Elimination is Not Optimal,” Numer. Math. 15, 354-356.
+
+V. Pan (1984). “How Can We Speed Up Matrix Multiplication?,” SIAM Review 26,
+393-416.
+
+Many of these methods have dubious practical value. However, with the publication of
+
+D. Bailey (1988). “Extra High Speed Matrix Multiplication on the Cray-2,” SIAM J.
+Set. and Stat. Comp. 9, 603-607.
+
+it is clear that the blanket dismissal of these fast procedures is unwise. The “stability”
+of the Strassen algorithm is discussed in §2.4.10. See also
+
+N.J. Higham (1990). “Exploiting Fast Matrix Multiplication within the Level 3 BLAS,”
+ACM Trans, Math. Soft. 16, 352-368.
+
+C.C. Douglas, M. Heroux, G, Slishman, and R.M. Smith (1994). “GEMMW: A Portable
+Level 3 B! Winograd Variant of Strassen’s Matrix-Matrix Multiply Algorithm,”
+J. Comput. Phys. 110, 1-10.
+
+1.4 Vectorization and Re-Use Issues
+
+The matrix manipulations discussed in this book are mostly built upon
+dot products and saxpy operations. Vector pipeline computers are able
+to perform vector operations such as these very fast because of special
+hardware that is able to exploit the fact that a vector operation is a very
+regular sequence of scalar operations. Whether or not high performance
+is extracted from such a computer depends upon the length of the vector
+operands and a number of other factors that pertain to the movement of
+data such as vector stride, the number of vector loads and stores, and
+the level of data re-use. Our goal is to build a useful awareness of these
+issues. We are not trying to build a comprehensive model of vector pipeline

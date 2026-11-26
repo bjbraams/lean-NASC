@@ -1,0 +1,108 @@
+5.2. THE QR FACTORIZATION 227
+
+number of rotations. For general m and n we have:
+
+Algorithm 5.2.2 (Givens QR) Given A é€ R™*" with m > n, the fol-
+lowing algorithm overwrites A with Q7 A = R, where 2 is upper triangular
+and Q is orthogonal.
+
+for j =1:n
+fori=m:-lj+i
+(c, s] = givens(A(i — 1,3), A(, 3)
+
+T
+Ati = 1:i, jn) = | - :| A(i - Li, jn)
+
+end
+end
+
+This algorithm requires 3n?(m—n/3) flops. Note that we could use (5.1.9)
+ta encode (c, s) in a single number p which could then be stored in the zeroed
+entry A(i,j). An operation such as z + QT x could then be implemented
+by using (5.1.10), taking care to reconstruct the rotations in the proper
+order.
+
+Other sequences of rotations can be used to upper triangularize A. For
+example, if we replace the for statements in Algorithm 5.2.2 with
+
+for i =m: — 1:2
+for j = 1:min{i — 1,n}
+
+then the zeros in A are introduced row-by-row.
+
+Another parameter in a Givens QR procedure concerns the planes of
+rotation that are invalved in the zeroing of each a,;. For example, instead
+of rotating rows i ~ 1 and i to zero a,; as in Algorithm 5.2.2, we could use
+rows j and #:
+
+for j=1n
+fori =m:-lij+l
+le, s] = givens(A(j, 3), Ali, 3))
+Ali ihn) = ss ‘| A(l gi], in)
+end
+end
+
+5.2.4 Hessenberg QR via Givens
+
+As an example of how Givens rotations can be used in structured problems,
+we show how they can be employed to compute the QR factorization of an
+upper Hessenberg matrix. A small example illustrates the general idea.
+
+228 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+Suppose n = 6 and that after two steps we have computed
+
+x x x
+
+G(2,3, 92)" G(1,2,0,)7A =
+
+eooocox
+eooce x
+oox XxX x
+ox KX Xx
+x «x XX KX
+x xXK xX XK
+
+x
+
+We then compute G(3, 4, #4) to zero the current (4,3) entry thereby obtain-
+ing
+
+G(3, 4, 83) G(2, 3,02)? G(1,2,1)°A =
+
+eooceox
+oooogo x K
+ooo xX xX xX
+ox KK xX x
+XX x Kx K
+x xX xX xX XK
+
+Overall we have
+
+Algorithm 5.2.3 (Hessenberg QR) If A € IR"** is upper Hessenberg,
+then the following algorithm overwrites A with Q7A = R where Q is or-
+thogonal and A is upper triangular. Q = G, --- G,_, is a product of Givens
+rotations where G; has the form G; = G(j,j + 1,9;).
+
+for j=I:n-1
+
+[es] = givens(A(j, 7), AG + 1,9))
+
+AGij + lj) = a : AGij +1, 7:2)
+end
+
+This algorithm requires about 3n? flops.
+
+5.2.5 Fast Givens QR
+
+We can use the fast Givens transformations described in §5.1.13 to compute
+an (M, D) representation of Q. In particular, if M is nonsingular and D
+is diagonal such that M7A = T is upper triangular and M7M = D is
+diagonal, then Q = Af D-? is orthogonal and Q7A = D?7T = Ris
+upper triangular. Analogous to the Givens QR procedure we have:
+
+Algorithm 5.2.4 (Fast Givens QR) Given A € R™™” with m > n, the
+following algorithm computes nonsingular M € IR"*™ and positive d(1:m)
+such that M7.A = T is upper triangular, and M7 M = diag(d1,...,dm). A
+is overwritten by T. Note: A = (MD-'?)(D¥/?7) is a QR factorization
+of A.

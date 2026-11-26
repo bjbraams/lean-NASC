@@ -1,0 +1,98 @@
+1.1. Basic ALGORITHMS AND NOTATION 13
+
+where iT
+A=[a,...,¢,] and Bo] : (1.1.3)
+ey
+
+with a, € IR” and by € R®. We therefore obtain
+
+Algorithm 1.1.8 (Matrix Multiplication: Outer Product Version)
+If Ac R™*?, Be BPX", and C ¢ R™*” are given, then this algorithm
+overwrites C with AB +C.
+
+for k = 1:p
+C= AC, k)B(k +C
+end
+
+This implementation revolves around the fact that AB is the sum of p outer
+products.
+
+1.1.15 The Notion of “Level”
+
+The dot product and saxpy operations are examples of “level-1” operations.
+Level-1 operations involve an amount of data and an amount of arithmetic
+that is inear in the dimension of the operation. An m-by-n outer product
+update or gaxpy operation involves a quadratic amount of data (O(mn))
+and a quadratic amount of work (O(mn)). They are examples of “level-2”
+operations.
+
+The matrix update C = AB+ C' is a “level-3” operation. Level-3
+operations involve a quadratic amount of data and a cubic amount of work.
+If A, B, and C are n-by-n matrices, then C = AB + C involves O(n?)
+matrix entries and O(n?) arithmetic operations.
+
+The design of matrix algorithms that are rich in high-level linear al-
+gebra operations is a recurring theme in the book. For example, a high
+performance linear equation solver may require a level-3 organization of
+Gaussian elimination. This requires some algorithmic rethinking because
+that method is usually specified in level-1 terms, e.g., “multiply row 1 by a
+scalar and add the result to row 2.”
+
+1.1.16 A Note on Matrix Equations
+
+In striving to understand matrix multiplication via outer products, we es-
+sentially established the matrix equation
+
+bid
+AB =)" ant
+kal
+
+where the a, and 6; are defined by the partitionings in (1.1.3).
+
+14 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+Numerous matrix equations are developed in subsequent chapters. Some-
+times they are established algorithmically like the above outer product ex-
+pansion and other times they are proved at the ij-component level. As
+an example of the latter, we prove an important result that characterizes
+transpoees of products.
+
+Theorem 1.1.1 if Aé R™*? and Be RP*", then (AB)T = BT AT.
+Proof. If C = (AB)’, then
+
+Pp
+cj = [(AB)"]j = [AB]ji = S ajubas -
+keoulh
+
+On the other hand, if D = BT.AT, then
+
+Pp Pp
+diy = [BT AT iy = SBT selAT as = D> bevjn.
+k=l k=l
+
+Since ej; = dj; for all i and j, it follows that C = D. B
+
+Scalar-level proofs such as this one are usually not very insightful. However,
+they are sometimes the only way to proceed.
+
+1.1.17 Complex Matrices
+
+From time to time computations that involve complex matrices are dis-
+cussed. The vector space of m-by-n complex matrices is designated by
+c™*", The scaling, addition, and multiplication of complex matrices corre-
+sponds exactly to the real case. However, transposition becomes conjugate
+transposition:
+C=AF => Cig = Gy;
+
+The vector space of complex n-vectors is designated by €*. The dot product
+of complex n-vectors z and y is prescribed by
+
+n
+saaty= Say.
+i=l
+Finally, if A= B+iC € €™*", then we designate the real and imaginary
+parts of A by Re(A) = B and Im(A) = C respectively.
+Problems
+
+P1.1.1 Suppose A € R°** and z € RY are given. Give a saxpy algorithm for computing
+the first column of M = (A—211)---(A—2rd).

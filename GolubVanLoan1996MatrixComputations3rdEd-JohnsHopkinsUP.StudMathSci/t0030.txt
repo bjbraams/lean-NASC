@@ -1,0 +1,102 @@
+1.3. BLOCK MATRICES AND ALGORITHMS 31
+
+This suggests how real matrix software might be applied to solve complex
+matrix problems. The only snag is that the explicit formation of
+
+;_[ A: -As
+a2 oa]
+
+requires the “double storage” of the matrices A; and Ag.
+
+1.3.7 A Divide and Conquer Matrix Multiplication
+
+We conclude this section with a completely different approach to the matrix-
+matrix multiplication problem. The starting point in the discussion is the
+2-by-2 block matrix multiplication
+
+Cn Cra] | Au Ar By Bi
+Cy Cy Ag Azz By Bro
+
+where each block is square. In the ordinary algorithm, C,j = Ay 213 +
+Ajo Boj. There are 8 multiplies and 4 adds. Strassen (1969) has shown how
+to compute C' with just 7 multiplies and 18 adds:
+
+PL = (An + Aga)(Bir + Boa)
+Poo = (An + An) Bi
+
+Ps; = Ai(Bi2 — Boz)
+
+Py = Ano( Ba — Bur)
+
+Pa = (An + Aiz) Baa
+
+Pe = (An — Ara)(Bu + Bi)
+Pr = (Aiz — Anz)( Bar + Boa)
+Cnr = P+hy-Poth
+
+Cy = Pathe
+
+Cy = Pt+h
+
+Cy = P+P-hth
+
+These equations are easily confirmed by substitution. Suppose n = 2m so
+that the blocks are m-by-m. Counting adds and multiplies in the compu-
+tation C = AB we find that conventional matrix multiplication involves
+(2m)* multiplies and (2m)* — (2m)? adds. In contrast, if Strassen’s al-
+gorithm is applied with conventional multiplication at the block level, then
+Tm} multiplies and 7m? + 11m? adds are required. If m >> 1, then the
+Strassen method involves about 7/8ths the arithmetic of the fully conven-
+tional algorithm.
+
+Now recognize that we can recur on the Strassen idea. In particular, we
+can apply the Strassen algorithm to each of the half-sized block multiplica-
+tions associated with the P;. Thus, if the original A and B are n-by-n and
+n = 2%, then we can repeatedly apply the Strassen multiplication algorithm.
+At the bottom “level,” the blocks are 1-by-1. Of course, there is no need to
+
+32 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+recur down to the n = 1 level. When the block size gets sufficiently small,
+(n < nmin); it may be sensible to use conventional matrix multiplication
+when finding the P; . Here is the overall procedure:
+
+Algorithm 1.3.1 (Strassen Multiplication) Suppose n = 2¢ and that
+Ae R™* and Be R°*". If nmin = 24 with d < g, then this algorithm
+computes C' = AB by applying Strassen procedure recursively q — d times.
+
+function: C = strass(A, B,n, min)
+
+ifn < nmin
+C=AB
+
+else
+m= n/2;u= im;v = m+ lin;
+P, = strass(A(u, u) + A(v, v), B(u, u) + B(v,v),m, Amin)
+Py = strass(A(v,u) + A(v,v), B(u,u), m1, min)
+P; = strass(A(u, u), B(u, v) — B(v, v), m, amin}
+P, = strass(A(v,v), B(v, u) — B(u, 4), m, Amin)
+Py = strass(A(u, u) + A(u,v), B(v,v),m, min)
+Py = strass(A(v,u) ~ A(u,u), B(u,u) + B(u,v),m, nmin)
+P; = strass(A(u, v) — A(v,v), B(v,u) + B(v,v),™, 2min)
+C(u,u) = Pi + Py -— Po + Py
+C(u,v) = Ps + Ps
+C(v,u) = Pat Pa
+C(v,v) =P, +P3—- Poth
+
+end
+
+Unlike any of our previous algorithms strass is recursive, meaning that
+it calls itself. Divide and conquer algorithms are often best described in
+this manner. We have presented this algorithm in the style of a MATLAB
+function so that the recursive calls can be stated with precision.
+
+The amount of arithmetic associated with strass is a complicated func-
+tion of n and nmin. If nmin > 1, then it suffices to count multiplications
+as the number of additions is roughly the same. If we just count the mul-
+tiplications, then it suffices to examine the deepest level of the recursion
+as that is where all the multiplications occur. In strass there are q — d
+subdivisions and thus, 7¢?-* conventional matrix-matrix multiplications to
+perform. These multiplications have size nmin and thus strass involves
+about s = (2%)*79-4 multiplications compared to ¢ = (27)°, the number
+of multiplications in the conventional approach. Notice that

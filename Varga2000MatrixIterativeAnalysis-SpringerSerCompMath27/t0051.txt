@@ -1,0 +1,45 @@
+2.2 Cyclic and Primitive Matrices 43
+
+with the particular choice of 5;’s of (2.33), the relations of (2.31) show us
+that the matrix PAP? simplifies to
+
+O Ai,2 O see O
+O O Ag nr?)
+(2.34) PAPT=| . “ . 4,
+O oO O Ak-1,k
+Ani O O -  O
+
+where the null diagonal submatrices are square. This is the basis® for
+
+Theorem 2.11. Let A > O be an irreducible n x n cyclic matrix of index
+k(> 1). Then, the k eigenvalues of modulus p(A) are of the form
+
+o(A)-exp |i (722), 0<j<k-1.
+
+Moreover, all the eigenvalues of A have the property that rotations of the
+complez plane about the origin through angles of 2n/k, but through no smaller
+angles, carry the set of eigenvalues into itself. Finally, there is ann xn
+permutation matrix P such that PAP? has the form (2.34).
+
+Proof. From the previous discussion, all that needs to be proved is the ro-
+tational invariance of the set of eigenvalues of A. To prove this rotational
+invariance, we simply make use of (2.25) and (2.27), which allows us to ex-
+press the matrix A in the form
+
+(2.35) A=exp (=) D,AD;1.
+
+But since the matrix product D, AD;’ is itself similar to A and hence has the
+same eigenvalues as A, we conclude from (2.35) that rotations of the complex
+plane about the origin through angles of 27/k carry the set of eigenvalues of
+A into itself. The fact that there are ezactly k eigenvalues of modulus p(A),
+by Definition 2.10, shows that this rotational invariance cannot be valid for
+smaller angles, which completes the proof. i
+
+Corollary 2.12. If A > O is an irreducible n x n cyclic matrix of index k,
+then its characteristic polynomial ¢(t) := det(tI — A) is of the form
+
+(2.362) p(t) = #™[t* — p*(A)][e* — d2p*(A)] ---[e* — 6,p*(A)],
+where |6;| <1 for 1<i<r if r>1, and wherem+rk=n.
+
+® Theorem 2.11 is a fundamental result of Frobenius (1912). The method of proof
+is due to Wielandt (1950).

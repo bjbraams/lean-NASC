@@ -1,0 +1,51 @@
+74 3. Basic Iterative Methods and Comparison Theorems
+
+Exercises
+
+1. Prove directly, from the construction of the matrix M in the proof of
+Theorem 3.3, that ||M|| = 1 = ||M|l1 = ||Mlloo. (See Exer. 1 and 2 of
+Sect. 1.3)
+
+2. Prove, similarly, that (3.39) of Theorem 3.3 is valid for the matrix
+norms ||A™||; and ||A™||oo-
+
+3. To indicate how slowly R(A™) can converge to Roo(A), show that for
+the matrix A of (3.31) with a = 0.99, the least positive integer m for
+which
+
+R(A)™)
+
+> = > 0.
+12> Rao(A) = 0.99
+
+is approximately 105.
+
+3.3 The Stein-Rosenberg Theorem
+
+With the definition of asymptotic rate of convergence, we now compare the
+asymptotic rates of convergence, or equivalently the spectral radii, of the
+point Jacobi matrix and the point Gauss-Seidel matrix in the case where the
+point Jacobi matrix has nonnegative real entries. This fundamental compar-
+ison, based on the Perron-Frobenius theory, is due to Stein and Rosenberg
+(1948).
+
+To begin with, let B be any n x n matrix with zero diagonal entries. We
+express the matrix B as
+
+(3.45) B=L+U,
+
+where L and U are, respectively, n x n matrix strictly lower and strictly
+upper triangular matrices. We can call such matrices B Jacobi matrices.
+The particular example in Sect. 3.1 of a point Jacobi matrix certainly satisfied
+these hypotheses. As the matrix (J — wL) is nonsingular for all real w, we
+similarly define
+
+(3.46) Ly := (I -wL)7{wU + (1 -w)I}
+
+as the associated successive overrelaxation matrix. By means of the
+Perron-Frobenius theory, we now geometrically characterize the spectral ra-
+dius of the Gauss-Seidel matrix £; in terms of the intersection of two curves.
+
+Definition 3.6. Let L and U be respectively strictly lower and strictly upper
+triangular n x n matrices. Then, for any o > 0,m(c) := p(oL + U), and
+n(o) := p(L +o).

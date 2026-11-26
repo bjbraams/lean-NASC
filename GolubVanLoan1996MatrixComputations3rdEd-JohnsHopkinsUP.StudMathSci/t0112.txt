@@ -1,0 +1,116 @@
+4.7. TOEPLITZ AND RELATED SYSTEMS 195
+y =r
+for k = l:n-1
+Be = 1+ fT y®)
+Oy = — (rene +7? Ey") By (4.7.1)
+
+26) = y®) 4 a, By)
+
+(e)
+(et1) _ | =
+wont]
+
+end
+
+As it stands, this algorithm would require 3n? flops to generate y = y().
+It is possible, however, to reduce the amount of work even further by ex-
+ploiting some of the above expressions:
+
+Be = 1+ [r*ITy®
+
+(RU + cy Ey yo
+14+] p@-vT y 1 Lk 1Y
+[ r Tk ] Oe
+
+Ul
+
+1 (ROMP YED) + aus (Ie AY} Bayt +74)
+
+Be-1 + ¢-1(—Be—10R-1)
+(- og _1)Be-1-
+
+Using this recursion we obtain the following algorithm:
+
+Algorithm 4.7.1. (Durbin) Given real numbers 1 = r0,71,...,7 such
+that T = (rj) € KR" is positive definite, the following algorithm com-
+putes y € R® such that Ty = —(r1,...,72)?.
+y(Ql) = -r(1); 8 = 1; a = —r(1)
+for k=1in-1
+A=(1-a7)f
+a = —(r(k +1) +r(ke - 1:1)7y(L:k)) /6
+2(1:k) = y(1sk) + ay(k: — 1:1)
+y(:k +1) = 20:4)
+end
+
+This algorithm requires 2n? flops. We have included an auxiliary vector z
+for clarity, but it can be avoided.
+
+Example 4.7.1 Suppose we wish to solve the Yule-Walker gystem
+
+1 5 2 vy. 5
+51 «5 wil=-| 2
+2 56 1 ws J
+
+using Algorithm 4.7.1. After one pass through the loop we obtain
+
+a=1/l8, 6=3/4, y= [ Ve | .
+
+196 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+
+‘We then compute
+
+(1 - a7) = 56/75
+
+(rs + ray + riya)/6 = —1/28
+vi + aye = ~225/420
+
+va + ay, = ~36/420,
+
+8
+
+a
+
+"ou
+
+a
+
+Coa
+
+giving the final solution y = [—75, 12, -8]7/140.
+
+4.7.3 The General Right Hand Side Problem
+
+With a little extra work, it is possible to solve a symmetric positive definite
+Toeplitz system that has an arbitrary right-hand side. Suppose that we
+have solved the system
+
+Tex = b = (b1,...,d4)7 (4.7.2)
+
+for some k satisfying 1 < k <n and that we now wish to solve
+
+Ea oe
+
+Here, r = (r1,...,7%)" as above. Assume also that the solution to the kth
+order Yule- Walker system 7,y = —r is also available. From T,v+pE,gr = 6
+it follows that
+
+v=Ty(b— wiyr) = 2 - pT, Ey = 2+ Egy
+and so
+
+B= bear Ev
+
+Le 7? Ea — arly
+(bap — 77 Ex) / (1+ 77y).
+
+Consequently, we can effect the transition from (4.7.2) to (4.7.3) in O(k)
+flops.
+
+Overall, we can efficiently solve the system T,,z = 6 by solving the sys-
+tems Tyxl*) = 4) = (by,...,b_)” and Tey!®) = —r) = (ry,...,7,)7 “in
+parallel” for k = lin. This is the gist of the following algorithm:
+
+Algorithm 4.7.2 (Levinson) Given 6 € R”™ and real numbers 1 =
+To.Tiy-+-9%m such that T = (rj;_j;) € R°*" is positive definite, the fol-
+lowing algorithm computes xz € IR® such that Tr = 6.
+
+y(1) = -r(1); 2(1) = 0(1); 8 = a = —r(1)

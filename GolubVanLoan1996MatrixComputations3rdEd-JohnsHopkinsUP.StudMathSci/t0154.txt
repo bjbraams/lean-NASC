@@ -1,0 +1,104 @@
+6.1. Basic Concepts Q77
+
+Important factors in the design of an effective distributed memory al-
+gorithm include (a) the number of processors and the capacity of the local
+memories, (b) how the processors are interconnected, (c) the speed of com-
+putation relative to the speed of interprocessor communication, and (d}
+whether or not a node is able to compute and communicate at the same
+time.
+
+6.1.2 Communication
+
+To describe the sending and receiving of messages we adopt a simple nota-
+tion:
+
+send( {matriz} , {id of the receiving processor} )
+recv( {matriz} , {id of the sending processor} }
+
+Scalars and vectors are matrices and therefore messages. In our model,
+if Proc() executes the instruction send(Vioc, A), then a copy of the local
+matrix Vioc is sent to Proc(A) and the execution of Proc(:)’s node program
+resumes immediately. It is legal for a processor to send a message to itself.
+To emphasize that a matrix is stored in a local memory we use the subscript
+“loc”
+
+If Proc(j:) executes the instruction recv(Uj,<, 4), then the execution of
+its node program is suspended until a message is received from Proc(,).
+Once received, the message is placed in 4 local matrix Ujoc and Proc()
+resumes execution of its node program.
+
+Although the syntax and semantics of our send/receive notation is ad-
+equate for our purposes, it does suppress a number of important details:
+
+Message assembly overhead. In practice, there may be a penalty
+associated with the transmission of a matrix whose entries are not
+contiguous in the sender’s local memory. We ignore this detail.
+
+@ Message tagging. Messages need not arrive in the order they are sent,
+and a system of message tagging is necessary so that the receiver is
+not “confused.” We ignore this detail by assuming that messages do
+arrive in the order that they are sent.
+
+«© Message interpretation overhead. In practice a message is a bit string,
+and a header must be provided that indicates to the receiver the
+dimensions of the matrix and the format of the floating point words
+that are used to represent its entries. Going from message to stored
+matrix takes time, but it is an overhead that we do not try to quantify.
+
+These simplifications enable us to focus on high-level algorithmic ideas. But
+it should be remembered that the success of a particular implementation
+may hinge upon the control of these hidden overheads.
+
+278 CHAPTER 6. PARALLEL MATRIX COMPUTATIONS
+
+6.1.3 Some Distributed Data Structures
+
+Before we can specify our first distributed memory algorithm, we must
+consider the matter of deta layout. How are the participating matrices and
+vectors distributed around the network?
+
+Suppose z € RR” is to be distributed among the local memories of a p-
+processor network. Assume for the moment that n = rp. Two “canonical”
+approaches to this problem are store-by-row and store-by-column.
+
+In store-by-column we regard the vector x as an r-by-p matrix,
+
+Irxp = [2(lir) 2(r + 1:2r) z(i+(p-1)rn) |,
+and store each column in a processor, Le., (1+ (4 —1)riur) € Proc(y).
+(In this context “€” means “is stored in.”) Note that each processor houses
+@ contiguous portion of x.
+
+In the store-by-row scheme we regard z as a p-by-r matrix
+
+Zpxr = [ 2(L:p) 2(p + 1:2p) a((r -1)p+i:n) J,
+and store each row in a processor, i.e., r(y:p:n) € Proc(). Store-by-row is
+sometimes referred to as the wrap method of distributing a vector because
+the components of z can be thought of as cards in a deck that are “dealt”
+to the processors in wrap-around fashion.
+
+If n is not an exact multiple of p, then these ideas go through with minor
+modification. Consider store-by-column with n = 14 and p= 4:
+
+r
+az? = [21 22 23 24 | Z5 Ze Z7 Tg | To To Tu, | 12713714] -
+Sees S| See | ee
+
+Proc(1) Proc(2) Proc(3) Proc(4)
+
+In general, if n = pr + q with 0 < q <p, then Proc{1),...,Proc(q) can
+each house r + 1 components and Proc(q + 1),..., Proc(p} can house r
+components. In store-by-row we simply let Proc(s) house x(j:p:n).
+
+Similar options apply to the layout of a matrix. There are four obvious
+possibilities if A ¢ R°** and (for simplicity) n = rp:
+
+I Orientation | Style | What is in Proc(js) }
+
+[Column _| Contiguous | AC, 1+ (u—l)r-ur) |
+Column Wrap A(:, pp)
+Row Contiguous | AC + (# — 1)rzpr, :)
+Row Wrap A(yrpen, :)
+
+These strategies have block analogs. For example, if A = [Aj,..., An] is
+a block column partitioning, then we could arrange to have Proc() store
+A; for i = yp:N.

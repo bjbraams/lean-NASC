@@ -1,0 +1,75 @@
+346 References
+
+Lévy, L. (1981) Sur la possibité du l’équilibre électrique, C. R. Acad. Sci. Paris 93,
+706-708. [29]
+
+MacNeal, R. H. (1953) An asymmetrical finite difference network, Quart. Appl.
+Math. 11, 295-310. /215, 238]
+
+Mann, W. Robert, Bradshaw, C. L., and Cox, J. Grady (1957) Improved approx-
+imations to differential equations by difference equations, J. Math. Phys. 35,
+408-415. [299]
+
+Manteuffel, Thomas A., Starke, Gerhard, and Varga, Richard S. (1995) Adaptive k-
+step iterative methods for nonsymmetric systems of linear equations, Elec. Trans.
+Numer. Anal. 3, 50-65. /182/
+
+Marchuk, G. I. (1959) Numerical Methods for Nuclear Reactor Calculations, Con-
+sultants Bureau, Inc., New York, 293 pp; (This is an English translation of a work
+originally published in Russian as Supplement Nos. 3-4 of the Soviet Journal of
+Atomic Energy, Atomic Press, Moscow, 1958.) [231]
+
+Marcus, M. D. (1955) A remark on a norm inequality for square matrices, Proc.
+Amer. Math. Soc. 6, 117-119. [104]
+
+Marcus, Marvin and Minc, Henryk (1964) A Survey of Matrix Theory and Matrix
+Inequalities, Allyn and Bacon, Boston. [27,59]
+
+Marek, I. and Szyld, D. B. (1990) Comparison theorems for weak splittings of
+bounded operations, Numer. Math. 58, 387-397. /108/
+
+Marik, Jan and Ptdk, Vlastimil (1960) Norms, spectra and combinatorial properties
+of matrices, Czechoslovak Math. J. 10, (85), 181-196. /61]
+
+Markoff, W. (1892) Uber Polynome, die in einem gegebenen Inteervalle méglichst
+wenig von Null abweichem, Math. Ann. 77, (1916): 213-258, (translation and
+condensation by J. Grossman of Russian article published in 1892). / 180]
+
+Martinez, S., Michon, G., and San Martin, J. (1994), Inverses of ultrametric matri-
+ces are of Stieltjes type, SIAM J. Matrix Anal. Appl. 15, 98-106. /109/
+
+McDonald, J. J., Neumann, M., Schneider, H. and Tsatsomeros, M. J. (1995) In-
+verse M-matrix inequalities and generalized ultrametric matrices, Linear Algebra
+Appl. 220, 329-349. [110]
+
+Mehmke, R. (1892) Uber das Seidelsche Verfahren, um lineare Gleichungen bei einer
+sehr grossen Anzahl der Unbekannten durch sukzessive Annaherungauflésen,
+Mosk. Math. Samml. XVI, 342-345. [104]
+
+Meinardus, G., Reddy, A. R., Taylor, G. D. and Varga, R. S. (1972) Converse
+theorems and extensions in Chebyshev rational approximation to certain entire
+functions in [0,-+oo), Trans. Amer. Math. Soc. 170, 171-186. /312/
+
+Mewborn, A. C. (1960), Generalizations of some theorems on positive matrices to
+completely continuous linear transformations on a normed linear space, Duke
+Math. J. 27, 273-281. [59, 60]
+
+Meyer, H. I. and Hollingsworth, B. J. (1957) A method of inverting large matrices
+of special form, Math. Tables Aids Comput. 11, 94-97. /233/
+
+Miller, V. A. and Neumann, M. (1985) A note on comparison theorems for nonneg-
+ative matrices, Numer. Math. 47, 427-434. [108]
+
+Milne, William Edmund (1953) Numerical Solution of Differential Equations, John
+Wiley and Sons, Inc., New York, 275 pp. [180]
+
+Minc, Henryk (1988) Nonnegative Matrices, John Wiley and Sons, New York. /59/
+
+von Mises, R. and Pollaczek-Geiringer, H. (1929) Praktische Verfahren der Gle-
+ichungsauflésung, Z. Angew. Math. Mech., 9, 58-77, 152-164. /104, 105, 106, 107]
+
+Motzkin, T. S. (1949) Approximation by curves of an unisolvent family, Bull. Amer.
+Math. Soc. 55, 789-793. [272]
+
+Muskat, Morris (1937) The Flow of Homogeneous Fluids Through Porous Media,
+McGraw-Hill Book Co., Inc., New York, 763 pp. [276]

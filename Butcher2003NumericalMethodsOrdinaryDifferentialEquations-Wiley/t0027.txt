@@ -1,0 +1,42 @@
+14. NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Because A(x) = B(x) = C(x), when « = 0, they retain this value when x > 0.
+To show that (104i) holds, calculate (d/dx)(3y2 — ys) = 0, so that 3y2 — ys is
+constant and equals its value when z = 0. Qo
+
+This problem seems artificial, but in reality comes from a well-known
+mechanical system, the simple pendulum.
+
+Consider a small mass m attached to a light inelastic string of length J, with
+the other point attached to the origin of coordinates, which can swing back
+and forth in a vertical plane. Let X, measured in a leftwards direction, and Y,
+measured in a downward direction, be the coordinates. Because the string is
+inelastic, the tension T in the string, always matches other forces resolved in
+the direction of the string so as to guarantee that the length does not change.
+
+We denote by U and V, respectively, the velocity components in the X and
+Y directions. The motion of the pendulum is governed by the equations
+
+e =U, (104j)
+
+O ay, (104K)
+me = -=, (1041)
+mo = =" +mg, (104m)
+X?4y?=P, (104n)
+
+where, in addition to four differential equations (104j)-(104m), the constraint
+(104n) expresses the constancy of the length of the string. The tension T acts
+as a control variable, forcing this constraint to remain satisfied. By rescaling
+variables in a suitable way, the ‘differential-algebraic’ equation system (104j)—
+(104n) can be rewritten with the constants m, g and [ replaced by 1 in each
+case. In the rescaled formulation write y; = X, y2 = Y, y3 =U, yg = V and
+ys = T, and we arrive at the system
+
+ayn = ys, (1040)
+tie y, (104p)
+He —yys, (1044)
+ou = -yys +1, (104r)
+yity=l. (104s)
+
+This set of equations (1040)-(104s) is exactly the same as (104a)—(104e), with
+the exception that (104e) is replaced by (104s). Assuming that initial values

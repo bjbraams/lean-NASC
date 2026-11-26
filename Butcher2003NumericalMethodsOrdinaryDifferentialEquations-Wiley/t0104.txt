@@ -1,0 +1,43 @@
+NUMERICAL DIFFERENTIAL EQUATION METHODS 91
+
+6
+Bt) = Dy; bicaye? —-y(#) = 1-1.3-1-1-6 = 18
+
+Figure 234(ii) Calculation details for &(t) and +(t), where r=
+
+1
+
+bacaasace + bacadance + bacaaascs = 5, (235f)
+1
+
+bgasecy + badancs + baaagcy = iP (235g)
+1
+
+=~. 235h
+
+byagsasece = 57 (235h)
+
+It can be shown, by solving for bz, bs and b4, from equations (235b), (235c)
+and (235e); by then solving for a32, a42 and a43 from equations (235d), (235f)
+and (235g); and then by substituting into (235h), that cq = 1. Many solutions
+and families of solutions are known to these conditions; the following are two
+examples:
+
+0
+aia
+2 2
+RK41: 1/0 3 , (235i)
+1/0 0
+Ti
+6 3
+0
+1}a
+4/4
+RK2: lo 2b (2353)
+1;1 -2
+z 0
+
+236 Higher orders
+
+Because the number of rooted trees of various orders increases rapidly for
+orders greater than four, the complexity of the order conditions also increases.

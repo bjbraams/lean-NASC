@@ -1,0 +1,55 @@
+162 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+This relation simplifies to c2(c4— 1) = 0 which, because cz = 0 is incompatible
+with (322d), implies cq = 1.
+An alternative proof of this result, is found by using the following:
+
+Lemma 322A If P and Q are each 3 x 3 matrices such that their product
+has the form
+
+r1 Ti2 0
+PQ=) rn 122 0],
+0 0 0
+
+we (| Ti 12 }) #0,
+T2122
+
+then either the last row of P is zero or the last column of Q is zero.
+
+where
+
+Proof. Because PQ is singular, either P is singular or Q is singular. In the
+first case, let u’ # 0 be such that uP = 0, and therefore u' PQ = 0; in
+the second case, let v # 0 be such that Qu = 0, and therefore PQuv = 0.
+Because of the form of PQ, this implies that the first two components of u!
+(or, respectively, the first two components of v) are zero. |
+
+To obtain the result that D(1) necessarily holds if s = p = 4, we apply
+Lemma 322A with
+
+be bg b4
+boce b3c3 baca
+
+4 4 4
+> dian - be(1—ce) Yo bias _ b3(1—c3) So biais _ ba(1—ca)
+i=1
+
+i=1
+
+P=
+
+i=1
+
+and
+eo & Dyer A305 — 5C3
+Q=| 3 & DVyyasje; — $8
+ca Ch Sony aajey — $e}
+The value of the matrix PQ can be calculated from the order conditions. For
+example, the (2,2) element is equal to
+
+[ Pace bses baa |[ GB a]'=dae=t
+i=l
+
+The elements in the last row and last column are a little more complicated to
+evaluate because they depend on linear combinations of elementary weights,
+but the relation of these elements in the product to the C(2) and D(1)

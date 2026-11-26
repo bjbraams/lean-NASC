@@ -1,0 +1,47 @@
+6.5 Asymptotic Convergence Rates for the Model Problem 227
+
+We shall call this the model problem. Note that this is the special case
+P=1,0c=0, f =0 in (6.37), a =1, @ = 0 in (6.38). Using a uniform
+mesh,
+
+(6.76) a=ith, yy=jh, 0<igj<N, h=1/N,
+
+we see in this case that R;, and Ih, as defined in Sect. 6.3, coincide with R
+and I’. Moreover, the finite difference approximation to (6.74), as deduced as
+the special case of (6.49), is
+
+4eui,5 — (uigag + imag + Mags + taj—1) = hPa,
+(6.77)
+1<ij<N-1,
+
+where we again use the notation uj; := u(zi,y;). The quantities
+Uo,j, UN,j» Ui,0, Ui,n are given values from (6.75). Thus, omitting the er-
+ror term 7;,; gives us the matrix problem
+
+(6.78) Az =k,
+
+where A is an (N — 1)? x (N — 1)? real matrix satisfying the conclusion of
+Theorem 6.5. From (6.77), all the diagonal entries of the matrix A are 4,
+so that we can obtain the point Jacobi matrix B, associated with A, simply
+from
+
+(6.79) B=I- 7A.
+
+We can explicitly obtain the eigenvalues and eigenvectors of the point Jacobi
+matrix B for the model problem here treated. Since A is real, symmetric,
+and positive definite, then it is clear from (6.79) that B is real, symmetric,
+and possesses real eigenvalues and real eigenvectors. If a, with components
+a4,;, is an eigenvector of B with associated eigenvalue p, then from (6.78)
+and (6.79), we have
+
+1 .
+(6.80) Ffainay + oi+1g + Oij-1 + agri} =a, 1S4ISN,
+where a9,; = ay,j = 4,0 = O4,n = 0. Let
+(k,£) : kri . eng .
+Oe °= Yeesin Wy sin Wi) 1<kl<N-1,1<i,j<N-1.
+
+Substituting aft in (6.80) shows that a(*) is an eigenvector of B, with
+
+corresponding eigenvalue
+
+(6.81) Mke = ; {cos (5) + cos (5) \ :

@@ -1,0 +1,51 @@
+NUMERICAL DIFFERENTIAL EQUATION METHODS 79
+
+consider generalizations, which will yield improved numerical behaviour but
+will retain, as much as possible, its characteristic property of simplicity.
+
+An important aim will be to obtain methods for which the asymptotic
+errors behave like high powers of the stepsize h. For such a method, the gain
+in accuracy, resulting from a given reduction in stepsize, would be greater
+than for the Euler method, because for this method, the error behaves only
+like the first power of h. We also examine the stability characteristics of these
+various more general methods. As we saw in Subsection 216, the Euler method
+does not work well for stiff problems, because of stability considerations. We
+would like to find methods that have better stability.
+
+The two major aims, greater accuracy and better stability, have to be
+balanced against the need to avoid additional computational costs, associated
+for example, with starting and stepsize-changing mechanisms. In the next few
+subsections, we explore some of the approaches used to achieve these aims.
+
+221 More computations in a step
+
+Instead of computing f only once in each time step, as in the Euler method,
+we might look for methods which evaluate f (with different arguments, of
+course), two or more times. We consider a single example of this idea in which
+f is evaluated twice.
+
+Since the Euler method is based on a left-hand quadrature rule, we might
+ask how it is possible to base a method on the trapezoidal rule. The difficulty
+with this is that the derivative at the beginning of the step is known, but at the
+end it is not known. To overcome this difficulty, one of the two f evaluations
+can be used to approximate the solution value at the end of the step, using the
+same approximation that is used in the Euler method. From this first order
+approximation, an approximation to the derivative at the end of the step is
+computed. The quota of two f evaluations has now been exhausted, but there
+is now data available to apply the trapezoidal rule formula.
+
+Putting all these stages of the computation together, we write the algorithm
+for computing y, in the form
+
+Yn = Yn—1 thf (tn-1,Yn—-1), (221a)
+h
+Yn = Yn-1 + 2 (flan, yr) + f(@n-1,Yn—1))- (221b)
+
+This is an example of a Runge-Kutta method.
+
+As an example of the use of this method, refer to Table 221(I), where the
+Kepler problem (201d), with zero eccentricity, is integrated through a half
+period. The number of steps, n, takes on successive values 2', i = 5,6,...,10,
+so that h takes on values 72~*, i = 5,6,..., 10, respectively. The second order
+nature of the approximations is suggested by the rate at which errors decrease
+in each of the four components, as n is repeatedly doubled.

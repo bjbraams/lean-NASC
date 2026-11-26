@@ -1,0 +1,24 @@
+LINEAR MULTISTEP METHODS 335
+
+Figure 434(ii) Stability regions for PECE methods with g = p (unbroken lines)
+and g = p — 1 methods (dashed lines). In each case p is attached to the curves
+
+Exercises 43
+
+43.1 Use the Schur criterion to show that all zeros of the polynomial
+729 — 11z? +5z+ 1 lie in the unit disc.
+
+43.2 Use the Schur criterion to show that not all zeros of the polynomial
+723 — 11z? + 6z+ 1 lie in the unit disc.
+
+43.3 Determine whether or not all zeros of the polynomial 7z* — 112? + (5+
+i)z +1 lie in the unit disc.
+
+43.4 Find the stability regions for the fourth order Adams-Bashforth-
+Adams-Moulton PEC and PECE methods.
+
+44 Order and Stability Barriers
+440 Survey of barrier results
+
+It is a simple matter to construct a linear k-step method with order 2k. This
+can be done, for example, by finding coefficients A;, Bj, j =0,1,...,, such

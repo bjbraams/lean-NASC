@@ -1,0 +1,47 @@
+202
+
+6. Derivation and Solution of Elliptic Difference Equations
+
+Let A = [a;,;] be any n x n tridiagonal matrix, ie. aj; = 0 for
+|ti—3| > 1, with real entries such that a;,;-1-ai-1,; > 0 for all2 <i<n.
+Show that there exists a diagonal matrix D with positive diagonal en-
+tries such that DAD™! is real and symmetric. Thus, conclude that
+for all A sufficiently small, the matrix A of (6.35) is diagonally sim-
+ilar to a real symmetric and positive definite matrix, and thus has
+positive real eigenvalues. Similarly, conclude that the matrices B of
+Theorem 6.1 and B of Theorem 6.3 (for all A sufficiently small) have
+real eigenvalues.
+
+Let A be the Nx N matrix of (6.35), where we assume that 3; = G2 = 0
+in (6.26) and that q(x) = 0 in (6.22). If
+p(t) 2k >0,  Pmax = oman, {hi = fi41 — Zi},
+show that
+(4-4 < ——ho___.
+ssn? (sore)
+(Hint: If Ag is the matrix of (6.5) with o = 0, express A as
+
+(kh? hmax)Ao + R, and show that R is Hermitian and nonnegative
+definite.)
+
+For the two-point boundary-value problem of (6.1)-(6.2), assume that
+o(x) =o > Oand that f(z) of (6.1) is in C4[a, b]. Using Taylor’s series,
+derive the following improved three-point difference approximation of
+(6.1) by the repeated differentiations of (6.1):
+
+o*h4
+(2 toh? + r) yi — (Yio + Yi-1)
+
+1
+. = gla ton) fit? f?}3
+
++O(h4) = 5{(10 + oh?) fi + fi-1 + fits} + O(h').
+More generally, if f(x) in C?"[a, b] for n > 2, derive improved difference
+
+approximations of (6.1) which, similar to the above expression, couple
+only three successive unknowns y;-1, yi, and y:+1. If the associated
+
+N x N tridiagonal matrix is A, := (a), show that
+
+al), = 1/h? =: al”) and lim al” = 2cosh(ho)/h?.
+
+iji—1

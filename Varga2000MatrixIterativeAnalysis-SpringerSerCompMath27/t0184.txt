@@ -1,0 +1,42 @@
+176 5. Semi-Iterative Methods
+
+(5.94) K(Q):= wa <1.
+
+Then, &(z) exists by the Riemann mapping theorem and is unique up to
+a multiplicative factor of absolute value 1, and as 1 ¢ 2 from (5.91), then
+|6(1)| > 1, giving the final inequality in (5.94). The connection with the
+numbers {7m}9°_, of (5.93) is that (cf. Eiermann, Niethammer and Varga
+(1985))
+
+(5.95) K(2) = lim yl" <1.
+m—-oo
+
+The constant K (£2) is called the asymptotic convergence factor for the
+covering domain 92.
+
+With M = C,,, it turns out, from classical SOR theory, that for fixed
+B = p(B), with o(B?) c [0,67], where 0 < 6B < 1 (the case 6 = 0 being
+uninteresting), there are only three different covering domains 2 = 92,,,g for
+any real w; these consist of a disk, a circular arc, and a banjo-type set and
+are shown below in Fig. 5.2.
+
+So os
+
+Fig. 5.2. Three Covering Domains
+
+The associated conformal mapping £(z), for the exteriors of each of these
+three covering domains, can be explicitly determined. Then, with the defini-
+tion of the new constant
+
+2 Wp
+1-/1-p(B) w-1'
+
+so that 2 < we, the result of Eiermann and Varga (1993a) is
+
+(5.96) We !=
+
+Theorem 5.5. Assume that the n x n Jacobi matric B = L +U is a con-
+sistently ordered weakly cyclic of index 2 matriz, and that the eigenvalues of
+B? are all nonnegative and lie in the interval (0, p?(B)], where 0 < p(B) <1.
+Then, the asymptotic convergence factors K(2.,,) satisfies the following
+properties:

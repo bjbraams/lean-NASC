@@ -1,0 +1,57 @@
+6.2 General Second-Order Ordinary Differential Equations 199
+
+4
+Lo =0, Up = 2 — M0
+
+ho 2?
++ +
+(6.34) Dp = Ly + Uy + PEO 4 20%,
+1
+
+_ fgho , Pon
+= 2-470.
+2 Ay
+Summarizing then, we have derived a system of equations which, in matrix
+notation, is
+
+ko
+
+(6.35) Ay =k+7(y).
+
+Note that A is an m x m matrix, where m = N,N +1, or N + 2, depending
+on the boundary conditions.
+
+As in the case of the matrix A of (6.5), we can also quickly deduce prop-
+erties of the matrix A from (6.32). Clearly, Ais a real tridiagonal matrix and,
+from the assumptions of (6.25) and (6.26), we see that the diagonal entries of
+A are positive, while the off-diagonal entries of A are nonpositive, providing
+that the mesh spacings h; are all sufficiently small. Assuming this to be true,
+then A is also irreducibly diagonally dominant, and thus (Corollary 3.20 ) A
+is an irreducible M-matrix with (A)-! > 0. As in Theorem 6.1, we conclude
+(using Theorem 3.18) that the point Jacobi matrix B associated with A is
+nonnegative and convergent. It is also clear that the use of graph theory,
+as in Sect. 6.1, similarly establishes that B is a consistently ordered cyclic
+matrix of index 2. Moreover (Exer. 5), B has real eigenvalues. Thus, we have
+established
+
+Theorem 6.3. Let A be the m x m matrix of (6.35), derived from the
+boundary-value problem of (6.22)-(6.23), subject to the conditions of (6.24)-
+(6.26). Then, for all mesh spacings sufficiently small,
+
+1. A is real, with positive diagonal entries and nonpositive off-diagonal en-
+tries. Moreover, A is irreducibly diagonally dominant.
+
+2. A is a tridiagonal irreducible M-matriz, and (A)~! > 0.
+
+3. If B is the mx m point Jacobi matrix derived from A, then B is a
+nonnegative, irreducible, consistently ordered cyclic matrix of index 2 with
+
+real eigenvalues, and p(B) <1.
+
+One interesting observation we can make from the above derivation is that
+boundary conditions are used in conjunction with the differential equation,
+which seems desirable in general. The same is true of applications of the
+variational method introduced in Sect. 6.1. Another fact worth noting is that
+if q(x) := 0 and p’(x) and o(z) are continuous, then the differential equation
+of (6.22) is self-adjoint, which suggests that the associated matrix A should
+be symmetric in this case, even for nonuniform mesh spacings. However, more

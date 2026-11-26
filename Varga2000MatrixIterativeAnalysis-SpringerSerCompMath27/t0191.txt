@@ -1,0 +1,38 @@
+6. Derivation and Solution of Elliptic
+Difference Equations
+
+6.1 A Simple Two-Point Boundary-Value Problem
+
+The basic aims in this chapter are to derive finite difference approximations
+for certain elliptic differential equations, to study the properties of the asso-
+ciated matrix equations, and to describe rigorous iterative methods for the
+solution of such matrix equations. In certain cases, the derived properties
+of the associated matrix equations are sufficiently powerful to allow us to
+prove rather easily (Theorem 6.2) that these finite difference approximations
+become more accurate with finer mesh spacings, but results in this area, es-
+pecially in higher dimensions, require detailed developments which we omit.
+Rather, in this chapter we concentrate on useful methods for deriving finite
+difference approximations of boundary-value problems which apply to inter-
+nal interfaces, which are of interest in reactor physics.
+
+To best understand different methods for deriving finite difference ap-
+proximations, we look closely in this section at the following second-order
+self-adjoint ordinary differential equation,
+
+(6.1) - f) +o(x)y(z) = f(z), a<ar<b,
+
+subject to the two-point boundary conditions
+
+(6.2) y(a) =o; y(b) =.
+
+Here, a and # are given real constants, and f(x) and o(zx) are given real
+continuous functions on a < x < b, where it is assumed that
+
+o(z) >0, foralla<a<b.
+For simplicity, we place a uniform mesh of size
+
+_ (b~a)
+N+1
+
+on the interval a < x < b, and we denote the mesh points of the discrete
+problem by

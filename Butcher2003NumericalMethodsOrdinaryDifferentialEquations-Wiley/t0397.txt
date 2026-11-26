@@ -1,0 +1,50 @@
+GENERAL LINEAR METHODS 387
+
+52.2 Find a general linear method with stability function equal to the [2, 0, 0]
+generalized Padé approximation to exp.
+
+52.3 Find the [3,0, 1] generalized Padé approximation to exp.
+
+52.4 Show that the [2, 0, 1] generalized Padé approximation to exp is A-stable.
+
+53 The Order of General Linear Methods
+530 Possible definitions of order
+
+Traditional methods for the approximation of differential equations are
+designed with a clear-cut interpretation in mind. For example, linear multistep
+methods are constructed on the assumption that, at the beginning of each
+step, approximations are available to the solution and to the derivative at a
+sequence of step points; the calculation performed by the method is intended
+to obtain approximations to these same quantities but advanced one step
+ahead. In the case of Runge-Kutta methods, only the approximate solution
+value at the beginning of a step is needed, and at the end of the step this is
+advanced one time step further.
+
+We are not committed to these interpretations for either linear multistep
+or Runge-Kutta methods. For example, in the case of Adams methods, the
+formulation can be recast so that the data available at the start and finish
+of a step is expressed in terms of backward difference approximations to the
+derivative values or in terms of other linear combinations which approximate
+Nordsieck vectors. For Runge-Kutta methods the natural interpretation, in
+which y,, is regarded as an approximation to y(z,p), is not the only one possible.
+As we have seen in Subsection 389, the generalization to effective order is such
+an alternative interpretation.
+
+For a general linear method, the r approximations, yr), ¢=1,2,...,7,
+are imported into step number n and the r corresponding approximations,
+yl, are exported at the end of the step. We do not specify anything
+about these quantities except to require that they are computable from an
+approximation to y(t,) and, conversely, the exact solution can be recovered,
+
+at least approximately, from yi 4), i=1,2,...,r.
+This can be achieved by associating with each input quantity, yr, a
+generalized Runge-Kutta method,
+
+ce) | AM
+S= roa Ooms (530a)
+
+Write s; as the number of stages in 5}.
+The aim will be to choose these input approximations in such a way that
+if yr is computed using S; applied to y(%n_1), for i = 1,2,...,r, then the
+
+4

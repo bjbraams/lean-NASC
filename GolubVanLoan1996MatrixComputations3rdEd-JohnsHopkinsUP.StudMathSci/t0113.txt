@@ -1,0 +1,107 @@
+4.7. TOEPLITZ AND RELATED SYSTEMS 197
+
+for k=lin-1
+B=(1— a7) p= (bk +1) —r(1ck)72(k: — 1:1) /8
+v(1:k) = 2(1:k) + py(k: — 1:1)
+a(k +1) = | v(L:k)
+ifk<n-1
+a = (-r(k +1) + r( Lik)? y(k: - 1:1) /8
+2(1:k) = y(1:k) + ay(k: — 1:1)
+1:k
+y(lik + 1) = [ ale ) |
+end
+end
+
+This algorithm requires 4n? flops. The vectors z and v are for clarity and
+can be avoided in a detailed implementation.
+
+Example 4.7.2 Suppose we wish to solve the symmetric positive definite Toeplitz
+
+(22 ]l2]--[4]
+
+using the above algorithm. After one pass through the loop we obtain
+
+a=1/15, = 3/4, v=[ The | z=[4]-
+
+We then compute
+
+Bo = (1-a7)8=56/75 p= (63 — rita — rami) /8 = 285/56
+My = t+ yn = 355/56 wy = 22 + wy, = —376/56
+
+Rane
+
+giving the final solution x = (355, -376, 285|7/56.
+
+4.7.4 Computing the Inverse
+
+One of the most surprising properties of a symmetric positive definite
+Toeplitz matrix T;, is that its complete inverse can be calculated in O(n?)
+flops. To derive the algorithm for doing this, partition Ty} as follows
+
+-1
+Tr! = [ *| = [2 | (4.7.4)
+
+where A =Tn_1, E = Eq_1, and r =(r1,...,fp—1)7. From the equation
+A &r v{_ fo
+TE 1 1} {1
+
+it follows that Av = —yEr = ~—yE(ri,...,ra-1)? and y = 1 —rTEv.
+If y solves the (n — 1)-st order Yule-Walker system Ay = —r, then these
+
+198 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+
+expressions imply that
+
+7 U1 +r7y)
+vy = By.
+
+Thus, the last row and column of 77) are readily obtained.
+It remains for us to develop working formulae for the entries of the
+submatrix B in (4.7.4). Since AB + Erv? = Iy_,, it follows that
+
+Tv
+BoA! (A Er)uT = At + — .
+
+Now since A = T,_; ia nonsingular and Toeplitz, its inverse is persymmet-
+ric. Thus,
+
+by = (ATH +
+
+_ UV;
+(A neji + = (4.7.5)
+Un—jUn—i + Viz
+
+ea v
+
+1
+= bp-jn-i + 5 (is — Un—7%m-i) :
+
+= ba-jn-i
+
+This indicates that although B is not persymmetric, we can readily compute
+an element 5,; from its reflection across the northeast-southwest axis. Cou-
+pling this with the fact that A~} is persymmetric enables us to determine
+B from its “edges” to its “interior.”
+
+Because the order of operations is rather cumbersome to describe, we
+preview the formal specification of the algorithm pictorially. To this end,
+assume that we know the last column and row of T7!:
+
+uutuiuerk
+uunuuxnk
+1. | uuuunyyk
+Th = uuutuitik
+uuuiooeieek
+KEkKkKkKeEE
+
+Here u and k denote the unknown and the known entries respectively, and
+n = 6. Alternately exploiting the persymmetry of Ty! and the recursion
+(4.7.5), we can compute B, the leading (n ~ 1}-by-(n — 1) block of T7},, as
+follows:
+
+kKkKkeEk:K: kKkkkeEE
+kKuutuiui<rk kuuvd45»ilk k
+peraym. kKuutui<7zzk (4.7.8) Kubuuiek
+kKuuuetbk Kuuuke
+kKuuwuuurk KkKkekKkKE
+REkkkeEE Keke keERk

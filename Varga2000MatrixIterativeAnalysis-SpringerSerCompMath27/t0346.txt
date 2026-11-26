@@ -1,0 +1,73 @@
+References 341
+
+Eiermann, M., Niethammer, W. and Varga, R. S. (1985) A study of semiiterative
+methods for nonsymmetric systems of linear equations, Numer. Math. 47, 503-
+533. [176, 182]
+
+Eiermann, M., Niethammer, W. and Varga, R. S. (1987) Iterationsverfahren fiir
+nichtsymmetrische Gleichungssysteme und Approximationsmethoden im Kom-
+plex, Jber. Deutsch. Math. Verein. 89, 1-32. [182]
+
+Elsner, Ludwig (1989) Comparisons of weak regular splittings and multisplitting
+methods, Numer. Math. 56, 283-289. /99, 108]
+
+Engeli M., Ginsburg, T., Ruthishauser, H., and Stiefel, E. (1959), Refined Iterative
+Methods for Computation of the Solution and Eigenvalues of Self-Adjoint Bound-
+ary Value Problems, Mitteilungen aus dem Institut fiir angewandte Mathematik
+Nr. 8, Birkhauser Verlag, Basel/Stuttgart, 107 pp. [281]
+
+Esch, Robin E. (1960) A necessary and sufficient condition for stability of partial
+difference equation problems, J. Assoc. Comp. Mach. 7, 163-175. [911]
+
+Evans, D. J. (1960) The solution of elliptic difference equations by stationary itera-
+tive processes, Information Processing, Proc. Int. Conf. Information Processing,
+Unesco, Paris, 79-85. [274]
+
+Faddeeva, V. N. (1949) The method of lines applied to some boundary problems,
+Trudy Mat. Inst. Steklov 28, 73-103. /223, 309]
+
+Faddeev, D. K. and Faddeeva, V. N. (1963) Computational Methods of Linear
+Algebra, W. H. Freeman and Company, San Francisco, CA. [2, 10, 220, 225]
+Fan, K. (1958) Topological proof for certain theorems on matrices with non-negative
+
+elements, Monatsh. Math. 62, 219-237. [59, 88, 93, 107]
+
+Fan, K. and Hoffman, A. J. (1955) Some metric inequalities in the space of matrices,
+Proc. Amer. Math. Soc. 6, 111-116. /28/
+
+Farrington, C. C., Gregory, R. T., and Taub, A. H. (1957) On the numerical solution
+of Sturm-Liouville differential equations, Math. Tables Aids Comput. 11, 131-150.
+[231]
+
+Feingold, David G. and Varga, Richard S. (1962) Block diagonally dominant matri-
+ces and generalizations of the Gerschgorin Circle Theorem, Pacific J. Math 12,
+1241-1250. [29]
+
+Flanders, Donald A. and Shortley, George (1950) Numerical determination of fun-
+damental modes, J. Appl. Phys. 21, 1326-1332. /159, 180]
+
+Forsythe, G. E. (1953) Solving linear algebraic equations can be interesting, Bull.
+Amer. Math. Soc. 59, 299-329. [180]
+
+Forsythe, G. E. (1956) Difference methods on a digital computer for Laplacian
+boundary value and eigenvalue problems, Comm. Pure Appl. Math. 9, 425-434.
+[323]
+
+Forsythe, G. E. and Ortega, J. (1960) Attempts to determine the optimum factor
+for successive overrelaxation, Proc. Int. Conf. Information Processing, Unesco,
+Paris, 110. [327]
+
+Forsythe, G. E. and Wasow, W. R. (1960) Finite Difference Methods for Partial
+Differential Equations, John Wiley and Sons, Inc., New York, London, 444 pp.
+[28, 148, 169, 192, 231, 282, 317, 826, 327]
+
+Fox, L. (1957) The Numerical Solution of Two-Point Boundary Problems in Or-
+dinary Differential Equations, Oxford University Press, Fair Lawn, NJ, 371 pp.
+[281, 232, 329]
+
+Frank, Werner (1960) Solution of linear systems by Richardson’s method, J. Assoc.
+Comput. Mach. 7, 274-286. [181]
+
+Frankel, S. P. (1950) Convergence rates of iterative treatments of par-
+tial differential equations, Math. Tables Aids Comput. 4, 65-75.
+[2, 65, 66, 104, 111, 180, 278, 312]

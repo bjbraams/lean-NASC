@@ -1,0 +1,49 @@
+140 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Theorem 311C
+y™ (y(z)) = D> ae) FE)(y(2)).
+
+tT,
+The alternative approach to finding the Taylor coefficients is based on the
+Picard integral equation
+§
+wlan + he) = yao) +h [| Hly(am + hE))as,
+
+which, written in terms of Picard iterations, becomes
+
+€
+vn (ito + hé) = y(o) +h [ Fluna(mo + hé))a€, (311)
+
+where the initial iterate is given by
+yo(x + hE) = y(xo). (311¢)
+
+For n = 1,2,..., we expand y,,(Zo + h€) for € € (0, 1], omitting terms that are
+O(n"),
+
+Theorem 311D The Taylor expansion of yn given by (311b) and (311c) is
+equal to
+
+Yn = y(ao) + D> ne” FOR Tash Plu le) + O18"). (3114)
+
+i=1 tet;
+
+Proof. The case n = 0 is obvious. We now use induction and suppose that
+(311d) is true with n replaced by n — 1. By Lemma 310B, with
+
+1
+a(t) = —~
+0) wt)”
+we have as the coefficient of F(t)(y(x0))h"™, the expression
+1
+er “1 ge = ere) = =
+[ TE (ti) r(t) hy (ti) v(t)
+
+where t = [trte -- + ty]. o
+
+enw,
+
+312 Elementary weights
+
+Having found the Taylor expansion of the exact solution to an initial value
+problem, we now find the corresponding expansion for the approximation
+computed by a Runge-Kutta method. A term-by-term comparison of these

@@ -1,0 +1,44 @@
+NUMERICAL DIFFERENTIAL EQUATION METHODS 107
+
+1074
+
+10~*
+
+10-8
+
+40710
+
+1 1
+107* 10-* 10-?
+h
+
+Figure 247(ii) Orbital calculations for various PECE methods
+
+Exercises 24
+
+24.1 Find a linear multistep of order 3 of the form
+
+Yn = Yn-2 + PhS (Cn—-1,Yn—-1) + Bohf (ena; Yn—2) + Bshf (tn—3, Yn—2)-
+
+24.2 Find a linear multistep of order 3 of the form
+
+Yn = Yn—2 + Bohf (en, Yn) + Bihf (@n—1,yn—1) + Bohf(tn—2,Yn-2)-
+
+24.3 If the differential equation y’ = y is solved using the implicit method
+Yn = Yn—-2t+2hf (fn—1, Yn—1), Show that the resulting difference equation
+has a solution which grows in powers of 1+h+4h? +O(h?) and a second
+solution that grows in powers of a quantity with smaller magnitude.
+
+24.4 If the differential equation y’ = —y is solved using the same method,
+show that the resulting difference equation has a solution which grows
+in powers of 1 — h+ $A? + O(h3) but has a second solution that grows
+in powers of a quantity with greater magnitude.
+
+25 Taylor Series Methods
+250 Introduction to Taylor series methods
+
+A differential equation y'(x) = f(z, y(x)), characterized by the function f, is
+presented to a computer in the form of a procedure, function or subroutine for
+computing values of f(u,v) for given arguments u and v. The program carries
+out the evaluation of this procedure in a manner that exactly corresponds
+to the occurrence of the function f, in the mathematical formulation of the

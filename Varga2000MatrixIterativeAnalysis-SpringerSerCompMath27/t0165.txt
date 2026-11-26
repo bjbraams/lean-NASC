@@ -1,0 +1,44 @@
+5.1 Semi-Iterative Methods and Chebyshev Polynomials 157
+
+Compute the norms ||fm(B)||,m > 1, for the 4x 4 matrix B of (1.10).
+How do these norms compare with the norms ||L7"|| = 5/4; m > 1,
+of Sect. 3.3, where £; is the point successive overrelaxation matrix
+derived from B?
+
+Let the nx n matrix M of (5.1) be convergent and Hermitian, and con-
+sider any “generalized arithmetic mean” semi-iterative method (i.e.,
+one for which each v;(m) > 0 for all 0 < j < m and all m > 1, there
+
+holds m
+Yi(m) = 1)
+
+9=0
+
+If gm(M) is the associated polynomial of (5.12), and M is such that
+p(M) is itself an eigenvalue of M, show that
+
+Rlgm(M)] < —Inp(M) = R[M™) for all m > 1.
+
+Thus, with these hypotheses, generalized arithmetic mean semi-
+iterative methods are always iteratively slower than the Jacobi it-
+erative method.
+
+In solving the matrix equation Ax = k, Richardson’s iterative
+method is defined by
+
+Ymt1 =Y¥m + m(-Aym +k), m2>0,
+
+where the a,’s are real scalars.
+a. Show that the error vectors €, for this method satisfy
+
+€m = m(A)eo, m>0,
+
+m-1
+where @m(x) := Il (1 -a;2).
+
+j=0
+b. If A is Hermitian and positive definite, with eigenvalues 0 < A; <
+d2 << +++ < An, then
+
+<
+Jam(ADl < 5 max, |dm(2)]

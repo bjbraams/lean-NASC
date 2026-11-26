@@ -1,0 +1,50 @@
+4.4 Extensions of the 2-Cyclic Theory of Matrices 137
+
+(4.62) LBwX =Ax, x #0.
+Directly from the definition of £g,., this is true if and only if
+(4.63) (\Lp + LE)x = (42=*) x, w#0,
+
+which expresses ((A + w — 1)/w) as an eigenvalue of ALg + LB. Since
+
+[A224] < nate + 2B) < o(MlLe +25) = mad,
+
+then from (4.61), we obtain
+
+< p(B) (AS). w#0, NAL
+
+On the other hand, assume that \ > 0 and x > 0 in (4.62). Then, as B is
+nonnegative and irreducible, it follows from (4.63) that mg(A) = (At+w—
+1)/w, and thus from (4.61),
+
+A+w-1
+(4.64) oD
+
+(4.65) AFHAT maa) > AV29(B), w £0.
+For \ # 1, moreover, Theorem 4.14 shows that equality is valid throughout
+(4.65) only if B is a consistently ordered cyclic matrix of index 2.
+
+For the special case w = 1, the proof of the Stein-Rosenberg Theorem 3.8
+in the irreducible case shows that £g,1 does indeed have a positive eigenvalue
+and a positive eigenvector, and setting w = 1 in (4.64) and (4.65) directly
+gives the result of
+
+Theorem 4.15. If BE S, then
+p(B)
+2— p(B)’
+
+with equality holding in the first inequality of (4.66) only if B is a consistently
+ordered cyclic matrix of index 2.
+
+(4.66) p(B) < o(LB,1) <
+
+Note that this theorem gives a sharpened form of statement 2 of the
+Stein-Rosenberg Theorem 3.8 for the set of matrices S.
+
+With Fig. 4.8 and the discussion of Sect. 4.3, it is geometrically evident
+that the straight line g,,(o) = (o +w—1)/w intersects the curves mg(c) and
+p(B)((o +1)/2) for allw with 0 < w < ws, where w is defined in (4.30), and
+we can conclude, using a result of Exer. 4 of Sect. 3.6, that the inequalities of
+(4.64) and (4.65) can be applied to every w in this interval. But for0 <w <1,
+these values of w are uninteresting from a practical point of view, since we
+have shown in Theorem 3.36 that the choice w = 1 minimizes p(£3,.,) in this
+range.

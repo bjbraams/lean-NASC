@@ -1,0 +1,111 @@
+1.4. VECTORIZATION AND RE-UsE Issuzs 43
+
+1.4.7 Blocking and Re-Use
+
+A cache is a small high-speed memory situated in between the functional
+units and main memory. See Fic.1.4.3. Cache utilization colors perfor-
+mance because it has a direct bearing upon how data flows in between the
+functional units and the lower levels of memory.
+
+To illustrate this we consider the computation of the matrix multiply
+update C = AB +C where A,B,C € R"™™ reside in main memory”. All
+data must pass through the cache on its way to the functional units where
+the floating point computations are carried out. If the cache is small and
+n is big, then the update must be broken down into smaller parts so that
+the cache can “gracefully” process the flow of data.
+
+One strategy is to block the B and C matrices,
+
+B= [ B,..., Bw | C= [(G...., cy ]
+e t t t
+
+where we assume that n = €N. From the expansion
+
+Ca = ABat+ Ca = > Als, k)Balk,:) + Ca
+k=l
+
+we obtain the following computational framework:
+
+for a = 1:N
+Load B, and C, into cache.
+for k = lin
+Load A(:, &) into cache and update Cy:
+Ca = A(:, k) Balk, ) + Ca
+end
+Store C,, in main memory.
+end
+
+Note that if M is the cache size measured in floating point words, then we
+must have
+Qnt+n< M. (1.4.1)
+
+Let [ be the number of floating point numbers that flow (in either direc-
+
+tion) between cache and main memory. Note that every entry in B is loaded
+
+into cache once, every entry in C’ is loaded into cache once and stored back
+
+in main memory once, and every entry in A is loaded into cache N = n/t
+times. It follows that 3
+
+=3n? 4
+
+Ty, = 3n*+ rz
+
+2The discussion which follows would also apply if the matrices were on a disk and
+
+ueeded to be brought into main memory.
+
+44 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+In the interest of keeping data motion to a minimum, we choose £ to be as.
+large as possible subject to the constraint (1.4.1). We therefore set
+
+1({M
+
+ant
+
+M-n
+(We use “x” to emphasize the approximate nature of our analysis.) If cache
+is large enough to house the entire B and C matrices with room left over
+for a column of A, then £=n and IT, = 4n?. At the other extreme, if we
+can just fit three columns in cache, then = 1 and Ty = n°.
+
+Now let us regard A = (Aas) , B = (Bag), and C = (Cag) as N-by-N
+block matrices with uniform block size £ = n/N. With this blocking the
+computation of
+
+obtaining
+TP, = 3n? +
+
+N
+Cop =). AayBys 9 a =1:N, B= 1:N
+
+yal
+can be arranged as follows:
+
+for a=1:N
+for 6 = 1:N
+Load Cag into cache.
+for y= 1:N
+Load Ag, and Byg inte cache.
+Cop = Cag + AayBrg
+end
+Store Cag in main memory.
+end
+end
+In this case the main memory/cache traffic sums to
+3
+Tz = Qn? + a
+
+because each entry in A and B is loaded N = n/¢ times and each entry
+in C is loaded once and stored once. We can minimize this by choosing £
+to be as large as possible subject to the constraint that three blocks fit in
+cache, i.e.,
+
+3A <M
+Setting 4 ,/M/3 gives
+
+{3
+2 3
+Ty = 2n* + 2n*4/—.

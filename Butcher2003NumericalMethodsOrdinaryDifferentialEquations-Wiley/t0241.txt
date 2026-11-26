@@ -1,0 +1,48 @@
+RUNGE-KUTTA METHODS 229
+
+of these generalizations allows the linear factor g to be time dependent so that
+the test problem becomes
+
+y' (x) = q(x)y(2). (356a)
+
+A second generalization, which we explore in Subsection 357, allows the
+differential equation to be non-linear.
+
+When (356a) is numerically solved using an implicit Runge-Kutta method
+(A, b",c), the stage values satisfy the equations
+
+&
+Yi = Yn-1 +>) aighq(tn—1 + he;)Y;, t= 1,2,...,8
+j=l
+and the output result is
+
+8
+Yn = Yn—1 + > biha(ta—1 + hei)¥i-
+
+t=1
+Let Z denote the diagonal matrix given by
+
+hg(tn—1 + ¢1) 0 ve 0
+_ 0 Alinta) 0
+0 0 halen te)
+= diag ([ halena ter) hgltna te) + ha(tn- +66) |).
+
+This makes it possible to write the vector of stage values in the form
+Y =yn-114+ AZY,
+so that
+Y = (1- AZ)“ 1yy-1.
+The output value is given by
+Yn = Yn-1 +O ZY = (140° Z(E — AZ)1) yn = R(Z)Yyn-1.
+
+The function R(Z) introduced here is the non-autonomous generalization of
+the linear stability function.
+
+We are mainly concerned with situations in which the stage abscissae are
+distinct and where they do not interfere with the stages of adjoining steps.
+This means that we can regard the diagonal elements of Z to be different from
+each other and independent of the values in the steps that come before or after
+the current step. With this in mind, we define a non-autonomous counterpart
+of A-stability that will guarantee that we obtain stable behaviour as long as
+the real part of g(x) is never positive. This is appropriate because the exact
+solution to (356a) is never increasing under this assumption, and we want to
+guarantee that this property carries over to the computed solution.

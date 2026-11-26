@@ -1,0 +1,58 @@
+RUNGE-KUTTA METHODS 151
+
+818 Local truncation error
+
+The conditions for order give guarantees that the Taylor expansions of
+the exact and computed solutions agree up to terms in h?. Obtaining an
+understanding of the respective terms in h?*+1 is regarded as a key to deriving
+methods that, not only have a specific order, but have a small truncation
+error. Because the number of terms of this order rises rapidly as p increases,
+it is extremely difficult to know how this sort of optimality should be arrived
+at. Picking out just the terms of order p+ 1, we can write the local truncation
+error in a single step as
+
+1 1
+
+ptt SS (5 - 30) F(t)(yo) + O(A?*?). (318a)
+
+we 7) AO
+ptt
+
+Since we are interested in asymptotic behaviour, that is limiting behaviour for
+
+h small, we do not devote much attention to the term O(h?+?). The coefficient
+
+of hP+! in (318a) is bounded in magnitude by
+
+)- | FO telh (s18b)
+> ya a(t) oh y(t)
+
+and this should somehow be made small. There is simply no general rule
+interrelating the magnitudes of the various elementary differentials and some
+assumptions need to be made.
+
+The first approach that can be considered is to compare, term by term, the
+expression for way?) (20), which is proportional to the local truncation
+error coefficient for linear multistep methods or for implicit Runge-Kutta
+methods of collocation type. The coefficient in this expression, corresponding
+to t, is
+
+1
+a(é)y(t)’
+so that the corresponding multiplier to yield the corresponding term in (318b)
+is
+
+lyY@#®) - I
+
+Hence, we can bound (318b) by
+
+1
+ex In) ®(@) — PaO)
+
+and hence, it might be desirable to minimize
+
+“MFO Go) ll
+
+eax, OHO — 1
+
+in seeking an efficient method.

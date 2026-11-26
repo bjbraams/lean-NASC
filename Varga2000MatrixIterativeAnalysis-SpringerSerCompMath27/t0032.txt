@@ -1,0 +1,53 @@
+24
+
+*3.
+
+1. Matrix Properties and Concepts
+
+Let A = [a;,;] be an n x n irreducible matrix which is diagonally
+dominant in the sense of Definition 1.20. If a;,; > 0,1 <i <n, and
+ai; < 0 for all i # j, prove that \ = 0 is an eigenvalue of A if and
+only if
+
+n
+Sain =0 for alll <i<n
+k=1
+
+(Taussky (1949)).
+
+Let A = [a;,;] be an nxn diagonally dominant matrix with nonnegative
+real diagonal entries. Show that the eigenvalues \; of A satisfy
+
+Red, >0, 1<i<n.
+Moreover, if A is Hermitian, conclude that A is nonnegative definite.
+
+From Theorem 1.21, if A is any strictly diagonally dominant matrix,
+then det(A) # 0. Using only this fact, prove directly Gerschgorin’s
+Theorem 1.11.
+
+Prove that any n x n strictly diagonally dominant matrix being non-
+singular is equivalent to Gerschgorin’s Theorem 1.11.
+
+Prove that any n x n irreducibly diagonally dominant matrix being
+nonsingular (cf. Theorem 1.21 is equivalent to the result of Taussky’s
+Theorem 1.18.
+
+1.6 Ovals of Cassini
+
+The use of ovals of Cassini by Brauer (1946), to determine inclusion regions
+for the eigenvalues of an n x n complex matrix, is a worthwhile extension of
+Gerschgorin’s Theorem 1.11. With the notation of (1.33) and with
+
+o(A) := {A: A is an eigenvalue of A}
+
+denoting the spectrum of A, the result of Brauer (1946) is
+
+Theorem 1.23. Let A = [ai,;] be an arbitrary n x n complex matrix, with
+n > 2. Then, if X is an eigenvalue of A, there is a pair (r,q) of positive
+integers with r # q (1 <1,q <n) such that
+
+(1.46)
+
+[A = dye - [A — gq] < Ap Ag.
+
+Hence, if

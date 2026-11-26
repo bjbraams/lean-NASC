@@ -1,0 +1,139 @@
+3.5. IMPROVING AND ESTIMATING ACCURACY 131
+
+up = min [ti]. Conclude that if a small pivot is encountered when Gaussian elimination
+with pivoting is applied to A, then A is ill-conditionad. The converse is not true. (Let
+A= Bn).
+
+P3.5.4 (Kahan 1966) The system Az = b where
+
+2 -1 1 2(1 + 107 #0)
+A= | -1 107% 19710 b= —10710
+1 1971 19-19 19-10
+
+has solution z = (107? —11)7. (a) Show that if (A+ £)y = 6 and [E| < 107°) A],
+then |x —y| < 1077 |x|. That is, small relative changes in A’s entries do not induce large
+changes in x even though xoo(A) = 10!°. (b) Define D = diag(10—5, 105, 10°). Show
+%oa(DAD) < 5. (c) Explain what is going on in terms of Theorem 2.7.3.
+
+P3.6.5 Consider the matrix:
+
+1 0 M -M
+Oo 1 -M M
+
+T= 00 1 0 MeR.
+oo0 0) 1
+
+What estimate of Keo(T) is produced when (3.5.6) is applied with d(k) = —sign(p(k))?
+What estimate does Algorithm 3.5.1 produce? What is the true #oo(T)?
+
+P3.5.6 What does Algorithm 3.5.1 produce when applied to the matrix By, given in
+(2.7.9)?
+
+Notes and References for Sec. 3.5
+
+The following papers are concerned with the scaling of Ax = 5 problems:
+
+FL. Bauer (1963). “Optimally Scaled Matrices,” Numer. Math. 5, 73-87.
+
+P.A, Businger (1968). “Matrices Which Can be Optimally Scaled,” Numer. Math. 12,
+346-48.
+
+A. van der Sluis (1969). “Condition Numbers and Equilibration Matrices,” Numer.
+Math. 14, 14-23.
+
+A. van der Sluis (1970). “Condition, Equilibration, and Pivoting in Linear Algebraic
+Syatems,” Numer. Math. 15, T4-86.
+
+C. McCarthy and G. Strang (1973). “Optimal Conditioning of Matrices,” SIAM J. Num.
+Anal. 10, 370-88.
+
+T. Fenner and G. Loizou (1974). “Some New Bounds on the Condition Numbers of
+Optimally Scaled Matrices,” J. ACM 1, 514-24.
+
+G.H. Golub and J.M. Varah (1974). “On a Characterization of the Best L2-Scaling of a
+Matrix,” SIAM J. Num. Anal. 11, 472-79.
+
+R. Skeel (1979). “Scaling for Numerical Stability in Gaussian Elimination,” J. ACM.
+26, 494-526.
+
+R. Skeel (1981). “Effect of Equilibration on Residual Size for Partial Pivoting,” SIAM
+J. Num. Anal. 18, 449-55.
+
+Part of the difficulty in scaling concerns the selection of a norm in which to measure
+errors. An interesting discussion of this frequently overlooked point appeers in
+
+W. Kahan (1966). “Numerical Linear Algebra,” Canadian Math. Bull. 9, 757-801.
+For a rigorous analysis of iterative improvement and related matters, see
+
+M. Jankowski and M. Wozniakowski (1977). “Iterative Refinement Implies Numerical
+Stability,” BIT 17, 303-311.
+
+132 CHAPTER 3. GENERAL LINEAR SYSTEMS
+
+€.B. Moler (1967). “Iterative Refinement in Floating Point,” J. ACM 14, 316-71.
+
+R.D. Skeel (1980). “Iterative Refinement Implies Numerical Stability for Gaussian Elim-
+ination,” Math. Comp. 35, 817-832.
+
+G.W. Stewart (1981). “On the Implicit Deflation of Nearly Singular Systems of Linear
+Equations,” SIAM J. Sei. and Stat. Comp. 2, 136-140.
+
+The condition estimator that we described is given in
+
+AK. Cline, C.B. Moler, G.W. Stewart, and J.H. Wilkinson (1979). “An Estimate for
+the Condition Number of a Matrix,” SIAM J. Num. Anal. 16, 368-75.
+
+Other references concerned with the condition estimation problem include
+
+C.G. Broyden (1973). “Some Condition Number Bounds for the Gaussian Elimination
+Procesa,” J. Inst. Math. Applic. 12, 273-86.
+
+F. Lemeire {1973}. “Bounds for Condition Numbers of Triangular Value of a Matrix,”
+Lin. Alg. and Its Applic. 11, 1-2.
+
+RS. Varga (1976). “On Diagonal Dominance Arguments for Bounding || AW? |les,” Lin.
+Alg. and Its Applic. 14, 211-17.
+
+G.W. Stewart (1980). “The Efficient Generation of Random Orthogonal Matrices with
+an Application to Condition Estimators,” SIAM J. Num. Anal. 17, 403-9.
+
+D.P. O'Leary (1980). “Estimating Matrix Condition Numbers,"SIAM J. Sci. Stat
+Comp. 1, 205-9.
+
+R.G. Grimes and J.G. Lewis (1981). “Condition Number Estimation for Sparse Matri-
+ces,” SIAM J. Sci. and Stat. Comp. 2, 384-88.
+
+A.K. Cline, A.R. Conn, and C. Van Loan (1982). “Generalizing the LINPACK Condition
+Estimator,” in Numerical Analysis , ed., J.P. Hennart, Lecture Notes in Mathematics
+no. 909, Springer-Verlag, New York.
+
+A.K. Cline and RK. Rew (1983). “A Set of Counter examples to Three Condition
+Number Estimators,” SIAM J. Sei. and Stat. Comp. 4, 602-611.
+
+W. Hager (1984). “Condition Estimates,” SIAM J. Sci. and Stat. Comp. 5, 311-316.
+
+N.J. Higham (1987). “A Survey of Condition Number Estimation for Triangular Matri-
+cea,” SIAM Review £9, 575-596.
+
+N.J. Higham (1988). “Fortran Codes for Estimating the One-norm of a Real or Complex
+Matrix, with Applications to Condition Estimation,” ACM Trans. Math. Soft. 14,
+381-396.
+
+N.J. Higham (1988), “FORTRAN Codes for Estimating the One-Norm of a Real or
+Complex Matrix with Applications to Condition Estimation (Algorithm 674),” ACM
+Trans. Math. Soft. 14, 381-396.
+
+C.H. Bischof (1990). “Incremental Condition Estimation,” SIAM J. Matrix Anal. Appl.
+11, 644-659. :
+
+C.H. Bischof (1990). “Incremental Condition Estimation for Sparse Matrices,” SIAM J.
+Matriz Anal. Appl. 11, 312-322.
+
+G. Auchmuty (1991). “A Posteriori Error Estimates for Linear Equations,” Numer.
+Math. 61, 1-6.
+
+N.J. Higham (1993). “Optimization by Direct Search in Matrix Computations,” SIAM
+J. Matrix Anal. Appl. 14, 317-333.
+
+D.J. Higham (1995). “Condition Numbers and Their Condition Numbers,” Lin. Alg.
+and Its Applic. 214, 193-213.

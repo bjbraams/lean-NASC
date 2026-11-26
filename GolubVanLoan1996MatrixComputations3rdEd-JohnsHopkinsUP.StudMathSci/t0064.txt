@@ -1,0 +1,111 @@
+3.2. THE LU FACTORIZATION 99
+
+computations is that if L = M,'-.. Mz1,, then L(k + I:n,k) =r), This
+follows from a careful look at the product that defines L. Indeed,
+
+L= (7 + ref) oo (2 + rer.) = I+ THe
+ki
+
+Since A(k + 1:n, k) houses the kth vector of multipliers r‘*) , it follows that
+A(i,k) houses 4;~ for alli > & .
+3.2.8 Solving a Linear System
+
+Qnce A has been factored via Algorithm 3.2.1, then Z and Uare represented
+in the array A. We can then solve the system Az = 6 via the triangular
+systems Ly = b and Uz = y by using the methods of §3.1.
+
+Qo 1 4 7
+o o -3 -6],
+1 8 0 1
+
+1 4 7
+Ax 2-3 -6 1}.
+3 2 1
+
+if & = (1,1,1)7, then y = (1,-1,0)7 solves Ly = b and z = (-1/3,1/3,0)7 solves
+Ur=y.
+
+Example 3.2.2 If Algorithm 3.2.1 is applied to
+
+14 #7 1
+A= 25 8 = 2
+3.6 «WW 3
+
+then upon completion,
+
+Deo
+
+3.2.9 Other Versions
+
+Gaussian elimination, like matrix multiplication, is a triple-loop procedure
+that can be arranged in several ways. Algorithm 3.2.1 corresponds to the
+“kij” version of Gaussian elimination if we compute the outer product
+update row-by-row:
+
+for k=1:in-1
+A(k + Lin, k) = A(k + Lin, k)/A(k, k)
+for i= k+1:in
+for j=k+imn
+A(i, j) = Ali, 9) — A(i, RACK, 3)
+end
+end
+end
+
+There are five other versions: k7i, tkj, ijk, jik, and jki. The last of these
+results in an implementation that features a sequence of gaxpy’s and for-
+ward eliminations. In this formulation, the Gauss transformations are not
+
+100 CHAPTER 3. GENERAL LINEAR SYSTEMS
+
+immediately applied to A as they are in the outer product version. Instead,
+their application is delayed. The original A(:, 7) is untouched until step j.
+At that point in the algorithm A(:, 7) is overwritten by Mj.1---M,A(:, j).
+The jth Gauss transformation is then computed.
+
+To be precise, suppose 1 < j < n —1 and assume that L(:,1:7 — 1)
+and U(1:7 ~ 1, 1:7 - 1) are known. This means that the first 7 — 1 columns
+of E and U are available. To get the jth columns of L and U we equate
+jth columns in the equation A = LU: A(:,j) = LU(:,j}. From this we
+conclude that
+
+A(Ql:ij-1,j) = L(g - Ldy - u(y ~ 1,9)
+and
+
+;
+ACen, j) = YO LG:n, kU (i) -
+
+k=1
+
+The first equation is a lower triangular system that can be solved for the
+vector U/(1:7 — 1,7). Once this is accomplished, the second equation can be
+rearranged to produce recipes for U(j,7) and L(j + l:n,j). Indeed, if we
+set
+
+jel
+vgn) = A(iin, 7) — SO Lin, kU, 9)
+k=1
+A(jin, 7) — Dyn, leg -— UA - 1,9),
+
+then L(j +1:n, 7) = v(j + In)/v(j) and U(j, j) = v(j). Thus, D(j + 1:2, j)
+is a scaled gaxpy and we obtain
+
+L=I;,U=0
+for 7 = 1:n
+ifgj=l
+u(jn) = Alen, j)
+else
+
+Solve (1:7 — 1,1:3 ~- Dz = A(1iy — 1,9) for z (3.2.5)
+and set U(1:7 — 1,7) = z.
+v(jin) = A(jin, 7) — LGjin, lj - Vz
+end
+ifj<n
+Lj + Ln, j) = v(7 + Lin)/v(7)
+end
+
+UG,3) = (9)
+
+end
+
+This arrangement of Gaussian elimination is rich in forward eliminations
+and gaxpy operations and, like Algorithm 3.2.1, requires 2n?/3 flops.

@@ -1,0 +1,44 @@
+1.3 Norms and Spectral Radii 13
+
+Proof. For the given matrix A, there exists a nonsingular n x n matrix S
+which reduces the matrix A to its Jordan normal form,* i.e.,
+
+I
+_ J
+(1.29) SAS :=Az=| 7.
+Jr
+
+where each of the n; x n; submatrices J; has the form
+
+AX 1
+M1
+x 1
+(1.30) J mot ,
+
+ll
+a
+A
+A
+3
+
+Since each submatrix J; is upper triangular, so is A, and thus the set
+{Ar }T7_1 includes all the distinct eigenvalues of the two matrices A and A,
+which are similar matrices from (1.29). By direct computation with (1.29),
+
+- Jp
+(1.31) (Ay = a , om>i.
+“am
+
+Because of the special form of the matrices J; of (1.30), it is easy to determine
+the entries of the powers of the matrix J). Indeed,
+
+dA? 2x, 1
+AP 2 1
+Ip= mS if ny, > 3,
+2r1
+oy)
+
+and in general, if J := [ao ()],1<i,7 <m, then
+
+4 See, for example, (Birkhoff and MacLane (1953), p. 334) for a proof of this basic
+result.

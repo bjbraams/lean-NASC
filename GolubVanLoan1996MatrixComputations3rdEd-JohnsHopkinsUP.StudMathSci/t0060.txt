@@ -1,0 +1,98 @@
+3.1. TRIANGULAR SYSTEMS 91
+
+3.1.4 Multiple Right Hand Sides
+
+Consider the problem of computing a solution X € R"** to LX = B where
+Le R*" is lower triangular and B¢ R°“'. This is the multiple right
+hand side forward substitution problem. We show that such a problem
+can be solved by a block algorithm that is rich in matrix multiplication
+assuming that ¢ and n are large enough. This turns out to be important in
+subsequent sections where various block factorization schemes are discussed.
+We mention that although we are considering here just the lower triangular
+problem, everything we say applies to the upper triangular case as well.
+To develop a block forward substitution algorithm we partition the equa-
+tion LX = B as follows:
+fy 0 tee 0 | | X By
+In La, ++ O Xe Bo
+: - . : = . . (3.1.3)
+Ln. Lyne Lyn Xn By
+Assume that the diagonal blocks are square. Paralleling the development of
+Algorithm 3.1.3, we solve the system L1)X, = B, for X, and then remove
+Xj, from block equations 2 through N:
+
+Io OO -- O Xo By — LX
+Ig. Lag --- 0 Xy By — LyX,
+Ln2 Ly3 --- Lyn Xn By -LmiX,
+
+Continuing in this way we obtain the following block saxpy forward elimi-
+nation scheme:
+
+for j =1:N
+Solve £53 X; = B;
+fori =j+hN (3.1.4)
+By = By — Lig XG
+end
+end
+
+Notice that the i-loop oversees a single block saxpy update of the form
+
+Byts By41 itis
+
+: 2 f-] op |x.
+
+By By Lng
+For this to be handled as a matrix multiplication in a given architec-
+ture it is clear that the blocking in (3.1.3) must give sufficiently “big”
+X;. Let us assume that this is the case if each X; has at least r rows.
+This can be accomplished if N = ceil(n/r) and X;,...,Xw-1 € R™* and
+Xp € BOND) x4,
+
+92 CHAPTER 3. GENERAL LINEAR SYSTEMS
+
+3.1.5 The Level-3 Fraction
+
+It is handy to adopt a measure that quantifies the amount of matrix multi-
+plication in a given algorithm. To this end we define the level-3 fraction of
+an algorithm to be the fraction of flops that occur in the context of matrix
+multiplication. We call such flops level-2 flops.
+
+Let us determine the level-3 fraction for (3.1.4) with the simplifying
+assumption that n = rN. (The same conclusions hold with the unequal
+blocking described above.) Because there are N applications of r-by-r
+forward elimination (the level-2 portion of the computation) and n? flops
+overall, the level-3 fraction is approximately given by
+
+Nr? 1
+‘ar T lon
+Thus, for large N almost all flops are level-3 flops and it makes sense to
+choose N as large as possible subject to the constraint that the underlying
+architecture can achieve a high level of performance when processing block
+saxpy’s of width at least r = n/N.
+
+3.1.6 Non-square Triangular System Solving
+
+The problem of solving nonsquare, m-by-n triangular systems deserves some
+mention. Consider first the lower triangular case when m > 7, i.e.,
+
+Dy c= by Ly ¢ R*™" 6, € R”
+Lay ~ be Ig € RON“ be IR™
+
+Assume that Z1, is lower triangular, and nonsingular. If we apply forward
+elimination to L,;7 = b, then z solves the system provided La; (Lyj181) =
+é2. Otherwise, there is no solution to the overall system. In such a case
+least squares minimization may be appropriate. See Chapter 5.
+
+Now consider the lower triangular system Lz = & when the number
+of columns n exceeds the number of rows m. In this case apply forward
+substitution to the square system L(1:m, 1:m)z(1:m, l:m) = 6 and prescribe
+an arbitrary value for x(m + 1:n). See §5.7 for additional comments on
+systems that have more unknowns than equations,
+
+The handling of nonsquare upper triangular systems is similar. Details
+are left to the reader.
+
+3.1.7 Unit Triangular Systems
+
+A unit triangular matrix is a triangular matrix with ones on the diagonal.
+Many of the triangular matrix computations that follow have this added
+bit of structure. It clearly poses no difficulty in the above procedures.

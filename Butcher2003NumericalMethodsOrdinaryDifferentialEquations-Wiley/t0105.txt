@@ -1,0 +1,54 @@
+92 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Above order four, it is no longer possible to obtain order s with just s stages.
+For order 5, 6 stages are required and for order 6, 7 stages are required. Above
+this order, there are even sharper increases in the required numbers of stages.
+We give a single example of a fifth order method:
+
+RK5: (236a)
+
+AlN Ai IR ©
+OC NIM ww OD we
+
+[arate Ie op ae
+
+SISlr1e cies oy
+|
+
+SISAIS Sle
+
+SIS|Ni00
+
+©
+é
+ax
+
+237 Implicit Runge-Kutta methods
+
+Implicit methods have the potential advantage, compared with explicit
+methods, that there will be fewer stages for the same order. The disadvantage
+is in the implicit nature of at least some of the stages. This makes it impossible
+to avoid iterative methods of evaluation. For the purpose of experimental
+comparison with explicit methods, we present here just three methods:
+
+1}21 9
+3/3
+1/1 0, (237a)
+3B 24
+4.4
+3-2V2 5-3/3 18 6}
+1 ve Ve (237b)
+| 14/2 3-2
+4 4
+1_ vB i 1_ vB
+27 6 4 4” 6
++S lite ot (2876)
+| 3 5
+
+It can be verified that (237a) has order 3, (237b) has order only 2 and (237c)
+has order 4. In the implicit case, the cost of using a specific method depends,
+not so much on the number of stages, but on the difficulty in evaluating the
+stages. From this point of view, (237a) is the easiest to use because only one
+of the stages is implicit; while (237b) and (237c) each have two interconnected
+implicit stages but, as will see in Subsection 363, the order 2 method (237b)
+can be implemented more cheaply than (237c).

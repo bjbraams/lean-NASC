@@ -1,0 +1,54 @@
+DIFFERENTIAL AND DIFFERENCE EQUATIONS 5
+
+By adjusting the scales of the variables, the factor yM can be removed from
+the formulation, and we arrive at the equations
+
+dy, _
+
+Ge Ue (101a)
+dy2 _
+
+a Yay (101b)
+dys yn
+
+ae = 101
+dz (yf + y3)5/?? (01«)
+dua e (1014)
+
+dx (yp +93)9/?"
+
+The solutions of this system are known to be conic sections, that is ellipses,
+
+parabolas or hyperbolas, if we ignore the possibility that the trajectory is a
+
+straight line directed either towards or away from the sun. We investigate
+
+this further after we have shown that two ‘first integrals’, or invariants, of the
+solution exist.
+
+Theorem 101A The quantities
+1 _
+Ha 5 (v3 tui) — (i +a)”,
+A="ys — yoyss
+are constant.
+Proof. We verify that the values of dH/dx and dA/dzx are zero if y satisfies
+(101a)-(101d). We have
+
+dH dys dys ys _
+= =n tue tn ut +H)? ty 02 2 + 92) ed
+
+y1y3 Yaya + Y1ys + Yous
+“OR +? + ub? © GF +99? * GP +y2)5?
+=0,
+and
+
+dA dy, dy dyz — dya
+
+a YE +t ae dn
+_ Y1y2 yoy
+= "G+ yaar * 8M + @+yee
+=0. Oo
+
+The quantities H and A are the ‘Hamiltonian’ and ‘angular momentum’,
+respectively. Note that H = T+ V, where T = } (y3 +y2) is the kinetic
+energy and V is the potential energy.

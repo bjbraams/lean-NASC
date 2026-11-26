@@ -1,0 +1,45 @@
+226 6. Derivation and Solution of Elliptic Difference Equations
+
+3. Let
+Cy d, ey
+bg c2 dz e2
+a3 b3 c3 dg €3
+
+en-2
+
+dn—1
+Qn bn Ch
+
+Derive an algorithm which generalizes (6.61)-(6.62) for directly solving
+the matrix problem Az = k.
+
+4. Consider the matrix problem A(e)u = k, described in Exer. 2 of Sect.
+6.3. First, partition the matrix A(e) by horizontal mesh lines, and
+let By(e) be the associated block Jacobi matrix. Next, partition the
+matrix A(e) by vertical mesh lines, and let By(e) be the associated
+block Jacobi matrix. Prove that
+
+lim p(Bv(e)) = 1, lim p(Bu(e)) = 0.3.
+
+Thus, the orientation of the mesh lines, used in partitioning the matrix
+A(e), is important for asymptotic rates of convergence.
+
+5. Let A be a Hermitian and positive definite n x n matrix that is parti-
+tioned as in (4.2). Prove that the block Jacobi matrix B of (4.4) has
+real eigenvalues.
+
+6.5 Asymptotic Convergence Rates for the Model
+Problem
+
+Thus far we have derived finite difference approximations to certain partial
+differential equations, and we have compared, at least theoretically, various
+block iterative methods applied to such finite difference approximations. Now,
+we wish to obtain a more definite appraisal of the advantages of such block
+iterative methods, relative to a fixed, simple, but nontrivial problem. To this
+end, consider the numerical solution of the Dirichlet problem,
+
+(6.74) —Ugr —Uyy = 0, O<2,y<1,
+
+for the unit square R with boundary I’, subject to the boundary condition
+
+(6.75) uz,y)=(2,y), (zy) el.

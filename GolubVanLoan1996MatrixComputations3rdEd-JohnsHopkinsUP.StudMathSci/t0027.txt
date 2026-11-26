@@ -1,0 +1,90 @@
+1.3. BLOCK MATRICES AND ALGORITHMS 25
+A to obtain
+Au eae Air my
+A=]: :
+Agi" Age | im,
+ny Ny
+
+where m, +--- +g = Mm, mp +--+, =n, and Agg designates the
+(a, 8) block or submatrix. With this notation, block Ayg has dimension
+Ma by-ng and we say that A = (Aug) is a q-by-r block matrix.
+
+1.3.2 Block Matrix Manipulation
+
+Block matrices combine just like matrices with scalar entries as long as
+* certain dimension requirements are met. For example, if
+
+Bu... Br my
+
+B= |: : ;
+Bu“ Bor | Ma
+ny Ny
+
+then we say that B is partitioned conformadly with the matrix A above.
+The sum C = A+ 2 can also be regarded as a g-by-r block matrix:
+Ci ts Ci Ant By ++) Att Bi
+cal: : |=
+Cu Ce Agt Ba ++: Agr + Bor
+The multiplication of block matrices is a little trickier. We start with a pair
+
+of lemmas.
+
+Lemma 1.3.1 Jf Ae R™*?, Be RP**,
+
+Al ™y
+A= B= [BB] ,
+Ag | ™q mm ne
+then
+Cy... Cir mi
+AB=C= :
+
+where Cog = AgBg for a = l:q and 9 = Lr.
+
+26 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+Proof. First we relate scalar entries in block Cag to scalar entries in C.
+Fori<a<q,1<f8<r,1<i< me, and1<j <ng we have
+
+[Cashi; = Crtiues
+where
+
+A = mete tM
+= mts + nei.
+
+But
+
+Pp P
+Chtiuts = So ange bk nts = Sal [Bal,.; = [Aa Bgl; -
+k=l keel
+
+Thus, Cag = AgBg.0
+
+ry
+
+Lemma 1.3.2 [f A € IR™?, Be IRP*",
+
+A= [ Al,..., As } ,and B= : ;
+Pr Ps B, De
+
+AB = C = SD A,B,.
+
+y=1
+
+Proof. We set s = 2 and leave the general s case to the reader. (See
+P1.3.6.) For 1 <i< mand 1 <j <7 we have
+
+P Pi Pitra
+cy = Soonbes = Soaicbey + So aundes
+kent kal kemtl
+
+{A Bi],, + [Aa Bal, = [Ai By + ApBa],;.
+Thus, C = A,B, + AgBe. 0
+
+For general block matrix multiplication we have the following result:
+Theorem 1.3.3 If
+
+Au... Au mi Bu... Bir PL
+
+A= : : , B= : : :
+Ag “" Ags ™Mg Ba '*” Bey Ps
+Pi Ps ny Mp

@@ -1,0 +1,42 @@
+136 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Table 310(I) Relation between terms in y derivatives and rooted trees
+
+t operator t labelled —_ tensor
+nee diagram erm tree term
+e ef f (y(z)) ej fi
+
+f j -
+l l fy@)) fo) [ fifi
+f’ i
+f f j k
+V V. F(a) (Fy(@)), Fo(2))) V fifi t*
+ft” t
+f k
+
+ef Ff Y@)F'W)fe@) jOGSLEE
+
+f’ i
+
+Definition 310A Given a tree t and a function f : RN > RY, analytic in a
+neighbourhood of y. Then the ‘elementary differential’ F(t)(y) is defined by
+
+F(r)(y) = fy), (310g)
+F ([t1, tay---ytml) = f°" (y)(F (i (y), F(t2)(y)---1F(tm)(y)). — (810h)
+
+Note that the tensor interpretation of (310h) is written as
+FY([tiste,.stm]) = Basjaeosim Ee (HP (te) ++ FP (tm)-
+
+The elementary differentials up to order 5 are shown in Table 310(ID). Note
+that we use the same abbreviation as in Table 310(I), in which f, f’, ... denote
+f(y(z)), f(y(z))’,... . The values of a(é) are also shown; their significance will
+be explained in the next subsection.
+
+As part of the equipment we need to manipulate expressions involving
+elementary differentials we consider the value of
+
+art) .
+hf { wo + 9) 80) F()(wo) J - (310i)
+
+tr Ct)
+As a formal series, this can be evaluated using the result

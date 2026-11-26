@@ -1,0 +1,48 @@
+RUNGE-KUTTA METHODS 191
+
+0
+1 L
+9 8
+L tL iL
+9 18 18
+L os L
+6 24 0 8
+1 1 -i 2
+3 6 0 2 3
+1 15 ~ 83 -i
+2 8 9 8 7 2
+3] _ 93 0 24921 __ 10059 735 735
+4 22 1408 704 1408 704
+17|86547313055 (¢ _ 96707067 15526951598 27949088 _ 452648800 270189568
+19} 10295610642 2867062 571978869 81711267 245133801 467982711
+2 nee: nn | I :  (¢4 © S11
+765 83 1600 75 225 3257600
+188 0 0 1593 2943 197 576 2476099 2
+— 3815 58S 20800 _ 975 2275 __ 29348800 39
+_ 142 0 0 2412 «B49 68 «128130321 2
+1989 7553 1640 195 4095 ~ 1467440 39
+
+334 The methods of Fehiberg
+
+Early attempts to incorporate error estimators into Runge-Kutta methods are
+exemplified by the work of Fehlberg (1968, 1969). In writing the coefficients
+of methods from this paper, a tabular form is used as follows:
+
+c
+
+=) SI =
+
+a
+The significance of this augmented tableau is that
+
+c| A
+ot
+
+is a Runge-Kutta method of order p, while
+
+|
+=|»
+
+is a Runge-Kutta method of order p+1. The additional vector d’ = BT —B7 is
+used for error estimation. The fifth order method, with additional sixth order
+output for error estimation, recommended by Fehlberg, is

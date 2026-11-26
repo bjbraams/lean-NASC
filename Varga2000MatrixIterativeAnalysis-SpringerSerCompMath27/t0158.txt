@@ -1,0 +1,50 @@
+150 5. Semi-Iterative Methods
+
+for any convergent matrix M. Reflecting on what has already been considered
+in previous chapters, it is evident that we have compared and optimized
+iterative methods only with respect to their asymptotic rates of convergence.
+The major aim of this chapter is now to introduce new iterative methods,
+and to make comparisons of various iterative methods with respect to average
+rates of convergence for every m > 0.
+
+Suggested by the classical theory of summability of sequences, we consider
+now a more general iterative procedure defined by (5.1) and
+
+m
+(5.6) y™ := So u;(m)x, m>0,
+
+j=0
+which we call a semi-iterative method with respect to the iterative method
+of (5.1). It is semi-iterative as we iterate first by means of (5.1), and then we
+algebraically combine these vector iterates by means of (5.6). As an example,
+letting
+
+;(m) := 03S, m>0,
+we have that the vectors y‘™) are arithmetic averages of the vectors x) ,0 <
+j <™m, which corresponds precisely to Cesaro (C,1) summability.
+
+Our object here is to prescribe the constants v;(m) of (5.6) in such a way
+that the vectors y‘™ tend rapidly to the unique solution x of (5.2), in some
+precise sense. First, we impose a natural restriction on the constants v;(m)
+of (5.6). If our initial vector approximation x() were equal to the unique
+solution vector x of (5.2), it would follow from (5.4) and (5.3) that x =x
+for all m > 0, and we require in this case that y") = x for all m > 0. Thus,
+
+m
+
+(5.7) Souj(m) =1, m>0.
+=0
+
+Letting
+
+(5.8) e™) : yl x, m>0,
+
+be the error vector associated with the vectors y"™ of (5.6), we have from
+(5.8) and (5.7) that
+
+m m m
+(5.9) a) — So uj (m)x - Sou (m)x = Vy (me,
+j=0 j=0 j=0
+and thus
+m
+(5.10) elm) — So v(m) Me €),

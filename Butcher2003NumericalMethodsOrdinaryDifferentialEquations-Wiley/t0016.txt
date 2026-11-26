@@ -1,0 +1,52 @@
+DIFFERENTIAL AND DIFFERENCE EQUATIONS 3
+
+for specific values of z, usually with z > 9, corresponding to the prediction
+of the future states of a differential equation system.
+
+Note that for an N-dimensional system, the individual components of an
+initial-value vector need to be given specific values. Thus, we might write
+
+yor3lm m -: aN \.
+
+When the problem is formally converted to autonomous form (100c), the value
+of nv+1 must be identical to 29, otherwise the requirement that yn4+1(2x)
+should always equal z would not be satisfied.
+
+For many naturally occurring phenomena, the most appropriate form in
+which to express a differential equation is as a high order system. For example,
+an equation might be of the form
+
+yO =¢ (xu, yy ye yr) , (100e)
+
+with initial values given for y(xo),y’(zo), y"(xo),---,y(°") (ao). Especially
+
+important in the modelling of the motion of physical systems subject to forces
+are equation systems of the form
+
+Vi (z) = filyi,y2,---.¥N),
+
+yo (2) = fo(yr,ye,---,YN)s
+
+: : (1008)
+
+yn (2) = f(y, y2,---.YN)s
+
+where the equations, though second order, do have the advantages of being
+autonomous and without yj,y,--.,yy Occurring amongst the arguments of
+fi, fay... fn.
+
+To write (100e) in what will become our standard first order system form,
+we can introduce additional components yn+41,Yn+2,---, Yon. The differential
+equation (100f) can now be written as the first order system
+
+yi (2) = y+,
+yo(2) = yn42,
+Yn(2) = yen,
+yw4i(2) = fins ye,---,4N), (100g)
+
+yw2(t) = fo(yr,¥2s--..¥N)s
+
+Yon (2) = f(y, y2,---s9N)-
+
+The important class of ‘separable Hamiltonian problems’ for which H =
+T(p) + V(q), where p is a vector of momenta and gq the corresponding vector

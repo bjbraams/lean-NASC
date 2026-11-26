@@ -1,0 +1,50 @@
+170 5. Semi-Iterative Methods
+
+2. By direct computation for (5.69), show that
+
+lim R[Pn(M)] = —In(ws — 1).
+
+m—00
+
+3. From (5.69) and (5.70), verify that ||Pn(M)|| < ||£™|| for all m > 2
+and all 0 < p(M) <1.
+
+4. With the nx n convergent matrix M in the form (5.60), show that the
+Gauss-Seidel iteration matrix £, obtained from the special case w = 1
+in (5.62) is such that
+
+Wer =m (M){1+p?(M)}H?, m>1,
+
+which is a strictly decreasing sequence of positive numbers. [Hint:
+Compute the norms ||L7"|| by using (5.79)].
+
+5. Prove that £2 |I/l Bn (24) II =: Bm is strictly increasing with m and
+that Bm = O(m) as m — oo. Does the ratio Bm/m have a limit as
+m— oo?
+
+6. From (5.71) and (5.72), verify that the norms ||L7,~" - £;|| are strictly
+decreasing with increasing m > 1.
+
+5.4 Cyclic Reduction and Related Iterative Methods
+
+In this section we shall tie together several theoretical observations and results
+which are closely related to the results of the previous sections of this chapter.
+Again, we assume that M is an n x n Hermitian and convergent matrix of
+the weakly cyclic form
+
+O|F
+(5.76) M= 2 a|
+where the diagonal submatrices of M are square and null, but not necessarily
+of the same order. Applying the Gauss-Seidel iterative method to the solution
+of the matrix equation x = Mx + g, the vector iterates of this method are
+defined by
+
+xi™t)
+
+(m)
+= Fx,’ +1,
+(5.77) ent) = et
+
+= Px") 4 gs, m>0,
+
+or equivalently,

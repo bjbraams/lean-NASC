@@ -1,0 +1,30 @@
+LINEAR MULTISTEP METHODS 327
+
+Figure 430(i) Stability region for the second order Adams—Bashforth method
+
+(1 — 28o)yn — (01 + 281) Yn—1 — (a2 + 281) Yn-2 — ++
+—(an + 2Bx)Yn—z = 0,
+and the stability region is the set of points hg in the complex plane for which
+(431a) has only bounded solutions as n — oo. To simplify the discussion, we
+will consider the interior of the stability region so that for z in this set, all
+solutions to (431a) converge to zero as n + 00. We will refer to this interior
+set as the open stability region. Write the difference equation in the form
+
+(431a}
+
+a(E7") — 26(E™) =0,
+and we see that the open stability region can be defined in terms of the relation
+a(w7!) — zB(w7!) = 0. (431b)
+
+That is, z is in the open stability region if there does not exist w outside the
+open unit disc such that the pair (z,w) satisfies (431b). Stated another way,
+this means that w is outside the open unit disc implies that z satisfying (431b)
+is not in the open stability region.
+
+As a starting point in determining the stability region, it is convenient to
+evaluate the points on the boundary of the unit circle and to note that the
+mapping
+
+a(w-1)
+
+oe BQ) (431c)

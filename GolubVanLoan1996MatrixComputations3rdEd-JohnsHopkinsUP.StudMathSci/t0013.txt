@@ -1,0 +1,99 @@
+SELECTED REFERENCES xxv
+
+J. Ortega (1988). Introduction to Parailel and Vector Solution of Linear
+Systems, Plenum Press, New York.
+
+Introduction. Direct Methods for Linear Equations. Iterative Methods for Linear
+Equations.
+
+J. Dongarra, I. Duff, D. Sorensen, and H. van der Vorst (1990). Solving
+
+Linear Systems on Vector and Shared Memory Computers, SLAM Pub-
+lications, Philadelphia, PA.
+Vector and Parallel Processing. Overview of Current High-Performance Comput-
+ers. Implementation Detaile and Overhead. Performance Analysis, Modeling, and
+Measurements. Building Blocksin Linear Algebra. Direct Solution of Sparse Linear
+Systems. Iterative Solution of Sparse Linear Systems.
+
+Y. Robert (1990). The Impact of Vector and Parallel Architectures on the
+Gaussian Elimination Algorithm, Halsted Press, New York.
+Introduction. Vector and Parallel Architectures. Vector Multiprocessor Computing.
+Hypercube Computing. Systolic Computing. Task Graph Scheduling. Analysis of
+Distributed Algorithms. Design Methodologies.
+
+G.H. Golub and J.M. Ortega (1993). Scientific Computing: An Introduc-
+tion with Parallel Computing, Academic Press, Boston.
+The World of Scientific Computing. Linear Algebra. Parallel and Vector Computing.
+Polynomial Approximation. Continuous Problems Solved Discretely. Direct Solu-
+
+tion of Linear Equations. Parallel Direct Methods. Iterative Methods. Conjugate
+Gradient-Type Methods.
+
+Edited Volumes
+
+D.J. Rose and R. A. Willoughby, eds. (1972). Sparse Matrices and Their
+Applications, Plenum Press, New York, 1972
+
+J.R. Bunch and D.J. Rose, eds. (1976). Sparse Matriz Computations,
+Academic Press, New York.
+
+LS. Duff and G.W, Stewart, eds. (1979). Sparse Matrix Proceedings, 1978,
+SIAM Publications, Philadelphia, PA.
+
+LS. Duff, ed. (1981). Sparse Matrices and Their Uses, Academic Press,
+New York.
+
+A. Bjérck, R.J. Plemmons, and H. Schneider, eds. (1981). Large-Scale
+Matriz Problems, North-Holland, New York.
+
+G, Rodrigue, ed. (1982). Parallel Computation, Academic Press, New
+York.
+
+xvi REFERENCES
+
+B. Kagstrém and A. Ruhe, eds. (1983). Matrix Pencils, Proc. Pite Havs-
+bad, 1982, Lecture Notes in Mathematics 973, Springer-Verlag, New
+York and Berlin.
+
+J. Cullum and R.A. Willoughby, eds. (1986). Large Seale Eigenvalue Prob-
+lems, North-Holland, Amsterdam.
+
+A. Wouk, ed. (1986). New Computing Environments: Parallel, Vector, and
+Systolic, SIAM Publications, Philadelphia, PA.
+
+M.T. Heath, ed. (1986). Proceedings of First SIAM Conference on Hyper-
+cube Multiprocessors, SLAM Publications, Philadelphia, PA.
+
+M.T. Heath, ed. (1987). Hypercube Multiprocessors, SLAM Publications,
+Philadelphia, PA.
+
+G. Fox, ed. (1988). The Third Conference on Hypercube Concurrent Com-
+puters and Applications, Vol. I! - Applications, ACM Presa, New York.
+
+M.H. Schultz, ed. (1988). Numerical Algorithms for Modern Parallel Com-
+puter Architectures, IMA Volumes in Mathematics and Its Applications,
+Number 13, Springer-Verlag, Berlin.
+
+E.F. Deprettere, ed. (1988). SVD and Signal Processing. Elsevier, Ams-
+terdam.
+
+B.N. Datta, C.R. Johnson. M.A. Kaashoek, R. Plemmons, and E.D. Son-
+tag, eds. (1988), Linear Algebra in Signals, Systems, and Control, SIAM
+Publications, Philadelphia, PA.
+
+J. Dongarra, I. Duff, P. Gaffney, and S. McKee, eds. (1989), Vector and
+Parallel Computing, Ellis Horwood, Chichester, England.
+
+O. Axelsson, ed. (1989). “Preconditioned Conjugate Gradient Methods,”
+BIT 29:4.
+
+K. Gallivan, M. Heath, E. Ng, J. Ortega, B. Peyton, R. Plemmons, C.
+Romine, A. Sameh, and B. Voigt (1990), Parallel Algorithms for Matrix
+Computations, SIAM Publications, Philadelphia, PA.
+
+G.H. Golub and P. Van Dooren, eds. (1991). Numerical Linear Alge-
+bra, Digital Signal Processing, and Parallel Algorithms. Springer-Verlag,
+Berlin.
+
+R. Vaccaro, ed. (1991). SVD and Signal Processing I: Algorithms, Analy-
+sts, and Applications. Elsevier, Amsterdam.

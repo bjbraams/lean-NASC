@@ -1,0 +1,55 @@
+RUNGE-KUTTA METHODS 143
+
+Lemma 312B Denote the vertex set V of the tree t by the set of index
+symbols V = {j,k,l,...}, where j is the root of t. Let the corresponding edge
+set be E. Form the expression
+
+6) [J ow (312i)
+(KEE
+and sum this over each member of V ranging over the index set {1,2,...,s}.
+The resulting sum is the value of ®(t). A similar formula for ©;(t), where i
+is not a member of V, is found by replacing (312i) by
+
+I ex (312))
+(ke
+and summing this as for ®(t).
+
+Note that, although c does explicitly appear in Definition 312A or Lemma
+312B, it is usually convenient to carry out the summations Yin ai to yield
+a result c, if / denotes a leaf (terminal vertex) of V. This is possible because
+1 occurs only once in (312i) and (312j).
+
+We illustrate the relationship between the trees and the corresponding
+elementary weights in Table 312(I). For each of the four trees, we write ®(t)
+in the form given directly by Lemma 312B, and also with the summation
+over leaves explicitly carried out. Finally, we present in Table 312(II) the
+elementary weights up to order 5.
+
+Table 312(I) Relation between elementary weights and rooted trees
+
+labelled tree ¢ Elementary weight @(t)
+
+s
+Cy > b:
+
+i=1
+
+> bjaig = = > bie;
+
+i,j=1
+
+[
+
+i
+
+j pk
+
+V > bjaijain = ¥ b; Red
+" 4,j,k=1 iS
+
+}
+
+> biaizaj, = > biaage;
+
+a,j,k=L aj=1
+

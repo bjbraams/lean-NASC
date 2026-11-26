@@ -1,0 +1,102 @@
+5.4. OTHER ORTHOGONAL FACTORIZATIONS 251
+
+where the Z; are Householder transformations and Tf, is upper triangular.
+Tt then follows that
+
+T; 0 r
+
+iT = = ul
+
+Qhaz = T = [% 0 | m-r . (5.4.5)
+roaor
+
+where Z = IZ, --- Z,. We refer to any decomposition of this form as a com-
+plete orthogonal decomposition. Note that null(A) = ran(Z(i:n,r + l:n)).
+See P5.2.5 for details about the exploitation of structure in (5.4.4).
+
+5.4.3 Bidiagonalization
+
+Suppose A € R™*" and m > n. We next show how to compute orthogonal
+Ug (m-by-m) and Vg (n-by-n) such that
+
+dy fh 0 wee 0
+0 d fa 0
+
+URAVg = 0: dnt faa | - (5.4.6)
+QO -.- 0 da
+
+0
+
+Ug = U,---U, and Vg = V,--- Vag can each be determined as a product
+of Householder matrices:
+
+x x xX xX x x xX xX
+x x xX Xx gox x x
+x x x x|Btpox xx | w&
+x xX xX x oO x x x
+Lx x x x | pox x x |
+[x x 0 0] [x x 0 O07
+@ x x x o x x x
+oxxx{|%loox x |%
+Ox x x 0oo0oxXx x
+LO x x x | 19 Oo x x |
+x x 0 0 x x 0 0 x x 0 0
+ox x Q Qo xx 0 ox x 0
+oo x x/4%loo0x x«|/%]oox x
+00x x 000 x 0 00x
+0 0%x x 000 x 000 0
+
+252 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+In general, U, introduces zeros into the kth column, while Vy zeros the
+appropriate entries in row k. Overall we have:
+
+Algorithm 5.4.2 (Householder Bidiagonalization} Given A ¢ R™**
+with m > n, the following algorithm overwrites A with UP AVs = B where
+B is upper bidiagonal and Ug = U;---U, and Vg = Y---Va-2. The
+essential part of U;’s Householder vector is stored in A({j + l:m, j) and the
+essential part of V;’s Householder vector is stored in A(j,j + 2:n).
+
+for j =1:n
+{v, 8] = house(A(j:m, j))
+ACi:m, j:n) = (Im—j41 — G00?) A(j:m, j:n)
+A(j + Lim, 9) = (2m - 7 +1)
+ifj<n-2
+lw, A] = house(A(j, j + I:n)*)
+A(j:m, j + bn) = A(j:m, j + Len); — Sov)
+A(j,j + 2:n) = v(2:n - 7)7
+end
+end
+
+This algorithm requires 4mn? — 4n3/3 flops. Such a technique is used in
+Golub and Kahan (1965), where bidiagonalization is first described. If the
+matrices Ug and Vg are explicitly desired, then they can be accumulated
+in 4m?n — 4n3/3 and 4n3/3 flops, respectively. The bidiagonalization of A
+is related to the tridiagonalization of A? A. See §8.2.1.
+
+Example 5.4.2 if Algorithm 5.4.2 is applied to
+
+1203
+
+4 6 6
+A=| 7 8 og |?
+
+10 11 12
+
+then to three significant digits we obtain
+
+ff 28 827 ri oo a0
+B= oO CO Ve =| 0.00 -.667 -.745
+0 0 0 0.00 -.745 587
+Ee: — 833 392 2]
+
+0, -3110 —451 —.238 -802
+p=
+
+069 -T0L  —.457
+—.7760 312 SAT 037
+
+5.4.4 R-Bidiagonalization
+
+A faster method of bidiagonalizing when m °> n results if we upper trian-
+gularize A first before applying Algorithm 5.4.2. In particular, suppose we

@@ -1,0 +1,41 @@
+122 4. Successive Overrelaxation Iterative Methods
+
+It is interesting to consider the result of the above corollary in relation
+to the similar result of the Stein-Rosenberg Theorem 3.8. With the basic as-
+sumption that the Jacobi matrix B of (4.18) is a nonnegative and convergent
+matrix, it follows from statement 2 of Theorem 3.8 that
+
+0 < p(Li) < p(B) <1,
+
+so that Roo(Li1) > Roo(B). Note that the exact ratio value for the asymp-
+totic rates of convergence is not determined. On the other hand, the result of
+(4.27) gives the exact value for this ratio with the basic, but obviously differ-
+ent, assumption that the matrix A of (4.2) is a consistently ordered p-cyclic
+matrix.
+
+It is instructive at this point to reconsider the numerical example of Sect.
+3.1. There, both the point Jacobi and point Gauss-Seidel iterative methods
+were applied to a particular equation Ax = k. As this matrix A is a con-
+sistently ordered 2-cyclic matrix (see Exer. 3 of Sect. 4.1), we conclude the-
+oretically that the asymptotic rate of convergence of the point Gauss-Seidel
+iterative method is twice that of the point Jacobi iterative method. But we
+can observe this numerically from (3.24), where the error vectors for these
+iterative methods are explicitly determined for a specific initial error vector.
+
+Exercises
+1. Let the p x p matrix A, p > 2, be defined by
+
+1,1 41,2 0 -:-:- 0
+0 a2,2 a2,3 0
+
+0 0 0 *. ap-tp
+Qp1 0 O +++ app
+
+where the diagonal entries of A are nonzero. Show that the analogous
+functional equation
+
+(At+w—1)? = Aw? py?
+
+exists between the eigenvalues \ of the associated point successive
+overrelaxation matrix and the eigenvalues yz of the point Jacobi matrix
+derived from A.

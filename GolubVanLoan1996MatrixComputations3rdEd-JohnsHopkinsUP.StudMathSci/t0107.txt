@@ -1,0 +1,95 @@
+4.6. VANDERMONDE SYSTEMS AND THE FFT 185
+
+and observe that po(z) = p(z). Writing
+
+pr(z) = alt) + al’) x eee al*)ze-k
+
+and equating like powers of z in the equation p, = cy + (2 — re) peti gives
+the following recursion for the coefficients aS*),
+
+al” =,
+for k =n—-1;-1:0
+ay” = cy — sayy”
+
+fori =kK+1:n-1
+alt) alt _ aqltt”
+
+end
+al) = att)
+
+end
+Consequently, the coefficients a; = al” can be calculated as follows:
+a(0:n) = c(O:n)
+fork =n-1:-1:0
+for i= k:n—-1 (4.6.4)
+Oy = Ay — TeQi41
+end
+end
+
+Combining this iteration with (4.6.3) renders the following algorithm:
+
+Algorithm 4.6.1 Given z(0:n) € R"*' with distinct entries and f
+f(0:n) € R"*', the following algorithm overwrites f with the solution a
+a(0:n) to the Vandermonde system V(z9,.-.,2n)a = f.
+for k =0:n -1
+for §=n:—1:k+1
+FG) = (£0) — FG - D)/@@) - 2G - & - 1)
+
+end
+
+Hof
+
+end
+for k=n—-1:-1:0
+for i= k:n-1
+F(H) =f) - (4 + I)z(k)
+end
+end
+
+This algorithm requires 5n?/2 flops.
+
+Example 4.6.1 Suppose Algorithm 4.6.1 is used to solve
+
+11 1 1747fa 10
+13 9 27 ag 5a | -
+1 4 16 64 a3 ua
+
+186 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+
+The first k-loop computes the Newton representation of p(x):
+p(z) = 10+ 16(z — 1) + 8(z — 1)(@ — 2) + (z — 1)(z - 2)(z - 3).
+The second k-loop computes a = (432 1]7 from (10 16 8 i]7.
+
+4.6.2 The System Vz = b
+
+Now consider the system Vz = 6. To derive an efficient algorithm for this
+problem, we describe what Algorithm 4.6.1 does in matrix-vector language.
+Define the lower bidiagonal matrix Le(a) € ROTU*G+) by
+
+Ik | 0
+1 0
+-a ol
+Ly(a) =
+1
+0 ~a 1
+
+and the diagonal matrix D; by
+
+Dy = diag(1,...,1,2e41 —Zo,---,2n — Zp—k-1)-
+k+l
+
+With these definitions it is easy to verify from (4.6.3) that if f = f(O:m)
+and c = ¢(0:n) is the vector of divided differences then c = UT f where U
+is the upper triangular matrix defined by
+
+UT = Dz Lq—1(1) +++ Dg La(1).
+Similarly, from (4.6.4) we have
+a=L"e,
+where L is the unit lower triangular matrix defined by:
+LT = Lo(z0)" +++ Ln—-1(Zn-1)"-
+
+Thus, a = LTUT f where V-T = LTUT. In other words, Algorithm 4.6.1
+solves V7 a = f by tacitly computing the “UL” factorization of V~?.
+Consequently, the solution to the system Vz = 6 is given by
+zevobeu (£8)
+= (Eo(1)?Dg* +++ La—a(1)” Dz) (Ln—1(Pa~1) ++ Lo(zo)b)

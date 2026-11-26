@@ -1,0 +1,47 @@
+RUNGE-KUTTA METHODS 283
+
+If the elementary weight function for the method is a, then the method
+corresponding to (a‘-)))-1 exactly undoes the work of the method but
+with h reversed. This means that the asymptotic error expansion for this
+reversed method would correspond to changing the sign of h in (387e). If
+a = (a(-))-}, this would give exactly the same expansion, so that (387e) is
+an even function. It then becomes possible to extend the applicability of the
+method by extrapolation in even powers only.
+
+3888 Some subgroups and quotient groups
+Let H, denote the linear subspace of G defined by
+H, = {a € G: a(t) = 0, whenever r(t) < p}.
+
+If a,8 € G then a = 8 + H, will mean that a — f is a member of Hy. The
+subspace is an ideal of G in the sense of the result
+
+Theorem 388A Let a € Gj, 8 € Gi, y € G and 6 € G be such that
+a=6+ Hy andy=6+ Hy. Then ay = Bb + Hp.
+
+Proof. Two members of G differ by a member of Hy if and only if they take
+identical values for any ¢ such that r(t) < p. For any such ¢, the formula
+for (ay)(¢) involves only values of a(u) and y(u) for r(u) < r(t). Hence,
+
+QO
+
+(ar) @) = (66)()-
+
+An alternative interpretation of Hp is to use instead 1+ H, € G, asa
+subgroup of G,. We have
+
+Theorem 388B Let a, € G then
+a=B+ Hp, (388a)
+if and only if
+a= B(1+ Hp). (388b)
+
+Proof. Both (388a) and (388b) are equivalent to the statement that a(t) =
+B(E) for all ¢ such that r(t) < p. oO
+
+Furthermore,
+Theorem 388C The subgroup 1+ Hy is a normal subgroup of G:.
+
+Proof. Theorem 388B is equally true if (388b) is replaced by a = (1+ Hp).
+Hence, for any 6 € Gi, (1+ Hp)8 = B(1+ Hp). Qo
+
+Quotient groups of the form G,/(1+ H,) can be formed, and we consider
+their significance in the description of numerical methods. Suppose that m and

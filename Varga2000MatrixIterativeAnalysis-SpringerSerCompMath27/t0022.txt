@@ -1,0 +1,44 @@
+14 1. Matrix Properties and Concepts
+
+0, j<i,
+(1.32) d@() = 4 (™,) apt for i<j < min(m,m+i),
+0, mti<j<m,
+
+where
+
+is the familiar binomial coefficient. If A is convergent, then A” — O as
+m — oo. But as (A)™ = SA™S™!, it follows that (A)™ > O as m = oo.
+Consequently, each (J,)” — O as m — oo, so that the diagonal entries \; of
+J, must satisfy |;| <1 for all 1 <1 <r. Clearly,
+
+p(A) = p(A)
+
+max |A;| <1,
+1Sl<r
+
+which proves the first part. On the other hand, if p(A) = p(A) < 1, then
+|Ai| < 1 for all 1 <1 <r. By making direct use of (1.32) and the fact that
+|Ai| < 1, it follow that
+
+lim a™ (1) = 0, foralll <i,j<m,
+
+m—00
+
+so that each J; is convergent. Thus, from (1.31), A is also convergent, and
+finally, as A™ = S~1(A)™S, we have that the matrix A is convergent, com-
+pleting the proof. Hi
+
+If A is an n x n convergent matrix, we thus far know only that ||A™|| > 0
+as m — oo. More precise results on the behavior of ||A™|| as a function of m
+will be obtained in Sect. 3.2.
+
+Exercises
+
+1. If x is any column vector in ©” with complex components
+21,22,+**, Zn, let
+
+n
+[ol = Yo esl and [belo += max lo
+
+Show that the results (1.19) of Theorem 1.2 are satisfied for these
+definitions of ||x||.

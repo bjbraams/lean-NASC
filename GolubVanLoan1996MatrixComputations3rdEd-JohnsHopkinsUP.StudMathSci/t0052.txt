@@ -1,0 +1,106 @@
+2.6. PROJECTIONS AND THE CS DECOMPOSITION rt)
+
+G.H. Golub, A. Hoffman, and G.W. Stewart (1988). “A Generalization of the Eckart-
+Young-Mirsky Approximation Theorem.” Lin. Alg. and fts Applic. 88/89, 317-328.
+
+G.A. Watson (1988). “The Smallest Perturbation of a Submatrix which Lowers the Rank
+of the Matrix,” IMA J. Numer. Anal. 8, 295-304.
+
+2.6 Projections and the CS Decomposition
+
+If the object of a computation is to compute a matrix or a vector, then
+norms are useful for assessing the accuracy of the answer or for measuring
+progress during an iteration. If the object of a computation is to compute
+a subspace, then to make similar comments we need to be able to quantify
+the distance between two subspaces. Orthogonal projections are critical in
+this regard. After the elementary concepts are established we discuss the
+CS decomposition. This is an SVD-like decomposition that is handy when
+having to compare a pair of subspaces. We begin with the notion of an
+orthogonal projection.
+
+2.6.1 Orthogonal Projections
+
+Let SC IR" be a subspace. P € R"™" is the orthogonal projection onto
+S if ran(P) = S, P? = P, and P™ = P. From this definition it is easy to
+show that if z € RR", then Pz € S and (I - P)ze S+.
+
+If P, and P2 are each orthogonal projections, then for any z € R”® we
+have
+
+(Pi - Pez iB = (Piz)? (2 — Pade + (Paz)? (1 - Pye.
+
+If ran(P,) = ran(P,) = S, then the right-hand side of this expression is
+zero showing that the orthogonal projection for a subspace is unique. If the
+columns of V = [v1,..., 1% ] are an orthonormal basis for a subspace S, then
+it is easy to show that P = VV7 is the unique orthogonal projection onto
+S. Note that if vy € IR”, then P = vv7/v7p is the orthogonal projection
+onto S = span{v}.
+
+2.6.2 SVD-Related Projections
+
+There are several important orthogonal projections associated with the sin-
+gular value decomposition. Suppose A = ULV? € R™™” is the SVD of A
+and that r = rank(A). If we have the U and V partitionings
+
+U=(U &1 Veal% I
+rom-r ron-r
+then
+VV? = projection on to null(A)> = ran(AT)
+V,V, = projection on to null(A)
+U,UT = projection on to ran(A)
+0,07 = projection on to ran(A)* = null(A?)
+
+76 CHAPTER 2. MATRIX ANALYSIS
+
+2.6.3 Distance Between Subspaces
+
+The one-to-one correspondence between subspaces and orthogonal projec-
+tions enables us to devise a notion of distance between subspaces. Suppose
+S; and 52 are subspaces of R” and that dim(S;) = dim(5z). We define the
+distance between these two spaces by
+
+dist(S,,52) = i] Pi — Pe jlo (2.6.1)
+
+where P; is the orthogonal projection onto S;. The distance between a
+pair of subspaces can be characterized in terms of the blocks of a certain
+orthogonal matrix.
+
+Theorem 2.6.1 Suppose
+
+w=(W Ww] Z=(%2% 2 |
+ko oak ko on-k
+
+are n-by-n orthogonal matrices. If S, = ran(W1) and Sq = ran(Z,), then
+dist(S,,5o) = || WPZa la = || 27 Wa lle.
+Proof.
+dist(5;, 52)
+
+tt
+
+| WiW? - 2.27 |p = |WT(WiWT - 227)2 Il,
+
+0 Wi2,
+-W7Z, 0
+
+2
+Note that the matrices WZ, , and Wi 2, are submatrices of the orthogonal
+matrix
+_[ Qu Q2)_ [WPA WZ] _ ar
+@= Qn Qu | =| wiz wrz, |=""2
+Our goal is to show that |] Qa ll, = [| Qi2 ll, Since Q is orthogonal it
+
+follows from
+g{ 7] =| Wz
+0 Quz
+
+L=1Qu2 lt + Naz 3
+for all unit 2-norm x ¢ R*. Thus,
+
+that
+
+Qa Il?
+
+max fQuziz=1- min | Quai?
+Wz fom If = ffoma
+
+1 - @min(Qii)*.

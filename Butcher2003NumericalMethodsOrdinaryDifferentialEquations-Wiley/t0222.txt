@@ -1,0 +1,51 @@
+210 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Lobatto IIIB: s=3, p=4,
+1 1
+6 6
+rt ooL
+6 3
+1 8
+6 6
+1 2
+6 3
+Lobatto TIC: s=3, p=4,
+1 1 1
+O)¢ 3 G
+af. 5 La
+2/6 i 12
+i]/i 2 1
+6 3 6
+L 2 L
+6 3 6
+Lobatto I: s=4, p=6,
+0 0 0 0 0
+5-Vv5 | 548 1 15-7¥5
+10 60 6 60
+b+V¥5 | 5-v5 154-75 1 0
+10 60 60 6
+1 1 5-5 5tV5 4g
+6 i2 i2
+i a 5 oa
+12 12 12 12
+Lobatto IIIA: s=4, p=6,
+0 0 0 0 0
+5=V5 | Ut+¥s = 25-VE 25-135 14-5
+10 120 T20 120 120
+B4+YB | 11-Y5 25413V5 02+ YB 1-5
+rT) 120 120 120 120
+1 1 5 5 1
+i2 12 12 i2
+— Ey Es 1
+i2 12 12 12
+Lobatto IIIB: s=4, p=6,
+0 a =lnv5 =1tvE gy
+12 34 24
+s-V5 | 1 25+V¥5 25-13V5 gg
+To | 13 120 120
+Btv8 | 1 25413V8  25-VB gg
+to | 12 120 T20
+1 1 1-¥5 Ntvs
+i2 120 120
+| i a a i
+12 12 12 12

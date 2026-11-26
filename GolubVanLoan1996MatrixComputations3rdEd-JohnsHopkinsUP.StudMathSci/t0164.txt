@@ -1,0 +1,87 @@
+6.2. MATRIX MULTIPLICATION 297
+
+Ayy Ba | Ais Ba} An Bis
+
+Buj - Bai: Bz t=1
+
+Bul - Bat - Bss
+
+As By | 4un Byjana Bs
+
+Br] - Bal - Bs t=2
+
+Buj - Bsa]: Bis
+
+An Bi | Aiz Boo} ais Bas
+
+Bu| - Bsa| - Bis t=3
+
+Ba | - Biz} - Bas
+
+Thus, if B is mapped onto the torus in a “staggered start” fashion, we can
+arrange for the first row of processors to compute the first row of C.
+
+If we stagger the second and third rows of A in a similar fashion, then
+we can arrange for all nine processors to perform a multiply-add at each
+step. In particular, if we set
+
+Au Buf 42 Ba] Ais Bas
+
+Ag By | Az Bs2| An Bis
+
+As3 Bs, | Ast Bin | Asa Bas
+
+then with westward flow of the A,; and northward flow of the B;; we obtain
+
+Aig Ba | Ais Bsa | Au Bas
+
+Any Bs, | An Baz | Azz Bas t=1
+
+Az, Bi | Asa Ba | Ass Bas
+
+298 CHAPTER 6. PARALLEL MATRIX COMPUTATIONS
+
+Ais Ba} Aun Bal An Bas
+
+Aa Br | Aza Baa | Ava Bas t=2
+
+Asz By | Ax Ba | An Bis
+
+An By | Az Ba | Ais Bss
+
+An Bu | Av Baz | An Bas t=3
+
+As3 Bg, | Asi Biz | Asa Bag
+
+From this example we are ready to specify the general algorithm. We
+assume that at the start, Proc(i, j) houses A,;, Bj;, and C,;. To obtain the
+necessary staggering of the A data, we note that in processor row i the Aj;
+should be circulated westward i — 1 positions. Likewise, in the jth column
+of processors, the B,; should be circulated northward j — 1 positions. This
+gives the following algorithm:
+
+Algorithm 6.2.2 Suppose A € R™™", B e R"**, and C € R™*" are given
+and that D = C + AB. If each processor in a p,-by-p, torus executes
+the following algorithm and n = pir, then upon completion Proc(y, A)
+houses Dy, in local variable Cioc. Assume the following local memory
+initializations: pi, (4,4) (the node id), north, east, south, and west, (the
+four neighbor id's), row = 1 + (ua - ljripr, col = 14+ (A I)rtAr, Alor =
+A(row, col), Bioc = B(row, col), and Coe = C(row, col).
+
+{Stagger the A,,; and Bj. }
+fork=1ly-1
+send (Atoc, west); recv(Aise, east)
+
+end
+for K=1:A-1
+send({Bige, north); recv(Bioe, south)
+end
+for k = 1:71
+
+Cioe = Croc + Atoc Boe
+send (Ajoc, west)
+send(Bige, north)
+Fecv(Ajoc, east)
+recv( Bice, south)
+
+end

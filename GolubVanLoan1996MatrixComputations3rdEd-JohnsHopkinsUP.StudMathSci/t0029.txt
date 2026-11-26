@@ -1,0 +1,93 @@
+1.3. BLOCK MATRICES AND ALGORITHMS 29
+last =0
+for j =L:r
+first = last +1
+last = first + n.vec{j) —1 (1.3.2)
+y= Al:, firstlast)z(first:last) + y
+end
+
+Again, the gaxpy’s performed each time through the loop can be carried
+out with Algorithm 1.1.3 or 1.1.4.
+
+1.3.5 Block Matrix Multiplication
+
+Just as ordinary, scalar-level matrix multiplication can be arranged in sev-
+eral possible ways, so can the multiplication of block matrices. Different
+blockings for A, B, and C' can set the stage for block versions of the dot
+product, saxpy,-and outer product algorithms of §1.1. To illustrate this
+with a minimum of subscript clutter, we assume that these three matrices
+are all n-by-n and that n = Né@ where N and @ are positive integers.
+
+If 4 = (Aag), B = (Bag), and C = (Cag) are N-by-N block matrices
+with é-by-é blocks, then from Theorem 1.3.3
+
+N
+Cap = Do AayBya + Cap = = LN, B=LN.
+yat
+If we organize a matrix multiplication procedure around this summation,
+then we obtain a block analog of Algorithm 1.1.5:
+
+for a =1:N
+t=(a—- 10+ liaé
+for 6 =1:N
+j=(8-1)é4+ 1:88 (1.3.3)
+for y =1:N
+k=(y-De+ lve
+Cli, 3) = AG, )B(R, 3) + CG,3)
+end
+end
+end
+
+Note that if @= 1, then a =i, 8 = j, and y = & and we revert to Algorithm
+1.1.5.
+To obtain a block saxpy matrix multiply, we write C = AB + C as
+Bu Bin
+[Ci....,Ov J=[Ai,..., Am ] +[ Cry... Cw
+
+Bur +++ Buy
+where Aa, Ca € R"™4, and Bag € IR“. From this we obtain
+
+30 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+for B=1:N
+j= (8-104 1:68
+for a =1:N
+i= (a—1é+ lad (1.3.4)
+CO, 7) = AG BGI) + CO, 9)
+end
+end
+
+This is the block version of Algorithm 1.1.7.
+A block outer product scheme results if we work with the blockings
+
+BT
+A=(A,...,4y] B=]:
+By
+
+where Ay, B, €3R"**, From Lemma 1.3.2 we have
+
+N
+C = A,BT +
+y=1
+and so
+for 7 = 1:N
+k= (y~-1)l + lye
+C= AC: k)B(k,:)+C (1.3.5)
+end
+
+This is the block version of Algorithm 1.1.8.
+
+1.3.6 Complex Matrix Multiplication
+Consider the complex matrix multiplication update
+
+Cy +iCy = (Ar + 44A2)(Bi + iBo) + (Cy + iC)
+
+where all the matrices are real and i? = —1, Comparing the real and
+imaginary parts we find
+
+CG, = AB, ~ AeBe + Ci
+Co = Ai Bot AgBy+Co
+
+and this can be expressed as follows:
+
+[a]-[4 “#][e]+[8]-

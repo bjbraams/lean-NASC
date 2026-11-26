@@ -1,0 +1,40 @@
+Richard S. Varga
+
+Institute of Computational Mathematics
+Kent State University
+
+Kent, OH 44242, USA
+varga@math.kent.edu
+
+ISSN 0179-3632
+
+ISBN 978-3-540-66321-8 (hardcover) e-ISBN 978-3-642-05156-2
+ISBN 978-3-642-05154-8 (softcover)
+
+DOI 10.1007/978-3-642-05156-2
+
+Springer Heidelberg Dordrecht London New York
+
+Library of Congress Control Number: 2009942152
+
+Mathematics Subject Classification (1991): 15A60, 15A48, 15A06, 41A21, 41A20, 41A10,
+65F1i0 39A10
+
+© Springer-Verlag Berlin Heidelberg 2000, First softcover printing 2009
+
+This work is subject to copyright. All rights are reserved, whether the whole or part of the
+material is concerned, specifically the rights of translation, reprinting, reuse of illustrations,
+recitation, broadcasting, reproduction on microfilm or in any other way, and storage in data
+banks. Duplication of this publication or parts thereof is permitted only under the provisions
+of the German Copyright Law of September 9, 1965, in its current version, and permission
+for use must always be obtained from Springer. Violations are liable to prosecution under the
+German Copyright Law.
+
+The use of general descriptive names, registered names, trademarks, etc. in this publication
+does not imply, even in the absence of a specific statement, that such names are exempt from
+the relevant protective laws and regulations and therefore free for general use.
+
+Cover design: SPi Publisher Services
+Printed on acid-free paper
+
+Springer is part of Springer Science+Business Media (www.springer.com)

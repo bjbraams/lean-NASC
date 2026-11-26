@@ -1,0 +1,106 @@
+2.1. Basic IDEAS FROM LINEAR ALGEBRA 51
+
+Here, Ajj is an (n — 1)-by-(n — 1) matrix obtained by deleting the first row
+and jth column of A. Useful properties of the determinant include
+
+det(AB) = det(A)det(B)  A,BeR™"
+det(AT) = det(A) AeR™
+det(cA) = o*det(A) cé€RAcR™
+det(A) 40 « Aisnonsingular Ae R™*"
+
+2.1.5 Differentiation
+
+Suppose a is a scalar and that A(q) is an m-by-n matrix with entries a;;(c).
+If a,;(q) is a differentiable function of a for all i and j, then by A(a) we
+mean the matrix
+
+Ata) = $-Ala) = (Feas(a)) = (Bula).
+
+The differentiation of a parameterized matrix turns out to be a handy way
+to examine the sensitivity of various matrix problems.
+
+Problems
+
+P2.1.1 Show that if Ac R™*%* has rank p, then there exists an X € R™*? and a
+Y € R®”? such that A = XY7, where rank(X) = rank(Y) = p.
+
+P2.1.2 Suppose A(a) € R"*" and B(ax) € R*" are matrices whoee entries are differ-
+entiable functions of the scalar a. Show
+
+EiMa) 810] = [Aca)] Bla) + ata) [F(a] .
+
+P2.1,3 Suppose A(a) € R"*” haa entries that are differentiable functions of the scalar
+a. Assuming A(a) is always nonsingular, show
+
+= [Ato] = - Aca [£ A¢ay] Aco).
+
+P2.1.4 Suppose A € FO*", b€ R® and that ¢(z) = }2z7 Az ~ 27d. Show that the
+gradient of ¢ ia given by Ve{x) = 1(AT + A)z — 0.
+
+P2.1.5 Assume that both A and A+ue7 are nonsingular where A € R°** and u,v €
+Show that if z solves (A + uo} = 6, then it alao solves a perturbed right hand side
+Problem of the form Az = 6+ as. Give an expression for a in terms of A, u, and v.
+
+Notes and References for Sec. 2.1
+
+There are many introductory lineer algebra texts. Among them, the following are per-
+ticularly usefui:
+
+P.R. Halmos (1958). Finite Dimensional Vector Spaces, 2nd ed., Van Nostrand-Reinhold,
+Princeton.
+
+52 CHAPTER 2. MATRIX ANALYSIS
+
+S.J. Leon (1980). Linear Algebra with Applications. Macmillan, New York.
+G. read (1993). Introduction to Linear Algebra, Wellesiey-Cambridge Preas, Wellesley
+
+D iw "(1994). Linear Algebra and Its Applications, Addison-Wesley, Reading, MA.
+C. Meyer (1997). A Course in Applied Linear Algebra, SLAM Publications, Philadelphia,
+PA.
+
+More advanced treatments include Gantmacher (1959), Horn and Johneon (1985, 1991},
+and
+
+AS. Housebolder (1964). The Theory of Matrices in Numerical Analysts, Ginn (Blais-
+dell), Boston.
+
+M. Marcus and H. Mine (1964). A Survey of Matriz Theory and Matriz Inequalities,
+Allyn and Bacon, Boston.
+
+JN, Franklin (1968). Matrix Theory Prentice Hall, Englewood Cliffs, NJ.
+
+R Bellman (1970). introduction to Matrix Analysis, Second Edition, McGraw-Hill, New
+York.
+
+P. Lancaster and M. Tismenetsky (1985). The Theory of Matrices, Second Edition,
+Academic Press, New York.
+
+J.M. Ortega (1987). Matriz Theory: A Second Course, Plenum Press, New York.
+
+2.2 Vector Norms
+
+Norms serve the same purpose on vector spaces that absolute value does
+on the real line: they furnish a measure of distance. More precisely, IR™
+together with a norm on R" defines a metric space. Therefore, we have the
+familiar notions of neighborhood, open sets, convergence, and continuity
+when working with vectors and vector-valued functions.
+
+2.2.1 Definitions
+
+A vector nerm on RR" is a function f:R" — R that satisfies the following
+properties:
+
+f(z) 20 : zeR, (f(z) =0 iff z=0)
+f(a+y) < f(z)+ fy) aye R"
+Faz) = lalf(x) aéRreR"
+
+We denote such a function with a double bar notation: sion: £(2) = = |{a |]. Sub-
+acripts on the double bar are used to distinguish between various norms.
+A useful class of vector norms are the p-norms defined by
+
+Well, = (lt? +-+-+lenlP)? = p2d. (2.2.1)
+Of these the 1, 2, and oo norms are the most important:
+Wet, = leal+---+{eal
+
+zl2 = (li? +---+|eql)? = (7z)}
+Wl = mex xi]

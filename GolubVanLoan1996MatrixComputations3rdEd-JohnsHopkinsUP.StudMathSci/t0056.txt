@@ -1,0 +1,114 @@
+2.7. THE SENSITIVITY OF SQUARE SYSTEMS 8&3
+
+it is a little unsatisfying because it is contingent on ¢ being “small enough”
+and because it sheds no light on the size of the O(e*) term. In this and the
+next subsection we develop some additional Az = 6 perturbation theorems
+that are completely rigorous.
+
+We first establish a useful lemma that indicates in terms of x(A) when
+we can expect a perturbed system to be nonsingular.
+
+Lemma 2.7.1 Suppose
+Ax
+
+5 AER™", 04bER”
+
+(A+ AA)y
+
+with || MA [| < || Alf and |] Abl| < ej] bi], ex(A) =r <1, then A+ AA
+is nonsingular and
+
+b+Ab AAER™", Abe R*
+
+fall | ltr
+Te Sor
+
+Proof. Since |} AT'AA|| << € || A7? || | All| = 7 < 1 it follows from
+
+Theorem 2.3.4 that (4 + AA) is nonsingular. Using Lemma 2.3.3 and the
+equality (J + A™1AA)y = 2 + A~*Ab we find
+
+lvl <¢ [(@+AtAAl | (zl +ef at ! ea)
+
+rar (letrrai)
+
+(heh+ri/zi).0
+
+s a lle te am Heh) =
+
+Since {| {| = || Ar} < Alle it follows that
+
+lvls
+
+We are now set to establish a rigorous Az = 6 perturbation bound.
+Theorem 2.7.2 If the conditions of Lemma 2.7.1 hold, then
+ly-zh . 2
+
+< nA 2.7.10
+fet $i") (27:10)
+Proof. Since
+y-x = A-'Ab — A“'AAy (2.7.11)
+we have |}y—2l| $ el] A7?H OH + eA? All yl and 90
+lly-=ll < en(ay—lell__ Holl en(Aye
+
+Ie HAlzl Iz
+
+ex(A) ( + : =) = inlA). a
+
+1A
+
+84 CHAPTER 2. MATRIX ANALYSIS
+
+Example 3.7.1 The Az =} problem
+
+0 id _ i
+1o-¢ “| 10-8
+has solution x = (1, 1)7 and condition eta) = 105, If Ab= (107%, 0)7, AA =0,
+and (A+ AA)y =b-+ Ab, then y = (141078, 1)7 and the inequality (2.7.10) says
+- 2 ylles IL 46 too
+10-8 = Ee 1
+12 [loo 2 loo
+Thus, the upper bound in (2.7.10) can be 5 grons overestimate of the error induced by the
+perturbation. On the other hand, if Ab = (0, 10-*)T, AA = 0, and (A+AA)y = b+Ab,
+then this inequality says
+hs S2x 1075108,
+Thus, there are perturbations for which the bound in (2.7.10) is essentially attained.
+
+Keo(A) = 1078108 = 1.
+
+2.7.5 Some Rigorous Componentwise Bounds
+
+We conclude this section by showing that a more refined perturbation the-
+ory is possible if componentwise perturbation bounds are in effect and if
+we make use of the absolute value notation.
+
+Theorem 2.7.3 Suppose
+Az
+
+b AéeR™", 04teR"
+
+(A+ AA)y b+ Ab AAER™", Abe R®
+
+and that [AA] < €[A| and |Adt < ¢lb|. If be(A) =r <1, then (A+ AA)
+is nonsingular and
+
+lly —= lleo 26 “1
+rare HAHA
+
+Proof. Since |} AA |loo < elf A lloo and |] Ad [loo < €lf } loo the conditions of
+Lemma 2.7.1 are satisfied in the infinity norm. This implies that A+ AA
+is nonsingular and
+
+Hvlleo . ltr
+
+Wz loo ~ 1-r"
+Now using (2.7.11) we find
+
+Iy—2{ < AT Ad] + [A™*IAAT Ty
+
+S ATH] + lA HAL lyl < «1471 1Al (le} + iy) -
+
+If we take norms, then
+
+- 1+
+¥~-lloo < elf |A7*| [Al lloo (eer its to) .

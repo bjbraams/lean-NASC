@@ -1,0 +1,74 @@
+340 References
+
+Crank, J. and Nicolson, P. (1947) A practical method for numerical evaluation
+of solutions of partial differential equations of the heat-conduction type, Proc.
+Cambridge Philos Soc. 43, 50-67. [289, 310]
+
+Csordas, George and Varga, Richard S. (1984) Comparisons of regular splittings of
+matrices, Numer. Math. 44, 23-35. /99, 108]
+
+Cuthill, Elizabeth H. and Varga, Richard S. (1959) A method of normalized block
+iteration, J. Assoc. Comput. Mach. 6, 236-244. /224, 233]
+
+Dancis, J. (1991) The optimal w is not best for the SOR iteration method, Linear
+Algebra Appl. 154-156, 819-845. / 178]
+
+Debreu, G. and Herstein, I. N. (1953) Non-negative square matrices, Econometrica,
+21, 597-607. /18, 59]
+
+Desplanques, J. (1887) Théoréme d’algébre, J. de Math. Spec. 9, 12-13. [29]
+
+Douglas, Jim, Jr. (1956) On the relation between stability and convergence in the
+numerical solution of linear parabolic and hyperbolic differential equations, J.
+Soc. Indust. Appl. Math. 4, 20-37. [311]
+
+Douglas, Jim, Jr. (1957) A note on the alternating direction implicit method for
+the numerical solution of heat flow problems, Proc. Amer. Math. Soc. 8, 408-412.
+[272, 273]
+
+Douglas, Jim, Jr. (1959) The effect of round-off error in the numerical solution of
+the heat equation, J. Assoc. Comput. Mach. 6, 48-58. / 233]
+
+Douglas, Jim, Jr. (1961a) Alternating direction iteration for mildly nonlinear elliptic
+difference equations, Numer. Math. 3, 92-98. [274] .
+
+Douglas, Jim, Jr. (1961b) A survey of numerical methods for parabolic differential
+equations, Advances in Computers, Vol. 2, edited by F. L. Alt, Academic Press,
+New York, 1-54. /278, 909, 910, 911]
+
+Douglas, Jim, Jr. (1962) Alternating direction methods for three space variables,
+Numer. Math. 4, 41-63. /268, 269, 274]
+
+Douglas, C. C., Malhotra, S. and Schultz, M. H. (1999) “Transpose free” alternat-
+ing direction smoothers for serial and parallel multigrid methods. Advances in
+Computational Mathematics, 39-52, Lecture Notes in Pure and Appl. Math. 202,
+Dekker, New York. /263/]
+
+Douglas, Jim, Jr. and Rachford, H. H., Jr. (1956) On the numerical solution of heat
+conduction problems in two or three space variables, Trans. Amer. Math. Soc.
+82, 421-439. [295, 264, 272, 274, 912]
+
+Downing, A. C., Jr. (1960) On the convergence of steady state multiregion diffusion
+calculations, Report ORNL-2961, Oak Ridge National Laboratory, Oak Ridge,
+TN 137 pp. [233]
+
+DuFort, E. C. and Frankel, S. P. (1953) Stability conditions in the numerical treat-
+ment of parabolic differential equations, Math. Tables Aids Comput. 7, 135-152.
+[811]
+
+Dunford, N. and Schwartz, J. T. (1958) Linear Operators, Part I, Interscience Pub.,
+Inc., New York, 858 pp. /104/
+
+Egervary, E. (1954) On a lemma of Stieltjes on matrices, Acta Sci. Math. Szeged.
+15, 99-103. [107]
+
+Egervary, E. (1960) Uber eine Methode zur numerischen Lésung der Poissonschen
+Differenzengleichung fiir beliebige Gebiete, Acta. Math. Acad. Sci. Hungar. 11,
+341-361. /222, 233]
+
+Eiermann, M. and Varga, R. S. (1993a) Is the optimal w best for the SOR iterative
+method?, Linear Algebra Appl. 183, 257-277. [175, 176, 178, 179]
+
+Eiermann, M. and Varga, R. S. (1993b) Optimal semi-iterative methods applied to
+SOR in the mixed case, Numerical Linear Algebra (L. Reichel, A. Ruttan, and
+R. S. Varga, eds.), Walter de Gruyter, New York, 47-73. [179]

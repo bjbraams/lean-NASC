@@ -1,0 +1,44 @@
+RUNGE-KUTTA METHODS 203
+
+Subtract (343c) from (343b) so that the stage values are written in terms of
+the result found at the end of the step. Also rearrange (343c) so that it gives
+Yn-1 in terms of y,. Thus, the result that works in the reverse direction is
+given by the equations
+
+Ye ya tS (04) — 8))400)), i=1,2...,8,
+
+j=l
+
+Yn-1 =v ADOC —;) f(¥j).
+
+This reversed method has tablean
+
+€1 — Yyj1 bj | a1 — br aig — be +++ 1s — by
+C2 — Djni bj | @21 — b1 22 — ba +++ ag — ds
+Cs — Yojnr bj | Ger — 61 Gen — ba +++ Aes — be
+—b —bp + bg
+Reverse the signs and we have the tableau for the reflection of (343a)
+Dyer bj —e1 | bran bp - ag +++ bg Os
+Djnr Oj — 2 | br — 21 by - 22 +++ be — Os
+Dja1 bj — ce | bi — 0512 — eg +++ Dg — Gos
+by be us bs
+
+It is easy to verify the following result, which we present without proof.
+
+Theorem 343A The reflection of the reflection of a Runge-Kutta method is
+the original method.
+
+If a method satisfies some of the simplifying assumptions introduced in
+Subsection 321, then we consider the possibility that the reflection of the
+method satisfies corresponding conditions. To enable us to express these
+connections conveniently, we write B(n), C(n), D(n) and E(n, ¢) to represent
+Bin), C(n), D(n) and E(n,¢), respectively, but in reference to the reflected
+method. We then have
+
+Theorem 343B [f 1 and ¢ are positive integers then
+
+Bln) > Bin), (343d)
+Bin) AC(n) > C(n), (343e)
+B(n) A D(n) > Diy), (3431)
+
+Bn + OQ) A E(n,0) > E(n, 6). (343g)

@@ -1,0 +1,47 @@
+RUNGE-KUTTA METHODS 199
+
+k <n-—1. Hence, (342f) follows except for the value of the P*_. coefficient,
+which is resolved by substituting z = 1. The final result (342g) is proved by
+supposing, on the contrary, that P*(r) = Q(x)R(x), where the polynomial
+factors Q and R have degrees m < n and n — m, respectively, and where R
+has no zeros in (0,1). We now find that Se Pyr(«)Q(x)dz = 0, even though
+the integrand is not zero and has a constant sign. oO
+
+In preparation for constructing a Runge-Kutta method based on the zeros
+G,t=1,2,...,8 of P*, we look at the associated quadrature formula.
+
+Lemma 342B Let c1, c2, ..., denote the zeros of P3. Then there exist
+positive numbers by, bo, ..., bs such that
+1 8
+[ de = 1.006), (42h)
+9 i=1
+
+for any polynomial of degree less than 2s. The b; are unique.
+
+Proof. Choose b;, i = 1,2,...,8 so that (342h) holds for any ¢ of degree less
+than s. Because the c; are distinct the choice of the }; is unique. To prove
+that (342h) holds for degree up to 2s — 1, write
+
+$(2) = P3(2)Q(a) + Re),
+
+where the quotient Q and the remainder R have degrees not exceeding s — 1.
+We now have
+
+1 1 1 8 8
+[ $(x)dx = [ P3(@)Q(a)de + [ Rla)de = 0+ 97 Re) = Yo bole).
+
+To prove the b; are positive, let d(x) denote the square of the polynomial
+formed by dividing P*(x) by x — ¢;. Substitute into (342h), and the result
+follows. QO
+
+We note that the choice of the c; as the zeros of P is the only one possible
+for (342h) to hold for ¢ of degree as high as 2s — 1. If this were not the case,
+let
+
+8
+i=1
+and substitute ¢(z) = S(x)Q(z) for any polynomial @ of degree less than s.
+It is found that S is orthogonal to all polynomials of lower degree and hence,
+apart from a scale factor, is identical with P;.
+We now consider the possibility of constructing an s stage implicit Runge—-
+Kutta method with order 2s. If such a method existed, then the values of the

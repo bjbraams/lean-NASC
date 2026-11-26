@@ -1,0 +1,54 @@
+1.5 Diagonally Dominant Matrices 23
+
+for all 1 <i <n. Ann xn matrix A is strictly diagonally dominant if
+strict inequality in (1.44) is valid for all 1 < i < n. Similarly, A is irreducibly
+diagonally dominant? if A is irreducible and diagonally dominant, with
+strict inequality holding in (1.44) for at least one i.
+
+Theorem 1.21. Let A = [a;,;] be ann x n strictly or irreducibly diagonally
+dominant complex matriz. Then, the matrix A is nonsingular. If all the diag-
+onal entries of A are in addition positive real numbers, then the eigenvalues
+
+Ax of A satisfy
+
+(1.45) Rey >0, 1<i<n.
+
+Proof. We shall consider only the case when the matrix A is strictly diago-
+nally dominant, since the proof for the case when A is irreducibly diagonally
+dominant is similar. With A strictly diagonally dominant, the union of the
+disks |z — a;,;| < A; does not include the origin z = 0 of the complex plane,
+and thus from Theorem 1.11, A = 0 is not an eigenvalue of A, proving that
+A is nonsingular. If the diagonal entries of the matrix A are all positive real
+numbers, it is clear that the union of the disks |z — a,,;| < A; in this case
+contains only points in the complex plane having their real parts positive,
+which gives (1.45). i
+
+Since a Hermitian matrix has real eigenvalues, we have as, an immediate
+consequence of Theorem 1.21, the result of
+
+Corollary 1.22. If A = [a;,;] is a Hermitian n x n strictly diagonally dom-
+inant or irreducibly diagonally dominant matrix with positive real diagonal
+entries, then A is positive definite.
+
+Exercises
+
+1. Complete the proof of Theorem 1.21 for the case where the n x n
+matrix A is irreducibly diagonally dominant.
+
+2. Given the matrix
+
+3-% 0
+= 1 1
+A=|-2 1-9),
+
+0-3} 1
+
+what are the strongest results you can state, using the results of the
+last two sections, about
+
+a) all the eigenvalues of A,
+b) the spectral radius of A,
+c) the spectral norm of A, using the results of the last two sections?
+
+° Note that a matrix can be irreducible and diagonally dominant without being.
+irreducibly diagonally dominant.

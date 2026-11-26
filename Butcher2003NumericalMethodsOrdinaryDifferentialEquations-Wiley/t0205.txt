@@ -1,0 +1,56 @@
+RUNGE-KUTTA METHODS 193
+
+equation being solved is approximately equal to a pure quadrature problem,
+then error estimates will be too optimistic.
+
+Although the methods were intended by Fehlberg to be used as order p
+schemes together with asymptotically correct error estimators, such methods
+are commonly implemented in a slightly different way. Many numerical
+analysts argue that it is wasteful to propagate a low order approximation
+when. a higher order approximation is available. This means that the method
+(A, or ,¢), rather than (A,b",c), would be used to produce output values.
+The order p+ 1 method will have a different stability region than that of the
+order p and this need to be taken into account. Also there is no Jonger an
+asymptotically correct error estimator available. Many practical codes have
+no trouble using the difference of the order p and order p+1 approximations to
+control stepsize, even though it is the higher order result that is propagated.
+
+335 The methods of Verner
+
+The methods of Verner overcome the fault inherent in many of the Fehlberg
+methods, that the two embedded methods both have the same underlying
+quadrature formula. The following method from Verner (1978) consists of a
+fifth order method which uses just the first six stages together with a seventh
+order method based or on all of the eight stages. Denote the two output coefficient
+vectors by b' and e , respectively. As usual we give the difference oT oT
+which is used for error estimation purposes:
+
+0
+afloa
+i8 is
+L -i 1
+é i2 a
+2] 2 4 8
+9 ar a7 aI
+2 40 _4 _36 34
+3 33 it it i
+1 369 n 5380 12285 2695
+73 73 219 584 1752
+8 | _ 8716 656 39520 416 52 0
+9 891 297 891 1 27
+1 3015 _9 _ 4219 5985 _ 539 0 693
+256 4 78 128 384 3328
+3 0 4 243 7 8 gg
+30 25 1120 160 700
+BT 0 _16 1377 121 0 go.
+640 65 2240 320 3320__35
+33° 0 — 132 891, — 33 3 8912
+640 325 2240 320 700 320 35
+
+As for the Fehlberg methods, we have a choice as to whether we use the
+fifth or sixth order approximation as output for propagation purposes. Even
+though the sixth order choice leaves us without an asymptotically correct
+local error estimator, the use of this more accurate approximation has definite
+advantages. In Figure 335(i) the stability regions for the two approximations
+are plotted. It is clear that stability considerations favour the higher order
+method.

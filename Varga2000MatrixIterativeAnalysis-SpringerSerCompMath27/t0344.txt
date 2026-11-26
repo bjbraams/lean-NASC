@@ -1,0 +1,77 @@
+References 339
+
+Bruce, G. H., Peaceman, D. W., Rachford, H. H., and Rice, J. D. (1953) Calculation
+of unsteady-state gas flow through porous media, Trans. Amer. Inst. Mining and
+Met. Engrs. 198, 79-91. [293]
+
+Buoni, John J. and Varga, Richard S. (1979) Theorems of Stein-Rosenberg type.
+In: Ansorge, R., Glashoff, K., and Werner, B. (Eds.) Numerical Mathematics,
+Birkhauser-Verlag, Basel, 65-75. / 106]
+
+Buoni, John J. and Varga, Richard S. (1981) Theorems of Stein-Rosenberg type.
+II. Optimal paths of relaxation in the complex plane. In: Schultz, M. H. (Ed.)
+Elliptic Problem Solvers, Academic Press, Inc., New York, 231-240. [106]
+
+Buoni, John J., Neumann, Michael and Varga, Richard S. (1982) Theorems of
+Stein-Rosenberg type. III. The singular case. Linear Algebra Appl. 42, 183-198.
+[106]
+
+Carlson, David H. and Varga, Richard S. (1973a) Minimal G-functions, Linear
+Algebra Appl. 6, 97-117. [29]
+
+Carlson, David H. and Varga, Richard S. (1973b) Minimal G-functions II, Linear
+Algebra Appl. 7, 233-242. /29/
+
+Carpenter, A. J., Ruttan, A., and Varga, R. S. (1984) Extended numerical com-
+putations on the “1/9” Conjecture in rational approximation theory, Rational
+Approximation and Interpolation (P.R. Graves-Morris, E. B. Saff, and R. S.
+Varga, eds.), Lecture Notes in Mathematics 1105, Springer-Verlag, Heidelberg,
+383-411. [306]
+
+Carré, B. A. (1961) The determination of the optimum accelerating factor for suc-
+cessive over-relaxation, Computer J. 4, 73-78. [327]
+
+Carslaw, H. S. and Jaeger, J. C. (1959) Conduction of Heat in Solids, 2nd ed.,
+Clarendon Press, Oxford, 510 pp. /276]
+
+Ciarlet, Philippe (1989) Introduction to Numerical Linear Algebra and Optimiza-
+tion, Cambridge University Press, Cambridge. /59/
+
+Cody, W. J., Meinardus, G., and Varga, R. S. (1969) Chebyshev rational approx-
+imation to e~* on [0,+00) with applications to heat-conduction problems, J.
+Approx. Theory 2, 50-65. [305]
+
+Collatz, L. (1942a) Einschliessungenssatz fiir die characteristischen Zahlen von Ma-
+trizen, Math. Z. 48, 221-226. /59/
+
+Collatz, L. (1942b) Fehlerabschatzung fiir das Iterationsverfahren zur Auflésung
+linearer Gleichungssysteme, Z. Angew. Math. Mech. 22, 357-361. [105]
+
+Collatz, L. (1950) Uber die Konvergenzkriterien bei Iterationsverfahren fiir lineare
+Gleichungssysteme, Math. Z. 53, 149-161. / 105]
+
+Collatz, L. (1952) Aufgaben monotoner Art, Arch. Math. 3, 366-376. [93, 94, 107]
+
+Collatz, L. (1955) Uber monotone Systeme linearer Ungleichungen, J. Reine Angew.
+Math. 194, 193-194. [107]
+
+Collatz, L. (1960) The Numerical Treatment of Differential Equations, 3rd ed.,
+Springer-Verlag, Berlin, 568 pp. /107, 190, 192/
+
+Conte, Samuel D. and Dames, Ralph T. (1958) An alternating direction method
+for solving the biharmonic equation, Math. Tables Aids Comput. 12, 198-205.
+[274]
+
+Conte, Samuel D. and Dames, Ralph T. (1960) On an alternating direction method
+for solving the plate problem with mixed boundary conditions, J. Assoc. Comput.
+Mach. 7, 264-273. [274]
+
+Cornock, A. F. (1954) The numerical solution of Poisson’s and the biharmonic
+equations by matrices, Proc. Cambridge Philos. Soc. 50, 524-535. /222, 233]
+Courant, R., Friedrichs, K., and Lewy, H. (1928) Uber die partiellen Differenzengle-
+
+ichungen der mathematischen Physik, Math. Ann 100, 32-74. /281, 294, 810, 323]
+
+Courant, R. and Hilbert, D. (1953) Methods of Mathematical Physics, Vol. 1, In-
+
+terscience Publishers, Inc., New York, 561 pp. [190]

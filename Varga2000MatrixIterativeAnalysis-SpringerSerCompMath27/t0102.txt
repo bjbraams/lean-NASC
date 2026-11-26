@@ -1,0 +1,45 @@
+94 3. Basic Iterative Methods and Comparison Theorems
+
+7. Let A be an n x n monotone matrix whose off-diagonal entries are
+nonpositive. If x; and x2 are two vectors with
+
+Ax, >k, Ax. <k,
+prove, using the exercise above, that
+x1 2X2X2,
+where x is the unique solution of Ax = k. (Collatz (1952)).
+
+8. Prove that a symmetric M-matrix is a Stieltjes matrix.
+
+9. Let A and B be two n x n M-matrices, with A > B. Prove that
+BUSA.
+
+3.6 Regular and Weak Regular Splittings of Matrices
+
+With the definitions of a Stieltjes matrix, an M-matrix, and an H-matrix,
+we return to the problem of comparing the asymptotic rates of convergence
+of iterative methods defined from different partitionings of a given matrix.
+Abstractly, if we seek to solve the matrix equation Ax = k where A is a given
+nonsingular n x n matrix, we consider expressing the matrix A in the form
+
+(3.81) A=M-N,
+
+where M and N are also n x n matrices. If M is nonsingular, we say that
+this expression represents a splitting of the matrix A, and associated with
+this splitting is the iterative method
+
+(3.82) Mx(™+) = Nx™ +k, m>0,
+
+which we write equivalently as
+
+(3.83) x™+) — M-INx™ + Mk, m>0.
+
+We now point out that all iterative methods considered thus far can be
+described from this point of view. For example, if the diagonal entries of the
+matrix A = [a;,)] are all nonzero, and we express the matrix A as in (3.4) as
+the matrix sum
+
+A=D-E-F
+
+where D = diag {a1,1;42,2;-++;@nyn} and where E and F are respectively
+strictly lower and strictly upper triangular n x n matrices. Then the following
+choices

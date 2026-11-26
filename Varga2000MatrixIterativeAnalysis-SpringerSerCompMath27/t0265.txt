@@ -1,0 +1,52 @@
+258 7. Alternating-Direction Implicit Iterative Methods
+
+which gives that KY KO = KAKO), Since these values kK) are positive
+from (7.54), we can divide these two expressions, which gives
+
+Kk?) _ KY °
+KY KY)
+
+Using the positivity of K2(z, y), it follows that KY?) = Q) and similarly,
+KM) = Ko), which is the desired result. ll
+
+Lemma 7.9. If Hi and V, commute and three mesh points of a square of
+side h are mesh points of A, then so is the fourth.
+
+Proof. Using Fig. 7.4, and equations (7.55) and (7.56), suppose that (x,y +
+h), (x,y), (a +h,y) are mesh points of A, but that (x + h,y + A) is a mesh
+points of I,. Now,
+
+[HyViul(2, y +h) = KO KM ule + hy) to
+
+On the other hand, [Vi Hyu](x, y + A) has no contribution to the mesh point
+
+(c+h,y). Thus, as KOK > 0, the matrices H; and V; do not commute,
+which is a contradiction.
+
+It is interesting that the proof of this last lemma can be interpreted equiv-
+alently by graph theory. In essence, what is shown in the proof is that the
+directed graph for the matrix product H;Vi has a path of length unity from
+the node at (z,y +h) to the node at (x + h,y), whereas the directed graph
+for the matrix product V;H, has no corresponding path.
+
+Corollary 7.10. If H; and Vi commute, then the convex closure® of the
+mesh points of Ap is a rectangle with sides parallel to the coordinate ares.
+
+Proof. By induction, it follows from Lemma 7.9 that the mesh points of A,
+form a rectangular array with sides parallel to the coordinate axes. Evidently,
+the convex closure of these points is a rectangle. li
+
+Lemma 7.11. Jf H; and V, commute, then X = cl, where c is a nonnegative
+scalar.
+
+Proof. Again referring to Fig. 7.4 and using equations (7.55)-(7.57), we have
+that
+
+[Vi Ai ul(z, y + h)
+
+h 1
+= -ko [Fs (« - gut h) +k + go(zy +h)| u(z,y) +++,
+
+® The convex closure of a finite point set is the smallest convex polygon containing
+the point set. It is identical with the convex hull of the finite point set. See
+Bonnesen and Fenchel (1934), p. 5.

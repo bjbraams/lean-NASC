@@ -1,0 +1,43 @@
+306 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+405 Necessity of conditions for convergence
+
+We formally prove that stability and consistency are necessary for
+convergence. Note that the proofs are based on the same simple problems
+that were introduced in Subsections 403 and 404.
+
+Theorem 405A A convergent linear multistep method is stable.
+
+Proof. If the method were not stable, there would exist an unbounded
+sequence 7) satisfying the difference equation
+
+Nn = O1Nn—1 + W2Mn—-2 + +++ + AkMn—k-
+Define the sequence ¢ by
+Cn = max |ni,
+i=0
+
+so that ¢ converges monotonically to oo. Consider the solution of the initial
+value problem
+
+y'(z)=0, (0) =9,
+
+with = = 1. Assuming that n steps are to be performed, we use a stepsize
+h = 1/n and initial values y; = ni/¢n, for i = 0,1,...,4 — 1. The condition
+that y; > 0 for 0 <i < k—1 is satisfied because ¢,, + oo. The approximation
+computed for y(£) is equal to 7,/Cn- Because the ¢ sequence is unbounded,
+there will be an infinite number of values of n for which |¢,| is greater than
+the greatest magnitude amongst previous members of this sequence. For such
+values of n, |tn/¢n| = 1, and therefore the sequence n +> Mn/¢n, Cannot
+converge to 0. Oo
+
+Theorem 405B A convergent linear multistep method is preconsistent.
+
+Proof. By Theorem 405A, we can assume that the method is stable. Let 7
+be defined as the solution to the difference equation
+
+Nn = O41 Nn—1 + O2Tn-2 + °° + OkNn—k,
+
+with initial values no = m = --- = ™-1 = 1. The computed solution of the
+problem
+
+y(z)=0, yO)=1, F=1,

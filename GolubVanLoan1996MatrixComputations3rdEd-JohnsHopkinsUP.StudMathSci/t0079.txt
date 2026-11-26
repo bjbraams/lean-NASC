@@ -1,0 +1,103 @@
+3.5. IMPROVING AND ESTIMATING ACCURACY 129
+
+for k =n: — 1:1
+Choose d(k).
+u{k) = (d(k) ~ p(k))/T(k, k) (3.5.6)
+
+p(i:k -— 1) = p(lck — 1) + y(K)T (1k — 1h)
+end
+
+Normally, we use this algorithm to solve a given triangular system Ty = d.
+Now, however, we are free to pick the right-hand side d subject to the
+“constraint” that y is large relative to d.
+
+One way to encourage growth in y is to choose d(k) from the set
+{-1,+1} so as to maximize y(k). If p(k) > 0, then set d(k) = -1. If
+p(k) <0, then set d(k) = +1. In other words, (3.5.6) is invoked with d(k)
+= -sign(p(k)). Since d is then’a vector of the form d(1:n) = (+1,...,+1)7,
+we obtain the estimator &, = {| T llooll ¥ lleo-
+
+A more reliable estimator results if d(k) € {—1,+1} is chosen so as
+to encourage growth both in y(k) and the updated running sum given by
+p(i:k — 1,4) + T(1:k — 1, k)y(k). In particular, at step k we compute
+
+y(k)* = (1 — p(h))/T(R, )
+s(k)* = ty(k)*] + || p(Lsk - 1) + T(1sk — 1, &)y(k)* fl
+y(k)~ = (-1 - p(k))/T (Rk)
+
+3(k)~ = |y(K)“| + | p(k — 1) + TCL — 1, &)y(k)o Ih
+
+and set
+
+y(k)t if s(&)* 2 s(k)-
+y(k) =
+
+y(k)- if s(k)* < s(k)-
+This gives
+
+Algorithm 3.5.1 (Condition Estimator) Let T ¢ R°*" be a nonsin-
+gular upper triangular matrix. This algorithm computes unit oo-norm y
+and a scalar x so [| T'y floc © 1/[f T~! loo and #6  figo(T)
+
+p(i:n) = 0
+for k=n:-1:1
+u(k)+ = (1 ~ p(k))/T(K, k)
+y(k}~ = (-1 — p(k) /T(k, k)
+p(k)* = plik ~ 1) + T(1:k — 1, &)y(k)t
+p(k)~ = p(:k — 1) + T(1:k - 1, k)y(k)~
+
+130 CHAPTER 3. GENERAL LINEAR SYSTEMS
+
+if fy(k)*! + Wee) Uh, & ty) + Wel) I
+
+y(k) = y(k)t
+p(1:k — 1) = p(k)t
+else
+y(k) = y(k)~
+p(1:k — 1) = p(k)
+end
+end
+v=/ll¥ lloo
+
+The algorithm involves several times the work of ordinary back substitution.
+
+We are now in a position to describe a procedure for estimating the
+condition of a square nonsingular matrix A whose PA = LU factorization
+we know:
+
+« Apply the lower triangular version of Algorithm 3.5.1 to U7 and ob-
+tain a large norm solution to UTy = d.
+
+Solve the triangular systems L7r = y, Lw = Pr, and Uz = w
+
+# Roo = Hf A Hooll 2 Ileo/Il * lleo-
+
+Note that || z lloo < {| A7* llooll 7 loo. The method is based on several heuris-
+tics. First, if A is ill-conditioned and PA = LU, then it is usually the case
+that U is correspondingly ill-conditioned. The lower triangle L tends to be
+fairly well-conditioned. Thus, it is more profitable to apply the condition
+estimator to U than to L. The vector r, because it solves ATPTr = d,
+tends to be rich in the direction of the left singular vector associated with
+omin(A). Righthand sides with this property render large solutions to the
+problem Az =r.
+
+In practice, it is found that the condition estimation technique that we
+have outlined produces good order-of-magnitude estimates of the actual
+condition number.
+
+Problems
+
+P3.5.1 Show by example that there may be more than one way to equilibrate a matrix.
+
+PS.5.2 Using § = 10,t = 2 arithmetic,
+
+solve
+
+nou )fa)_f7
+
+5 7 zy} (OL 3
+using Gaussian eliminstion with partial pivoting. Do one step of iterative improvement
+using t = 4 arithmetic to compute the residuel. (Do not forget to round the computed
+residual to two digits.)
+P3.5.3 Suppose P(A + E) = LO, where P is a permutation, £ is lower triangular with
+143] <1, and U is upper triangular. Show that &eo(A) 2 || A lloo/{Il E lloo + 4) where

@@ -1,0 +1,41 @@
+Chapter 5
+
+General Linear Methods
+
+50 Representing Methods in General Linear Form
+500 Multivalue multistage methods
+
+The systematic computation of an approximation to the solution of an initial
+value problem usually involves just two operations: evaluation of the function
+f defining the differential equation and the forming of linear combinations
+of previously computed vectors. In the case of implicit methods, further
+complications arise, but these can also be brought into the same general linear
+formulation.
+
+We consider methods in which a collection of vectors forms the input at
+the beginning of a step, and a similar collection is passed on as output from
+the current step and as input into the following step. Thus the method is a
+multivalue method, and we write r for the number of quantities processed in
+this way. In the computations that take place in forming the output quantities,
+there are assumed to be s approximations to the solution at points near the
+current time step for which the function f needs to be evaluated. As for
+Runge-Kutta methods, these are known as stages and we have an s-stage or,
+in general, multistage method. .
+
+The intricate set of connections between these quantities make up what is
+known as a general linear method. Following Burrage and Butcher (1980), we
+represent the method by four matrices which we will generally denote by A,
+U, B and V. These can be written together as a partitioned (s + r) x (s +r)
+
+matrix
+AU
+Bv|
+The input vectors available at step number n will be denoted by yr,
+ye, ..., y"71 During the computations which constitute the step, stage
+
+values Y|, Yo, ..., Y, are computed and derivative values F; = f(Y;),
+4 = 1,2,...,s are computed in terms of these. Finally, the output values
+are computed and, because these will constitute the input at step number
+
+Numerical Methods for Ordinary Differential Equations. J.C. Butcher
+Copyright © 2003 John Wiley & Sons, Ltd. ISBN: 0-471-96758-0

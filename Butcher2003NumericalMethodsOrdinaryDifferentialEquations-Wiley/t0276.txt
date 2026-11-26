@@ -1,0 +1,47 @@
+264 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+one of the three senses then they are equivalent also in each of the other senses.
+We temporarily refer to these three equivalence relations as ‘equivalence’, ‘®-
+equivalence’ and ‘P-equivalence’, respectively.
+
+Definition 381A Two Runge-Kutta methods are ‘equivalent’ if for any
+initial value problem defined by an autonomous function f satisfying a
+Lipschitz condition, and an initial value yo, there exists ho > 0 such that
+the result computed by method number 1 is identical with the result computed
+by method number 2, if h < ho.
+
+Definition 381B Two Runge-Kutta methods are ‘@-equivalent’ if for any
+t €T, the elementary weight ®(t) corresponding to method number 1 is equal
+to ®(t) corresponding to method number 2.
+
+In introducing P-equivalence, we need to make use of the concept of
+reducibility of a method. By this we mean that the method can be replaced
+by a method with fewer stages formed by eliminating stages that do not
+contribute in any way to the final result, and combining stages that are
+essentially the same, into a single stage. We now formalize these two types of
+reducibility.
+
+Definition 381C A Runge-Kutta method (A,b",c) is 0-reducible’ if the
+stage index set can be partitioned into two subsets {1,2,...,s} = PUP
+such that b; = 0 for alli € Po and such that aj = 0 ifi € Py andj € Po.
+The method formed by deleting all stages indexed by members of Py is known
+as the 0-reduced method’.
+
+Definition 381D A Runge-Kutta method (A,6',c) is ‘P-reducible’ if the
+stage index set can be partitioned into {1,2,...,s} = P, UP, U---UP5 and
+if for all I,J = 1,2,...,3, Diep, aij is constant for alli € Py. The method
+(A,b", ©), with 3 stages with O17 = Yep, aij, for t € Pr, br = Diep, bi and
+=, fori € Py, is known as the P-reduced method.
+
+Definition 381E A Runge-Kutta method is ‘irreducible’ if it is neither 0-
+reducible nor P-reducible. The method formed from a methed by first carrying
+a P-reduction and then carrying out a 0-reduction is said to be the ‘reduced
+method’.
+
+Definition 381F Two Runge-Kutta methods are ‘P-equivalent’ if each of
+them reduces to the same reduced method.
+
+Theorem 381G Let (A,b',c) be an irreducible s-stage Runge-Kutta
+method. Then for any two stage indices i,j € {1,2,...,8}, there exists
+a Lipschitz-continuous differential equation system such that Y; # Yj.
+Furthermore, there exists t € T, such that ,(t) # ®;(t).

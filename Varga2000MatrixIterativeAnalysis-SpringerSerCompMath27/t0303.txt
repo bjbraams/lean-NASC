@@ -1,0 +1,46 @@
+296 8. Matrix Methods for Parabolic Partial Differential Equations
+
+for all m > 0. Show that this inequality is also true for the vector
+norms ||x||1 and ||x||.o of Exer. 1, Sect. 1.3. If S is the matrix of
+Exer. 1 of this section, show that the constant M can be chosen to be
+unity for 0 < At < (Ar)?/2K, for all these vector norms.
+
+8.4 Relationship with Iterative Methods for Solving
+Elliptic Difference Equations
+
+The form of equation (8.42), i.e.,
+
+(8.49) w((n + 1)At) = T(At)w(nAt) + {I -T(At)}A7!s, At > 0,
+
+where w(0) = v(0) = g, suggests that matrix approximations of exp(—AtS)
+induce abstract iterative methods for solving the matrix problem
+
+(8.50) Aw=s.
+
+In fact, if p(T(At)) < 1, the solution of (8.50) is obviously also the solution
+of the matrix equation
+
+w =T(At)w + (I —T(At))A7's.
+
+Inserting iteration exponents in the above equation produces the convergent
+iterative method
+
+(8.51) w(t) — T(At)w + (I — T(At)) Ams,
+
+which is identical with (8.49) for w") := w((n)At), and the convergence of
+the iterative method in (8.51) results in
+
+(8.52) lim w™ = Ans,
+
+n—-0o
+
+The relationship of the iterative method of (8.49) or (8.51) with the so-
+lution of the matrix differential equation
+(8.53) wi) =-CAv(t)+C74s, t>0,
+where v(0) = g, becomes clearer if we recall that, when C-1A is an irre-
+ducible M-matrix, the solution vector v(t) of (8.53) tends to the steady-state
+solution, A~!s, of (8.53). Thus, we have established that any stable approxi-
+mation T'(At) of exp(—AtC~1 A) with p(T(At)) < 1 gives rise to a convergent
+iterative method (8.51), whose solution is the steady-state solution of (8.53).
+What is of interest to us now is essentially the converse of the above
+observation. For all the iterative methods previously described in this book,

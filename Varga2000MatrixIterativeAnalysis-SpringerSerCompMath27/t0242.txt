@@ -1,0 +1,39 @@
+7. Alternating-Direction Implicit Iterative
+Methods
+
+7.1 The Peaceman-Rachford Iterative Method
+
+In the previous chapter, we considered various block iterative methods, such
+as the line and 2-line successive overrelaxation iterative methods, which
+as practical methods involved the direct (or implicit) solution of particu-
+lar lower-order matrix equations. Also, as a standard for comparison of the
+asymptotic rates of convergence of these methods, we considered the numer-
+ical solution of the Dirichlet problem for the unit square with uniform mesh
+spacings, calling this the model problem. This knowledge of block methods,
+as well as representative asymptotic rates of convergence for the model prob-
+lem for the iterative methods considered thus far, serves as the basis for the
+introduction of the alternating-direction implicit iterative methods, due to
+Peaceman and Rachford (1955) and Douglas and Rachford (1956).
+
+For simplicity, we consider first the partial differential equation
+
+(7.1) —Uae(t,Y) — Uyy(z,y) + ou(a,y) = S(a,y), (a,y) € R,
+
+in the unit square R: 0 < z,y < 1 of the r—y plane, where a is a nonnegative
+constant. For boundary conditions, we assume that
+
+(7.2) u(z,y)=(z,y), (zy) ET,
+
+where ¥(z, y) is a prescribed function on the boundary I of R. If a uniform
+mesh of length A in each coordinate direction is imposed on R, then the
+partial differential equation (7.1) is approximated, using central differences,
+by
+
+{—u(zo — h, yo) + 2u(z0, yo) —u(xo +h, yo)}
+(7.3) +{—u(zo0, yo — h) + 2u(zo, yo) —u(zo, yo + h)}
++o{h?u(z0, yo)} = h?S(x0, yo).
+
+With N := 1/h, the totality of these difference equations gives rise to (N —1)?
+linear equations in (N — 1)? unknowns, of the form
+
+(7.4) Au=k,

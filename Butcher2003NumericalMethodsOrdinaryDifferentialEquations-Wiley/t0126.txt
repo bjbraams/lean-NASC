@@ -1,0 +1,48 @@
+NUMERICAL DIFFERENTIAL EQUATION METHODS 113
+
+Table 253(I) Coefficients defined by (253c)
+
+mM} a a a3 Og | Ba Bo Bs Ba
+3 rl
+1 2 3
+9/-2 4 30
+3 12 2 i2
+3 16 _ 3h 37 -13 _20 _49
+2 10 40 2 10 120
+4 | —8 518 _107 769 67 437,—— 2397
+2 28 28 IG 2 2 84 © 560
+
+Table 253(II) Coefficients defined by (253d)
+
+min i» % uw | & b& &
+1 1
+1| 3 2
+1 1 1 1
+2) 2 ~ia 2 if
+3 2 1 1 2 5
+2 10 120 2 10 120
+4/i -3 2 Lali 3s 42 2
+2 28 84 1680 2 28 84 1680
+
+254 The use of f derivatives
+
+In this subsection, we consider an autonomous differential equation system
+
+y' (x) = F(y(2)).
+
+As we remarked in Subsection 224, the use of derivatives of f is more general
+than the use of higher derivatives of y. Methods that use f’ directly have
+mainly been proposed for the solution of stiff problems by one-step methods.
+If an implicit Runge-Kutta method is used, the implementation requires the
+solution of non-linear equations, typically by a Newton-type method. It was
+proposed by Rosenbrock (1963) that the Newton iterations could be replaced
+by a single iteration involving the inverse of a matrix such as J—hy f'(y(@n-1))-
+Methods formed in this way use this linear operation as an intrinsic part of
+the order requirement for the method. We give a single example in which
+modified derivatives F, and Fo, and the final result at the end of a step, are
+computed by the formulae
+
+(i-h (1 - ) f'(n-1)) Fi = fn), (254a)
+
+(rh (1-2) Fun) Fe=F (yma +h(2 -4)R), (2540)
+Yn = Yn—-1 + APS. (254c)

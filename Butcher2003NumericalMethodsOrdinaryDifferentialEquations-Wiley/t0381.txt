@@ -1,0 +1,32 @@
+GENERAL LINEAR METHODS 371
+
+Figure 511(i) A commutative diagram for covariance
+
+methods which do not have this property but can still yield satisfactory
+numerical results.
+
+512 Definition of convergence
+
+Just as for linear multistep methods, the necessity of using a starting
+procedure complicates the idea of convergence. We deal with this complication
+by assuming nothing more from the starting procedure than the fact that, for
+sufficiently small h, it produces an approximation arbitrarily close to
+
+uy(Zo)
+uzy (xo)
+
+?
+
+ury(Zo)
+where u is some non-zero vector in R”. Here y(aq) is the given initial data
+and it will be our aim to obtain a good approximation at some F > xo. This
+approximation should converge to
+
+ury(Z)
+ugy(Z) (512a)
+
+ury(Z)
+for any problem satisfying a Lipschitz condition. For notational convenience,
+(512a) will usually be abbreviated as uy(Z).
+Formally, we write ¢(h) for the starting approximation associated with the
+method and with a given initial value problem.

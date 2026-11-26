@@ -1,0 +1,38 @@
+2. Nonnegative Matrices
+
+2.1 Spectral Radii of Nonnegative Matrices
+
+In investigations of the rapidity of convergence of various iterative meth-
+ods, the spectral radius p(A) of the corresponding iteration matrix A plays
+a major role. For the practical estimation of this constant p(A), we have
+thus far only the upper bounds for p(A) of Sect. 1.4, provided by extensions
+of Gerschgorin’s Theorem 1.11. In this section, we shall look closely into the
+Perron-Frobenius theory of square matrices having nonnegative real numbers
+as entries. Not only will this theory provide us with both nontrivial upper and
+lower bounds for the spectral radius for this class of matrices, but the struc-
+ture of this theory will be decidedly germane to our subsequent development
+of iterative methods. We begin with
+
+Definition 2.1. Let A = [a,,;] and B = [b,j] be two real n x r matrices.
+Then, A > B(> B) if a;,; > b;,;(> 3) for alll <i<n,1<j <r. IfO is the
+null matrix and A > O (> O), we say that A is a nonnegative (positive)
+matrix. Finally, if B = [b;,;] is an arbitrary complex n x r matrix, then |B|
+denotes! the nonnegative matrix with entries |b;,;|.
+
+Since column vectors are nx 1 matrices, we shall use the terms nonnegative
+and positive vector throughout. In developing the Perron-Frobenius theory,
+we shall first establish a series of lemmas on nonnegative irreducible square
+matrices.
+
+Lemma 2.2. If A > O is an irreducible n x n matria, then
+(I+ A)""1>0.
+
+Proof. It is sufficient to show, for any nonzero vector x > 0, that (I +
+A)"-!x > 0. Defining the sequence of nonnegative vectors xx41 := (I +
+A)xx~,0 < k < n—2, where xo := x, the proof will follow by showing that
+X41 has fewer zero components? than does xx for every 0 <,k < n—2. Since
+Xk+1 = Xk + Axx, it is clear that x,41 has no more zero components than
+
+1 This is not to be confused with the determinant of a square matrix B, which we
+denote by det B.
+? Provided, of course, that x, has at least one zero component.

@@ -1,0 +1,51 @@
+244 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+where J is the Jacobian approximation. The cost, measured solely in terms
+of linear algebra costs, divides into two components. First, the factorization
+of the matrix (360b), carried out from time to time during the computation,
+costs a small multiple of s* N? floating point operations. Secondly, the solution
+of (360a) each iteration costs a small multiple of s?N? arithmetic operations.
+
+It is the aim of the study of implementable methods to lower the factors
+s® in the occasional part of the cost and to lower the factor s* in the ‘per
+iteration’ part of the cost.
+
+361 Diagonally-implicit Runge-Kutta methods
+
+Because of the excessive cost in evaluating the stages in a fully implicit Runge-
+Kutta method, we consider the so-called DIRK (‘diagonally-implicit Runge-
+Kutta methods’) (Alexander, 1977). For these methods, the coefficient matrix
+A has a lower triangular structure with equal elements on the diagonal. Note
+that sometimes these methods are referred to as SDIRK, with DIRK methods
+not necessarily having equal diagonals. Earlier names for methods in this
+general class are semi-implicit Runge-Kutta methods (Butcher, 1965) and
+semi-explicit (Ngrsett, 1974).
+
+The advantage of these methods are that the stages can be evaluated
+sequentially rather than as one great implicit system. We consider here the
+derivation of some low order members of this class with a brief analysis of
+their stability regions.
+
+To obtain order 2 with two stages, consider the tableau
+
+c2 Cg -A A.
+
+bd ba
+
+The order conditions are
+
+by +b =1, (361a)
+bid + bac, = > (361b)
+with solution 6, = (=), be = gi574y. The method is A-stable if 4 > }
+
+and L-stable if \ = 1+ 3Vv2. A particularly attractive choice is cp = 1,
+A = 1 -4¥?2 for which the tableau is
+
+1-3v2/1-iv2 0
+1 1v2_1-1v2.
+V2 1-4y2
+For s = p = 3, the stability function is given by
+1+(1—3A)z + (4 — 3A +4 3d7)z? + (2 — $4 3d? — A) 23
+(1 — Az)3
+
+R(z) =

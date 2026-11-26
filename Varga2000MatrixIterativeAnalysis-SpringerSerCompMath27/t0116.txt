@@ -1,0 +1,51 @@
+108
+
+3. Basic Iterative Methods and Comparison Theorems
+
+1. Ng > Ni in Theorem 3.32, and
+
+2. M;* > Mz" in Theorem 3.36.
+Csordas and Varga (1984) considered
+
+3. A71N2A7! > A“1N,A7},
+
+and more generally
+
+4. there is a positive integer j for which
+
+(A7!Ng))A7} > (A71N,)9 AT},
+Each of these four conditions gives the comparison theorem
+1> p(Mz"N2) > p(My"N1) 2 0.
+
+where the hypothesis of 1. implies 2. (cf. Lemma 3.35), 2. implies 3.,
+and 3. implies 4., while the reverse implications in 1.-4. are not in
+general valid. As mentioned in Section 3.6, 1. can be extended to weak
+regular splittings, but not the others.
+
+The second newer type of comparison theorem for splittings of a matrix
+can be described as follows. If A = M, — Ny = Mp2 — No are two
+splittings of A where My, 1N, and My 1N> are convergent nonnegative
+matrices, and where A~! > O, then it follows that G; := A7~1N; >O
+for i = 1,2 (cf. Axelsson (1994), p. 217). Then, if x > 0 is the Perron
+vector of Gi, ie., Gx = p(Gi)x, and if (G2 — G1)Gix > 0, then
+
+1 > p(Mz'N2) > p(My*Ni).
+
+The dependence now on the associated Perron vector x is what is
+different here. For additional references, see Marek and Szyld (1990).
+
+Finally, O’Leary and White (1985) have proposed multisplittings for
+solving linear systems of algebraic equations on parallel computers.
+For interesting associated papers, see Miller and Neumann (1985).
+Neumann and Plemmons (1987), White (1989), and Elsner (1989).
+
+We know from Corollary 3.24 and Definition 3.22 that if A isannxn
+Stieltjes matrix, then its inverse, a real symmetric and positive definite
+matrix, satisfies A~! > O. Then, given any n x n real symmetric and
+positive definite matrix B with B > O, is B~! necessarily a Stieltjes
+matrix? In general, the answer is no, and a counterexample for n = 3
+is given by
+
+402 1/7 6-8
+B=|043 » where BU! = 5 6 12-12
+234 2}_g-12 16

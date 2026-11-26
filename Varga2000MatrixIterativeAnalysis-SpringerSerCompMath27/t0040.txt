@@ -1,0 +1,51 @@
+32 2. Nonnegative Matrices
+
+does xx. If x,41 and x, have exactly the same number of zero components,
+then for a suitable n x n permutation matrix P, we may write
+
+(2.1) Paps. = (3 , Px, = ¢] , a>0,8>0,
+
+where the vectors a and 3 both have, say, m components, 1 < m < n.
+Partitioning the corresponding new matrix PAP? relative to the partitioning
+in (2.1), we can write
+
+a) _ [6 Ai Ai2|] [6B
+(2.2) [3] = é] + a aa E
+where Aj,; and A2,2 are square, and A;,; is of order m. This implies that
+Aoi = 0, but as Az, > O and GB > 0, this can only occur when Agi =
+O, which contradicts the hypothesis that A is irreducible. Thus, x,41 has
+
+fewer zero components than does x,, and since xp has at most (n — 1) zero
+components, then x; has at most (n -k- 1) zero components. Thus,
+
+Xn-1 = (I+ A)""1xp
+
+is a positive vector, completing the proof. ll
+
+If A = [a;,;] > O is an irreducible n x n matrix and if x > 0 is any nonzero
+vector, let
+
+n
+> 45,525
+j=l
+
+(2.3) Tx += min el
+
+where the minimum is taken over all i for which x; > 0. Clearly, rx is a
+nonnegative real number and is the supremum of all numbers p > 0 for
+which
+
+(2.4) Ax > px.
+
+We now consider the nonnegative quantity r defined by
+
+(2.5) r =sup {rx}.
+
+x>0
+
+x#0
+As rx and rax have the same value for any scalar a > 0, we need consider
+only the set P of vectors x > 0 with ||x|| = 1, and we correspondingly let Q
+be the set of all vectors y = (I + A)""!x where x € P. From Lemma 2.2,
+Q consists only of positive vectors. Multiplying both sides of the inequality
+Ax > xx by (I + A)"~1, we obtain

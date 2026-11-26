@@ -1,0 +1,37 @@
+6.3 Derivation of Finite Difference Approximations in Higher Dimensions 215
+
+and I’ by Rp and I, so that Rp, is the convex hull of a finite set of mesh points
+in three dimensions. Then, integrations are carried over three-dimensional
+regions T;,;.
+
+In two-dimensional calculations, we have seen that the region Rp approx-
+imates R, and it might appear that simply choosing mesh points sufficiently
+close near the boundary would give better geometrical approximations of R.
+Unfortunately, rapid changes in mesh spacings have a disastrous effect on the
+spectral radius of the associated point Jacobi matrix, as shown in Exer. 2.
+In certain physical problems with interfaces, this cannot always be avoided
+within machine limitations. In the next section, however, we shall see that
+part of this decrease in rate of convergence can be offset by the use of block
+iterative methods.
+
+Finally, one key idea we have used in the derivation of finite difference
+approximations is the integration over mesh regions. Although the mesh re-
+gions considered were generally rectangular, more general mesh regions can
+also be treated. Following MacNeal (1953), consider the region of Fig. 6.12
+as an example. Again, one can assign to each mesh point (x;,y;), where ui,;
+is unknown, a mesh region r;,;. If u;,; is to be coupled to ux,e, then there is a
+boundary edge of r;,; that bisects the line segment joining (z;, y;) to (xx, ye).
+In this way, mesh regions more general than rectangles can be composed,
+and integrating the differential equation over each mesh region leads to a
+matrix equation Au = k + 7(u) for which A has positive diagonal entries,
+nonpositive off-diagonal entries. Moreover, A is real, symmetric, and diag-
+onally dominant. For applications to triangular and hexagonal meshes, see
+
+ES
+ss
+
+<S
+
+Fig. 6.12.
+
+bos

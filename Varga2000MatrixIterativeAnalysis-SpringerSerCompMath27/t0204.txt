@@ -1,0 +1,47 @@
+196 6. Derivation and Solution of Elliptic Difference Equations
+
+6.2 General Second-Order Ordinary Differential
+Equations
+
+In this section, we derive finite difference approximations of general second-
+order ordinary differential equations. Specifically, consider
+
+(6.22) = {n(x He} + a(2) 2%) +o(2)y(z) = f(z),
+a<xz<b,
+
+subject to the general two-point boundary conditions
+
+(6.23) ony(a) — Bry'(a) = 1; a2y(b) + Bay"(b) = y2-
+
+It is well known that if p'(z), q(x), o(x), and f(x) are continuous in a < z < b,
+then it is possible to reduce® (6.22) by means of a change of independent and
+dependent variables, to the simple form of (6.1). Numerically, this reduction
+is often not at all convenient to use. Moreover, in many problems arising from
+reactor physics and engineering, p,q,0, and f are only piecewise continuous,
+and actually possess a finite number of discontinuities in the interval of in-
+terest a < x < b. Physically, such problems arise from steady-state diffusion
+problems for heterogeneous materials, and the points of discontinuity repre-
+sent interfaces between successive homogeneous compositions. For such prob-
+lems, we assume that y(x) and p(x)dy/dx are both continuous in a < x < b.
+Since p(z) itself is only piecewise continuous, this latter assumption implies
+that
+dy(tt) _ dy(t-)
+
+(6.24) t+) pt-)~7 a<t<b,
+
+at all interior points t of a < x < b, where in general g(t+) and g(t—)
+denote respectively the right- and left-hand limits of g(x) at z = t. Finally,
+we assume that the given quantities of (6.22) and (6.23) satisfy
+
+(6.25) p(z)>0, o(z)>0, asad,
+and
+(6.26) a >0, B>0, a+B>0, i=1,2.
+
+Because of the similarity of results for the different methods of derivation,
+our discrete approximations to (6.22)-(6.23) will be formulated, for brevity,
+only in analogy with the integration method of (6.11). Choose now any dis-
+tinct set of points a = zp < 21 < --: < Zn41 = 6, subject only to the
+requirement that the discontinuities of the given functions p,q,o, and f be
+a subset of these points. We shall call these points z; the mesh points of the
+
+8 See, for example, Kantorovich and Krylov (1958), p. 218.

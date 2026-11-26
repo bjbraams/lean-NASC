@@ -1,0 +1,48 @@
+NUMERICAL DIFFERENTIAL EQUATION METHODS 97
+
+For this problem, high order methods are always more accurate than low
+order methods. However, the relative advantage is exaggerated in that no
+account is taken of the greater work in completing a step as the order increases.
+Assuming that the total computational work is proportional to the number
+of stages in the method, it is a simple matter to compensate for this; all that
+needs to be done is to multiply the number of steps by the number of stages in
+each method. The comparisons with this correction made are shown in Figure
+239(ii). The general conclusion, that high order is more efficient than low
+order, still follows from these comparisons, but not to such a marked extent.
+
+Numerical tests, not reported here, indicate similar behaviour for implicit
+methods. For the initial value problem (201a), with output computed at z = 1,
+(237a) and (237b) gave slightly worse results than for corresponding explicit
+methods. However, for the fourth order method (237c), the results were
+approximately six decimal places better. This suggests that, even though the
+cost of evaluating the result in each step of an implicit method is significantly
+higher, the extra cost is sometimes worthwhile for this method.
+
+Exercises 23
+
+23.1 Repeat the calculation that led to Table 221(I) but using the method
+given by (231a) and (231b) with 6 = 3.
+
+23.2 Find a solution to the third order conditions (233a), (233b), (233c) and
+(233d) such that b; = 0, c3 = 1.
+
+23.3 Continue Table 234(I) to include trees of order 5.
+23.4 Write down the formula for &(t) and the value of 7(¢) for ¢ the order 7
+
+tree
+i
+
+23.5 By noting that b4a43a32C2 + b3(ca — c3)(c3 — Co)e3 = b4a4g(cg — Ca)c3 -
+b3(ca — €3)@32C2, prove that c, = 1 for any solution to the fourth order
+conditions (235a) to (235h).
+
+23.6 Find the order of the implicit method given by the tableau (237a).
+
+23.7 Solve the orbital problem with eccentricity e = 0 using the implicit
+method (237a).
+
+24 Linear Multistep Methods
+240 Historical introduction
+
+The idea of extending the Euler method by allowing the approximate solution
+at a point to depend on the solution values and the derivative values at several

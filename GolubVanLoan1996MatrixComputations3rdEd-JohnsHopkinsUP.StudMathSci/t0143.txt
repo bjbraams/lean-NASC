@@ -1,0 +1,121 @@
+§.4. OTHER ORTHOGONAL FACTORIZATIONS 255
+
+R.J. Hanson and C.L. Lawson (1969). “Extensions and Applicatious of the Householder
+Algorithm for Solving Linear Least Square Problems,” Math. Comp. 23, 787-812.
+
+P.A. Wedin (1973). “On the Almost Rank-Deficient Case of the Least Squares Problem,”
+BIT 13, 344-54.
+
+G.H. Golnb and V. Pereyra (1976). “Differentiation of Pseudo-Inverses, Separable Non-
+linear Least Squares Problems and Other Tales,” in Generalized Inverses and Appli-
+vations , ed. M.Z. Neshed, Academic Press, New York, pp. 303-24.
+
+The computation of the SVD is detailed in §8.6. But here ara some of the standard
+references concerned with ita calculation:
+
+G.H. Golub and W. Kahan (1965). “Calculating the Singular Values and Pseudo-Inverse
+of a Matrix,” SIAM J. Num. Anal. 2, 205-24.
+
+P.A. Businger and G.H. Golub (1969). “Algorithm 358: Singular Vaiue Decomposition
+of the Complex Matrix,” Comm. ACM 12, 564-65.
+
+G.H. Golub and C. Rainach (1970). “Singular Value Decomposition and Least Squares
+Solutions,” Numer. Math. 14, 403-20. See also Wilkinson and Reinsch(1971, pp.
+1334-51).
+
+T.F. Chan (1982). “An Improved Algorithm for Computing the Singular Value Decom-
+position,” ACM Trans. Math. Soft. 8, 72-83.
+
+QR with column pivoting was first discussed in.
+
+P.A. Businger and G.H. Golub (1965). “Linear Least Squares Solutions by Householder
+Transformations,” Numer. Math. 7, 269-76. See also Wilkinson and Reinsch (1971,
+pp. 11-18).
+
+Knowing when to stop in the algorithm is difficult. In questions of rank deficiency, it is
+helpful to obtain information about the mmallest singular value of the upper triangular
+matrix A. This can be done using the techniques of §3.5.4 or those that are discussed in
+
+I. Karasalo (1974). “A Criterion for Truncation of the QR Decomposition Algorithm for
+the Singular Linear Least Squares Problem,” BIT 14, 156-66.
+
+N. Anderson and L Karagalo (1975). “On Computing Bounds for the Least Singular
+Value of Triangular Matrix,” BIT 15, 1-4.
+
+Other aspects of rank éstimation with QR are discussed in
+
+L.V. Foster (1986). “Rank and Null Space Calculations Using Matrix Decomposition
+without Column Interchanges,” Lin. Alg. and its Applic. 7, 47-71.
+
+T.F. Chan (1987). “Rank Revealing QR Factorizations,” Lin. Alg. and Its Applic.
+88/89, 67-82.
+
+T.F. Chan and P. Hansen (1992). “Some Applications of the Rank Revealing QR Fac-
+torization,” SIAM J. Sei. and Stat. Comp. 13, 727-741.
+
+J.L, Barlow and U.B. Veruulapati (1992). “Rank Detection Methods for Sparse Matri-
+cea," SIAM J. Matriz. Anal Appt 13, 1279-1297.
+
+‘T-M. Hwang, W-W. Lin, and E.K. Yang (1992). “Rank-Revealing LU Factorizations,”
+Lin. Alg. and lts Applic. 175, 115-141.
+
+C.H. Bischof and P.C. Hansen (1992). “A Block Algorithm for Computing Rank-
+Revealing QR Factorizations,” Numerical Algorithms 2, 371-302.
+
+S. Chandrasekaren and 1.C.F. Ipeen (1994). “On Rank-Revealing Factorizations,” SIAM
+J. Matriz Ansi, Appl 15, 592-622.
+
+RD. Fierro and P.C. Hansen (1998). “Accuracy of TSVD Solutions Computed from
+Rank-Revealing Decompositions,” Numer. Math. 70, 453-472.
+
+256 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+5.5 The Rank Deficient LS Problem
+
+If A is rank deficient, then there are an infinite number of solutions to the
+LS problem and we must resort to special techniques. These techniques
+must address the difficult problem of numerical rank determination.
+
+After some SVD preliminaries, we show how QR with column pivoting
+can be used to determine a minimizer zg with the property that Azg is a
+linear combination of r = rank(A) columns. We then discuss the minimum
+2-norm solution that can be obtained from the SVD.
+
+5.5.1 The Minimum Norm Solution
+
+Suppose A € R™*" and rank(A) = r <n. The rank deficient LS problem
+has an infinite number of solutions, for if x is a minimizer and z € null(A)
+then x + z is also a minimizer. The set of all minimizers
+X= {re R": {| Ax — 6 fla = min }
+is convex, for if x1,22 € 4 and A é [0,1], then
+| Aa, + (1-A)t2) - 6g S All Ati — lg + (1 -A)l| Azz — bly
+
+= min|j Ar— dy.
+
+Thus, Ar; + (1 ~ A)x2 € ¥. It follows that 7 has a unique element having
+minimum 2-norm and we denote this solution by z,5. (Note that in the
+full rank case, there is only one LS solution and so it must have minimal
+2-norm. Thus, we are consistent with the notation in §5.3.)
+
+5.5.2. Complete Orthogonal Factorization and x5
+
+Any complete orthogonal factorization can be used to compute zz5. In
+particular, if Q and Z are orthogonal matrices such that
+
+Tt _ _ Ty, #0 r
+QAz =T = 0 Of m-r r = rank(A)
+
+rom-r
+then
+Ax — 13 =| (QTAZ)ZT2 - QTHZ =" Tiw-cl} +1412
+
+where
+
+Ti w r Tr c r
+a r= [o] ate Qb= [o] mis
+
+Clearly, if z is to minimize the sum of squares, then we must have w = T;,'c.
+For x to have minimal 2-norm, y must be zero, and thus,
+
+1
+sus = Z| THE].

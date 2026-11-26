@@ -1,0 +1,39 @@
+9.2 Application of Isoperimetric Inequalities 325
+
+and
+
+Ani/?
+(9.43) R(Lai (ny) = 2 (47) h+o(h).
+Forming ratios, we have
+
+R(Luy(n))
+9.44 a =14+0(1), h-0,
+(9.44) RELonch) (1)
+and
+RL 1/2
+
+(9.45) (Lasim) _ Aa +0(1), h-0.
+
+R(Lu(ny) Ant?
+The change in the rate of convergence, by using wi(h), instead of w»(h), is,
+for small h, dependent on the dimensionless constant
+
+Aa}/2
+which, by (9.37), is greater than or equal to unity. We tabular the value of
+K for various regions (Pélya and Szegé (1951)).
+
+(9.46)
+
+Region K
+circle 1.00
+square 1.04
+equilateral triangle 1.12
+semicircle 1.12
+45° — 45° — 90° triangle | 1.16
+30° — 60° — 90° triangle | 1.21
+
+We remark that for any of the regions listed above, using the estimate w;(h)
+for w»(h) will only result in approximately a 20 per cent decrease in the rate
+of convergence of the successive overrelaxation method, for h small. This
+was observed by Garabedian (1956) in examples numerically carried out by
+Young (1955).

@@ -1,0 +1,49 @@
+RUNGE-KUTTA METHODS 145
+
+313 The Taylor expansion of the approximate solution
+
+We show that the result output by a Runge-Kutta methods is exactly the
+same as (311d), except that the factor y(t)~! is replaced by ®(t). We first
+establish a preliminary result.
+
+Lemma 313A Let k =1,2,...,. if
+
+Yi=y+ >
+
+n(t)<k-1
+
+1
+Oh (313a)
+
+then
+
+AfY)= >> ay PPIOMO FOOL) + OF). (313b)
+
+r(t)<k
+
+Proof. Use Lemma 310B. The coefficient of
+
+SP won”
+in Af(¥j) is
+II 8; (t;),
+j=l
+where t = [tit2 --- ty]. oO
+
+We are now in a position to derive the formal Taylor expansion for the
+computed solution. The proof we give for this result is for a general Runge—
+Kutta method that may be implicit. In the case of an explicit method, the
+iterations used in the proof can be replaced by a sequence of expansions for
+Y,, for hf(¥i), for Yo, for hf(¥Y2), and so on until we reach Y,, hf(Y,) and
+finally yi.
+
+Theorem 313B The Taylor expansions for the stages, stage derivatives and
+output result for a Runge-Kutta method are
+
+= yot 5 a i(t)h" F(£)(yo) + O(h"t"), ¢ = 1,2,...,8, (313c)
+
+ripen”
+AfmH= TF eovowom 400" 4=1,2,...,8, (313d)
+r(t}<n
+n=w+ DO yen OPO) + 00H"). (313)
+
+r(t)<n

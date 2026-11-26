@@ -1,0 +1,61 @@
+viii
+
+34
+
+35
+
+36
+
+37
+
+38
+
+39
+
+CONTENTS
+
+333 A class of error-estimating methods ........... 185
+334 The methods of Fehlberg.........--..2-4.. 191
+335 The methods of Verner... .....0..0.2.0 000-54 193
+886 The methods of Dormand and Prince........... 194
+Implicit Runge-Kutta Methods ............... 196
+840 Introduction... 2... ee ee 196
+341  Solvability of implicit equations ...........0.. 197
+842 Methods based on Gaussian quadrature.......... 198
+348 ~~ Reflected methods... 2.02.2 ee eee 202
+344 Methods based on Radau and Lobatto quadrature .. . . 205
+Stability of Implicit Runge-Kutta Methods ....... 212
+350  A-stability, A(a)-stability and L-stability......... 212
+351 Criteria for A-stability. ©... 2 ee ee 213
+352 Padé approzimations to the exponential function .. . . 215
+353  A-stability of Gauss and related methods ........ 221
+854 Order stars 2. ee en 223
+3855 Order arrows and the Ehle barrier ........00.. 226
+856 AN-stability.. 2... 0.00... eee ee ee 228
+857 Non-linear stability... 0... ee ee 232
+858  BN-stability of collocation methods ............ 236
+359 The V and W transformations .............. 237
+Implementable Implicit Runge-Kutta Methods .... . 242
+360 Implementation of implicit Runge-Kutta methods . . . . 242
+861  Diagonally-implicit Runge-Kutta methods ........ 244
+362 The importance of high stage order... 1.1.2.0... 245
+363  Singly implicit methods ............-0.20.4 249
+364 Generalizations of singly-implicit methods ....... . 254
+365 Effective order and DESIRE methods... ........ 256
+Order Barriers ........-.....0 0.00002 eee eee 258
+370 Eaplicit barriers 2... ee ee 258
+371 An upper bound on the required number of stages . . . . 260
+Algebraic Properties of Runge-Kutta Methods ..... 262
+380 Motivation... 2.2. ee ee eee 262
+381 Equivalence classes of Runge-Kutta methods ..... . 263
+382 The group of Runge-Kutta methods. ........... 266
+383 The Runge-Kutta group... 6.0.0.2 00022 eae 269
+384 A homomorphism between two groups .......... 272
+385 A generalization of G, .. 2.002. ee eee 274
+386 Recursive formula for the product............. 275
+387 Some special elements ofG .............-.. 280
+388 Some subgroups and quotient groups ........... 283
+889 An algebraic interpretation of effective order... .. . . 285
+Implementation Issues ..................... 290
+
+890 Introduction... 0... ee ee ee ee 290

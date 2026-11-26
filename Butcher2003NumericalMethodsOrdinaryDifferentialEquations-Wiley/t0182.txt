@@ -1,0 +1,58 @@
+170 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Proof. The case p = 1 follows from (323g), so we consider instead the case
+p > 2. Also, without loss of generality we assume that 1 < ¢ < p—1, because
+internal order 1 is equivalent to c¢; = Yja1 aij and because g > p implies
+internal order p — 1. We first prove that
+
+. 1
+Dobie! =z, k=1,2,...,p.
+
+For k = 1 the result is equivalent to (323g). If the result has been proved for
+k-1<p, we verify it for k, thus completing an induction argument. We have
+
+1 1
+Yond! = So bet? Sie = — - ESD AE
+
+i=1
+The next "step is to extend the internal order property to stage number s.
+Write the value of $;(t) as }73_, aijx;. We then have
+
+WOROFD yen =
+= 3 biaagX5
+
+ij=1
+
+& 1 8 ol)
+=bs | Slassxs- a] + YO tS
+DXi — py a(t)
+
+j=l
+
+. 1 1
+- (Soa aOGOES
+
+j=l
+implying that
+
+Say =
+TO!
+Next we prove the order condition for a tree of the form [r*—'t,] where
+k+r(ty) < p. We write (t1) = 374_, bix;. For k = 1 we have
+
+i=l
+
+~ 1 1
+O(t) = bax; = > O95 = So Ee
+x iHiXs 3 4 = Saya) eH) > 3H
+Now assume that & > 1 and that the result has been proved when & is replaced
+by k — 1. For the rest of this proof, we write ®((t]) = j_, bixi. We have
+
+bck! = bck? - bck and hence
+
+(1) = &((r**45))
+
+s
+= ad:
+
+i=l

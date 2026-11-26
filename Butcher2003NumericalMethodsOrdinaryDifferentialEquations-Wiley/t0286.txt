@@ -1,0 +1,44 @@
+274 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+385 A generalization of Gy
+
+It will be convenient to build an algebraic system similar to G,, but possessing,
+in addition to the group structure, a vector space structure. We cannot exactly
+achieve all of this, but we can achieve almost all of it. The way we go about
+this is to add to T an additional member, known as the ‘empty tree’ and
+denoted by @. The augmented set of trees will be denoted by T#. We write
+G for the set of mappings T# > R and G; the set of those members of G for
+which § maps to 1. We define the operation G, x G — G just as for the group
+operation except that the coefficient of a(t) in the formula for (af)(t) is B(@).
+With this understanding we retain the associativity property, in cases where
+it makes sense. That is, if a, 8 € G, and y € G, then
+
+(a8)y = a(67).
+Furthermore, left-multiplication by an element of G, is linear in the sense that
+a8 + 7) = 08 + ay,
+whenever a € G; and £,7 € G. Furthermore,
+a(cB) = caf,
+
+where for a scalar c, cf is the mapping that takes t to c(t) for all t € T*.
+
+The generalization we have introduced has a simple significance in terms of
+Runge-Kutta tableaux and methods. Instead of computing the output value
+from a step of computation by the formula
+
+&
+yoth > biFi, (385a)
+i=l
+where yo is the input value and F,, Fb, ..., F’, are stage derivatives, we can
+replace (385a) by
+8
+boyo +h > OF.
+
+i=1
+To express this in a tableau, we place the coefficient bp in the spare space at
+the left of the last line. Thus, the tableau would have the form
+
+(1 | A111 G2 *7* Aig
+€2 | Gai G22, ** Os
+Cg} M1 As2 ''* Oss
+
+bof tr by + by

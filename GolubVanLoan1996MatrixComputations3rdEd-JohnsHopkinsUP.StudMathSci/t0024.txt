@@ -1,0 +1,99 @@
+1.2. EXPLOITING STRUCTURE 19
+
+large n (the typical situation of interest) we see that the exact flop count
+offers no insight beyond the n?/3 approximation.
+
+Flop counting is a necessarily crude approach to the measuring of pro-
+gram efficiency since it ignores subscripting, memory traffic, and the count-
+less other overheads associated with program execution. We must not infer
+too much from a comparison of flops counts. We cannot conclude, for ex-
+ample, that triangular matrix multiplication is six times faster than square
+matrix multiplication. Flop counting is just a “quick and dirty” accounting
+method that captures only one of the several dimensions of the efficiency
+issue.
+
+1.2.5 The Colon Notation—Again
+
+The dot product that the k-loop performs in Algorithm 1.2.1 can be suc-
+cinctly stated if we extend the colon notation introduced in §1.1.8. Suppose
+Ae R™*" and the integers p, g, andr satisfy 1 <p<q<nandl<r<m.
+We then define
+
+A(r, 2:4) = [Grpy-.- eq] € REX G@-PtD |
+Likewise, if 1 <p<q<mand1l<e<n, then
+
+pe
+A(pg,c) =|: | EIRP!
+Gee
+With this notation we can rewrite Algorithm 1.2.1 as
+C(1:n, lin) = 0
+for 4 = lin
+for j = in
+C(t, 7) = Ali, 2:7) BES, J) + CU, 9)
+end
+end
+
+We mention one additional feature of the colon notation. Negative in-
+crements are allowed. Thus, if x and y are n-vectors, then s = 27 y(n: —1:1)
+
+is the summation a
+so So ritn—s41 .
+i=
+1.2.6 Band Storage
+
+Suppose A € R"™*" has lower bandwidth p and upper bandwidth g and
+assume that p and g are much smaller than n. Such a matrix can be stored
+in a (p+q + 1)-by-n array A.band with the convention that
+
+ay = Aband(i-j +9413) (1.2.1)
+
+20 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+for all (i,j) that fall inside the band. Thus, if
+
+ay a2 a3 0 OO @
+Qa G32 G23 Oy O 0
+Q azz a33 G34 a3, 0
+A= +
+0 O Gaz O4q O45 ag
+0 0 O 454 G55 G56
+0 0 oO 0 aes G66
+
+then
+0 O a@i3 G24 435 Gas
+G0 a a @: a. a
+Aand = 12 G23 G34 G45 O56
+@11 922 G33 G44 55 Seg
+021 432 G43 O54 O65 0
+
+Here, the “0” entries are unused. With this data structure, our column-
+oriented gaxpy algorithm transforms to the following:
+
+Algorithm 1.2.2 (Band Gaxpy) Suppose A € R"*” has lower band-
+width p and upper bandwidth q and is stored in the A.band format (1.2.1).
+Ifz,y € R", then this algorithm overwrites y with Az + y.
+
+for j = lin
+Ytop = max(1,j — 9)
+Yoor = min(n, j + p)
+Qtop = max(1,q + 2 - 7)
+Avot = Stop + Yooe — Ytop
+, U(YropYoor) = 2(j)A-band(atop:aroes J) + Y(Yeop'Veot)
+en
+
+Notice that by storing A by column in A.band, we obtain a saxpy, column
+access procedure. Indeed, Algorithm 1.2.2 is obtained from Algorithm 1.1.4
+by recognizing that each saxpy involves a vector with a small number of
+nonzeros. Integer arithmetic is used to identify the location of these nonze-
+ros. As a result of this careful zero/nonzero analysis, the algorithm involves
+just 2n(p +q+ 1) flops with the assumption that p and g are much smaller
+than n.
+
+1.2.7 Symmetry
+We say that A € R™ "is symmetric if AT = A, Thus,
+
+1 3
+A=|2 5
+3 6
+
+aps

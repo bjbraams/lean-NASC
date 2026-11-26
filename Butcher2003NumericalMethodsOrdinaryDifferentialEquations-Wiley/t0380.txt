@@ -1,0 +1,49 @@
+370 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Bl+Vv=u+v. (510c)
+
+Just as for linear multistep methods, we need a concept of stability. In the
+general linear case this is defined in terms of the power-boundedness of V,
+and as we shall see, is related to the solvability of the problem y’ = 0.
+
+Definition 510C A general linear method (A,U,B,V) is ‘stable’ if there
+exists a constant C such that for alln =1,2,..., ||V||<C.
+
+511 Covariance of methods
+
+If the interpretation of a method is agreed to, at least to the choice of the
+preconsistency vector, we consider the question of the effect on a numerical
+approximation if the initial value problem being solved undergoes a shift of
+origin. Consider the two initial value problems
+
+y'(z) = fv), y(Zo) = Yo, (511a)
+z'(a) = f(z(z)—1), (0) = yo + 0, (511b)
+
+where 7 € RY is arbitrary. If (511a) has a solution, then (511b) also has a
+solution, which is identical to the former solution except that each point on
+the trajectory is translated by 7. If the solution is required at some Z > 20,
+then the solution to (511a) at this point can be found by subtracting 7 from
+the solution of (511b).
+
+When each of these problems is solved by a numerical method, it is
+natural to expect that the numerical approximations should undergo the same
+covariance rule as for the exact solution. This means that in a single step of a
+method (A, U, B, V), interpreted as having a preconsistency vector u, we want
+to be able to shift component number i of y!l by um, for all i = 1,2,...,7,
+and be assured that component i of y!!] is also shifted by the same amount.
+At the same time the internal approximations (the stage values) should be
+shifted by n. Of course no shift will take place to the stage derivatives.
+
+The idea of covariance is illustrated in Figure 511(i). Given an initial value
+problem (f, yo) as given by (511a) the operation v represents the computation
+of a numerical approximation to the solution on an interval [zo,Z], or at
+a single value of x. Furthermore, o represents a shift of coordinates by a
+specific vector 7, as in the transformation to the problem (511b). Covariance
+is just the statement that the diagram in Figure 511(i) commutes, that is,
+that 0 ov = vog. The diagonal arrow representing these equal composed
+functions corresponds to the operation of solving the problem, and then
+shifting coordinates or else shifting first and then solving.
+
+The covariance of the output values is equivalent to (510a) and the
+covariance of the stage values is equivalent to (510b). We have no interest in
+methods that are not covariant even though it is possible to construct artificial

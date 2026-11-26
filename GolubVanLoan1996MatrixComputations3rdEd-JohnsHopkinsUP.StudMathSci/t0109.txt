@@ -1,0 +1,99 @@
+4.6. VANDERMONDE SYSTEMS AND THE FFT 189
+
+If we define the index vector c = (0246135 7], then
+
+11 #21 1 1 1 1 1
+tw wt wl wo wo we wo?
+Low 1 ofl wt wh w? wh
+. 1 ow wt wl wow ww wt wd
+Fes) = |
+Low wt wel —w -w® yh a?
+1 wf! 1 wt] —w? —wS -w? we
+1 ow wf wl ew? —w -w? wh
+
+The lines through the matrix are there to help us think of F,(:,c} as a
+2-by-2 matrix with 4-by-4 blocks. Noting that w? = w2 = wa we see that
+
+(Fal Fe
+Fe(:,c) = Fat,
+
+where
+10 0 0
+_ 0 we 0 0
+%M=15 9 a2 0
+00 0 uw
+
+It follows that if x in an 8-vector, then
+
+j Foe | [eee]
+
+4] [_F4x(0:2:7)
+Ha | | Fyx(:2:7)_ 7)
+Thus, by simple scalings we can obtain the 8-point DFT y = Fyz from the
+4point DFTs yp = F4x(0:2:7) and: yp = Fyx(1:2:7):
+
+Far = F(:,c)x(c)
+
+y(0:4) = yrtd.+yg
+WAT) = yr-d.*yp.
+Here,
+1
+w
+w?
+uw
+and “.*" indicates vector multiplication. In general, if n = 2m, then y =
+F,2 is given by
+
+d=
+
+y(O:m—1) = yrt+d.eyg
+vmn-1) = ya—deys
+
+190 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+where
+d= [1 wires, wm”
+gro = F,2(0:2:n-1),
+yep = Fax (l:2in - 1).
+
+For n = 2° we can recur on this process uutil n = 1 for which Fix = 2:
+
+function y = FFT(z,n)
+ifr=1
+y=r
+else
+m = nf2; w = e72etn
+yr = FFT (z(0:2:n),m); ya = FFT (2(1:2:n),m)
+d= {1, Wyre, mnt V; z=d.eyp
+_| yrtz
+y=[ortz]
+end
+
+This is a member of the fast Fourier transform family of algorithms. It
+has a nonrecursive implementation that is best presented in terms of a
+factorization of F,,. Indeed, it can be shown that F,, = A;---A,P, where
+
+AQ=1,0B, L=%,r=n/L
+with
+
+- Ihya Quy - da L/2-1
+Buz Tuy On) and Qn;2 = diag(1,wz,.. + Wy ).
+The matrix P, is called the bit reversal permutation, the description of
+which we omit. (Recall the definition of the Kronecker product “@” from
+§4.5.5.) Note that with this factorization, y = F,r can be computed as
+follows:
+
+z=Pizr
+
+for g = 1:t
+L=R,ran/Lh (4.6.5)
+z=(,@ Bx
+
+end
+
+The matrices A, = (1, 3,) have 2 nonzeros per row and it is this sparsity
+that makes it possible to implement the DFT in O(nlogn) flops. In fact,
+a careful implementation involves 5n log, n flops.
+
+The DFT matrix has the property that
+
+Fy = iF = +F,. (4.6.6)

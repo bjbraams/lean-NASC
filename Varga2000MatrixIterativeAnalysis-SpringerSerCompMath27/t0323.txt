@@ -1,0 +1,47 @@
+316 9. Estimation of Acceleration Parameters
+
+from (9.1), w, = 1.2596. Having selected a positive vector x(), the subsequent
+vectors x™) can be viewed as iterates of the point Gauss-Seidel method ap-
+plied to the solution of
+
+Ax =0,
+
+where x( is the initial vector of the iterative process. Specifically, if we
+choose x) to have all components unity, the results of this iterative proce-
+dure are tabulated below.
+
+m Am Am Wm Wm
+
+0 | 0.4375 | 0.8750 | 1.1429 | 1.4776
+
+1 | 0.6071 | 0.8333 | 1.2294 | 1.4202
+
+2 | 0.6471 | 0.8333 | 1.2546 | 1.4202
+
+3 | 0.6534 | 0.6750 | 1.2589 | 1.2738
+
+In actual practice, this iterative process is terminated when some measure
+of the difference Gm —w,,, is sufficiently accurate.?
+
+The definition of (9.5) shows that the vectors x” can be expressed as
+powers of the matrix L; applied to x:
+
+x™) = Lex), m>0,
+
+and, for this reason, the method just described for finding the largest eigen-
+value (in modulus) of L£; is basically a combination of the Perron-Frobenius
+theory of nonnegative matrices, and the power method, the latter being ap-
+plicable to any matrix whose largest eigenvalue in modulus is unique. (See
+Bodewig (1959), p. 269.) The rate at which this process converges depends
+on the dominance ratio:
+
+[Aal
+9.14 d:= —~ <1,
+(@.14) Ail
+where we have ordered the eigenvalues of £1 as |\1| > |Aa| > |A3| > - ++ > [Anl-
+Convergence of the power method is slow when d is close to unity.
+
+3 For example, at the Bettis Atomic Power Laboratory, (Gm —Ww,,)/(2—@m) < 0.2
+is the criterion used. This procedure for finding bounds for w» is often referred
+to in nuclear programs as the w-routine. See Bilodeau, Dorsey, Fairey, and Varga
+(1957).

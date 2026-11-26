@@ -1,0 +1,30 @@
+210 6. Derivation and Solution of Elliptic Difference Equations
+
+positive in R from (6.39), then A has positive diagonal entries and nonpos-
+itive off-diagonal entries. In fact, it is evident from (6.49) not only that A
+is symmetric, but as o > 0 then A is strictly diagonally dominant. For irre-
+ducibility properties of A, consider now the point Jacobi matriz B derived
+from A. Again, as in Sect. 6.1, (6.49) shows us that B is evidently a nonneg-
+ative matrix with row sums all less than unity, so-that B is convergent. For
+the discrete mesh of Fig. 6.7, the directed graph of the point Jacobi matrix
+is given in Fig. 6.9 (a). Not only do we see from this that B (and hence
+A!) is irreducible, but we also see that the greatest common divisor of the
+lengths of the closed paths of the directed graph G(B) is two, which proves
+(Theorem 2.22 of Sect. 2.4) that B is cyclic of inder 2. Next, we number the
+mesh points, where u;,; is unknown in Fig. 6.9(b), from left to right, top to
+bottom, calling this the natural ordering of the mesh points. With this
+
+G@): Go):
+
+Fig. 6.9.
+
+ordering, consider the directed graph G(B) of type 2 of Fig. 6.9(b). Since
+each closed path has the same number of major and minor paths, then from
+the results of Sect. 4.4, B is consistently ordered. Thus almost all the con-
+clusions drawn in Theorem 6.1 for the one-dimensional case remain valid in
+two dimensions. Although it is evident that the matrices A and B are no
+longer tridiagonal, there is a partitioning of A which is block tridiagonal. In
+Fig. 6.9(b), we partition the matrix A by placing all mesh points of successive
+horizontal mesh line segments into successive sets, and since the particular
+derivation given here is based on the five-point approximation, then A can
+be written as

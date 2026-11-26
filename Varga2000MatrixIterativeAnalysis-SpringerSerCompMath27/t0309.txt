@@ -1,0 +1,53 @@
+302 8. Matrix Methods for Parabolic Partial Differential Equations
+
+s(t) = (p - Se) (58+ ( - 5) D)
+*Q
+
+’
+
+where
+
+@7) = (Se"+ (1-$) 0) (v- be)”.
+
+As T(t) = Q*Q, then 75(t) is a nonnegative definite Hermitian matrix, which
+proves that the eigenvalues of Ts(t) are nonnegative real numbers. Moreover,
+in a similar manner it can be shown that the eigenvalues of T(t) are less
+than unity for 0 < t/2 < 2. (See Exer. 6.)
+
+For the iterative method resulting from the matrix approximation T5(t)
+of exp(—tC~1A), this can be written as a two-step method:
+
+wor) -(7-*r) Sty 4 (2) hw
+2 2 2
+
+-1
+t t 4
++5 (7 - 5) D7s,
+
+wittl) — t-tu tr + it TS w(t1/2)
+2 2 2
+t t.\7
+
+which is called the symmetric successive overrelaxation iterative
+method and has been considered by Aitken (1950), Sheldon (1955), and Ha-
+betler and Wachspress (1961). This iterative method corresponds to sweeping
+the mesh in one direction, and then reversing the direction for another sweep
+of the mesh.”° Sheldon (1955) observed that, since the resulting iteration
+matrix T;(t) has nonnegative real eigenvalues less than unity for 0 < t/2 < 2,
+one can rigorously apply the Chebyshev semi-iterative method of Sect. 5.1 to
+(8.77) to accelerate convergence further. In effect then, one first selects the
+optimum value of t which gives the smallest spectral radius for the matrix
+Ts(t) and then generates a three-term Chebyshev recurrence relation for the
+vectors w'”),
+
+As a final result in this chapter, we recall that in our discussions of the suc-
+cessive overrelaxation iterative method and the Peaceman-Rachford variant
+of the alternating-direction implicit iterative methods, each of the associated
+iteration matrices was shown to be primitive for certain choices of accelera-
+tion parameters.?! However, these isolated and seemingly independent results
+
+(8.77)
+
+20 For this reason, this method is sometimes called the to-fro or forward-backward
+iterative method.
+21 See Exer. 4 of Sect. 3.6 and Theorem 7.15 of Sect. 7.3.

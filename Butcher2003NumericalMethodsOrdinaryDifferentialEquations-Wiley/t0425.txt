@@ -1,0 +1,76 @@
+416 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Butcher J. C. (1977) On A-stable implicit Runge-Kutta methods, BIT, 17: pp.
+375-378.
+
+Butcher J. C. (1979) A transformed implicit Runge-Kutta method, J. Assoc.
+Comput. Mach., 26: pp. 731-738.
+
+Butcher J. C. (1985) The nonexistence of ten-stage eighth order explicit Runge-
+Kutta methods, BIT, 25: pp. 521-540.
+
+Butcher J. C. (1987) The numerical analysis of ordinary differential equations,
+Runge-Kutta and general linear methods, Wiley, Chichester and New York.
+
+Butcher J. C. (1995) On fifth order Runge-Kutta methods, BIT, 35: pp. 202-209.
+
+Butcher J. C. (1995a) An introducton to DIMSIMs, Comput. Appl. Math., 14: pp.
+59-72.
+
+Butcher J. C. (1997) An introduction to ‘Almost Runge-Kutta’ methods, Appl.
+Numer. Math., 24: pp. 331-342.
+
+Butcher J. C. (1997a) A generalization of singly-implicit Runge-Kutta methods,
+Appl. Numer. Math., 24: pp. 343-350.
+
+Butcher J. C. (1998) ARK methods up to order five, Numer. Algorithms, 17: pp.
+193-221.
+
+Butcher J. C. (2002) The A-stability of methods with Padé and generalised Padé
+stability functions, Numer. Algorithms, 31: pp. 47-58.
+
+Butcher J. C. and Cash J. R. (1990) Towards efficient Runge-Kutta methods for
+stiff systems, SIAM J. Numer. Anal., 27: pp. 753-761.
+
+Butcher J. C. and Chartier P. (1997) A generalization of singly-implicit Runge-
+Kutta methods, Appl. Numer. Math., 24: pp. 343-350.
+
+Butcher J. C. and Chipman F. H. (1992) Generalized Padé approximations to the
+exponential function, BIT, 32: pp. 118-130.
+
+Butcher J. C. and Jackiewicz Z. (1996) Construction of diagonally implicit general
+linear methods of type 1 and 2 for ordinary differential equations, Appl. Numer.
+Math., 21: pp. 385-415.
+
+Butcher J. C. and Jackiewicz Z. (1998) Construction of high order diagonally implicit
+multistage integration methods for ordinary differential equations, Appl. Numer.
+Math., 27: pp. 1-12.
+
+Butcher J. C. and Jackiewicz Z. (2003) A new approach to error estimation for
+general linear methods, Numer. Math. (to appear).
+
+Butcher J. C. and Moir N. (2003) Experiments with a new fifth order method,
+Numer. Algorithms (to appear).
+
+Butcher J. C. and Wright W. M. (2003) A transformation relating explicit and
+diagonally-implicit general linear methods, Appl. Numer. Math., 44: pp. 313-327.
+
+Butcher J. C. and Wright W. M. (2003a) The construction of practical general linear
+methods, BIT (to appear).
+
+Byrne G, D. and Lambert R. J. (1966) Pseudo-Runge-Kutta methods involving two
+points, J. Assoc. Comput. Mach., 13: pp. 114-123.
+
+Cooper G. J. and Verner J. H. (1972) Some explicit Runge-Kutta methods of high
+order, SIAM J. Numer. Anal., 9: pp. 389-405.
+
+Curtis A. R. (1970) An eighth order Runge-Kutta process with eleven function
+evaluations per step, Numer. Math., 16: pp. 268-277.
+
+Curtis A. R. (1975) High-order explicit Runge-Kutta formulae, their uses and
+limitations, J. Inst. Math. Appl., 16: pp. 35-55.
+
+Curtiss C. F. and Hirschfelder J. O. (1952) Integration of stiff equations, Proc. Nat.
+Acad. Sci. U.S.A., 38: pp. 235-243.
+
+Dahlquist G. (1956) Convergence and stability in the numerical integration of

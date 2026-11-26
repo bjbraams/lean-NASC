@@ -1,0 +1,53 @@
+3.6 Regular and Weak Regular Splittings of Matrices 97
+
+In terms of satisfying the hypothesis that A~! > O in Theorem 3.29, we
+now recall results from Sect. 3.5.
+
+Corollary 3.30. Let A be a Stieltjes matriz, and let A= M—N be a regular
+splitting of A where N is real and symmetric. Then,
+
+- N)- p(A7*)
+
+3.90 MN) < AWN) AAT) ey,
+
+(90) MNS Te oN): A)
+
+Proof. Since A is a Stieltjes matrix, A~! > O from Corollary 3.24 and Defini-
+tion 3.22. Then the results of Theorem 3.29 are valid. As A~! and N are both
+real symmetric matrices, then p(A7!) = ||A71||, and p(N) = ||N||. Thus, as
+
+p(AtN) < ATI < AIL = (477) - 0),
+
+the first inequality of (3.90) follows from (3.88) and the strictly increasing
+nature of r/(1 +7) for7 > 0. ™
+
+As a means for generating regular splittings, the results of Sect. 3.5 are
+again useful.
+
+Theorem 3.31. Let A = [a;,;] be ann x n M-matriz. If M is anyn xn
+matrix obtained by setting certain off-diagonal entries of A to zero, then
+A=M-—N isa regular splitting of A and p(M-1N) <1.
+
+Proof. This follows from Theorem 3.25 and Theorem 3.29. i
+
+We now assume that A = M, — N, = M2 — N»2 are two regular splittings
+of A. We now seek to compare the spectral radii of the two products M; IN,
+and My 1N2. Results of this kind are called comparison theorems in the
+literature.
+
+Theorem 3.32. Let A = M; — Ny = M2 — No be two regular splittings of
+A, where A~1 > O. If No > Ni > O, then
+
+(3.91) 1 > p(Mz"No) > p(My1M) > 0.
+If, moreover, A~! > O and if Nz > Ni > O, equality excluded,!” then
+
+(3.92) 1 > p(Mz'Noe) > p(My1Ni) > 0.
+
+Proof. To establish (3.91), we have from the hypotheses that A~!N2 >
+AN, > O. As r/(1 +7) is a strictly increasing function for r > 0,
+then (3.91) directly follows from the expression in (3.88) of Theorem 3.29.
+Then, to establish the stronger inequalities of (3.92), it suffices to prove that
+p(A-!N2) > p(A71N) > 0. Since No > Ni > O, equality excluded, and
+A-! > O, we have that
+
+17 By this we mean that neither Ni nor N2 — N; is the null matrix.

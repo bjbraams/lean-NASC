@@ -1,0 +1,52 @@
+120 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+The four output quantities for this method are the approximate solution found
+at the end of the step, together with h multiplied by each of the three stage
+derivatives. The second of the two general linear methods, that do not fit into
+any of the classical families, is the method introduced in Subsection 262. Its
+general linear method coefficient matrix is
+
+0 0 0 529 3904 4232 1472
+
+~~ 3375 3375 3375 3375
+
+189 0 0 152 —127 — 419 —1118
+
+3375 25 ° * ry °°
+
+Biss ies 9| 1 0 ag Ba
+3375 25 19 1
+
+5is2 ies Of} 21 0 360 Bsa
+0 0 0 1 0 0 0
+0 0 1 0 0 0 0
+0 0 0 0 0 1 0
+
+{n
+
+For this method, the output quantities are given by yi ly y(tn), yf! ]
+
+y(en-1), yf! = hy'(en) and yl?! w hy'(an-1).
+
+264 Numerical examples
+
+The limited numerical testing performed here does not give a great deal of
+support to the use of pseudo Runge-Kutta or hybrid methods. Using the
+Kepler problem with eccentricity e = } over a half period, the pseudo Runge-
+Kutta method (261a) was compared with the classical Runge-Kutta method
+and the results are summarized in Figure 264(i). To make the comparison
+as fair as possible, the axis denoted by h shows the stepsize per function
+evaluation. That is, for the Runge-Kutta method, h = 4h and, for the pseudo
+Runge-Kutta method, h = 3h. The classical Runge-Kutta is significantly
+more accurate for this problem.
+
+I|E|
+
+107? 19071 10-8 10-8 10-4 107?
+
+1 1 1
+10-8 10-2 107?
+
+h
+
+Figure 264(i) Comparison of Runge-Kutta with pseudo Runge-Kutta method

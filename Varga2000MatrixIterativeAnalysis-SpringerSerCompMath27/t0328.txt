@@ -1,0 +1,42 @@
+9.2 Application of Isoperimetric Inequalities 321
+
+If the matrix A of (9.12) is partitioned as follows,
+
+determine the dominance ratio dy, for the associated block Gauss-
+Seidel matrix. How do dp; and dj, compare?
+
+5. Let Hy be an irreducible n x n Stieltjes matrix with eigenvalues 0 <
+01 < 02 <-+++ < Gp, and, for x in R”, let x™ > 0 and 0 < Am < 04.
+Using the notations of (9.16) and (9.19), show that
+
+I] |? (m)
+01 S Am + Ge™)eGelmaD) SH
+
+6. Prove Theorem 9.4.
+
+9.2 Application of Isoperimetric Inequalities
+
+The goal in this section is to connect the classical theory of isoperimetric
+inequalities to the topic of finding bounds for the optimum relaxation factor
+wp for matrix problems somewhat more restrictive than those treated in Sect.
+9.1. This interesting connection was first made by Garabedian (1956). We
+shall derive Garabedian’s estimate in a different manner and obtain a measure
+for the efficiency for his estimate.
+
+Let R be an open, bounded, and connected region in the plane with
+boundary I’, such that R, the closure of R, is the union of a finite number of
+squares, each of side h*. Specifically, we seek discrete approximations to the
+Poisson boundary-value problem
+
+(9.20) —Uge — Uyy = f(z,y), (zy) € R,
+
+subject to the boundary condition
+
+(9.21) u(z,y) =9(z,y), (a,y) eT.
+
+For the discussion to follow, it is useful to introduce the Helmholtz equation
+for R:
+
+(9.22) Van + Vyy + A?v(z,y) =0, (x,y) € R,
+
+where

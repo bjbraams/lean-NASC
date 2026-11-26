@@ -1,0 +1,16 @@
+58 2. Nonnegative Matrices
+
+6. Let B be an irreducible n x n complex matrix. Prove that G(B) is a
+cyclic graph of index p(> 1) if and only if B is weakly cyclic of index
+p.
+
+7. For a fixed positive integer n, consider the set of all nonnegative n x n
+matrices B with p(B) = 1, where B can be irreducible or reducible. If
+2 is the collection of all eigenvalues of all these matrices, show that
+the p-th roots of unity, i.e., solutions of z? = 1, are elements of 2 for
+every p with 1 < p < n. Show also that these are the only points of Q
+having absolute value unity.
+
+8. With the definition of 2 in the previous exercise, show that if \ € 2,
+then each point of the line segment joining \ and 1 (ie., a\ + (1— a)
+for 0 <a < 1) is also in Q.

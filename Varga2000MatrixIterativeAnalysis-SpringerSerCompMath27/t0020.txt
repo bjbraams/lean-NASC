@@ -1,0 +1,49 @@
+12 1. Matrix Properties and Concepts
+which has eigenvalues |a|? + 4 + ,/|a|? + 4, so that
+
+[All = fie? +5 +/lel + i} > [al = p(A).
+
+Analogous to our definitions of convergence of vector sequences and series, we
+can similarly define what we mean by the convergence of matrix sequences
+and series. If A) = {al}, A®) = (at), -++ is an infinite sequence of n x n
+complex matrices, we say that this sequence converges to an n x n complex
+matrix A = [aj,;] if
+
+lim al™) =a; foralll <i,j<n.
+
+m-— Co *
+
+Similarly, by the convergence of an infinite series )>>_o B) of nxn complex
+matrices BO") = (oo) to the matrix B = [b;,;], we mean
+
+N
+Jim. dos =; foralll <i,j<n.
+
+In terms of spectral norms, it follows from Theorem 1.5 that
+
+|A™ — Al] 30 asm— co
+if and only if the sequence A, A“), --. of matrices converges to the matrix
+A, and similarly,
+
+N
+
+So Bm —B
+
+m=0
+
+—0 as N-oo
+
+if and only if the infinite series \°°_, B™) converges to the matrix B.
+
+We now return to the problem posed in the previous section. If A is an
+nxn complex matrix, when does the sequence A, A”, A, --- of powers of the
+matrix A converge to the null matrix O? As sequences of this form are basic
+
+to our development, we now make the
+
+Definition 1.9. Let A be an n x n complex matrix. Then, A is convergent
+(to zero) if the sequence of matrices A, A”, A? --- converges to the null matrix
+O, and is divergent otherwise.
+
+Theorem 1.10. [f A is an n x n complex matrix, then A is convergent if
+and only if p(A) <1.

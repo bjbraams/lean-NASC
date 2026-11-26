@@ -1,0 +1,48 @@
+8.4 Iterative Methods for Solving Elliptic Difference Equations 303
+
+are merely corollaries to Theorem 8.12, as the associated matrix approxima-
+tions of (8.58) and (8.67) are nonnegative consistent approximations to an
+irreducible M-matrix in each case.
+
+In summary, the main purpose of this section was to establish a corre-
+spondence between the iterative methods previously described and matrix
+methods for approximating the solution of parabolic partial differential
+equations. Although it is true that all these iterative methods could be
+adapted for use in approximating the solution of parabolic partial differential
+equations, the variants of the alternating-direction implicit method are more
+widely used in practical parabolic problems, mainly because of their inherent
+unconditional stability.
+
+Exercises
+
+1. Show that one can select time increments At;,1 <i < m, such that
+the matrix of (8.57),
+
+m
+
+[]{@ - 4t)I + At,B},
+
+i=1
+is precisely the polynomial p(B) of (5.21).
+2. Let A= D-E-F bean nxn matrix where D is a positive diagonal
+
+matrix and FE and F are respectively strictly lower and strictly upper
+triangular matrices. For the splittings
+
+M =D, N,=E+F,
+M,=D-E,  No=F,
+
+1-
+My =+(D-wb), Ns=F—) + F, w £0,
+
+let C; := M;,1 = 1,2,3, and consider respectively the Padé matrix
+approximation E,(AtC;1A) for exp(—AtC; 1A). Show for At = 1
+that these Padé approximations exactly correspond to the point Ja-
+cobi, point Gauss-Seidel,and point successive overrelaxation iterative
+methods, respectively.
+
+3. Verify that the matrices T;(At),2 < i < 5, of (8.58), (8.67), (8.71),
+and (8.72) are each consistent approximations of exp(— AtS). Next, for
+small At show that the expansion of T3(At) in (8.67) agrees through
+quadratic terms of exp(—AtA) without assuming that H) and Vi; com-
+mute.

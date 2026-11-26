@@ -1,0 +1,57 @@
+376 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+where os
+Ty = Yj -yltp—i)—h [ Flulan—1 + hé)) dé,
+
+r a
+Ty = y(tn—1) + cihy!(ta—1) — 0 Uis@"" — Yo aizhy" (en),
+jel
+
+j=
+
+T3 = af (F(o(en—1 + hg)) _ u'(tn—1)) a8,
+
+Ty = bY ais (Flylen—1 + hes) — y'(n-1))-
+
+j=l
+Simplify and estimate these terms, and we find
+
+Ty = y(tn-1 + hei) — y(@n-1) — af “yn + h€)dé
+=0,
+
+Te = y(tn—1) + eihy'(@n-1)
+- > Uy (uiy(en—) + hujy (en-1)) - » aig hy' (tn—-1)
+j=l j=l
+=0, because Vu =1 and Uv+ Al=c,
+Ta =a] ni + hE) — Fy(t@n—
+yrail= | f (cena + Ae) ~ FluCen-1))) |
+
+C4
+<af
+0
+C4
+<aL [
+0
+
+Ce
+<DM | ede
+0
+
+F(u(en—1 + AE) ~ F(y(en-1))]] a8
+
+vlena +g) ~ y(en—1) [ae
+
+= SelM,
+Il = A] So 05;(FluCer—a + es)) = Fluler-)))|
+
+j=l
+
+SAD aig - fn + hes) — F(y@n—1))Il
+j=l
+
+SAL Jais| + lly(@n—1 + he) — y(tn-a)l
+j=l
+
+<hL?M > lagesl,
+
+j=l

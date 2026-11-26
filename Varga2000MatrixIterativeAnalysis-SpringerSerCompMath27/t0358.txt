@@ -1,0 +1,29 @@
+References 353
+
+Young, David M. (1956a) On the solution of linear systems by iteration, Proc.
+Sixth Sym. in Appl. Math., McGraw-Hill Book Co., Inc., New York, pp. 283-298.
+[180, 181]
+
+Young, David M. (1956b) Notes on the alternating direction implicit iterative
+method, NN-28, 9 pp. and Notes on an iterative method of Douglas and Rachford,
+NN-32, 8 pp., Digital Computing Center, The Ramo-Wooldridge Corp. [273]
+
+Young, David M. (1961) The numerical solution of elliptic and parabolic partial
+differential equations. Modern Mathematics for the Engineer, Second Series,
+McGraw-Hill Company, Inc., New York, pp. 373-419. [310]
+
+Young, D. M. (1971) Iterative Solution of Large Linear Systems, Academic Press,
+New York. [144, 145, 148, 178]
+
+Young, David M. and Ehrlich, Louis (1960) Some numerical studies of itera-
+tive methods for solving elliptic difference equations, Boundary Problems in
+Differential Equations, University of Wisconsin Press, Madison, pp. 143-162.
+[268, 269, 278, 274]
+
+Zhang, Xian and Gu, Dunhe (1994) A note on A. Brauer’s theorem, Linear Algebra
+Appl., 196, 163-174. [30]
+
+Zolotareff, E. (1877) Anwendung der elliptischen Funktionen auf Probleme iiber
+
+Funktionen, die von Null am wenigstem oder meisten abweichen, Abh. St. Pe-
+tersburg 30. /273]

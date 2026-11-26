@@ -1,0 +1,89 @@
+5.6. WEIGHTING AND ITERATIVE IMPROVEMENT 267
+
+Notice that the “bottom half” of this equation determines v,
+Su=Qlb v=2Zyu, (5.6.9)
+while the “top half” prescribes z:
+Rix = QTb— (QT B2,Z7 + QT BZ2Z7 v= QTe- QT BZqu. (5.6.10)
+The attractiveness of this method is that all potential ill-conditioning is
+concentrated in triangular systems (5.6.9) and (5.6.10). Moreover, Paige
+
+(1979b) has shown that the above procedure is numerically stable, some-
+thing that is not true of any method that explicitly forms B~! A.
+
+5.6.4 Iterative Improvement
+A technique for refining an approximate LS solution has been analyzed by
+Bjérck (1967, 1968). It is based on the idea that if
+
+a a1[f] = [3 | AcR™", beR™ = (5.6.11)
+
+then || b~ Az {fo = min. This follows because r+Az = band A7r = 0imply
+AT Ar = AT). The above augmented system is nonsingular if rank(A) =
+n, which we hereafter assume.
+
+By casting the LS problem in the form of a square linear system, the
+iterative improvement scheme (3.5.5) can be applied:
+
+7 =o; 2 =0
+for k=0,1,
+
+fH) rik)
+(]-[o)- Le aL]
+[LaF o] [2] [2]
+at o || 2 | = | g@
+rlk+i) ik) pe
+[Lies | = [ cm | + en |
+end
+
+The residuals f{*) and g) must be computed in higher precision and an
+original copy of A must be around for this purpose.
+
+268 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+If the QR factorization of A is available, then the solution of the aug-
+mented system is readily obtained. In particular, if A = QR and Ri =
+A(1:n, lin), then a system of the form
+
+L# oft] -[0]
+
+transforms to
+hr Oo R A fi
+0 Im-n 0 foi =| h
+RF oO oO z 9
+where
+fi n h n
+Qt = [4] m-n Q"p = Lf] mn
+
+Thus, p and z can be determined by solving the triangular systems RTA = g
+and Riz = f; — A and seving » = Q[ h |: Assuming that Q is stored in
+
+factored form, each iteration requires 8mn — 2n? flops.
+
+The key to the iteration’s success is that both the LS residual and so-
+lution are updated—not just the solution. Bjérck (1968) showa that if
+q(A) = 8% and é-digit, 8-base arithmetic is used, then z‘) has appraxi-
+mately k(t — q) correct base 8 digits, provided the residuals are computed
+in double precision. Notice that it is x9(A), not «2(A)*, that appears in
+this heuristic.
+
+Problems
+
+PS.6.1 Verify (5.6.4).
+P5.6.2 Let A € R™*” have full rank and define the diagonal matrix
+A = diag( 1,...,1,(1+6),1,...,1)
+— ——
+had mh
+
+for 6 > —1. Denote the LS solution to min || A(Az — 6) |[2 by 2(6) and its residual by
+r(6) = b— Ax(8). (a) Show
+
+A(ATA)~ AT exeT
+= {i - 6——____ + .
+ré) ( 1+ bef A(ATA)—1 AT eq r(0)
+{b) Letting r;,(4) stand for the kth component of r(5), show
+
+_ r4(0)
+n(8) = 1+ sep A(ATA)-!ATe,.
+{c) Use (b) to verify (5.6.5).
+
+P5.6.3 Show how the SVD can be used to solve the generalized LS problem when the
+matrices A and B in (5.6.8) are rank deficient.

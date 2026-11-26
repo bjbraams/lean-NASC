@@ -1,0 +1,94 @@
+3.4. PIVOTING 115
+
+L=I,;0=0
+for 7 = l:n
+ifj=1
+a(jn) = AGj:n, 7)
+else
+Solve L(1:7 — 1, 1:7 -— Dz = Atle -1,97)
+for z and set U(1:7 ~ 1,7) =z.
+u(j:n) = A(in, 7) - Gen, ley — Wz
+end (3.4.2)
+ifj<n
+Determine ps with k < 4 < 1 80 |v(y)| = || (7:7) |I..-
+(7) =»
+v(j) + (4)
+A(j,j + Un) + A(u,j + lin)
+LG + 1,7) = v9 + Lin)/v(j)
+ifj>1
+L(5, 1:9 — 1) 6 L(y, 13-1)
+end
+end
+UG, 9) = r(3)
+end
+
+In this implementation, we emerge with the factorization PA = LU where
+P= E,_;--- Ey where E, is obtained by interchanging rows k and p(k) of
+the n-by-n identity. As with Algorithm 3.4.1, this procedure requires 2n7/3
+flops and O(n) comparisons.
+
+3.4.6 Error Analysis
+
+We now examine the stability that is obtained with partial pivoting. This
+requires an accounting of the rounding errors that are sustained during
+elimination and during the triangular system solving. Bearing in mind
+that there are no rounding errors associated with permutation, it is not
+hard to show using Theorem 3.3.2 that the computed solution 2 satisfies
+(A+ E)z = 6b where
+
+JE] < nu(3]Aj + SPTLIO}) + O(u?). (3.4.3)
+Here we are assuming that P, £, and U are the computed analogs of P,
+L, and U as produced by the above algorithms. Pivoting implies that the
+elements of L are bounded by one. Thus [| Lj... <n and we obtain the
+bound
+
+Ello < nu (311 A loo + 5nll foo) + O(u?). (3.4.4)
+
+116 CHAPTER 3. GENERAL LINEAR SYSTEMS
+
+The problem now is to bound || U |l,9. Define the growth factor p by
+lay |
+= max —~— 3.4.5
+em ee Ales (3.45)
+where A) is the computed version of the matrix A“) = M,Z, --- ME, A.
+
+It follows that
+Elles < 8n% pl] A llou + O(u?). (3.4.6)
+
+Whether or not this compares favorably with the ideal bound (3.3.1) hinges
+upon the size of the growth factor of p. (The factor n? is not an operating
+factor in practice and may be ignored in this discussion.) The growth factor
+measures how large the numbers become during the process of elimination.
+In practice, p is usually of order 10 but it can also be as large as 2"-!. De-
+spite this, most numerical analysts regard the occurrence of serious element
+growth in Gaussian elimination with partial pivoting as highly unlikely in
+practice. The method can be used with confidence.
+
+Example 3.4.3 If Gaussian elimination with partis! pivoting is applied to the problem
+.001 20 |[ ] = [ S00
+
+1.00 2.00 x2 3.00
+with @ = 10,t = 3, floating point arithmetic, then
+ou 7 1.00 o “; 1.00 «2.00
+p=([? ob] fe 002 io} F=[ 0 1.00
+
+and # = (1.00, .996)7. Compare with Example 3.3.1.
+
+Example 3.4.2 If A € R"*" is defined by
+l ifi=jorj=n
+a; = ~1 ifi>j
+: 0 otherwise
+then A has an LU factorization with |¢;;] <1 and tnn = 2"7!.
+
+3.4.7 Block Gaussian Elimination
+Gaussian Elimination with partial pivoting can be organized so that it is
+rich in level-3 operations. We detail a block outer product procedure but
+block gaxpy and block dot product formulations are also possible. See
+Dayde and Duff (1988).
+
+Assume A € IR™” and for clarity that n = rN. Partition A as follows:
+
+Az {Aun An r
+Ag Ago n-fT
+
+rn?

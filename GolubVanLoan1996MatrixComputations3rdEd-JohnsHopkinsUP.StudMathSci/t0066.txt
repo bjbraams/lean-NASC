@@ -1,0 +1,113 @@
+3.2. THe LU FACTORIZATION 103
+
+3.2.12 A Note on Pailure
+
+As we know, Gaussian elimination fails unless the first n — 1 principal
+submatrices are nonsingular. This rules out some very simple matrices,
+
+8-4
+01
+A= 10 .
+
+While A has perfect 2-norm condition, it fails to have an LU factorization
+because it has a singular leading principal submatrix.
+
+Clearly, modifications are necessary if Gaussian elimination is to be
+effectively used in general linear system solving. The error analysis in the
+following section suggests the needed modifications.
+
+Problems
+
+PS.2.1 Suppose the entries of A(e) € R™*" are continuously differentiable functions of
+the scalar ¢. Assume that A = A(0} and all its principal submatrices are nonsingular.
+Show that for sufficiently small ¢, the matrix A(e) has an LU factorization A(e) =
+E{e)U(e) and that L{e) and U(e} are both continuously differentiable.
+
+PS.2.2 Suppose we partition A € RE*"
+
+— [| An Aiz
+A= [ Aor Aq ]
+
+where Aj; is r-by-r. Assume that Az, is nonsingular. The matrix 5 = Aza—Az14j;' A1z
+is called the Schur complement of Ay, in A. Show that if Ai; bas an LU factorization,
+then after r steps of Algorithm 3.2.1, A(r + l:n,r + lin) houses S. How could 3 be
+obtained after r steps of (3.2.5)?
+
+P3.2.3 Suppose A € R*** has an LU factorization. Show how Az = 6 can be solved
+without storing the multipliers by computing the LU factorization of the n-by-(n + 1)
+PS.2.4 Describe » variant of Gaussian elimination that introduces seros imto the columns
+of A in the order, n: — 1:2 and which produces the factorization A = UL where U is unit
+upper triangular end L is lower triangular.
+
+P3.2.5 Matrices in RO%" of the form N(y,k) = I - vet where y € R” are said to
+be Gauss-Jordan transformations. (a) Give a formula for N(y,&)~ assuming it exists.
+(b) Given z € R", under what conditions can y be found 00 N(y,k)2 = ¢4? (c} Give
+an algorithm using Gauss-Jorden transformations that overwrites A with A~'. What
+conditions on A ensure the success of your algorithm?
+
+P3.2.6 Extend (3.2.5) so that it can also handle the case when A has more rows than
+columns.
+
+P3.2.7 Show how A can be overwritten with L and U/ in (3.2.5). Organize the three
+loops po that unit stride access prevails,
+
+P3.2.8 Develop « version of Gaussian elimination in which the innermost of the three
+loops oversees a dot product.
+
+104 CHAPTER 3. GENERAL LINEAR SYSTEMS
+
+Notes and References for Sec. 3.2
+
+Schur complements (P3.2.2) arise in many applications. For a survey of both practical
+and theoretical interest, see
+
+R.W. Cottle (1974). “Manifestations of the Schur Complement,” Lin. Alg. and its
+Applic. 8, 189-211,
+
+Schur complements are known ag “Gauss transforms” in some application areas. The
+use of Gauss-Jordan transformations (P3.2.5) in detailed in Fux (1964). See also
+
+T. Dekker and W. Hoffman (1989). “Rehabilitation of the Gauss-Jordan Algorithm,”
+Numer. Math. 54, 591-599.
+
+As we mentioned, inner product versions of Gaussian elimination have been known and
+used for some time. The names of Crout and Doolittle are associated with these ijk
+techniques, They were popular during the days of desk calculators because there are
+far fewer intermediate results than in Gaussian elimination. These methods still have
+attraction because they can be implemented with accumulated inner products. For re-
+marks along these lines see Fox (1964) as well as Stewart (1973, pp. 131-39). See also:
+
+G.E. Forsythe (1960). “Crout with Pivoting,” Comm. ACM 3, 507-8.
+W.M. McKeeman (1962). “Crout with Equilibration and Iteration,” Comm. ACM. 5,
+553-55.
+
+Loop orderings and block issues in LU computations are discussed in
+
+J.J. Dongarra, F.G. Gustavson, and A. Karp (1984). “Implementing Linear Algebra
+Algorithms for Dense Matrices on a Vector Pipeline Machine,” SIAM Review 26,
+91-112.
+
+J.M. Ortega (1988). “The ijk Forms of Factorization Methods I: Vector Computers,”
+Parallel Computers 7, 135-147,
+
+D.H. Bailey, K.Lee, and H.D. Simon (1991). “Using Strassen’s Algorithm to Accelerate
+the Solution of Linear Systems,” J. Supercomputing 4, 357-371.
+
+JW. Demmel, N.J. Higham, and RLS. Schreiber (1995). “Stability of Block LU Factor-
+ization,” Numer. Lin. Alg. with Applic. 2, 173-190.
+
+3.3. Roundoff Analysis of Gaussian Elimina-
+tion
+
+We now assess the effect of rounding errors when the algorithms in the
+previous two sections are used to solve the linear system Ar = 6. A much
+more detailed treatment of roundoff error in Gaussian elimination is given
+in Higham (1996).
+
+Before we proceed with the analysis, it is useful to consider the nearly
+idea] situation in which no roundoff occurs during the entire solution process
+except when A and 6 are stored. Thus, if fi(b) = 6+e and the stored matrix
+f(A) = A+ E is nonsingular, then we are assuming that the computed
+solution 2 satisfies
+
+(A+ B)\z=(b+e) Ello ull Allo, [ello < uljb ila. (3.3.1)

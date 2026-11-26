@@ -1,0 +1,55 @@
+324 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+rhy' (an) hy' (tn)
+rhy'(tn —rh hy' (tn —h
+y'( ” ) x VD(r)V- y( " )
+rhy' (2n—(p—1)rh) hy'(@n—(p—1)h)
+where V is the Vandermonde matrix
+1 Oo 0 te 0
+1 1 1 ooo 1
+v=|1 2 2? ee 2p-t
+1 p-1 (p-1)? --- (p—1P?
+
+and
+D(r) = diag(r,r?,r?,...,r?).
+
+The additional errors introduced into the computation by this change of
+stepsize technique can be significant. However, we are concerned here by
+the effect on stability. With constant stepsize, the stability of the difference
+equation system related to the derivative approximations is determined by
+the influence matrix
+
+0
+1
+0
+
+roo
+
+0
+0
+0
+
+ooo
+
+0
+
+0
+
+J= 0
+000... 1 0
+
+and because J is nilpotent, the dependence of quantities computed in
+
+a particular step eventually become insignificant. However, whenever the
+stepsize is altered by a factor r, the influence matrix becomes
+
+VD(r)V-1T, (424a)
+
+and this is, in general, not nilpotent. If, for example, the interpolation
+approach with stepsize ratio r is repeated over many steps, then (424a) might
+not be power bounded and unstable behaviour will result. In the case p = 3,
+(424a) becomes
+
+0 0 0
+ar? —r? —2r? +273 07], (424b)
+4p? — 4p? pr? 42r3 0

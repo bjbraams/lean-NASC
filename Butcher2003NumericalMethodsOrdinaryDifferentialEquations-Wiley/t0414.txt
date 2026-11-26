@@ -1,0 +1,50 @@
+404 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+stage order is 2:
+
+BT14+ fy =0, (544g)
+Bro=3, (44h)
+B (c? — 2Ac) =0. (544i)
+
+We now turn to the conditions for RK stability. If the stability matrix
+M(z)=V +2BU + 2BAU + 2BA’U + 24BASU
+
+is to have only a single non-zero eigenvalue, this eigenvalue must be the trace
+of M(z) and for order 4 must equal 1+ 2+ 32? + g23 + He. We therefore
+impose the conditions that the traces of BU, BAU, BA?U and BA®U have
+values 1, 4, 3, 3, respectively. The first of these is equivalent to (544i) and
+the remaining can be written in the form
+
+B' A(c? — 2Ac) = 0, (544j)
+B" A?(c? — 2Ac) = 0, (544k)
+b! A®c+ BARC? ~ 2Ac) = ai (5441)
+
+Because A* = 0, (5441) simplifies to
+
+1
+
+T 42n —
+
+b' A*c= 34(1 + Baca) (544m)
+We now show that 7 satisfies the equation
+
+Baeq = B' (I + 284A). (544n)
+
+This follows by observing that 84e] — 8° (I + 264A) multiplied respectively
+by c? —2Ac, A(c? — 2Ae), A?(c? — 2Ac) and A3(c? — 2Ac) are each zero if and
+only if cach of (544j), (544k) and (5441) holds.
+
+Multiply each side of (544n) by (I + 284A)~*e and use (544h) to show that
+
+1 2 4
+58 BE SOE ~ Ph,
+from which it follows that
+x Ua 2 + Bat $98 + BOD
+Ba(1 — 284 + 26? — 483)
+To construct a 4-stage fourth order ARK method in detail, carry out the
+following steps:
+
+(5440)
+
+1. Choose the value of 84.
+2. Evaluate ¢; from (5440).

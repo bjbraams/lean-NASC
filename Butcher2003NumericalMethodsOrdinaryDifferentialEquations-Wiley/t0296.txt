@@ -1,0 +1,52 @@
+284 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+m are Runge-Kutta methods with corresponding elementary weight functions
+a and @. If m and m™ are related by the requirement that for any smooth
+problem the results computed by these methods in a single step differ by
+O(h?*1), then this means that a(t) = a(t), whenever r(t) < p. However, this
+is identical to the statement that
+
+awe (1+ Hy)a,
+
+which means that a and @ map canonically into the same member of the
+quotient group Gi /(1 + Hp).
+
+Because we also have the ideal H, at our disposal, this interpretation of
+equivalent computations modulo O(h?+') can be extended to approximations
+represented by members of G, and not just of G1.
+
+The C(£) and D(€) conditions can also be represented using subgroups.
+
+Definition 388D A member a of G; is in C(€) if, for any tree t such that
+r(t) < €, a(t) = 7(t)~ta(r)" and also
+1
+
+Fp tita tm) (388)
+
+a([ttyte-+-tm]) =
+for any tite--+tm €T.
+Theorem 388E The set C(€) is a normal subgroup of G1.
+A proofs of this result, and of Theorem 388G below, are given in Butcher
+The DE) condition is also represented by a subset of G,, which is also
+known to generate a normal subgroup.
+
+Definition 388F A member a of G, is a member of D(€) if
+
+a(tu) + a(ut) = a(t)a(u), (388d)
+whenever t,u€ T and r(t) < €.
+Theorem 388G The set D(£) is a normal subgroup of G,.
+
+The importance of these semigroups is that E is a member of each of them
+and methods can be constructed which also lie in them. We first prove
+
+Theorem 388H For any real @ and positive integer €, E © C(E) and
+E®) € D®.
+
+Proof. To show that E® € C(€), we note that E(t) = y(é)~16") and
+that if E@ is substituted for a in (388c), then both sides are equal to
+or(th+r (tite te (tm) +1
+(r(t) + r(t1) +005 +7 (tm) + DVM) Vt)”
+To prove that E € D(€), substitute Z into (388d). We find
+r(t) + r(u) _1 1
+(r(t) + ru)r@)r) © (rt) + ru)r)yu) 7) Cu)’
+

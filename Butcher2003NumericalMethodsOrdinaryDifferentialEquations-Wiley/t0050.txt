@@ -1,0 +1,45 @@
+DIFFERENTIAL AND DIFFERENCE EQUATIONS 37
+Exercises 12
+
+12.1 Write the difference equation given by (124e) in the form
+zn = O(Zn—1)>
+
+with zo a given initial value.
+12.2 Write the difference equation system
+
+Un = Un-1 + Un-1, Uo = 2,
+Un = 2natezy, w= l.
+
+in the form yn = $(Yn—1, Yn—2), With yo and y; given initial values.
+
+12.3 Use the formula for the error in linear interpolation together with the
+solution to (123c) to verify the order of convergence of (124e).
+
+12.4 Calculate /2 by applying the Newton method to the equation
+
+227? -1=0.
+
+12.5 Calculate the value of /3 by applying the secant method to
+
+z?-3=0.
+
+12.6 Calculate the circumference of the ellipse
+a y?
+242-1
+9 t4>%
+
+using the arithmetic-geometric mean.
+
+13 Difference Equation Theory
+130 Linear difference equations
+
+The standard form for linear difference equation systems is
+Xn = AnXn-1 + ny (130a)
+
+which becomes an initial value problem if the value of the initial vector
+Xo is specified. The corresponding system in which ¢, is omitted is the
+‘homogeneous part’.
+
+Many linear difference equations are more naturally formulated as
+
+Yn = AniYn—1 + An2Yn—2 + +++ + AnkYn—k + Yn»

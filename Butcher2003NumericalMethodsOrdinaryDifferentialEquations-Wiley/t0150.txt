@@ -1,0 +1,48 @@
+1388 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Lemma 310B The value of “ is
+
+oe - ~F(t(W0),
+teT
+where 8 is defined by
+
+t=7,
+
+a 1,
+a= { K Ot), t=[tite---te].
+
+Proof. Use Theorem 305A. The case t = 7 is obvious. For ¢ = [é7"4t5"? ---¢)"7],
+where t, to, ..., t; are distinct, the factor
+
+1
+o(1) Ty ots)"
+where J is the index set consisting of m, copies of 1, mz copies of 2, ... and
+my copies of j, is equal to o(t)—!. im
+
+311 The Taylor expansion of the exact solution
+
+We approach the question of the Taylor series of the exact solution from two
+points of view. In the first, we evaluate the Taylor coefficients by repeated
+differentiation, as we have illustrated in Subsection 310. In the second, we
+successively find Taylor series for the Picard iterates.
+
+The central result in the first approach is an expression for the derivatives
+written in terms of labelled trees. Throughout the discussion it will be
+assumed, without further comment, that y is a solution to y’(z) = f(y(x))
+and that y is differentiable arbitrarily often. First, we need a formula for the
+derivative of a single elementary differential.
+
+Lemma 311A Let S = So U {s} be an ordered set, where every member of
+So is less than s. Let t be a member of T$,, then
+
+# FUt(ute))
+
+is the sum of F(|u|)(y(z)) over all u € T% such that the subtree formed by
+removing s from the set of vertices is t.
+
+Proof. If S = {so,s}, then the result is equivalent to
+
+<fiu(e)) = Fe) Fl).
+
+We now complete the proof by induction in the case S = {sg}US,US2U---U
+Sx U{s}, where {39}, 91, So, ..., Sz, {s} are disjoint subsets of the ordered

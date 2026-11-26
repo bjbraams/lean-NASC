@@ -1,0 +1,90 @@
+1.1. Basic ALGORITHMS AND NOTATION 11
+
+This is the idea behind Algorithm 1.1.5. Using the colon notation we can
+highlight this dot-product formulation:
+
+Algorithm 1.1.6 (Matrix Multiplication: Dot Product Version)
+If Ae R™*?, Be RP*", and C ¢ R™™*" are given, then this algorithm
+overwrites C with AB+C.
+
+for i= 1:m
+for j = 1:n
+C(t, 7) = AG, BC, 9) + C9)
+end
+end
+In the language of partitioned matrices, if
+af
+A= : a, € R?
+a
+
+and
+B={6y,...,bn] b, € RP
+then Algorithm 1.1.6 has this interpretation:
+for i= 1:m
+for j = iin
+Cig = AF by +
+end
+end
+
+Note that the “mission” of the j-loop is to compute the ith row of the
+update. To emphasize this we could write
+for i= l:m.
+f= af Bod
+end .
+
+where
+
+Cc=|:
+on
+is a row partitioning of C. To say the same thing with the colon notation
+we write
+for i= l:m
+C(i,:) = AG, B+ Cli,
+end
+
+Either way we see that the inner two loops of the ijk variant define a
+row-oriented gaxpy operation.
+
+12 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+1.1.13 A Saxpy Formulation
+Suppose A and C’ are column-partitioned as follows
+
+A = [ay,...,ap] a; ¢R™
+C = [er,.--.en] ec; ER".
+By comparing jth columns in C = AB + C we see that
+
+P
+Gg = Ye +;, j=l
+k=l
+
+These vector sums can be put together with a sequence of saxpy updates.
+Algorithm 1.1.7 (Matrix Multiplication: Saxpy Version) If the ma-
+
+trices A € R™*?, Be IR?*™", and C € R™*" are given, then this algorithm
+overwrites C with AB +C.
+
+for j = i:n
+for k = l:p
+C(:,3) = AG, K)B(R, 9) + CG, 9)
+end
+end
+
+Note that the k-loop oversees a gaxpy operation:
+for j =1:n
+CC, 9) = ABC, 3) + CG, 9)
+end
+1.1.14 An Outer Product Formulation
+Consider the kij variant of Algorithm 1.1.5:
+
+for k = l:p
+for j = iin
+for i = 1:m
+Cli, 5) = AG, EBA, J) + CU, 3)
+end
+end
+end
+
+The inner two loops oversee the outer product update
+
+C=a,bf+C

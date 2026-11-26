@@ -1,0 +1,102 @@
+5.1. HOUSEHOLDER AND GIVENS MATRICES 213
+
+This involves about 2¢r(2n — r) flops. If Q is explicitly represented as an
+n-by-n matrix, QTC would involve 2n?q flops.
+
+Of course, in some applications, it is necessary to explicitly form Q
+(or parts of it). Two possible algorithms for computing the Householder
+product matrix Q in (5.1.3) are forward accumulation,
+
+Q =h
+for j = 1:r
+
+Q = 90;
+end
+
+and backward accumulation,
+
+Q=In
+
+for jor: -—1:1
+Q=9;9
+
+end
+
+Recall that the leading (j— 1)-by-(j — 1) portion of Q; is the identity. Thus,
+at the beginning of backward accumulation, Q is “mostly the identity” and
+it gradually becomes full as the iteration progresses. This pattern can be
+exploited to reduce the number of required flops. In contrast, Q is full
+in forward accumulation after the first step. For this reason, backward
+accumulation is cheaper and the strategy of choice:
+
+Q=I,
+
+for j=r:— 1:1
+
+u(jen) = AG sun, p (5.1.5)
+Q(iim, jm) = (I - Byv(j:n)v(j:n)7)QU:n, jen)
+
+end
+
+This involves about 4(n?r ~ nr? + 3/3) flops.
+
+5.1.7. A Block Representation
+
+Suppose Q = Q,---Q, is a product of n-by-n Householder matrices as
+in (5.1.3). Since each Q; is a rank-one modification of the identity, it
+follows from the structure of the Householder vectors that Q is a rank-r
+modification of the identity and can be written in the form
+
+Q=I+wyt (5.1.6)
+
+where W and Y are n-by-r matrices. The key to computing the block
+representation (5.1.6) is the following lemma.
+
+214 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+Lemma 5.1.1 Suppose Q = 1+WYT is on n-byn orthogonal matriz with
+WY eR If P=I— Buv™ with v € IR" and z = —SQu, then
+Q, = QP = I+WyYP
+where W, = [W 2] ond Y, = [Y v] are each n-by-(j +1).
+Proof.
+QP
+
+(1+ WYT) (1 — BuvT) = 14+ WYT — BQue™
+= 1+WY? 4 aT =14(We][Yo]" 0
+
+By repeatedly applying the lemma, we can generate the block representa-
+tion of Q in (5.1.3) from the factored form representation as follows:
+
+Algorithm 5.1.2 Suppose Q = Q,---Q, is a product of n-by-n House-
+holder matrices as described in (5.1.3). This algorithm computes matrices
+W,Y € R°™* such that Q=1+WY?.
+¥ = yl)
+W = -B,v)
+for j =2:r
+z= -f)(2+WYT oo)
+W = (Wj
+Y =[Y v)]
+end
+
+This algorithm involves about 2r?n — 2r3/3 flops if the zeros in the v“) are
+exploited. Note that Y is merely the matrix of Householder vectors and is
+therefore unit lower triangular. Clearly, the central task in the generation
+of the WY representation (5.1.6) is the computation of the W matrix.
+
+The block representation for products of Householder matrices is attrac-
+tive in situations where Q must be applied to a matrix. Suppose C € R°*4.
+It follows that the operation
+
+Ce Qo=(l+wyTyc=c+yY(w'c)
+
+is rich in level-3 operations. On the other hand, if Q is in factored form,
+Q°C is just rich in the level-2 operations of matrix-vector multiplication
+and outer product updates. Of course, in this context the distinction be-
+tween level-2 and level-3 diminishes as C’ gets narrower.
+
+We mention that the “WY” representation is not a generalized House-
+holder transformation from the geometric point of view. True block reflec-
+tors have the form Q = I ~2VVT where V ¢ R°”" satisfies V'V = I,.
+See Schreiber and Parlett (1987) and also Schreiber and Van Loan (1989).
+
+Example 6.1.3 Ifn = 4, r = 2, and [1, 6, 0, .8]7 and (0, 1, .8, 6|7 ore the

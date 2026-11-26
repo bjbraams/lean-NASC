@@ -1,0 +1,48 @@
+4.4 Extensions of the 2-Cyclic Theory of Matrices 131
+
+0a0a
+
+a0a0 1
+(4.46) Bz = Oadal’ O<a<>5,
+
+a0a0
+
+which are cyclic of index 2, but inconsistently ordered (see Exer. 4 of Sect.
+4.1), as well as matrices such as
+
+Oaa 1
+(4.47) B3=|a0a], 0<a<>5,
+aad
+
+which are not cyclic of index 2.
+As in the proof of Lemma 3.7 of Sect. 3.3, we also associate with B the
+matrix
+(4.48) Mp(c) =oLpt+L, o>0.
+For o > 0, Mp(c) is a nonnegative irreducible matrix, and its spectral radius
+ma(c) := p(Mz(c)) is, from Lemma 3.7, a strictly increasing function of o.
+Specifically, for the matrix B, of (4.45), its associated function mg, (c) is
+readily verified to be
+(4.49) me,(c) = p(Bi)o/?, o >0.
+Actually, any consistently ordered cyclic matrix B of index 2 of the set
+S has its associated function mg(c) given by (4.49) as we now show. Since
+
+Mg(o) = 01/7 {o/?Lg +o /7 LE}, o >0,
+
+it follows from Definition 4.3 that all the eigenvalues of Mg(c) are the same
+as the eigenvalues of the matrix
+
+o? (Lp +L5) =0'/B,
+so that
+mp(a) == o(Ma(a)) = p(o"/?B) = o/p(B).
+
+Regarding this behavior as ideal, we measure departures from this by means
+of the function
+
+ma(c)
+p(B)ot/??
+defined for all B € S. The point of the following discussion is to obtain upper
+
+and lower bounds for the function hg(Inc) for o > 0. This in turn will give
+rise to upper and lower bounds for p(Lz.w).
+
+(4.50) hg(Ing) := o>0,

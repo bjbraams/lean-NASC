@@ -1,0 +1,47 @@
+154 5. Semi-Iterative Methods
+
+—p(M) Sa<b<p(M) <1,
+with
+
+max_{|a|, ||} = p(M).
+
+We now concentrate on the particular case where we require as a priori
+knowledge only the spectral radius p(M) of M. With b := p(M) := —a,
+where 0 < p(M) < 1, the polynomials f(r) of (5.21) also satisfy a three-
+term recurrence relation derived from (5.20) and (5.21):
+
+m>1,
+
+where p := p(M),fo(x) = 1, and fi (x) = x. Replacing the variable x by the
+matrix M and using (5.12), we have
+
+2Cin(1/p) 1\ <m-
+Crab (;) gmt} _ 2A) get) —Cm-1 (;) z-1) om > 1,
+
+After a small amount of algebra, using (5.20), (5.8), and (5.2), we can write
+this equivalently as
+
+(5.23) vy") = wma {My™ + g—y™D} py), m>0,
+
+where
+
+2Cm(1/p) =1+ Cm-1(1/)
+
+pCm+1(1/p) Cn+i(1/p)’
+We shall call this the Chebyshev semi-iterative method with respect
+to (5.1). For m = 0, (5.23) reduces to y®) = My +g, but as y = x(
+from the restriction of (5.7), it follows that both the vectors y andy‘
+of the semi-iterative method are respectively equal to the vector iterates
+x() and x) of (5.1). But what is more important, the recursive relation of
+(5.23) shows that it is unnecessary to form the auxiliary vector iterates x™
+of (5.1), in order to determine the vectors y‘“). Thus, whereas we had origi-
+nally thought of forming the vectors y‘”) by means of (5.6), the relationship
+of (5.23) shows that we can directly determine the vectors y(™ in a manner
+very similar to the determination of the vectors x”) of (5.1). We note, how-
+ever, that whereas x("+)) depended explicitly only on x(™ in (5.1), yo™+)
+depends on the two previous approximations y") and y°"-), In terms of
+computing machine applications, the semi-iterative method of (5.23) requires
+an additional vector of storage over the iterative method of (5.1), an item
+which if of rather minor importance.
+
+(5.24) Wm41 = m>1,w,:=1.

@@ -1,0 +1,58 @@
+2.1 Spectral Radii of Nonnegative Matrices 35
+
+Setting B = A in Lemma 2.4 immediately gives us
+
+Corollary 2.5. If A > O is an irreducible n x n matrix, then the positive
+eigenvalue r of Lemma 2.3 equals the spectral radius p(A) of A.
+
+In other words, if A > O is an irreducible n x n matrix, its spectral
+radius p(A) is positive, and the intersection in the complex plane of the
+circle |z| = p(A) with the positive real axis is an eigenvalue of A.
+
+Lemma 2.6. If A > O is an irreducible n x n matriz, and if B is any
+principal square submatriz® of A, then p(B) < p(A).
+
+Proof. If B is any principal submatrix of A, then there is an nxn permutation
+matrix P such that B = Ai, where
+
+B Ap
+
+2.18 PAPT =
+(2.18) [a Ag,2
+
+. Then, set C := [6 0 | .
+
+oo
+Here, B and Ap, are, respectively, m x m and (n — m) x (n — m) principal
+square submatrices of PAP™, where 1 < m < n. Clearly, O < C < PAPT,
+
+and p(C) = p(B), but as C = |C| # PAP’, the conclusion follows immedi-
+ately from Lemma 2.4 and Corollary 2.5.
+
+We now collect the above results into the following main theorem of Perron
+(1907) and Frobenius (1912).
+
+Theorem 2.7. Let A > O be an irreducible n x n matrix. Then,
+
+1. A has a positive real eigenvalue equal to its spectral radius.
+2. To p(A) there corresponds an eigenvector x > 0.
+
+3. p(A) increases when any entry of A increases.
+
+4. p(A) is a simple eigenvalue of A.
+
+Proof. Parts 1 and 2 follow immediately from Lemma 2.3 and Corollary 2.5.
+To prove part 3, suppose we increase some entry of the matrix A, giving us
+a new irreducible matrix A, where A > A and A # A. Applying Lemma 2.4,
+we conclude that p(A) > p(A). To prove that p(A) is a simple eigenvalue
+of A, i.e., p(A) is a zero of multiplicity one of the characteristic polynomial
+o(t) := det(tI — A), we make use of the fact that ¢'(¢) is the sum of the
+determinants of all (n—1)x (n—1) principal submatrices of the matrix t]—A.4
+If A; is any principal submatrix of A, then from Lemma 2.6, det[tI — Aj]
+cannot vanish for any t > (A). From this it follows that
+
+det[p(A)I — Ai] > 0,
+
+3 A principal square submatrix of an n x n matrix A is any matrix obtained by
+crossing out any j rows and the corresponding j columns of A, where 1 <j <n.
+4 For example, see Birkhoff and MacLane (1953), p. 288.

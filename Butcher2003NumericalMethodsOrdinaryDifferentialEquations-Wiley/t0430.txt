@@ -1,0 +1,95 @@
+Index
+
+Adams J. C., xii, 98, 359
+Alexander R., 244
+
+algebraic analysis of order, 389
+angular momentum, 5
+annihilation condition, 401, 403
+arithmetic-geometric mean, 36
+Axelsson O., 222
+
+B-series, 263
+barrier
+Dahlquist first, 335-337, 339, 364
+Dahlquist second, 342
+Daniel-Moore, 385
+Ehle, 223, 226, 227
+explicit Runge-Kutta, 258
+Barton D., 108
+Bashforth F., xii, 98, 359
+boundary locus, 328, 329
+Brenan K. E., xiii
+Brouder C., 263
+Burrage K., 118, 241, 249, 357
+Butcher J. C., 86, 116, 118, 149, 175,
+181, 222, 223, 241, 244, 249, 254,
+260, 263, 284, 341, 357, 364, 366,
+386, 393, 394, 400, 405, 410
+Butcher-Chipman conjecture, 386
+Byrne G. D., 115, 364
+
+Calvo M. P., xiii
+
+Campbell S. L., xiii
+
+Cash J, R., 254
+Cauchy-Schwarz inequality, 52
+Chartier P., 405
+
+Chipman F. H., 249, 386
+Christoffel-Darboux formula, 251
+coefficient tableau, 87
+companion matrix, 25
+compensated summation, 75, 76
+conjugacy, 285
+
+consistency, 100, 102, 301, 304-306, 308,
+310, 369, 373, 374, 380
+
+contraction mapping principle, 23
+
+convergence, 63, 100, 102, 301, 303, 306,
+308, 310, 369, 371, 372, 374, 380
+
+convolution, 30
+
+Cooper G. J., 179
+
+covariance, 101, 370
+
+Curtis A. R., 179
+
+Curtiss C. F., 98
+
+Dahlquist G., 98, 230, 231, 304, 336,
+342-344, 346-348, 363
+Daniel J. W., 385
+DASSL, xiii
+Davis P. J., 20
+density of tree, 126
+derivative weight, 142
+difference equation, 31
+Fibonacci, 33
+linear, 31, 37
+differential algebraic equation, xii
+differential equation
+autonomous, 2, 135
+chemical kinetics, 15
+dissipative, 11
+Hamiltonian, xiii, 3
+harmonic oscillator, 17
+initial value problem, 2
+Kepler, 4, 79, 120
+linear, 25
+Lotka-Volterra, 18
+many-body, 7
+method of lines, 9
+mildly stiff, 54
+Prothero and Robinson, 246
+restricted three-body, 8
+Robertson, 16
+simple pendulum, 13
+
+Numerical Methods for Ordinary Differential Equations. J.C. Butcher
+Copyright © 2003 John Wiley & Sons, Ltd. ISBN: 0-471-96758-0

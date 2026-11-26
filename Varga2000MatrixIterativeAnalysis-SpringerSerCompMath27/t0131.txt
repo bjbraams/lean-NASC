@@ -1,0 +1,51 @@
+4.3 Theoretical Determination of an Optimum Relaxation Factor 123
+
+2. If A is the matrix of the above exercise, show that for each k =
+1,2,---,p—1, there exists a px p permutation matrix P, such that the
+functional equation, relating the eigenvalues \ of the point successive
+overrelaxation matrix and the eigenvalues ju of the point Jacobi matrix
+B derived from P, AP{’, is of the form
+
+(A+w—1)? = uP yP.
+
+If B is convergent, which value of k maximizes R.(L1)?
+
+4.3 Theoretical Determination of an Optimum
+Relaxation Factor
+
+With the matrix A of (4.2) a consistently ordered p-cyclic matrix with non-
+singular diagonal submatrices A;,;,1 <i < N, we now assume that the asso-
+ciated block Jacobi matrix B of (4.18) is convergent. From the Corollary 4.6,
+we then know that the block successive overrelaxation matrix L,, is conver-
+gent for w = 1, and by continuity it is also convergent for some interval in w
+containing unity. This in turn implies that there is a comparable interval in w
+for which the average rate of convergence R(L7") is defined for all sufficiently
+large positive integers m. The problem that we should like to solve is the
+determination of a relaxation factor wm which mazimizes the average rate of
+convergence R(£™) as a function of w for each positive integer m, provided
+that R(L7) is defined, but the solution of this problem is complicated by the
+fact that wm is presumably a function of m. We now investigate the simpler
+problem of determining the optimum relaxation factor w» which maximizes
+the asymptotic rate of convergence R.o(L,,), or equivalently, we seek
+
+(4.28) min p(C.) = p(Lun):
+
+w real
+
+In particular, if the eigenvalues of B? are real and nonnegative, it is known®
+that the relaxation factor w, for which (4.28) is valid is unique and is precisely
+
+specified as a the unique positive real root (less than p/(p—1)) of the equation
+
+(4.29) (p(B)we)? = [p?(p — 1)'~?] - (w — 1),
+where p(B) is the spectral radius of the associated block Jacobi matrix. For
+p = 2, this unique root wy of (4.29) can be expressed equivalently® as
+
+(4.30) Wp
+
+2
+_ 2 _ p(B)
+~ 14/1 p(B) =i (eas) ‘
+
+5 See Varga (1959a).
+® The third member of (4.30) is due to Young (1950).

@@ -1,0 +1,79 @@
+350 References
+
+Stark, R. H. (1956) Rates of convergence in numerical solution of the diffusion
+equation, J. Assoc. Comput. Mach. 3, 29-40. /231, 314]
+
+Starke, Gerhard and Varga, Richard S. (1993) A hybrid Arnoldi-Faber iterative
+method for nonsymmetric systems of linear equations. Numer. Math. 64, 213-
+240. [182]
+
+Stein, P. (1951) The convergence of Seidel iterants of nearly symmetric matri-
+ces,Math. Tables Aids Comput. 5, 237-240. [106]
+
+Stein, P. (1952) Some general theorems on iterants, J. Res. Nat. Bur. Standards
+48, 82-83. [15, 28]
+
+Stein, P. and Rosenberg, R. L. (1948) On the solution of linear simultaneous equa-
+tions by iteration, J. London Math. Soc. 23, 111-118. [2, 74, 105]
+
+Stiefel, E. (1956) On solving Fredholm integral equations, J. Soc. Indust. Appl.
+Math 4, 63-85. [180]
+
+Stiefel, E. (1958) Kernel polynomials in linear algebra and their numerical pplica-
+tions, Nat. Bur. Standards Appl. Math. Ser. 49, 1-22. /180]
+
+Stieltjes, T. J. (1887) Sur les racines de l’equation Xn = 0, Acta Math. 9, 385-400.
+[107]
+
+Strang, Gilbert W. (1960) Difference methods for mixed boundary-value problems,
+Duke Math. J. 27, 221-231. [811]
+
+Taussky, O. (1948) Bounds for characteristic roots of matrices, Duke Math. J. 15,
+1043-1044. /20, 29]
+
+Taussky, O. (1949) A recurring theorem on determinants, Amer. Math. Monthly
+56, 672-676. [24]
+
+Taussky, O. (1962) Some topics concerning bounds for eigenvalues of finite ma-
+trices, Survey of Numerical Analysis, edited by John Todd, McGraw-Hill Book
+Company, Inc., New York, 279-297. [29]
+
+Temple, G. (1939) The general theory of relaxation methods applied to linear sys-
+tems, Proc. Roy. Soc. London. Ser. A169, 476-500. [28]
+
+Thomée, V. (1997) Galerkin finite element methods for parabolic problems,
+Springer-Verlag, Heidelberg. /309/
+
+Tikhonov, A. N. and Samarskii, A. A. (1956) On finite difference methods for
+equations with discontinuous coefficients, Doklady Akad. Nauk SSSR (N.S.) 108,
+393-396. /197, 204, 231]
+
+Todd, John (1950) The condition of a certain matrix, Proc. Cambridge Philos. Soc.
+46, 116-118. /105, 193]
+
+Todd, John (1954) The condition of certain matrices, II, Arch. Math. 5, 249-257.
+[105]
+
+Todd, John (1956) A direct approach to the problem of stability in the numerical
+solution of partial differential equations, Comm. Pure Appl. Math. 9, 597-612.
+[310, 911]
+
+Todd, John (1958) The condition of certain matrices, III, J. Res. Nat. Bur. of
+Standards 60, 1-7. [105]
+
+Todd, John (1967) Inequalities of Chebyshev, Zolotareff, Cauer and W. B. Jordan,
+Proc. of Conf. at Dayton, OH on Inequalities. Academic Press, Inc., New York,
+321-328. [273]
+
+Todd, John (1967a) Optimal ADI-parameters, Funktional Anal. Approx. Theor.,
+Numer. Math. 7, 58-70. [273]
+
+Tornheim, L. (1950) On n-parameter families of functions and associated convex
+functions, Trans. Amer. Math. Soc. 69, 457-467. [272]
+
+Turing, A. M. (1948) Rounding-off errors in matrix processes, Quart. J. Mech. Appl.
+Math. 1, 287-308. [105]
+
+Ullman, J. L. (1952) On a theorem of Frobenius, Michigan Math. J. 1, 189-193.
+
+[59]

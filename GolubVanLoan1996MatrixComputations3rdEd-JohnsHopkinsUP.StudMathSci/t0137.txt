@@ -1,0 +1,100 @@
+5.3. THE FULL RANK LS PROBLEM 243
+
+Proof. Let E and f be defined by FE = 6A/e and f = 5b/e. By hypothesis
+5A lly < an(A) and so by Theorem 2.5.2 we have rank(A +t£) = n for
+all t € (0, ¢]. It follows that the solution x(t) to
+
+(A+tE)T(A+t2B)z(t) = (A+tE)"(b+tf) (5.3.10)
+
+is continuously differentiable for all t € (0, ¢]. Since z = z(0) and = = z(e),
+we have
+£=2 + (0) + Of).
+
+The assumptions 6 # 0 and sin(@) # 1 ensure that x is nonzero and so
+
+hé-sih | 14M , oe
+lz ~* fei, +O): (5.3.11)
+
+In order to bound || £(0) ||, we differentiate (5.3.10) and set ¢ = 0 in the
+result. This gives
+
+ET Ar+ ATEx + ATAZ(0) = ATS + 87
+
+Le,
+
+£(0} = (ATA)“'AT(f = Ex) + (ATA) ET. (5.3.12)
+By substituting this result into (5.3.11), taking norms, and using the easily
+verified inequalities | f ||, < |] 6 lz and | Ell, < | A ll, we obtain
+
+l@-rh { T Ay-t aT ( [lb tle )
+—————4 < e¢|{/A A‘ A) 1A Et]
+izh, DAIL ATA A Ih Tall els
+
+PLS 2 T Ay-1 2
++ Talla 4 I (A* A) Ie} + Ole").
+
+Since AT(Az — b) = 0, Az is orthogonal to Ax — 6 and so
+o- Ari]3 +] Ax? =(]b)2.
+
+Thus,
+WAU 213 > 1018 —sts
+and so by using (5.3.7)
+2-21 1 2sin(6) P
+peace Ly 9 —_——
+ivi, * cfm) (Sia + :) + ma(A) aa} +o)
+
+thereby establishing (5.3.8).
+To prove (5.3.9), we define the differentiable vector function r(t) by
+
+r(t) = (b+ tf) — (A +4tB)a(t)
+
+244 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+and observe that r = r(0) and # = r(e). Using (5.3.12) it can be shown
+that
+#(0) = (I- A(ATA)~1AT) (f — Ez) - A(ATA)“TETr
+
+Since || # —r [lp = ¢ll F(0) |, + O(e?) we have
+
+Wé-rlp _ MOM, oe
+1? lp “Teh +O)
+
+€ {I I-A(ATA)“1A? |, ( +
+
+lA
+
+HA Hall = Ila
+Welle )
+
++ J A(ATA)~? [gl A ai} + O(2).
+
+Inequality (5.3.9) now follows because
+Allo lly =H A llall ATO lla S s2(ADIG lls
+bus = || (I~ A(ATA)“1A™)b ll, < |] 1 - A(AA)“*AP [fall blo.
+
+and
+|| ( - A(A?A)-1 A? |], = min(m — An, 1). 0
+
+An interesting feature of the upper bound in (5.3.8) is the factor
+
+tan(9)qo(A)? = ——_P4S——_— xy(A)?.
+an()eatAY = pe 24)
+
+Thus, in nonzero residual problems it is the square of the condition that
+measures the sensitivity of zz5. In contrast, residual sensitivity depends
+just linearly on <2(A). These dependencies are confirmed by Example 5.3.1.
+
+5.3.8 Normal Equations Versus QR
+
+It is instructive to compare the normal equation and QR approaches to the
+LS problem. Recall the following main points from our discussion:
+
+e The sensitivity of the LS solution is roughly proportional to the quan-
+tity «2(A) + prsxo(A)’.
+
+@ The method of normal equations produces an =, whose relative error
+depends on the square of the condition.
+
+« The QR approach (Householder, Givens, careful MGS) solves a nearby
+LS problem and therefore produces a solution that hes a relative error
+approximately given by u(«2(A) + exs2(A)°).

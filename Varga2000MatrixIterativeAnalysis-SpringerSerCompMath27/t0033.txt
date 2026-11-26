@@ -1,0 +1,55 @@
+1.6 Ovals of Cassini 25
+
+(1.47) Kij(A) = {2 EC: |z — ai] - [2 — 05,51 < Ais} for i 4 5,
+then
+
+n
+(1.48) o(A) © (J Ki,3(A) =: K(A).
+a
+
+Proof. If X € o(A), there is an associated eigenvector x # 0 with Ax = Ax.
+As x # 0, we may assume that 1 = maxi<j<n|z;|, and there is an r with
+1 <r <n such that |x,| = 1. If all other components of x are zero, then
+Ax = Xx can be verified to reduce to a,,- = ». But then, \ = a,,, clearly
+satisfies (1.46) for any pair (r,j) with j # r.
+
+If the other components of x are not all zero, let x, be the component
+with the second largest absolute value, i.e.,
+
+1 = |z,| > |xq| > 0 and |xq| > |xe| for.all 2A r and £4 q.
+With the two indices r and gq, the associated components from Ax = Ax
+
+satisfy
+
+n
+
+n
+
+(A = Gyr) Lp = Scan nte, and (A — qq) tq = Sag kre.
+
+kat kat
+kAr k#a
+
+On taking absolute values above, we have (cf. (1.33))
+
+n
+|A — arr] < lana |x| < Ar: aq], and
+
+k=1
+
+ker
+n
+|A — dgq - [tq] < Solar! + |e| < Ag: [tr] = Ag.
+ee
+
+Multiplying these inequalities gives
+|X = Grrl [A = Gaal + [Zql S Ar - Ag: [als
+
+but as |zq| > 0, then |A—a,,,|-|A—@g,q| < |A-Aq, the desired result of (1.46).
+The inclusion of (1.48) is then evident. ll
+
+The quantity K;,;(A) in (1.47) defines the (i, j)-th oval of Cassini, i # j,
+for the matrix A. There are n(n — 1)/2 such ovals of Cassini associated with
+a matrix A. These are a bit more complicated to determine than the related
+n Gerschgorin disks for the matrix A, but it seems not well known that
+the eigenvalue inclusion of (1.48) is always at least as good as that given by

@@ -1,0 +1,47 @@
+9.1 Application of the Theory of Nonnegative Matrices 319
+
+If a) = al™, this common value must be o1 by Theorem 2.9, and the
+procedure terminates. On the other hand, if these bounds are unequal, we
+define Am+1 ?= of” and continue this process. To start the process, one can
+choose Ao = 0. In much the same manner as in Theorem 9.1, we can prove
+(see Exer. 6) the result of
+
+Theorem 9.4. Let H, be an nx n irreducible Stieltjes matrix with eigen-
+values 0 < 01 < a2 < +++ < On, let Ay = 0, and let x be any positive
+vector. Then, the sequences of positive numbers {al™ }2-_, and {a™ }20_4,
+defined in (9.19), are respectively nondecreasing and nonincreasing, and have
+the common limit o1.
+
+To illustrate this procedure numerically, consider the matrix A of (9.12),
+which is a tridiagonal irreducible Stieltjes matrix. The bounds o; and o4 for
+the eigenvalues of A are
+
+Tv . Tv :
+o1 =2(1~cos(Z)) = 0.38196; 04 =2(1 + cos (£)) = 3.61803.
+Applying Corollary 1.12 to A would give us the upper bound o4 < 4. With
+
+do = 0, and x() having all components unity, the bounds a™ and al”) for
+a1 are tabulated below.
+
+a” af”
+
+0 0 0.3333 | 0.5000
+
+1 | 0.3333 | 0.3810 | 0.3846
+
+2 | 0.33810 | 0.3820 | 0.3820
+
+This numerical procedure is applied to each irreducible submatrix of the
+matrices H; and V;. Geometrically then, this process is applied to each row
+and column of mesh points of the discrete problem. The final estimates of a
+and @ in (9.3) are then, respectively, the minimum of the lower eigenvalue
+bounds and the maximum of the upper eigenvalue bounds.
+
+The procedure described here is in reality a combination of the Wielandt
+(1944) inverse power method® and the Perron-Frobenius theory of nonnega-
+tive matrices. A closely related application of the Perron-Frobenius theory to
+eigenvalue bounds for alternating-direction implicit methods was originally
+made by Wachspress and Habetler (1960). Of course, improvements can be
+
+5 See Wilkinson (1956) for an up-to-date account of the numerical behavior of this
+method.

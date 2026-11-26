@@ -1,0 +1,43 @@
+NUMERICAL DIFFERENTIAL EQUATION METHODS 69
+
+with the matrix M constant. Using fixed stepsize h, the Euler method gives
+as the approximate solution at rp, = %p + nh,
+
+Yn = (T+ hM yn,
+leading to the numerical solution
+Yn = (E+ hM)" yo. (216b)
+For this problem, the exact solution is
+y(an) = exp(nhM)y(a0). (216c)
+
+We wish to examine some features of the approximate solution (216b) by
+comparing these features with corresponding features of the exact solution
+(216c).
+
+By making a change of basis, so that y(z) = S§(x), and yz = SG, where
+S is a constant non-singular matrix, we can rewrite the differential equation
+in the form
+
+(2) = Mie), (2164)
+where M = $-!MS. The solution is
+Glan) = exp(nhM)G (20).
+The solution computed by the Euler method transforms to
+Gn = (I+ hM) "fo.
+
+If the transformed matrix M is chosen as the Jordan canonical form of
+M, then the differential equation system (216d), as well as the numerical
+approximation, become, to some extent, decoupled. This means that, for each
+distinct eigenvalue g, one of the equations in the system (216d) has the simple
+
+form
+y'(z) = qy(z), (216e)
+
+and other components that correspond to the same Jordan block will depend
+on this solution, but will not contribute to its behaviour.
+
+Hence, to obtain acceptable behaviour, for the type of linear problem given
+by (216a), it is essential that we obtain acceptable behaviour for (216e).
+All this will mean is that (1+ hq)" will be an acceptable approximation to
+exp(nhq). At very least, we want bounded behaviour for (1+ hg)”, as n + 00
+whenever exp(nhq) is bounded. This, in turn, implies that |1+ hq| is bounded
+by 1, if Reg < 0 and q is an eigenvalue of M. Because any analysis of this type
+will involve the product of h and q, it is convenient to write this product as

@@ -1,0 +1,56 @@
+9.1 Application of the Theory of Nonnegative Matrices 315
+
+Theorem 9.1. Let B be ann x n block Jacobi matrix which is nonnegative,
+irreducible, and a consistently ordered weakly cyclic matriz of index 2. If x
+is any positive vector, then the sequences of positive numbers {A,,}°_9 and
+Dm}S=0, defined in (9.6), are respectively nondecreasing and nonincreasing,
+and have the common limit p(B).
+
+Corollary 9.2. In addition, let the matrix B be convergent with real eigen-
+values. If Am <1 form > mo, and if
+
+2
+
+2
+9.9 vw, = oS, 6 = ==, MSM,
+( ) m 1+ TT). — Am lm i+Vi—\n
+then
+(9.10) < <u 2 <@m4i<Gm, m>m
+. w, w, = SS Sm, 2™Mo,
+Wm > Ym+1 = Vb 1+ 1 — p(B) m+1 m 0
+and
+(911 1H tn = i Sm =u
+
+Proof. This result is an obvious consequence of Theorem 9.1 and the fact
+that
+
+Osu,
+
+2
+w(p.) = ————_,
+(x) Vie
+is a 1-1 increasing function of py.
+
+In the case that we choose to use the cyclic Chebyshev semi-iterative
+method of Sect. 5.3, then only the estimates of p?(B) = p(L1) of (9.7) are
+needed to deduce approximations of the parameters wy, of (9.2).
+
+As a simple numerical example of this procedure, consider the matrix
+
+2-10 0
+-1 2-10
+
+(9.12) A=! 9-1 2-1]°
+0 0-1 2
+
+which arises (Sect. 6.1) from a discrete approximation to a two-point
+boundary-value problem. Its associated point Jacobi matrix,
+
+0100
+1/1010
+
+(9.13) B=s\o101\°
+0010
+
+has real eigenvalues and satisfies all the hypotheses of Theorem 9.1 and Corol-
+lary 9.2; its spectral radius is given by p(B) = cos(7/5) = 0.8090, and thus

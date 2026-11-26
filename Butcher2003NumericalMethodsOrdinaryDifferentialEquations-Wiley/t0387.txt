@@ -1,0 +1,56 @@
+GENERAL LINEAR METHODS 377
+
+so that, combining these estimates, we arrive at (515a).
+To verify (515b), we write
+
+& r
+H" —h Dou F(h) — ovgG =H +++,
+j=l j=l
+where
+
+1
+T = ui (v(en-1 +h) - y(tn-1) - af y'(@n-1 + ng)as),
+Tz = vihy' (zn-1 +h) + (ui - > big - > Vig; ) hy (2n-1),
+j=l j=l
+1
+Ty = us [ (v'(en-a + AE) ~ 9'(@na) ab
+
+3
+Ty = -h>> bi (vena + hej) - v'(@n-1)).
+j=l
+We check that T; = 0 and that, because )7_, bij + Dja1 Vigdy = ug + U4, To
+simplifies to hu;(y'(@n-1 +h) —y'(@n-1)) 80 that ||To|| < h?L?M|v;|. Similarly,
+IITs] < 3h? L?M|u,| and ||T4|| < A? L?M YYs_, [bizeyl-
+
+To prove (515c) we first need to estimate the elements of ¥-F by deducing
+from (515a) that
+
+(%-%) -rYoay (10%) - 18)
+j=l
+
+and hence that
+
+a
+< (34 + > si nL?M,
+j=l
+[Ij — %yll < PLP Me;.
+Thus,
+
+8
+
+De (40%) — £(%))|] < WPLEMho > Pasles-
+
+j=1 a j=l
+Add this estimate of | hg bis ( 4%) - 1(%)) | to (515b) to obtain (515c).
+a
+
+The next, step in the investigation is to find a bound on the local truncation
+error.
+
+Lemma 515B Under the conditions of Lemma 515A, the exact solution and
+the computed solution in a step are related by
+
+:
+y= vy (OP aP A) + KP, 8H 1,2,--07,
+
+j=1

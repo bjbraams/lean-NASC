@@ -1,0 +1,59 @@
+DIFFERENTIAL AND DIFFERENCE EQUATIONS
+
+Algorithm 107a Computation of orbit and period for the Lotka~Volterra
+
+problem
+
+21
+
+co = cos(theta);
+si = sin(theta);
+
+while carryon
+
+dr = £./df;
+r= r-dr;
+
+u = 1lt+r.#co;
+v= Q+r.*si;
+
+end
+
+C = u0#v0"2texp(-u0-v0) ;
+r = ones(size(theta));
+u = itr.*co;
+
+v = Qtr.*si;
+
+carryon=1;
+
+theta = linspace(0,2*pi,nt1);
+
+£ = u.*v.72-Cxexp(utv);
+df = -v.#r.*(v.¥#co. “24tu.*8i.72);
+
+carryon = norm(dr,inf) > 0.000000001;
+
+phi = 1./(v.*co."2+u.*si.72);
+period = (2*pi/n)*sum(phi(i:n));
+
+evaluates a vector with element number i equal to u;v? — Cexp(ui + 0%),
+and that linspace(0,2*pi,n+i) generates a vector with n + 1 components,
+
+equally spaced in [0, 27].
+
+Table 107(I) Approximations to the period T, given by (107d) for
+
+(uo, vo) = (2, 2)
+
+n | approximate integral
+
+10 | 4.62974838287860
+
+20 | 4.61430252126987
+
+40 | 4.61487057379480
+
+80 | 4.61487051945097
+160 | 4.61487051945103
+320 | 4.61487051945103

@@ -1,0 +1,44 @@
+6.4 Factorization Techniques and Block Iterative Methods 219
+
+7. Verify the result of (6.54).
+
+8. For the differential equation:
+Une — Uyy + 0.lu = —4 4 0.1(2? + y?)
+
+in the quarter circle 0 < z < 1,0 <y < 1,0 < 2?4+y? <1, with
+the boundary conditions of Fig. 6.6(a), let x9 = yo = 0, 21 = yi =
+0.5, zo = yo = 0.866, and x3 = y3 = 1. Derive the associated finite
+difference approximation Az = k, where A is a 10 x 10 matrix. Also,
+determine its point Jacobi matrix.
+
+9. For the previous problem derive the finite difference approximation
+Aw = k associated with the Ritz form of the variational method for
+the particular triangularization of Fig. 6.10.
+
+10. Consider the partial differential equation:
+
+-{A(z, y)us be _ {C(a, y)uy ty +D(a, y)Us + E(z, y)uy
++F(z,y)u = S(z,y)
+
+defined in an open and bounded connected set R, with the boundary
+conditions of (6.38) applying on the boundary I of R. Assuming that
+the coefficients are continuous in R, and satisfy
+
+A(z,y)>0, C(z,y)>0, F(z,y) 20, (zy) eR,
+
+derive a finite difference approximation of this boundary-value prob-
+lem for a rectangular mesh, and obtain a two-dimensional analogue of
+Theorem 6.3 for the properties of the derived matrix.
+
+11. For the partial differential equation (B.1) with boundary conditions
+(B.2) of Appendix B, derive for the mesh configuration of Fig. B.2 the
+associated five-point finite difference approximation Az = k, summa-
+rized in (B.5).
+
+6.4 Factorization Techniques and Block Iterative
+Methods
+
+The previous sections of this chapter were aimed at the derivation of finite
+difference approximations of certain differential equations, but questions per-
+taining to the numerical solution of these matrix equations were left unan-
+swered. Given these matrix equations along with their derived properties, we

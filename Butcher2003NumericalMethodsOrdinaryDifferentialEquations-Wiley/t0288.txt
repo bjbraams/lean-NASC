@@ -1,0 +1,46 @@
+276 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Theorem 386A Fora € G, and 8 €G,
+
+(ap) (@) = 60),
+(aB)(t) = A(a,,t)(B) + a(t) 80).
+
+Proof. In this proof only, we introduce the notation R4S to denote RS,
+with R # @. If a tree ¢ is represented by the set S of vertices, with an implied
+set of edges, then the notation tz, where R<S, will denote the tree formed
+from the elements of R, with the induced set of edges. With this terminology,
+we can write (383a) in the form
+
+(aB)(t) = D7 a(S \ R)A(R) + a(t) 80).
+Ras
+Hence, we need to show that.
+
+Na, t) = S° a(S \ Rte.
+Ras
+
+This is obvious in the case t = 7. We now consider a tree tu with t represented
+by S and u represented by Q. This means that tu can be represented by the
+graph (V,£), where V is the union of the vertex sets associated with S and
+Q and F is the union of the corresponding edge sets together with additional
+edge connecting the two roots. Temporarily we write (V, #) = SQ. If RaS
+and PaQ then the set of subgraphs related to SQ by the relation X4SQ are
+of the form X = RP or of the form X = R. Hence,
+
+X- a(SQ\ X)fx = FY a(SQ\ PRtpa + Sof SQ \ Rte
+
+Xa4SQ PaQ Ras: Ras
+= Yo oQ\Pite Y o(S\ Rote + a((S\R)Q) Str
+PaQ Ras Ras
+= A(a,t)A(a, u) + a(u)A(a, t)
+= X(a, tu). oO
+
+As examples of the use of the algorithm for evaluating 4, and thence values
+of the product on G, x G, we find
+
+Ma, 7) =F, (386a)
+Ma, TT) =FF + a(r)7, (386b)
+Ma, 77-7) = (TF + a(7)F)-F + alt) (FF + a(r)F)=HTF-F + 2a(r)FF + a(7)?F,
+(386c)
+Ma, 7-77) =F (7F + a(7)F) + a(r7)F = FTF + a(r)FF +a(rr)F.
+
+(386d)

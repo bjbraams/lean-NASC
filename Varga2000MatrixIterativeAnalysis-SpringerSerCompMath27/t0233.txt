@@ -1,0 +1,29 @@
+6.4 Factorization Techniques and Block Iterative Methods
+
+1 3 5 7 9
+Pray
+2. 4 6 8 10
+il 13 15 17 19
+Pr)
+12 14 16 18 20
+Fig. 6.17.
+Fay Fro) Ee)
+Fig. 6.18.
+Exercises
+
+1. If we define the sequence of tridiagonal matrices
+
+bi ci
+az bo cy
+
+225
+
+and assume that det A; # 0 for all 1 < j < n, prove that the direct
+method of (6.61)-(6.62) can be carried out. Moreover, characterize the
+
+quantities b; — a;wi-1,i > 1 (Faddeev and Faddeeva (1963), p. 20).
+
+2. Let A be annxn tridiagonal M-matrix. Using the result of the previ-
+ous exercise, prove that the direct method of (6.61)-(6.62) can always
+
+be used to solve Az = k.

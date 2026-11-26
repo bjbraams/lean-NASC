@@ -1,0 +1,55 @@
+334 B. Appendix
+
+shadings. This particular problem is then physically made of of three different
+materials. Although any piecewise constant S(z,y) could equally well have
+been used here, we have specifically chosen S(x,y) := 0 only to simplify the
+discussion of numerical results to follow.
+
+Table B.1.
+Region | D(z,y) | o(z,y) | S(z,y)
+
+1 1.0 0.02 0
+2 2.0 0.03 0
+3 3.0 0.05 0
+
+It is clear that a minimum of 16 mesh points is necessary to describe
+these different regions by means of a nonuniform mesh. Using the notation
+of (6.42) of Sect. 6.3, we now select this minimum mesh, denoted by solid
+circles in the Fig. B.1, so that
+
+(B.3)  co=yo=90, t1=y=1, te=y2=2, 23 =y3 = 2.1.
+
+With the method of integration of Sec. 6.3 based on a five-point formula, we
+can derive the matrix equation
+
+(B.4) Au =0,
+
+which is our discrete approximation to (B.1)-(B.2). The first purpose of this
+appendix is to give the actual entries of this 16 x 16 matrix A, which can
+serve as a check to those derived by the reader. Numbering the mesh points
+in the natural ordering, i.e., as shown in Fig. B.2, the difference equations for
+the following mesh point are given below:
+
+point 15.15125u; — 0.15u2 — 15.0us = 0;
+
+—0.15u1 + 20.20175u2 — 0.05u3 — 20.0u6 = 0;
+
+—0.05u2 + 6.05055u3 — 0.5u4 — 5.5u7 = 0;
+
+—0.5u3 + 1.00005u4 — 0.5ug = 0;
+
+—15.0u; + 18.16375us5 — 1.65u6 — 1.5u9 = 0;
+
+—20.0u2 — 1.65u5 + 25.22175ug — 1.05u7 — 2.519 = 0;
+—5.5ug — 1.05u6 + 13.10855u7 — 5.5ug — 1.05ui1 = 0;
+—1.5u5 + 6.025u9 — 3.0ui9 — 1.5u13 = 0;
+
+—2.5ug — 3.0ug + 11.045u39 — 2.5431 — 3.0u14 = 0;
+—1.5ug + 3.0125u13 — 1.5u14 = 0.
+
+(B.5)
+
+ee
+
+Because of the geometrical symmetry of R about the line x = y, the remaining
+difference equations can be deduced from those above, e.g., @15,14 = @5,9-

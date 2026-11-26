@@ -1,0 +1,49 @@
+1.4 Bounds for the Spectral Radius of a Matrix and Directed Graphs 19
+
+The geometrical interpretation of the concept of irreducibility by means
+of graph theory is quite useful, and we now consider some elementary notions
+from the theory of graphs (Kénig (1950)). Let A = [a;,;] be any n x n complex
+matrix, and consider any n distinct points P;, P2,---, Pp, in the plane, which
+we shall call nodes. For each nonzero entry a;,; of the matrix, we connect
+the node P; to the node P; by means of a directed arc® PP; , directed from
+P, to P;, as shown in Fig. 1.2.
+
+- ~
+
+P B
+
+Fig. 1.2.
+
+In this way, with every nxn matrix A can be associated a finite directed
+graph G(A). As an example, the matrix B of (1.10) has a directed graph
+
+LF B
+
+(1.40) GOB):
+
+R B
+
+Similarly, the matrix A of (1.38) has the directed graph
+
+G(A):
+(ay mO_O
+
+R B
+
+Definition 1.16. A directed graph with n nodes is strongly connected
+if, for any ordered pair (P;, P;) of nodes, with 1 < i,j < n, there exists a
+directed path, consisting of abutting directed arcs
+
+PB, PBs PB, =is
+
+connecting P; to P;. (We shall say that this path has length r).
+
+By inspection, we see that the directed graph G(B) of (1.40) is strongly
+connected. On the other hand, for the directed graph G(A) of (1.41), there
+exists no directed path from P2 to P;, so that G(A) is not strongly connected.
+
+The indicated equivalence of the matrix property of irreducibility of Def.
+1.15 with the concept of the strongly connected directed graph of a matrix
+
+® For a diagonal entry ai; # 0, the path joining the node P; to itself is called a
+loop. For an illustration, see G(A) in (1.41).

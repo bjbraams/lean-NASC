@@ -1,0 +1,55 @@
+4.6 CO(q,r) and GCO(q,r): Generalized Consistent Orderings 147
+
+Bibliography and Discussion
+
+Al
+
+4.2
+
+4.3
+
+As stated, the basis for the material of Sect. 4.1-4.3 is due to Young
+(1950). The generalization of Young’s property A to property A” is
+due to Arms, Gates, and Zondek (1956), whereas the generalization to
+p-cyclic matrices is due to Varga (1959a). Essentially the same defini-
+tion of a p-cyclic matrix was given independently by Kjellberg (1961),
+although Kjellberg’s formulation applies to bounded linear operators
+on Banach spaces as well.
+
+With regard to Theorem 4.4, this type of determinantal equality has
+been generalized by Keller (1958) for matrices arising from elliptic
+partial differential equations. This in turn provides another generaliza-
+tion of the successive overrelaxation iterative method. See also Keller
+(1960a).
+
+The terms consistent and inconsistent orderings are due to Young
+(1950); the eigenvalue formulation in Definition 4.3, however, is ap-
+parently new. In Exer. 8, the interesting property that all orderings
+of tri-diagonal block matrices are consistent orderings is due to Fried-
+man (1957). For other results on the number of consistent orderings,
+see Heller (1957).
+
+Theorem 4.5 is a generalization by Varga (1959a) of original results of
+Young (1950), corresponding to the case p = 2. The functional equa-
+tion (4.20) of Theorem 4.5, however, is not the only relationship known
+between the eigenvalues 2 of the successive overrelaxation matrix and
+the eigenvalues y of the Jacobi matrix. Kjellberg (1961) obtains the
+equation
+
+(A+w—1)? =AFuPuP, 1<k<p-1;
+
+see Exer. 2. On the other hand, Keller (1958) obtains equations of the
+
+form
+a
+
+A+a-1?= r
+
+w(A+ 6-1).
+
+The determination of the optimum relaxation factor w, which min-
+imized p(L.,) for the general p-cyclic case is due to Varga (1959a),
+which again generalizes the original results of Young (1950). For the
+simple case of 2 x 2 matrices, Ostrowski (1953) also determines an op-
+timum relaxation factor, but he was apparently unaware of the earlier
+fundamental work of Young (1950).

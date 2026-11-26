@@ -1,0 +1,41 @@
+90
+
+Table 234(I) The rooted trees up to order four
+
+NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Tree . t Vv
+Order 1 2 3 3
+® | Dib Dis dies Di bie? ig itagey
+y 1 2 3 6
+Tree v ¥ Y i
+Order 4 4 4 4
+@ | Sbic? Lia biciasies Diag bias] — eax iis ajace
+7 4 8 12 24
+
+The values of these quantities are shown in Table 234(I), for each of the
+eight trees with orders up to four. A further illustrative example is given by
+
+the tree
+t=,
+
+for which ®(¢) = 3°,, bic} ajc} and +(t) = 18. Details of the calculation of
+these quantities is indicated in Figure 234(ii). On the left-hand diagram labels
+i and j are attached to the non-terminal vertices, as used in the formula
+for &(t), using the factors shown in the middle diagram. On the right-hand
+diagram, the factors are shown whose product gives the value of +(¢).
+
+235 Fourth order methods
+
+Write the order conditions presented in the previous subsection, in the special
+case s = 4, assuming, because the method will be explicit, that aj; = 0 unless
+i > j. This yields the conditions
+
+bi + b2 + bs +b, = 1, (235a)
+
+boe2 + bgcg + bac = i (235b)
+
+bach + bgce + bacz = ; (235c)
+
+bgagaco + byaance + baaazcs = A (235d)
+boc} + bach + bach = i (235e)

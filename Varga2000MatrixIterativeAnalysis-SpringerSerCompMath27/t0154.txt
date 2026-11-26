@@ -1,0 +1,12 @@
+146 4. Successive Overrelaxation Iterative Methods
+
+of index p (2 < p< N) matriz, or equivalently, all closed directed paths, from
+one vertex to the same vertex in the block directed graph for B, have lengths
+divisible by p. Then, for any choice of the positive integer k with1 < k < p—1,
+the functional equation
+
+(A+w—1)? = MPP
+
+which couples the eigenvalues r, of the associated successive overrelaxation
+matriz L,,, and the eigenvalues ,, of the associated block Jacobi matrix B, is
+valid.

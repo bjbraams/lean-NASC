@@ -1,0 +1,112 @@
+5.4. OTHER ORTHOGONAL FACTORIZATIONS 253
+
+compute an orthogonal Q € R™*™ such that
+Ta Ry
+oa=[ |
+is upper triangular. We then bidiagonalize the square matrix Ri,
+
+UE RVs = By.
+
+Here Up and Vg are n-by-n orthogonal and 2, is n-by-n upper bidiagonal.
+If Ug = Q diag (Ug, IJm-—n) then
+
+urav=[@ | ap
+
+is a bidiagonalization of A.
+
+The idea of computing the bidiagonalization in this manner is mentioned
+in Lawson and Hanson (1974, p.119) and more fully analyzed in Chan
+(1982a). We refer to this method as R-bidiagonalization. By comparing its
+flop count (2mn?+2n3) with that for Algorithm 5.4.2 (4mn?—4n5/3) we see
+that it involves fewer computations (approximately) whenever m > 5n/3.
+
+5.4.5 The SVD and its Computation
+
+Once the bidiagonalization of A has been achieved, the next step in the
+Golub-Reinsch SVD algorithm is to zero the superdiagonal elements in B.
+This is an iterative process and is accomplished by an algorithm due to
+Golub and Kahan (1965). Unfortunately, we must defer our discussion of
+this iteration until §8.6 as it requires an understanding of the symmetric
+eigenvalue problem. Suffice it to say here that it computes orthogonal
+matrices Up and Vz such that
+
+UZBVg = ED = diag(oy,...,0n) € R™*?.
+
+By defining U = UgUy and V = VaVq we see that UTAV = © is the SVD
+of A. The flop counts associated with this portion of the algorithm depend
+upon “bow much” of the SVD is required. For example, when solving the
+LS problem, U7 need never be explicitly formed but merely applied to 6
+as it is developed. In other applications, only the matrix U; = U(:, Lin)
+is required. Altogether there are six possibilities and the total amount of
+work required by the SVD algorithm in each case is summarized in the
+table below. Because of the two possible bidiagonalization schemes, there
+are two columns of flop counts. If the bidiagonalization is achieved via
+Algorithm 5.4.2, the Golub-Reinsch (1970) SVD algorithm results, while if
+R-bidiagonalization is invoked we obtain the R-SVD algorithm detailed in
+Chan (1982a). By comparing the entries in this table (which are meant only
+as approximate estimates of work), we conclude that the R-SVD approach
+is more efficient unless m =n.
+
+254 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+Required { Golub-Reinsch SVD RSVD
+
+D>} 4mn? ~ 4n3/3 2mn? + 2n3
+
+ZV 4mn? + 8n3 2mn? + 11n3
+
+ro 4m?n - 8mn? 4m?n + 13n3
+
+ry 14mn? — 2n* 6mn? + 11n3
+
+U,V | 4m?n+ 8mn? + 9n3 | 4m?n + 22n5
+
+r,01,V 14mn? + 8n> 6mn? + 20n3
+
+Problems
+
+P5.4.1 Suppose A € R™*" with m <n. Give an algorithm for computing the factor-
+ization
+
+uTaV =[BO)
+where 2 is an m-by-m upper bidisgonal matrix. (Hint: Obtain the form
+
+x x 0 0 0 9
+
+ox x Gd 0 0
+
+0 Oo x x 0 O]°
+x 0
+
+90 0 O x
+using Householder matrices and then “chase” the (m,m + 1) entry up the (m + ljst
+column by applying Givens rotations from the right.)
+
+P&.4.2 Show how to efficiently bidiagonalize an n-by-n upper triangular matrix using
+Givens rotations.
+
+P8.4.3 Show how to upper bidiagonalize a tridiagonal matrix T € R**~" using Givens
+rotations.
+
+P5.4.4 Let Ae R™™" and assume that 0 # v satisfies |] Av lo = on(A)!] v lla Let I
+be a permutation such that if II7'y = w, then [wal = || w {loo Show that if All = QR
+is the QR factorization of AMI, then [rnal < fon(A). Thus, there always exists a
+permutation I] such that the QR factorization of ATI “dispisys” near rank deficiency.
+PS.4.5 Let z,y € R™ and Q € R™*™ be given with Q orthogonal. Show that if
+
+QFz = [2] mat ay = [2] mot
+then uly = 27y— af.
+
+P5.4.6 Let A = [01,...,0n] € *** and b€ R™ be given. For any subset of A's
+columns {ac;,-..,¢,} define
+
+res[dey,.--,Ge,] = MN ff [aey,---,0e, ]2—b lla
+
+xéR
+
+Describe an alternative pivot selection procedure for Algorithm 5.4.1 such that if QR =
+All = [@c,,-+.,Gc, } in the final factorization, then for k = Lin:
+
+res[aeq,--+,de,] = min Tesla, ,---+De,_2>Me.]
+Notes and References for Sec. 5.4
+Aspects of the complete orthogonal decomposition are discussed in

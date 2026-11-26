@@ -1,0 +1,50 @@
+6.4 Factorization Techniques and Block Iterative Methods 221
+
+iterative method requires three multiplications and four additions per mesh
+point per iteration. Therefore, the direct method of (6.61)-(6.62), which com-
+pares in total arithmetic effort with just two complete iterations of the point
+successive overrelaxation method, is numerically more desirable in practical
+problems. The only possible shortcoming of the direct inversion would be
+instability with respect to growth of rounding errors, but when the matrix
+A is diagonally dominant and tridiagonal, Wilkinson (1961) has shown that
+the direct method is extremely stable with respect to the growth of rounding
+errors.
+
+The application of this direct method to the numerical solution of ma-
+trix equations, arising from finite difference approximations to elliptic partial
+differential equations in two and higher dimensions, can be made in several
+ways. Recall that for two-dimensional problems, these finite difference ap-
+proximations produce matrix equations Az = k, where the matrix A has the
+form (Theorem 6.5)
+
+By Cy
+Ag Bo C2
+(6.64) A= tate
+
+. Cn-1
+An Bn
+
+Here, the square diagonal submatrices B; is of order nj, where n; corresponds
+to the number of mesh points on the jth horizontal mesh line of the discrete
+problem. The direct inversion method of (6.61)-(6.62) can be immediately
+generalized so as to apply to Az = k. Indeed, if the vectors z and k are
+partitioned relative to the matrix A of (6.64), then define
+
+Wi := By'Ci,; Wi:=(Bi- AiWi-1)1C;, 2<i<N-1,
+
+(665) Go BOK, Gi = (By - AWi1)"(Ki - AiGia),2<i SN,
+
+and the vector components Z; of the solution of Az = k are given recursively
+by
+
+(6.66) Zy:=Gni Z:=Gi-WiZin1, 1<i<N-1.
+
+Of course, the advantage again of this generalized method is that it is direct.
+But this method now is more costly as far as storage on a digital computer
+is concerned. For example, let us consider the discrete approximation of the
+partial differential equation
+
+(6.67) —(P(a,y)ue)e — (P(a, y)Uy)y + o(a, y)u(a,y) = f(a)
+
+on a square mesh R», consisting of N rows, each with N mesh points. With
+the five-point approximation, the symmetry of the derived matrix A shows

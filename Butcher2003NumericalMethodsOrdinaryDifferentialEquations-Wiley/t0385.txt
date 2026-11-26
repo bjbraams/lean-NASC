@@ -1,0 +1,60 @@
+GENERAL LINEAR METHODS 375
+
+Lemma 515A Assume that h < ho, chosen so that hoL||Alloo < 1. Define €
+as the vector in R® satisfying
+
+8 5
+Gy — roLlaigles = xa +> leer.
+
+j=l j=l
+
+Let f°) = uiy(tn1) + vihy' (ent), H"! = wiylen) + vihy' (en), for
+#=1,2,...,7 and Y; = y(tn-1 +hej), fori =1,2,...,8, where c= A1+Uv.
+Also let Y; denote the value of Y; that would be computed exactly using gr
+as input vector y!"—l, Assume the function f satisfies a Lipschitz condition
+with constant L and that the exact solution to the initial value problem satisfies
+lly@)ll <M, lly’(@)I| $ LM. Then
+
+s r
+ls = has f(%) - ua
+
+j=1 jot
+
+s
+<W12M (54 +e laseil). (515a)
+
+j=l
+
+s& r
+a —hY by f%) — Sova”
+j=l j=1
+
+1 8
+< nena (lu + [oil +X Puel) (515b)
+4
+
+gs r
+a! Ao 7%) —- vga?
+j=l j=l
+
+1 s 8
+<WL?2M (Sle! + |vil + D> [izes] + hol >> Pale) . (515¢)
+
+j=l jel
+Proof. We first note that
+Ci
+lly(tn—1 + hes) ~ yl@na)ll =A | [vet néyag|
+0
+
+Ci
+
+ch [ |y'(ana + 6) lag
+oO
+
+<|ei[hLM.
+
+We now have
+
+& r
+F-h > ay f(%) — Ugo = + t+ Tet Ts,
+j=l j=l

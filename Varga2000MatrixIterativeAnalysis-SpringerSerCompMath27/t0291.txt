@@ -1,0 +1,52 @@
+284 8. Matrix Methods for Parabolic Partial Differential Equations
+
+(8.24) llexp(tQ)|| ~ K exp(t¢(Q)),  t + +00,
+
+where K is a positive constant, independent of t.
+
+As ¢(Q) in (8.24) then dictates the asymptotic behavior of || exp(¢Q)]|| for
+large t when Q is essentially positive, we accordingly make!*
+
+Definition 8.6. If Q is an essentially positive n xn matrix, then Q is super-
+critical, critical, or subcritical if its real eigenvalue ¢(Q), from Theorem
+8.3, is respectively positive, zero, or negative.
+
+Consider now the nonhomogeneous ordinary matrix differential equation
+
+dv(t
+WO) _ Ove) +r,
+where v(0) in JR” is the given initial vector condition, and r in IR” is a
+given time-independent vector. If Q is nonsingular, then the unique solution
+of (8.25), satisfying the initial vector condition, is
+
+(8.25)
+
+(8.26) v(t) = —Q71r + exp(tQ) - {v(0) + Q-'r}, t>0.
+
+Theorem 8.7. Let the n x n matrix Q of (8.25) be essentially positive and
+nonsingular. If Q is supercritical, then for certain initial vectors v(0), the
+solution v(t) of (8.25) satisfies
+
+(8.27) lim__||v(¢)|| = +00.
+t-+400
+
+If Q is subcritical, then the solution vector v(t) of (8.25) is uniformly bounded
+in norm for allt > 0, and satisfies
+
+: —_o-1
+(8.28) jim, v(t) = -Qu'r.
+Proof. Since Q is by hypothesis nonsingular, then Q has no zero eigenvalues.
+Thus, Q is either supercritical or subcritical. The results then follow from
+
+Theorem 8.5 and (8.26). Note that the vector —-Q7!r, as Q is nonsingular, is
+just the solution of (8.25) with the derivative term set to zero. lll
+
+With the previous theorem, we arrive at the final result in this section,
+which connects the theory in this section to the ordinary matrix differential
+equation of (8.19).
+
+Corollary 8.8. If C is ann x n positive diagonal matriz, and A is an irre-
+ducible n x n M-matriz, then the unique vector solution of
+
+14 These terms are the outgrowth of investigations concerning mathematical models
+for nuclear reactor theory. See, for example, Birkhoff and Varga (1958).

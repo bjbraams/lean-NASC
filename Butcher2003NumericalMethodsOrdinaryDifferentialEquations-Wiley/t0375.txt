@@ -1,0 +1,57 @@
+GENERAL LINEAR METHODS 365
+regard h as the stepsize for the complete cycle of two steps. We denote the
+
+incoming approximations as Y¥,3/2, Yn—1, hfn—2, Afn—s/2 and hfy—1. The
+first half-step, relating yn_1/2 and hf, 1/2, to the input quantities, gives
+
+Yn} = hha t+ Bung — Hn — gehfn-2 + Ahfn_g + Bh int.
+Substitute this into the corresponding formula for y, and we find
+
+Yn = 55S a+ tao tfn + HYn-8 — f¥n-1 — pesto fn—2
++ Fae ing + Sol fn-1-
+Translating these formulae into the (A,U, B, V) formulation gives
+
+a 9 19 8 es 4 19
+
+33 11 it 66 il 22
+
+4753 251 19 8 _ 449 3463 449
+
+7920 1440 i id 15840 7920 660
+
+so |] 8 —& = 4 19
+
+AU 33 it it 66 il 22
+— | 4753 251 19 8 _ 449 3463 449
+
+BYV 7920 ©1440 re it 15840 7920 660
+0 0 0 0 0 0 1
+
+1 0 0 0 0 0 0
+
+0 1 0 0 0 0 0
+
+This formulation can be simplified, in the sense that r can be reduced, and
+we have for example the following alternative coefficient matrices
+
+5 0 1 -2 4 w
+33 66 11 22
+753 251 1 449 3463-449
+fc 251 307 *
+AU! _| ~3% too | «ol 300330
+BY 0 0 0 oO 0 1
+1 0 0 0 0 0
+0 1 0 60 0 0
+
+Because of the natural way in which we have written this particular composite
+cyclic pair in general linear form, and then rewritten it, using equally simple
+operations into a less recognizable form, an obvious question arises. The
+question is whether it might have been more appropriate to use the general
+linear formulation from the start, and then explore the existence of suitable
+methods that have no connection with linear multistep methods.
+
+We now turn to pseudo Runge-Kutta methods. Consider the method given
+by (261a). Even though four input values are used in step number n: yn—1,
+AFI), afl and aR, this can be effectively reduced to two because,
+in addition to yn—1, only the combination + Jar — 1 Lar - tare
+is actually used. This means that a quantity of this form, but with n-1

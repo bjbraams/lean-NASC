@@ -1,0 +1,47 @@
+6.1 A Simple Two-Point Boundary-Value Problem 189
+
+The third method for deriving difference approximations to (6.1) is based
+on a variational formulation of the solution of (6.1)- (6.2). Specifically, let
+w(z) be any function whose derivative is piecewise continuous‘ in a < x < b,
+which also satisfies the boundary conditions w(a) = a, w(b) = B; and consider
+the following functional of w(z) :
+
+b 2
+(6.14) F(w) := s/f (2) + o(x)(w(x))? — outa} dz.
+
+If we write w(x) := y(x) + e(x), where y(z) is the unique solution of (6.1)-
+(6.2), then simply substituting this sum in (6.14) yields
+
+6 b 2
+Fw) = Fy) + [ {HE vove-esharss [ {(<) +ae| de.
+
+On integrating the first term of the first integral by parts, we can then write
+the first integral as
+
+a b 2
+(2 - (a) 4) +[ €(x) {-3 +oy- rh dz.
+
+But the integral above surely vanishes from (6.1), and since w(x) and y(z)
+satisfy the same boundary conditions of (6.2), then e(a) = e(b) = 0. Thus,
+we conclude that
+
+b 2
+(6.18) Fw) = Fw) +5 | {(“2) + tana} dx > Fly),
+
+where the final inequality in (6.15) makes use of the hypothesis that o(z) >
+0 on [a,b]. Thus, the solution y(zx): of (6.1)- (6.2) minimizes F(w) for all
+sufficiently smooth functions w(z) satisfying the boundary conditions w(a) =
+a, w(b) = B.
+
+There are two different ways of utilizing the preceding results for the func-
+tional F(w). The first is to directly approximate numerically the functional
+F(w), which we express as the sum
+
+N pany 2
+(6.16) F(w) = ; > | { (=) + 0(2)(w(z))? — 2w(z) sco} de.
+j=0 YE
+
+4 The function f(x) is piecewise continuous in a < x < b if it is continuous at all
+but a finite number of points in this interval, and possesses right- and left-hand
+limits at all interior points of the interval and appropriate one-sided limits at the
+end points.

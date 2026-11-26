@@ -1,0 +1,37 @@
+RUNGE-KUTTA METHODS 269
+
+As we saw in Subsection 343, this method exactly undoes the work of m.
+Denote this new method by m~', and we prove the result
+
+Theorem 382B Let m denote a Runge-Kutta method. Then
+
+[m+ m7] = {m7} - m] = 1.
+
+1
+
+Proof. The tableaux for the two composite methods m-m~! and m=!-m
+are, respectively,
+C1} G11 Giz **' 1, 0 0 tee 0
+C2) G21 G22 *'' Ae 0 0 nee 0
+€g | Qs1 sq **' Ags 0 0 see 0
+C1 |b, bg +++ bs ay,—b, aiz—be +--+ ais—bs’
+co| 6 bg -:+ bs da, — 6) da2—b2 --- das — bs
+Ce | b1 bg +++ be G1 — bi Gen — be Qs — b5
+a rs a an ace h
+and
+€1— Djar bj [arr — by aig — be a5 — bs 0 0 0
+2 — Yjn1 8; | @a1 — br azz — be G25 — bs 0 0 0
+€s — Djnt Oj | Ge1 ~ b1 eg — be Oss — bs 0 0 0
+a Lye b; —b —by tt —b, Qj, a2 *-* Gs”
+C2 — Dyan oj | bn —bp ++ =e @21 G22 -** Aas
+Cs — Din 53 —h abe ue —bs Gs 52-77 Oss
+—b —bg + abe by bps og
+
+Each of these methods is P-reducible to the methods m and m—!, respectively,
+but in each case with 6" replaced by the zero vector, so that each lies in the
+equivalence class 1. QO
+
+383 The Runge-Kutta group
+
+While the group of equivalent classes of Runge-Kutta methods is conceptually
+very simple, it is difficult to use for detailed manipulations. We turn to a

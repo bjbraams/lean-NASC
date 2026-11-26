@@ -1,0 +1,45 @@
+58 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Table 204(I) Comparison of explicit and implicit Euler methods:
+problem (201a)
+
+n Explicit error Implicit error Iterations
+5 0.03719000 —0.03396724 28
+10 0.01817489 —0.01737078 47
+20 0.00898483 —0.00878393 80
+40 0.00446704 —0.00441680 149
+80 0.00222721 —0.00221462 240
+160 0.00111203 —0.00110889 480
+320 0.00055562 —0.00055484 960
+640 0.00027771 —0.00027762 1621
+
+a serious disadvantage, because of the very much greater computing cost, as
+measured in terms of f evaluations, for the implicit as compared with the
+explicit form of the method.
+
+For stiff problems, such as that given by (203a), the implicit Euler method
+shows itself to advantage. Since this problem is linear, it is possible to write
+the answer for the approximation computed at the end of a step explicitly. In
+the step going from zp to 21 = 2 +h, with solution approximations going
+from yo = [(yo)1, (yo)2]" to 91 = [(y1)1, (y1)2]", we have the relations between
+these quantities given by
+
+(wyi} —,|-16 = 121 |(y1): (yo)1 16 cos(x1) — 13sin(z1)
+lo =n 12 4] [ * le +h & cos(z1) Sane ,
+so that
+
+1+16h —-12h} |(y1)i] _ | (Yo): + 16h cos(a1) — 13h sin(21)
+-12h 149h| |(y)o| | (yo)2 — 11h cos(21) + 9Asin(21)
+
+and the new approximation is found using a linear equation solution.
+
+The results for this calculation, presented in Figure 204(i), show that this
+method is completely satisfactory, for this problem. Note that the largest
+stepsize used is 7, so that only a single step is taken.
+
+,» (204a)
+
+Exercises 20
+
+20.1 On acopy of Figure 200(i), plot the points corresponding to the solution
+computed by the Euler method with y(0) = 3, h =.

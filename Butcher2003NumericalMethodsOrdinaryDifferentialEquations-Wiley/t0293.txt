@@ -1,0 +1,55 @@
+RUNGE-KUTTA METHODS 281
+
+to the stages Y;, i = 1,2,...,8 of (887a) by 7; and the output result by €,
+then
+
+s
+m=1t SY agngD, ;
+jal
+
+8
+E=14+ > bigD. (387c)
+t=1
+In the case of a generalized method, where bg is the coefficient of yn—1 in the
+formula for yn, (887c) is replaced by
+
+8
+€=bol+ > bimD,
+i=1
+
+where, in this context 1, is the group-theoretic identity in G.
+In addition to D, it is convenient to introduce an element E € G, defined
+by
+
+EQ) =1,
+1
+E(t) 1" teT.
+This means that E corresponds to the exact solution of the differential
+equation as represented by the Picard iteration scheme introduced in Section
+311. The conditions for order p for the Runge-Kutta method (387a) can now
+be written in the form
+
+&t)=E@), = r(t) <p.
+
+Finally, we define a sequence of members of G which correspond to the
+computation of the Taylor coefficients at the initial point, scaled in terms of
+powers of h. If T, corresponds to the method which, on input yo = y(zo),
+computes h*y(*) (2), then we require that
+
+T.() = 0,
+a(t), rt) =k,
+0, r(t) Ak.
+
+Obviously, T; = D, but D” is not defined for n > 2.
+We can relate T,, T2, ... with E by writing
+
+T, (t) =
+
+co
+1
+E=1+ > ale (387d)
+where the result is interpreted as meaning that
+
+BG) =10)+ > GTO,
+
+k=1

@@ -1,0 +1,51 @@
+RUNGE-KUTTA METHODS 131
+
+Although we have not included details of the bijections involved in this
+summarized proof, we illustrate these in the cases n = 4, for monotonically
+labelled trees in Table 302(II), and for n = 3, for fully labelled trees in Table
+302(II).
+
+3803 The use of labelled trees
+
+We have seen that a(t), introduced in Subsection 302, is the number of distinct
+ways of labelling the vertices of t with the integers {1, 2,...,r(t)}, on condition
+that for each edge (i,j), i < j. It is convenient to generalize this by writing S
+for an finite ordered set such that the cardinality is #5 = r(t), and counting
+trees labelled with members of S such that i < j for each edge (i,j). Let Tg
+denote the set of trees labelled in this way and let |t| denote the member of
+T corresponding to t € T$, but with the vertex labels removed. This means
+that a(t) can be interpreted as the number of members of TZ such that | - |
+maps them to ¢ € T. Similarly, we write Ts for the set of trees labelled by a
+set with cardinality r(¢), where no assumption is made about order. In this
+case §(t) is the number of t € Ts, such that |t| = t.
+
+304 Differentiation
+
+We need to develop fairly intricate formulae involving derivatives of vector-
+valued functions of vector arguments. Hence, in this subsection and the next,
+we review basic calculus ideas in a vector setting. We start with elementary
+notions of derivative of a real-valued function of a single real variable, and of
+partial derivatives of a real-valued functions of several real variables. A real
+valued function f, whose domain contains an open interval around the real
+number a, is differentiable at a if there exists a number f'(a), referred to
+as the derivative of f at a, such that |f(@ + 6) — f(a) — f'(a)d|/|6| > 0 as
+|6| > 0. This definition is extended in two ways. First, f can take values in
+R’, in which case f is differentiable if each of its components is differentiable.
+Furthermore, f’(a) € R% is equal to the vector made up from the derivatives
+of the components of f. Another way of writing this is
+
+f(a + 6) — F(a) - f'(@)5)])
+I6|
+
+When the domain of f is generalized to X C R™, such that a € O Cc X,
+where O is an open set, such as a product of open intervals, then f'(a), if it
+exists, is a linear operator, f’(a): R“ > RY, such that
+
+Ilf(a + 5) - f(a) — f'(@)ll
+(|6l|
+
+If the components of a and f are written as
+
++0 as {d|/ 0.
+
+70 as |ld{] 30.

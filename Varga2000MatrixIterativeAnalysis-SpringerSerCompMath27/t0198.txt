@@ -1,0 +1,58 @@
+190 6. Derivation and Solution of Elliptic Difference Equations
+
+Making central difference approximations to the integrals of the form
+
++3 ( dw(2) , 2 ( Wi 7 Wi ; _ (wisi — wi)?
+
+and
+wity . 41 t 9% +1 + Gi
+[ g(x) dx = (238) » (Zig1 — Ui) = ‘Gao h,
+ti
+
+leads to the discrete approximation F(w), defined as
+
+N 2 2
+_il (wi41 — wi)? Fit W541 + OW;
+3 »{ ht 2 h
+i=0
+— (wisi fit + wif.
+
+Using the explicit form of the matrix A and the vector k in (6.5) and (6.6), it
+can be verified (Exer. 7) that we can express 2F(w)/h as the quadratic form:
+
+(6.17)
+
+2F(w) op 1 2 @
+—— = 2w'k
+(6.18) , = Aw — 2w*k+ he +73
++5{0(0)6? + o(a)a?} - (670) +asle)
+where w is a vector with arbitrary components w),:--,wn. If w := z+ €
+
+where Az = k, then it follows from the real symmetric and positive definite
+nature of the matrix A that
+
+2F(z+e) _ 2F(z)
+
+h Th
+which is the discrete analogue of the minimization property of (6.15). From
+this, we see that minimizing the discrete function F'(w) by means of
+
+(6.19) +P Ae > SY FG),
+
+aF(w)
+
+Ow;
+
+=0, 1<j<N,
+
+leads us again precisely to the solution of the matrix equation
+Az =k,
+
+whose properties have already been discussed.
+
+It is interesting to mention at this point that our finite difference approxi-
+mation Az = k, of the two-point boundary value problem of (6.1)-(6.2), bears
+a close relationship with the Ritz Method® applied to the functional F(w) of
+(6.14). Specifically, let us now restrict our class of admissible functions to
+
+5 See Collatz (1960), pp. 202-208, or Courant and Hilbert (1953), p. 175.

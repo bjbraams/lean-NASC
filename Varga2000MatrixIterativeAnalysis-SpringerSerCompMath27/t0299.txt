@@ -1,0 +1,42 @@
+292 8. Matrix Methods for Parabolic Partial Differential Equations
+
+q=0 g=1 q=2
+2
+p=0 1 l-z 1-atS
+exp(—z) :| p=1 1 2-z 6-424 2?
+PUA P= I+z 242 6+2z
+~2 1 6-22 | 12-6z+2?
+p* 2? 16442427 | 12462422
+It2+¢5
+
+These rational approximations for exp (—z) generate matrix approximations
+of exp (—AtS), in an obvious way. Formally, we merely replace the variable
+z by the matrix AtS, and we define
+
+(8.47) Ep,q(AtS) := [dp,q (Ats))~* [Mp,q(AtS)}]
+
+to be the (p,q)-Padé matrix approximation of exp (—AtS). From the en-
+tries of the Padé table for exp(—z), we see that the matrix approximations
+for exp(—AtS) corresponding to the forward difference, backward difference,
+and Crank-Nicolson methods are ezactly the Padé matrix approximations
+E,1(AtS), Fi,0(AtS), and E;,1(AtS), respectively.
+
+Our purpose in introducing these Padé approximations is threefold. First,
+we see that the matrix approximations associated with the forward difference,
+backward difference, and Crank-Nicolson methods are special cases of Padé
+matrix approximations of exp (—AtS). Second, these Padé approximations
+generate many other useful matrix approximations of exp(—AtS). Although
+it is true that such higher-order Padé approximations have been less used in
+practical applications, it is entirely possible that they may be of use on larger
+computers where higher-order implicit methods could be feasible. Third, the
+direct association of these matrix approximations with the classical analysis
+topic of rational approximation of analytic functions gives a powerful tool
+for the analysis of stability of these approximations. For example, it can be
+shown’? that if the eigenvalues of 9 are positive real numbers, then the Padé
+matrix approximation Ep,(AtS) in (8.47) is unconditionally stable if and
+only if p> q.
+
+Another important concept, due to Lax and Richtmyer (1956), on approx-
+imations of the matrix exp(—AtS) is given by
+
+19 See Varga (1961).

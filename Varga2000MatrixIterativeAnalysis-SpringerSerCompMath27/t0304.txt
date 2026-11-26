@@ -1,0 +1,49 @@
+8.4 Iterative Methods for Solving Elliptic Difference Equations 297
+
+we shall now show that we can regard these iterative methods specifically
+in terms of discrete approximations to parabolic differential equations,
+so that the actual process of iteration can be viewed as simply marking
+progress in time to the steady-state solution of an equation of the form
+(8.53). That such a relationship exists is intuitively very plausible, and is
+in reality an old idea. In order to bring out this relationship, we are first
+reminded that in an iterative procedure, such as in (8.51), the initial vector
+w() is some vector approximation of the solution of Ax = s. Although this
+initial approximation corresponds to the initial condition for a parabolic
+partial differential equation, it is, however, not prescribed in contrast to the
+matrix differential equation of (8.11)-(8.12). Next, the solution of (8.50) is
+independent of the matrix C of (8.53). This gives us the additional freedom
+of choosing, to our advantage, any nonsingular matrix C which might lead
+to more rapidly convergent iterative methods.
+
+The Point Jacobi Iterative Method.
+We first express the n x n matrix A in the form
+
+(8.54) A=D-E-F,
+
+where D is a positive diagonal matrix and FE and F are respectively strictly
+lower and strictly upper triangular matrices. Setting C := D, consider the
+consistent Padé matrix approximation Ep,1(AtS) for exp(—AtS) where S =
+CA:
+
+(8.55) exp(—AtS) = I — AtS = I —- AtD-\(D — E - F) =: T, (At).
+
+With L:= D-1E and U := D-'F, the matrix T,(At) of (8.55) gives rise to
+the iterative procedure
+
+(8.56) w((n +1)At) = {(1 — At)I + At(L + U)}w(nAt) + AtD7's.
+
+Clearly, the choice At = 1 gives us the familiar point Jacobi iterative method.
+To extend this to the block Jacobi method, we partition the matrix A as in
+(3.68), and now let the matrix C be defined as the block diagonal matrix D
+of (3.69). Again, the choice of At = 1 in the approximation of (8.55) gives
+the associated block Jacobi iterative method.
+
+To carry the analogy further, we now use a sequence of time steps At;, 1 <
+i<m, in (8.56). With B := L+U, this defines an iterative procedure whose
+error vectors €') satisfy
+
+j
+(8.57) 9 = []{(1- At)I+ At Bye, 1<j<m.
+i=l
+
+It is possible to select the At,’s such that

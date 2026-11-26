@@ -1,0 +1,44 @@
+46 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+though the independent variable, which we denote by «, will not always have
+the meaning of physical time, we will often refer to it as ‘the time variable’.
+The dependent variable y need not have the meaning of distance and need not
+even be scalar. If y is vector-valued, then it can be interpreted as a collection
+
+of scalar valued components y1, yo, ..., yw. Thus, we can write
+yi(z)
+ye) = | 2
+yn(z)
+
+The differential equation, and the initial information, which together
+determine the values of the y components as the time variable varies, can
+be written in the form
+
+y'(z) = f(z, y(2)), y(2o) = Yo- (200a)
+
+In the vector-valued case, the function f is defined on Rx R% to RY . However,
+it is often convenient to write the individual components of f as scalar-valued
+functions of x and the vector y(x); or what is equivalent, of the individual
+components of y(x). Similarly, the initial information can also be written in
+terms of individual components yio, yoo, ---, yno Of yo. There is a potential
+for confusion in the use of subscripts to denote either individual components
+of y, or individual values of 2, at which y is evaluated or approximated. This
+confusion will be avoided, by using each notation only in a context which
+makes the meaning clear, or else, where it becomes necessary, by refining the
+notation.
+
+With the freedom we have to write y as a vector or as an ensemble of scalars,
+we see that (200a) can be written in one of several equivalent forms. We can
+write out the components of y(x) in f(z, y(x)) to emphasize the dependence
+of y’(x) on each of these components:
+
+y' (x) = f(z,41(2), y2(2),---,yw(2)), —- y(@o) = yo,
+or we can take this a step further by writing out the individual components
+of y' (2):
+
+yi (2) Yio
+y3(x) y20
+. = f(#,y1(2),92(x),-..,yw(e)), (0) =
+yn (2) YNO
+Finally, we obtain a very detailed formulation by writing everything in terms
+of individual components:

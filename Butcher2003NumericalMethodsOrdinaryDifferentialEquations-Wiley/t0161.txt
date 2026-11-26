@@ -1,0 +1,46 @@
+RUNGE-KUTTA METHODS 149
+
+the results for two particular trees. In fact for each of t; = sfand b= ¥ F(t)
+reduces to
+
+F(t) = fylFyyf + fou) fyf + fe),
+
+and instead of two order conditions
+
+1 1
+8(t,) = bc;a;;0;nCh = ——~ = —
+(t1) > BC AiGAGKCK y(t) 30
+and
+O(t2) = So biaijejajnce = — = i (316b)
+y(t2) 40
+we have the single condition
+7
+
+> DiCiQijAjKCr + > bj 043 Cj 0;KRCK = 120°
+
+We discuss in Subsection 324 the construction of fifth order methods.
+These usually satisfy the so-called D(1) condition, which we introduce in
+Subsection 321. This simplifying assumption has, as one of its consequences,
+the dependence of (316b) on other conditions, for which there is no confusion.
+Hence, for methods satisfying D(1), scalar and vector order five conditions
+are equivalent.
+
+For orders 6 and higher, the confusion between the order conditions for the
+scalar case becomes more pronounced. The first published methods of this
+order (Huta, 1956, 1957) were derived for scalar problems but, nevertheless,
+have order 6 for the general vector case (Butcher, 1963a).
+
+317 Independence of elementary weights
+
+We show in Subsection 371 that, given a positive integer p, there exists an
+integer s such that there is a Runge-Kutta method with s stages with order p.
+We now present a more general result on the independence of the elementary
+weights but without a specific value of s given.
+
+Theorem 317A Given a finite subset To, of T and a mapping ¢ : To > R,
+there exists a Runge-Kutta method such that the elementary weights satisfy
+
+&(t) = o(d), for all t € To.
+
+Proof. Let #7 = n. The set of possible values that can be taken by the
+vector of @(t) values, for all ¢ € Tp is a vector space. To see why this is the

@@ -1,0 +1,108 @@
+REFERENCES xxi
+
+A. George and J. W-H. Liu (1981). Computer Solution of Large Sparse
+Positive Definite Systems. Prentice-Hall Inc., Englewood Cliffs, New
+Jersey.
+
+Introduction. Fundamentals. Some Graph Theory Notation and Its Use in the
+Study of Sparse Symmetric Matrices. BAnd and Envelope Methods. General Sparse
+Methods. Quotient Tree Methods for Finite Element and Finite Difference Prob-
+
+lems. One-Way Dissection Methods for Finite Element Problems. Nested Dissection
+Methods, Numerical Experiments.
+
+S. Pissanetsky (1984). Sparse Matrir Technology, Academic Press, New
+York.
+
+Fundamentals. Linear Algebraic Equations. Numerical Errors in Gaussian Elimi-
+nation. Ordering for Gausa Elimination: Symmetric Matrices. Ordering for Gausa
+Elimination: General Matrices. Sparee Eigenanalysis. Sparse Matrix Algebra. Con-
+nectivity and Nodal Amembly. General Purpose Algorithms.
+
+LS. Duff, A.M. Erisman, and J.K. Reid (1986). Direct Methods for Sparse
+Matrices, Oxford University Press, New York.
+
+Introduction. Sparse Matrices:Storage Schemés and Simple Operations. Gaussian
+Elimination for Dense Matrices: The Algebraic Problem Gaussian Elimination
+for Dense Matrices: Numerical Considerations. Gaussian Elimination for Sparse
+Matrices: An Introduction. Reduction to Block Triangular Form. Local Pivotal
+Strategies for Sparse Matrices. Ordering Sparse Matrices to Special Forms. im-
+Plementing Gaussian Elimination: Analyse with Numerical Values. Implementing
+Gaussian Elimination with Symbolic Analyse. Partitioning, Matrix Modification,
+and Tearing. Other Sparsity-Oriented Issues.
+
+R. Barrett, M. Berry, T.F. Chan, J. Demmel, J. Donato, J. Dongarra, V.
+Ejijkhout, R. Pozo, C. Romine, H. van der Vorst (1993). Templates for
+the Solution of Linear Systems: Building Blocks for Iterative Methods,
+SIAM Publications, Philadelphia, PA.
+
+Introduction. Why Use Templates? What Methods are Covered? Iterative Methods.
+Stationary Methods. Nonstationary Iterntive Methods. Survey of Recent Krylov
+Methods. Jacobi, Incompiete, SSOR, and Polynomial Preconditioners. Complex
+Systems, Stopping Criteria. Data Structures. Parallelism. The Lanczos Connection.
+Block Iterative Methods. Reduced System Preconditioning. Domain Decomposition
+Methods. Multigrid Methods. How Projection Methods.
+
+W. Hackbusch (1994). Iterative Solution of Large Sparse Systems of Equa-
+tions, Springer-Verlag, New York.
+
+Intreduction. Recapitulation of Linear Algebra. Iterative Methods. Methods of
+Jacobi and Gauss-Seidel and SOR, Iteration in the Positive Definite Case. Analysis
+in the 2-Cyclic Case. Anslysis for M-Matrices. Semi-Iterative Methods. Transfor-
+mationa, Secondery Iterations, Incomplete Triangular Decompositions. Conjugate
+Gradient Methods. Multi-Grid Methods. Domain Decomposition Methods.
+
+sexi REFERENCES
+
+O. Axelsson (1994). Iterative Solution Methods, Cambridge University
+Press.
+
+Direct Solution Methods. Theory of Matrix Eigenvaluss. Positive Definite Matri-
+ces, Schur Complements, and Generalised Eigenvalue Probemsa. Reducible and Irre-
+ducible Matrices and the Perron-Frobenious Theory for Nonnegative Matrices. Basic
+Iterative Methods aod Their Rates of Convergence. M-Matrices, Convergent Split-
+tings, and the SOR Method. Incomplete Factorization Preconditioning Methods.
+Apprmcdmate Matrix Inverses and Corresponding Preconditioning Methods. Block
+Disgonal and Schur Complement Preconditionngs. Estimates of Eigenvalues and
+Condition Numbers for Preconditioned Matrices. Conjugate Gradient and Lanczcs-
+Type Methods. Generalised Conjugate Gradient Methods. The Rate of Convergence
+of the Conjugste Gradient Method.
+
+Y. Saad (1996). Iterative Methods for Sparse Linear Systems, PWS Pub-
+lishing Co., Boston.
+
+Background in Linear Algebra. Discretization of PDEs. Sparse Matrices. Basic
+Iterative Methods. Projection Methods. Krylov Subspace Methods - Part I. Krylov
+Subspace Methods - Part I]. Methods Related to the Norma! Equations. Precon-
+ditioned Iterations. Preconditioning Techniques. Parallei Implementations. Parallel
+Preconditioners. Domain Decomposition Methods.
+
+Linear Fitting Problems
+
+C.L. Lawson and R.J. Hanson (1974). Solving Least Squares Problems,
+Prentice-Hall, Englewood Cliffs, NJ. Reprinted with a detailed “new
+developments” appendix in 1996 by SIAM Publications, Philadelphia,
+PA.
+
+Introduction. Analysis of the Least Squares Problem. Orthogonal Decomposition by
+Certain Elementary Transformations. Orthogonal Decomposition by Singular Value
+Decomposition. Perturbation Theorems for Singular Values. Bounds for the Con-
+dition Number of a Triangular Matrix. The Pseudoinverse. Perturbation Bounds
+for the Pseudoinverse. Perturbstion Bounds for the Solution of Problem LS. Nu-
+merical Computations Using Elementary Orthogonal Traneformations. Computing
+the Solution for the Overdetermined or Exactly Determined Full Rank Problem.
+Computation of the Covariance Matrix of the Solution Parametera. Computing the
+Solution for the Underdetermined Pull Rank Problem Computing the Solution for
+Problem LS with Poasibly Deficient Pseudorank. Anslysie of Computing Exrove for
+Householder Transformations. Analysis of Computing Errors for the Problem LS.
+Analysis of Computing Errors for the Problem LS Using Mixed Precision Arithmetic.
+Computation of the Singular Value Decomposition and the Solution of Problem
+LS. Other Methods for Least Squares Problems. Linear Leest Squares with Linear
+Equality Constraints Using a Basie of the Null Space. Linear Least Squares with
+Linear Equality Constraints by Direct Elimination. Linear Least Squares with Lin-
+ear Equality Constraints by Weighting. Linear least Squares with Linear Inequality
+Constraints. Modifying a QR Decomposition to Add or Remove Column Vectors.
+Practical Analysis of Least Squares Probiens. Examples of Some Methods of Ana-
+lyzing 5 Lesat Squares Problem. Modifying a QR Decomposition to Add or Remove
+Row Vectors with Application to Sequential Processing of Problems Having a Large
+or Banded Coefficient Matrix.

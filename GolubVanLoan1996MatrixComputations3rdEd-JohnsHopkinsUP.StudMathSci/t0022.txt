@@ -1,0 +1,106 @@
+1.1. Basic ALGORITHMS AND NOTATION 15
+
+P1.1.2 In the conventional 2-by-2 matrix multiplication C = AB, there are eight
+multiplications: 011511, 421612, 02112, 031612, a12631, 212672, 2gbg, and a2gbz2. Make
+8 table that indicates the order that these multiplications are performed for the ijk, jik,
+kij, ikj, jki, and kji matrix multiply algorithms.
+
+P1.1.3 Give an algorithm for computing C = (zy7)* where z and y are n-vectors.
+P1.1.4 Specify an algorithm for computing (XY7)* where X,Y € RO*?,
+
+P1.1.5 Formulate an outer product algorithm for the update C = ABT + C where
+AE R™™*, Be R**, and C € R™*",
+
+P1.1.6 Suppose we have real n-by-n matrices C, D, E, and F. Show how to compute
+real n-by-n matrices A and B with just three real n-by-n matrix multiplications so that
+(A +4B) = (C+iD)(E + iF). Hint: Compute W = (C+ DE — F).
+
+Notes and References for Sec. 1.1
+
+It must be stressed that the development of quality software from any of our “semi-
+formal” algorithmic presentations is a long and arduous task. Even the implementation
+of the fevel-1,2, and 3 BLAS require care:
+
+C.L. Lawson, R.J. Hanson, , D.R. Kincaid, and F.T. Krogh (1979). “Basic Linear
+Algebra Subprograms for FORTRAN Usage,” ACM Trans. Math. Soft. 5, 308-323.
+
+C.L. Lawson, R.J. Hanson, D.R. Kincaid, and F.T. Krogh (1979). “Algorithm 539,
+Basic Linear Algebra Subprograms for FORTRAN Usage,” ACM Trans. Math. Soft.
+5, 324-325.
+
+J.J. Dongarra, J. Du Cros, S. Hammarling, and RJ. Hanson (1988). “An Extended Set
+of Fortran Basic Linear Algebra Subprograma,” AGM Trans. Math. Soft. 14, 1-17.
+
+J.J. Dongarra, J. Du Cros, S. Hammarling, and R.J, Hanson (1988). “Algorithm 656 An
+Extended Set of Fortran Basic Linear Algebra Subprograms: Mode! Implementation
+and Test Programs,” ACM Trans. Math. Soft. 14, 18-32.
+
+J.J. Dongarra, J. Du Cros, LS. Duff, and S.J. Hammarling (1990). “A Set of Level 3
+Basic Linear Algebra Subprograms,” ACM Trans. Math. Soft. 16, 1-17.
+
+J.J. Dongarra, J. Du Cros, 1.8. Duff, and S.J. Hammarling (1990). “Algorithm 679. A
+Set of Level 3 Basic Linear Algebra Subprograms: Model Implementation sand Teat
+Programs,” ACM Trans. Math. Soft. 16, 18-28.
+
+Other BLAS references include
+
+B. Kagstrém, P. Ling, and C. Van Loan (1991). “High-Performance Level-3 BLAS:
+Sample Routines for Double Precision Real Data,” in High Performance Computing
+Hf, M. Durand and F. El Dabaghi (eds), North-Holland, 269-281.
+
+B. Kégstrém, P, Ling, and C. Van Loan (1995). “GEMM-Based Level-3 BLAS: High-
+Performance Model Implementations and Performance Evaluation Benchmark,” in
+Parallel Programming and Applications, P. Fritzon and L. Finmo (eds), ISO Press,
+184-188.
+
+For an appreciation of the subtleties associated with software development we recommend
+
+J.R. Rice (1981). Matriz Computations and Mathematical Software, Academic Press,
+New York.
+
+and a browae through the LAPACK manual.
+
+16 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+1.2 Exploiting Structure
+
+The efficiency of a given matrix algorithm depends on many things. Most
+obvious and what we treat in this section is the amount of required arith-
+metic and storage. We continue to use matrix-vector and matrix-matrix
+multiplication as a vehicle for introducing the key ideas. As examples of
+exploitable structure we have chosen the properties of bandedness and sym-
+metry. Band matrices have many zero entries and so it is no surprise that
+band matrix manipulation allows for many arithmetic and storage short-
+cuts, Arithmetic complexity and data structures are discussed in this con-
+text.
+
+Symmetric matrices provide another set of examples that can be used to
+illustrate structure exploitation. Symmetric linear systems and eigenvalue
+problems have a very prominent role to play in matrix computations and
+so it is important to be familiar with their manipulation.
+
+1.2.1. Band Matrices and the x-0 Notation
+
+We say that A € R™*" has lower bandwidth p if aj; = 0 whenever i > j +p
+and upper bandwidth q if j > i+q implies aj; = 0. Here is an example of
+an 8-by-5 matrix that has lower bandwidth 1 and upper bandwidth 2:
+
+e2e2cooox x
+eoocoo XK XK X
+S2O200xK xXx x
+ooo xK xX XK XQ
+Soxxxxoo
+
+The x’s designates arbitrary nonzero entries. This notation is handy to
+indicate the zero-nonzero structure of a matrix and we use it extensively.
+Band structures that occur frequently are tabulated in Table 1.2.1.
+
+1.2.2. Diagonal Matrix Manipulation
+
+Matrices with upper and lower bandwidth zero are diagonal. If D ¢ R™*"
+is diagonal, then
+
+D = diag(d,,...,dg), q=min{mn} <-> dj =dy
+
+If D is diagonal and A is a matrix, then DA is a row scaling of A and AD
+is a column scaling of A.

@@ -1,0 +1,107 @@
+4.4. SYMMETRIC INDEFINITE SYSTEMS 161
+
+4.4 Symmetric Indefinite Systems
+
+A symmetric matrix whose quadratic form x7 Az takes on both positive and
+negative values is called indefinite. Although an indefinite A may have an
+LDLT factorization, the entries in the factors can have arbitrary magnitude:
+
+e1])_[1 Ojfe 0 1 of?
+10] tte 14{0 -tfe}| ife 1] °
+Of course, any of the pivot strategies in §3.4 could be invoked. However,
+they destroy symmetry and with it, the chance for a “Cholesky speed”
+indefinite system solver. Symmetric pivoting, i.e., data reshufflings of the
+form A ~.PAPT, must be used as we discuised in §4.2.9. Unfortunately,
+symmetric pivoting does not always stabilize the LDL™ computation. If e
+and €2 are small then regardless of P, the matrix
+A=P | a1 pr
+1 ee
+has small diagonal entries and large numbers surface in the factorization.
+With symmetric pivoting, the pivots are always selected from the diagonal
+and trouble results if these numbers are small relative to what must be
+zeroed off the diagonal. Thus, LDLT with symmetric pivoting cannot be
+recommended as a reliable approach to symmetric indefinite system solving.
+Tt seems that the challenge is to involve the off-diagonal entries in the
+pivoting process while at the same time maintaining symmetry.
+Tn this section we discuss two waya to do this. The first method is due
+to Aasen(1971) and it computes the factorization
+
+PAPT = LTLT (4.4.1)
+where L = (£,;) is unit lower triangular and T is tridiagonal. P is a permu-
+
+tation chosen such that |é;;| < 1. In contrast, the diagonal pivoting method
+due to Bunch and Parlett (1971) computes a permutation P such that
+
+PAPT = LDLT (4.4.2)
+
+where D is a direct sum of 1-by-1 and 2-by-2 pivot blocks. Again, P is
+chosen so that the entries in the unit lower triangular L satisfy |é,;| < 1.
+Both factorizations involve n3/3 flops and once computed, can be used to
+solve Az = b with O(n?) work:
+
+PAP? =LTL', Lz = Pb,Tw=2,L’y=w,2=Py 3 Ar=b
+
+PAPT = LDL", Lz = Pb,Dw=2,L’y=w,2=Py +> Axz=b
+
+The only thing “new” to discuss in these solution procedures are the Tw = z
+and Dw = z systems.
+
+162 CuaPTER 4. SPECIAL LINEAR SYSTEMS
+
+In Aasen’s method, the symmetric indefinite tridiagonal system Tw = z
+is solved in O(n) time using band Gaussian elimination with pivoting. Note
+that there is no serious price to pay for the disregard of symmetry at this
+level since the overall process is O(n*).
+
+In the diagonal pivoting approach, the Dw = z system amounta to a set
+of 1-by-1 and 2-by-2 symmetric indefinite systems. The 2-by-2 problems
+can be handled via Gaussian elimination with pivoting. Again, there is no
+harm in disregarding symmetry during this O(n) phase of the calculation.
+
+Thus, the central issue in this section is the efficient computation of the
+factorizations (4.4.1) and (4.4.2).
+
+4.4.1 The Parlett-Reid Algorithm
+
+Parlett and Reid (1970) show how to compute (4.4.1) using Gauss trans-
+forms. Their algorithm is sufficiently illustrated by displaying the k = 2
+step for the case n = 5. At the beginning of this step the matrix A has
+been transformed to
+
+O m x x
+O vs xX xX
+
+a f 0 0 90
+
+Br ag ug U4 U5
+
+AY = M,PAPFMT = | 0 uw; x x x
+x
+
+x
+
+where P; is a permutation chosen so that the entries in the Gauss trans-
+formation 44, are bounded by unity in modulus. Scanning the vector
+(v3 v4 vs)? for its largest entry, we now determine a 3-by-3 permutation P,
+such that
+
+_ | es ds
+Po} vg | = | oe => || = max{|ds], [84], 1ds]} -
+Us os
+
+If this maximal element is zero, we set Mz; = P, = I and proceed to the
+next step. Otherwise, we set P, = diag(Jz, P,) and Mz =I ~ ae with
+
+a) = (0 0 0 t4/ts ast, )”
+
+and observe that
+rasy By 0 o 0
+6, a2 t3 0 0
+A® = M.P,A9PPMT = | 0 @ x x x
+0 0 x x x
+0 0 x x x
+
+In general, the process continues for n—2 steps leaving us with a tridiagonal
+matrix
+
+T = APD = (My Pao) MyPL)A(Mp—2Pa-o MPA)?

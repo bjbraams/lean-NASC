@@ -1,0 +1,50 @@
+278 8. Matrix Methods for Parabolic Partial Differential Equations
+
+where C and A are n x 7 real matrices with time-independent entries,® and
+
+(8.12) u(0) =g.
+
+Note that the integration method of Sect. 6.3 directly utilizes the boundary
+conditions of (8.2), which are incorporated in the vector s(t) and the matrix
+A, and that the vector g of (8.12) is some integral average on Rp of the
+function g(z, y) defined on R. The solution of (8.11)-(8.12) is called the semi-
+discrete approximation of the solution of (8.1)-(8.2), in that the spatial
+variables have been discretized, while t, the time variable, remains continuous.
+
+For properties of the matrices C and A, we have from (8.10) that C is
+by construction a real diagonal matrix whose diagonal entries are integrals of
+the function ¢. But from (8.4), C is then a positive diagonal matrix. For the
+real matrix A, we have, by virtue of the five-point approximation, that there
+are at most five nonzero entries in any row of A. Also, using the hypotheses of
+(8.4) and (8.5), we have, for all sufficiently fine Cartesian mesh regions Rp,
+that A is irreducibly diagonally dominant? with positive diagonal entries and
+nonpositive off-diagonal entries. From Corollary 3.20 and Definition 3.22, it
+is thus an irreducible M-matrix. Multiplying on the left by C~! in (8.11), we
+have
+(8.13) at) = —-C™tAu(t) + C7!s(t) + 7(t), t>0,
+where T(t) := C~!7(t). With the above properties for the matrices C’ and
+A, it follows that C~1A is also an irreducible M-matriz for sufficiently fine
+mesh regions Rp.
+
+To give a particular estimate for T(t), consider the following special case
+of (8.1):
+
+ur(Z, y3t) = Ure(Z, yt) + Uyy(z,yst), (,y) € R,t>0,
+
+in a rectangle R. If the Cartesian mesh Rp, which approximates RF is uniform,
+iie., Ax = Ay = hand G := 0 in (8.2), it can be verified, by means of Taylor’s
+series expansions, that for allO <t <T,
+
+(8.14) ri(t) = O(n?)
+
+if the fourth derivatives uzzrz and Uyyyy are continuous and bounded”? in R
+for0<t<T.
+
+8 See Exer. 7 for cases where the matrices A and C have time-independent entries
+even when the functions a, 3, and 7 of (8.2) are time-dependent.
+
+® This requires the additional hypothesis that (x) := 0 in R and a(x) :=0 on
+cannot simultaneously occur.
+
+10 For example, see Douglas (1961b) for more general results concerning discretiza-
+tion errors.

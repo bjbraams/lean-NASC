@@ -1,0 +1,49 @@
+4.1 p-Cyclic Matrices 113
+
+O Bi 2
+Boi O Bas
+
+(4.8) By = re
+
+. By-1,n
+By,w-1 O
+
+where the matrices B, and Bp are partitioned relative to the partitioning
+of the matrices A; and Ap, respectively. But the matrices B, and Bz have
+interesting properties. First of all, the matrix By is in the normal form (2.37)
+of a matrix which is weakly cyclic of index p. (See Definition 2.13 of Sect.
+2.2). Similarly, we can permute the blocks of the partitioned matrix B2 to
+show that Bo is weakly cyclic of index 2. (See Exer. 4 of Sect. 2.4.) This leads
+us to
+
+Definition 4.1. If the block Jacobi matrix B of (4.4) for the matrix A of
+(4.2) is weakly cyclic of index p (> 2), then A is p-cyclic, relative to the
+partitioning of (4.2).
+
+We point out that if the diagonal submatrices A;; of (4.2) are 1 x 1
+matrices, then the property that the matrix A is 2-cyclic in the sense of
+Definition 4.1 is equivalent to Young’s property A. Similarly, the statement
+that the matrix A of (4.2) is 2-cyclic in the sense of Definition 4.1, with
+no restrictions on the order of the diagonal submatrices A;,;, is implied by
+property A” of Arms, Gates, and Zondek.
+
+It is interesting to point out that by choosing N = 2 in (4.2), the matrix
+B of (4.4) takes the simple form
+
+_[ O Bia
+
+which is obviously weakly cyclic of index 2. In other words, any partitioning
+of the matrix A of (4.2) with N = 2, for which the diagonal submatrices are
+nonsingular, is such that the associated matrix A is then 2-cyclic.
+
+Our first use of graph theory in this chapter! is directed toward the ques-
+tion of deciding when the given matrix A of (4.2) is p-cyclic, or equivalently,
+when its block Jacobi matrix B of (4.4) is weakly cyclic of index p. To this
+end, we consider the block directed graph G,(B) of the nxn matrix B. Instead
+of taking n nodes for the directed graph of B, as in Sect. 1.4, we now take N
+nodes P,(1),; Px(2);*** Pai), where N is the number of diagonal submatri-
+ces of the partitioned matrix A of (4.2). By analogy with our definitions of
+directed graphs of matrices Sect. 1.4, if the submatrix B,,;, of the partitioned
+matrix B, has at least one nonzero entry, we connect the node P,,;) to the
+
+1 See also Sect. 4.4.

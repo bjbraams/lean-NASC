@@ -1,0 +1,48 @@
+6 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+A further property of this problem is its invariance under changes of scale
+of the variables:
+
+n= a7,
+¥2 = oF,
+¥3 = Ys,
+Ya = OF,
+e=a °F.
+
+The Hamiltonian and angular momentum get scaled to
+
+A= 3(3+02) -Gitw) 7-078,
+A=TiU4 — Tos = aA,
+
+A second type of transformation is based on a two-dimensional orthogonal
+transformation (that is, a rotation or a reflection or a composition of these)
+Q, where Q-! = Q". The time variable x is invariant, and the position and
+velocity variables get transformed to
+
+ML Wn
+ye | _ | Q 0 | cD
+Ys 0 Q U3
+ya Ua
+
+It is easy to see that A = 0 implies that the trajectory lies entirely in a
+subspace defined by cos(@)yi = sin(@)y2, cos(@)ys = sin(@)y4 for some fixed
+angle 6. We move on from this simple case and assume that A # 0. The sign
+of H is of crucial importance: if H > 0 then it is possible to obtain arbitrarily
+high values of y? + y? without y3 + y? vanishing. We exclude this case for the
+present discussion and assume that H < 0. Scale H so that it has a value
+-3 and at the same time A takes on a positive value. This value cannot
+exceed 1 because we can easily verify an identity involving the derivative of
+
+r = «/y? + y2. This identity is
+
+2
+(£) = 2Hr? + dr — A® = -r? + 2r ~ A, (101e)
+
+Since the left-hand side cannot be negative, the quadratic function in r on
+the right-hand side must have real roots. This implies that A < 1. Write
+A = vV1-e?, for e > 0, where we see that e is the eccentricity of an ellipse
+on which the orbit lies. The minimum and maximum values of r are found to
+be 1 —e and 1+ e, respectively. Rotate axes so that when r = 1 — e, which
+we take as the starting point of time, y; = 1—e and y. = 0. At this point we
+
+find that ys = 0 and y4 = /(1 + e)/(1—e).

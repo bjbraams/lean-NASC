@@ -1,0 +1,101 @@
+Chapter 4
+
+Special Linear Systems
+
+§4.1 The LDM® and LDL’ Factorizations
+84.2 Positive Definite Systems
+
+§4.3 Banded Systems
+
+§4.4 Symmetric Indefinite Systems
+
+84.5 Block Systems
+
+84.6 Vandermonde Systems and the FFT
+84.7 Toeplitz and Related Systems
+
+134 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+
+structure that it can destroy. Fortunately, there is a happy resolution to
+this conflict in the symmetric indefinite problem.
+
+Any block banded matrix is also banded and so the methods of §4.3 are
+applicable. Yet, there are occasions when it pays not to adopt this point of
+view. To illustrate this we consider the important case of block tridiagonal
+systems in §4.5. Other block systems are discussed as well.
+
+In the final two sections we examine some very interesting O(n) algo-
+rithms that can be used to solve Vandermonde and Toeplitz systems.
+
+Before You Begin
+
+Chapter 1, §§2.1-2.5, and §2.7, and Chapter 3 are assumed. Within this
+chapter there are the following dependencies:
+
+§4.5
+i
+§4l 3 §42 > §43 3 §44
+1
+§46 — §47
+
+Complementary references include George and Liu (1981), Gill, Murray,
+and Wright (1991), Higham (1996), Trefethen and Bau (1996), and Demmel
+(1996). Some MATLAB functions important to this chapter: chol, tril,
+triu, vander, toeplitz, fft. LAPACK connections include
+
+It is a basic tenet of numerical analysis that structure should be ex-
+ploited whenever solving a problem. In numerical linear algebra, this trans-
+lates into an expectation that algorithms for general matrix problems can
+be streamlined in the presence of such properties as symmetry, definiteness,
+and sparsity. This is the central theme of the current chapter, where our
+principal aim is to devise special algorithms for computing special variants
+of the LU factorization.
+
+We begin by pointing out the connection between the triangular fac-
+tors L and U when A is symmetric. This is achieved by examining the
+LDMT factorization in §4.1. We then turn our attention to the important
+case when A is both symmetric and positive definite, deriving the stable
+Cholesky factorization in §4.2. Unsymmetric positive definite systems are
+also investigated in this section. In §4.3, banded versions of Gaussian elimi-
+nation and other factorization methods are discussed. We then examine the
+interesting situation when A is symmetric but indefinite. Our treatment of
+this problem in §4.4 highlights the numerical analyst’s ambivalence towards
+pivoting. We love pivoting for the stability it induces but despise it for the
+
+133
+
+LAPACK: General Band Matrices
+
+-GBSY Solve AX = B
+-CGBCON | Condition estimator
+-GBRFS Improve AX = B, ATX = B, A? X = B solutions with error bounds
+-GBSVX | Solve 4X = B, ATX = B, AY X = B with condition estimate
+~GBTRF PA=LU
+-GBTRS j Solve AX = B, ATX = B, A¥X = Bvin PA= LU
+-CBEQU | Equilibration
+
+LAPACK: General Tridiagonal Matrices
+-GTS¥ | Solve AX = B
+-GTCON | Condition estimator
+-GTRFS | Improve AX = B, ATX = B, AN X = B solutions with error bounds
+-Gtsvx | Solve AX = B, ATX = B, A#X = B with condition estimate
+~GTIRF | PA=LU
+~GrtRS | Solve AX = B, ATX = B, AUX = B via PA = LU
+
+LAPACK: Full Symmetric Positive Definite
+
+Posy Solve AX = B
+
+POcoN Condition estimate via PA = LU
+
+PORFS Improve AX = B solutions with error bounds
+POSVE Solve AX = B with condition estimate
+
+PoTRF | A= GGT
+
+potrs | Solve AX = B via A= GGT
+
+potar | Aq!
+
+POEQU Equilibration
+

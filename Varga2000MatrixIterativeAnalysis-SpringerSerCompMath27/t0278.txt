@@ -1,0 +1,14 @@
+7.4 Variants of the Peaceman-Rachford Iterative Method 271
+
+Let the n x n Hermitian matrices H; and Vj be respectively positive
+definite and nonnegative definite. Clearly, for a > 0 sufficient small,
+Ay := Hy, — al and VY, := Vj + al are both Hermitian and posi-
+tive definite. Show that the Peaceman-Rachford iterative method of
+(7.11) with acceleration parameters rm41 for the matrices Ay and Yj
+is equivalent to the variant defined by
+
+(Ay + Sm4it)ul™/?) = (Sait —Vi)u™ +k,
+
+(Vi + Sm4it)ul™) = (Smit — Wy)ul™/2) +k, m>0,
+
+where Pm41 — Q@ =! Sm41, Tm+1 + Q@ =: Sm4i-

@@ -1,0 +1,46 @@
+262 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+The method constructed in this way has order, or generalized order,
+respectively, equal to p = 2m-+ 1. To see this, let Y; denote the approximation
+to y(n_1 + hé;) in stage number 1 + i of the order 2m + 1 order Radau I
+method (in Case I) or the 2m + 2 order Lobatto method (in Case II). It is
+easy to see that the stages corresponding to row number k approximate the
+Y quantities to within O(h*++). Thus the full method has order 2m + 1 in
+Case I and generalized order 2m + 1 in Case II. Add one more stage to the
+Case II methods, as in Theorem 323B, and we obtain order p = 2m + 2 with
+s = 4(3m?+m-+4) stages compared with p = 2m+1 and s = 3(3m? +m+2)
+stages in Case I. This gives the result of the theorem. o
+
+Exercises 37
+37.1 Show that Lemma 322A can be used to prove that cs = 1, ifs = p> 4.
+
+37.2 Show that Lemma 322A can be used to prove that c; =1,ifs=p>5
+leading to an alternative proof of Theorem 370B.
+
+38 Algebraic Properties of Runge-Kutta Methods
+380 Motivation
+
+For any specific N-dimensional initial value problem, Runge-Kutta methods
+can be viewed as mappings on R% to R . However, the semi-group generated
+by such mappings has a significance independent of the particular initial value
+problem, or indeed of the vector space in which solution values lie. If a method
+with s; stages is composed with a second method with s2 stages, then the
+combined method with s; + s2 stages can be thought of as the product of the
+original methods. It turns out that this is not quite the best way of formulating
+this product, and we need to work with equivalence classes of Runge-Kutta
+methods. This will also enable us to construct a group, rather than a mere
+semi-group.
+
+It will be shown that the composition group of Runge-Kutta equivalent
+classes is homomorphic to a group on mappings from trees to real numbers.
+In fact the mapping that corresponds to a specific Runge-Kutta method is
+just the function that takes each tree to the associated elementary weight.
+
+There are several reasons for introducing and studying these groups.
+For Runge-Kutta methods themselves, it is possible to gain a better
+understanding of the order conditions by looking at them in this way.
+Furthermore, methods satisfying certain simplifying assumptions, notably the
+C and D conditions, reappear as normal subgroups of the main group. An
+early application of this theory is the introduction of the concept of ‘effective
+order’. This is a natural generalization from this point of view, but makes very
+little sense from a purely computational point of view. While effective order

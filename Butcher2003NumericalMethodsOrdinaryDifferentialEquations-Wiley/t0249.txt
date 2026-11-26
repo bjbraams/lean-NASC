@@ -1,0 +1,53 @@
+RUNGE-KUTTA METHODS 237
+
+deduce that «; = 0 fori =s+1,s+2,...,2s—1. Thus, the only way for M
+to be positive semi-definite is that
+
+VIMV= 28 pesel
+s
+and that
+€23 > 0. (358a)
+
+Combining these remarks with a criterion for (358a), we state:
+
+Theorem 358A A collocation Runge-Kutta method is algebraically stable if
+and only if the abscissae are zeros of a polynomial of the form
+P* — @P* (358b)
+
+s-1
+
+where @ > 0.
+
+Proof. Because ¢; = 0 for 7 = 1,2,...,2s — 1 it follows that
+
+1
+[ P(z)o(z)dx = 0, (358)
+0
+
+where ¢(z) is a polynomial of degree s, with positive leading coefficient
+
+and zeros ¢1, C2, ..., cs and P is any polynomial of degree not exceeding
+
+s — 2. Furthermore, if P is a polynomial of degree s — 1 and positive leading
+coefficient, the integral in (358c) has the same sign as —e€2,. Because of the
+orthogonality of ¢ and polynomials of degree less than s — 1, ¢ is a positive
+constant multiple of (358b). Apart from a positive factor, we can now evaluate
+the integral in (358c), with P(x) = P}_,(z),
+
+1 1
+[ Py_1(2)(P; (x) — OP3_,(2))dx = -8 [ Pz_,(«)*dz,
+which has the opposite sign to @. oO
+
+A consequence of this result is that both Gauss and Radau IIA methods
+are algebraically stable. Many other methods used for the solution of stiff
+problems have stage order lower than s and are therefore not collocation
+methods. A general characterization of algebraic stable methods is found by
+using a transformation based not on the Vandermonde matrix V, but on a
+generalized Vandermonde matrix based on the polynomials that, are essentially
+the same as P**, for i = 0,1,2,...,8—1.
+
+359 The V and W transformations
+
+We refer to the transformation of M using the Vandermonde matrix V to form
+V™MV, as the ‘V transformation’. We now introduce the more sophisticated
+W transformation.

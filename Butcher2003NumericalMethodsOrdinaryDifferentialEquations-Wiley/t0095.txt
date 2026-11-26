@@ -1,0 +1,51 @@
+82 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+223 Use of higher derivatives
+
+For many practical problems, it is possible to derive formulae for the second
+and higher derivatives of y, making use of the formula for y'’ given by
+a differential equation. This opens up many computational options, which
+can be used to enhance the performance of multistage (Runge-Kutta) and
+multivalue (multistep) methods. If these higher derivatives are available, then
+the most popular option is to use them to evaluate a number of terms in
+Taylor’s theorem. Even though we consider this idea further in Section 25, we
+will present a simple illustrative example here.
+Consider the initial value problem
+
+1
+y=yrty’, 90) = 5, (223a)
+with solution
+_ ___exp(5x?)
+ula) = 2— fy exp(42?)da’
+By differentiating (223a) once, twice and a third time, it is found that
+
+y" = (2 + 2y)y' +y, (223b)
+yl" = (w+ Qy)y” + (2 + 2yhy’, (223c)
+yO = (w+ 2y)y” + (3+ 6y'y”. (223d)
+
+We illustrate the Taylor series method by solving (223a) with output point
+= = 1. Using n steps and stepsize h = 1/n, for n = 8, 16, 32, ..., 2°, the
+method was used with orders p = 1, 2, 3 and 4. For example, if p = 4, then
+
+nh 8 h?
+= eo ey A)
+Yn = Ina thy + sy + ey + ayy
+
+where y’, y”, y'” and y“) are given by (223a), (223b), (223c), (223d) with
+Ln—1 and yn—1 substituted for x and y, respectively.
+
+The results for these experiments are shown in Figure 223(i). In each case
+the error is plotted, where we note that the exact result is
+
+exp(}) ~ __1.64872127070013
+
+= se 2.04799324543883.
+2— flexp(hz2)de  2— 1.19495766191023
+
+224 Multistep-multistage-multiderivative methods
+
+While multistep methods, multistage methods and multiderivative methods
+all exist in their own right, many attempts have been made to combine their
+attributes so as to obtain new methods of greater power. By introducing higher
+y derivatives into multistep methods, a new class of methods is found. These
+are known as Obreshkov methods, after their discoverer Obreshkov (1940).

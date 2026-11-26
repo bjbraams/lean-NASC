@@ -1,0 +1,44 @@
+4.1 p-Cyclic Matrices 117
+
+(a/)1/? =: v.
+
+Thus, we can write
+
+aL + BU = (a?-1p)/P?{uL + v-P-YU}.
+
+Using the hypothesis that B = L + U is a consistently ordered weakly cyclic
+matrix of index p, it follows from Definition 4.3 that the eigenvalues of vL +
+v-®-DU are independent of v for v # 0. Hence, we can set v = 1, and
+we conclude that the eigenvalue sets {o;}"_, and {7;}7_, are again identical.
+This proves that the determinants of (4.13) are equal, completing the proof.
+
+Exercises
+
+1.
+
+Let A be the partitioned matrix of (4.2), where the diagonal submatri-
+ces are square and nonsingular. Prove that A is p-cyclic if there exist
+p disjoint nonempty sets S,,,m = 0,1,2,---,p —1, of W, the set of
+the first N positive integers, such that
+
+U 5m = W,
+
+m=0
+
+and if A;,; 4 O, then either i = j, or ifi € S,, then j € Spm_1, where
+the subscripts taken modulo p.
+
+Let A satisfy the hypotheses of Exer. 1. Prove that A is p-cyclic if
+there exists a vector y7 = (71,72,---,Yw) with integer components
+such that if A;,; # O, then y; — y¥; is equal to p—1 or —1, and for each
+integer r,0 <r < p—1, there exists some 7; = r (mod p). The vector
+77 is said to be an ordering vector for A. Find the ordering vectors
+
+for the matrices A; and Ag of (4.5) and (4.6).
+
+For the 4 x 4 matrix A of (1.9), partitioned so that its diagonal sub-
+matrices are all 1 x 1 matrices, prove that
+
+a. A is 2-cyclic;
+
+b. A is consistently ordered.

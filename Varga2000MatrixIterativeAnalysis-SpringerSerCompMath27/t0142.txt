@@ -1,0 +1,46 @@
+134 4. Successive Overrelaxation Iterative Methods
+
+_ il T), _ il T
+(4.59) Va = py(La + Lb); We = (Le - LB),
+so that Vg and Wz are respectively real symmetric and real skew- symmetric
+matrices. As Pg(e%) is a nonnegative irreducible matrix, let x > 0 be the
+eigenvector corresponding to the eigenvalue hg(a). If x is normalized so that
+||x|] = 1, then
+
+(4.60) hp(a) = x? Pp(e*)x = cosh 3) x Vex,
+
+since Wg is a real skew-symmetric matrix.!! As the quadratic form x7 Vgx
+can be equivalently written as the Rayleigh quotient x7Vgx/x'x, this is
+bounded above!” by the largest real eigenvalue of Vg, as Vp is a real sym-
+metric matrix. But as Vg is also a nonnegative irreducible matrix, its largest
+real eigenvalue is equal to its spectral radius, which from (4.59) is obviously
+unity. Combining with the first part of this part of this theorem, we then
+have
+
+a
+1 < hp(a) < cosh ($) ;
+for all real a. To complete the proof, let a # 0, and suppose that
+x! Vpx = p(Vg) =1.
+
+From the symmetry of Vg, this implies that x is also an eigenvector of Vg,
+which from (4.58) further implies that x is an eigenvector of the real skew-
+symmetric matrix Wg. But as a real skew-symmetric matrix has only eigen-
+values of the form io, where is real, it remains to show that Wgx is not the
+null vector. By the irreducibility of B, there exists at least one positive entry
+in the first row of LB, and by direct multiplication, the first component of
+the column vector Wpx is a negative real number. This contradiction proves
+that x7Vgx < 1 for a #0, and thus
+
+1 < hp(c) < cosh 3)
+
+for all a # 0, completing the proof.
+
+Before finding bounds for the spectral radius of Cp,,, we bring out the
+relationship between the matrix property hg(a) = 1 and the previously in-
+troduced concepts of a consistently ordered cyclic matrix of index 2.
+
+Theorem 4.14. Let B € S. Then, ha(a) = 1 if and only if B is a consis-
+tently ordered cyclic matrix of index 2.
+
+11 For any real vector y,y’ My = 0 when M is a real skew-symmetric matrix.
+12 See, for example, the proof of Theorem 1.7.

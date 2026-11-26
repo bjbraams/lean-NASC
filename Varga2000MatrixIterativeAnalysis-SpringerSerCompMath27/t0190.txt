@@ -1,0 +1,23 @@
+182
+
+5.5
+
+5. Semi-Iterative Methods
+
+The first general treatment of semi-iterative methods and their ap-
+plications to the iterative solution of matrix problems, appeared in
+Niethammer and Varga (1983), where there was a strong coupling to
+summability theory. Subsequent papers on this topic by Eiermann, Ni-
+ethammer and Varga (1985), Gutknecht, Niethammer and Varga, R. S.
+(1986), and Eiermann, Niethammer and Varga (1987), emphasized
+the connection with conformal mapping theory. But more recently,
+software packages for Schwarz-Christoffel mappings were directly uti-
+lized in the solution of matrix equations in Starke and Varga (1993)
+and Manteuffel, Starke and Varga (1995), and most recently, software
+packages involving generalized Schwarz-Christoffel mappings have ap-
+peared in an intriguing paper, “The conformal “bratwurst” map and
+associated Faber polynomials,” by Koch and Liesen (1999). It is ab-
+solutely fascinating to see the simultaneous development of tools from
+the diverse areas of complex function theory, sophisticated new soft-
+ware, and complex approximation theory, all applied to the solution
+of matrix equations!

@@ -1,0 +1,44 @@
+22 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+Exercises 10
+10.1 You are given the initial value problem
+ul" (a) — 3u" (x) + 2u(x)u'(z) =0, u(1)=2, w(1)=—1, u"(1) =4.
+Show how to reformulate this problem in the form
+y'(z) = f(y(z)), —-y(#0) = vos
+where f : R® > R.
+
+10.2 You are given the non-autonomous initial value problem
+
+ul =sut27v, u(0) = 3,
+vo =u-—vt 2ru, v(0) = 2,
+Jaypee -
+
+w uti w(0) =5.
+
+Show how to write this as an autonomous problem.
+
+10.3 The matrix
+
+-1 1 0 0 oO
+1-2 1 0 0 0
+0 1 -2 0 0 0
+A=(N-1?]} ff: PoE
+0 0 O-- -2 1 0
+0 0 O-- 41-2 1
+0 0 O-- O 1-1
+
+arises in the numerical solution of the heat equation, but with Neumann
+boundary conditions. Find the eigenvalues of A.
+
+10.4 A mechanical problem formulated in ‘Hamiltonian form’ makes use of a
+Hamiltonian function H(p1, po,...,41,92)---). The differential equation
+for the generalized position component number i and generalized
+momentum component 7 are respectively
+
+OH OH
+(OF f= SF
+%= Bp, and pj 8a:
+
+Show that the differential equation system defined by the Hamiltonian
+H(p1,p2,91,92) = 5(} + 3) — (af +B)?
+
+is the Kepler problem.

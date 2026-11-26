@@ -1,0 +1,44 @@
+6.2 General Second-Order Ordinary Differential Equations 201
+
+Exercises
+
+1.
+
+Let p(x) € C{a,b] and y(x) € C*[a, 6], and consider a general mesh
+spacing a = Zo < 21 < Zo:+: < BN41 = 5, where 241 := hi + Zi,
+and pip1/2 = p(ai + hi/2). If hy = max(hi, hi), show by means of
+Taylor’s series that, for any 1 <i < N,
+
+Yiti — Yi Yi — Yi-1
+fo (2, weed _ Passa ( hy ) +ran( Ai-1 )
+de Pe ae f ~ hi thi-t
+
+2
+
++0(hi),
+
+if hj # hi-1, and O(h?) otherwise. Next, for the case g = 0, and
+a; = 1,8; = 0 in (6.22) - (6.23), show that this use of Taylor’s series
+in approximating (6.22) leads to a matrix equation similar to that of
+(6.35), but the associated matrix now is in general nonsymmetric.
+
+Let q(x) € C?{a,b] and y(x) € C?[a,b]. Using the notation of the
+previous exercise, show that
+
++ dy(zi) _ (Yin TY (wT Y¥i-1 Z.
+ge) =a (SS) +0: (AAS) +008),
+
+if hi # hi_-1, and O(h?) otherwise.
+
+For the differential equation of (6.1) with a = 0 and b = 1, assume
+that o(z) > 0 for 0 < z < 1, and that
+
+dy(0
+
+10) 9 and y(t) =
+are now the boundary conditions. Using a uniform mesh h = 1/(N +1),
+determine explicitly the matrix A of (6.35) of order N + 1 in this case.
+
+In place of (6.25), assume that o(z) > 0 for a < x < b. Show that if
+min((;, 32) = 0, then all the conclusions of Theorem 6.3 and Corollary
+6.4 remain valid.

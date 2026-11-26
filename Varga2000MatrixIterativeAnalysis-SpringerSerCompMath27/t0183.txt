@@ -1,0 +1,47 @@
+5.5 Semi-Iterative Methods Applied to the SOR Method 175
+
+For each positive integer m, this implies that the optimal semi-iterative
+method applied to (5.1) is, in this case, just the basic iteration method of
+(5.1), repeated m times.
+
+The above result can be applied in the case when the n x n Jacobi matrix
+B= L+U is a consistently ordered cyclic of index 2 matrix, where the
+eigenvalues of B? are nonnegative, and p(B) < 1. In this case, it is known,
+from conformal mapping theory (cf. Young (1954a)), that for
+
+2
+Oe Te Jt pAB)
+
+the eigenvalues of the associated successive overrelaxation matrix L,, := (I —
+wL)-1{(1 —w)I +wU}, for w = wy, all lie on the circle {z EC : |z] = wy — 1}.
+(In fact, since the conformal mapping involved is independent of the order n
+of the matrix B, these eigenvalues of £,,, can be made arbitrarily “dense” on
+this circle.) Hence, from (5.90), there is no improvement in convergence rates
+over the straight use of the iteration matrix L,,,!
+
+But what happens when w # wy? Can semi-iteration applied to the it-
+eration matrix L,,, for w # wy, improve matters? Interestingly enough, the
+answer is yes. The result of Eiermann and Varga (1993a), where tools from
+conformal mapping theory and complex approximation theory are used, is
+given in Theorem 5.5 below. For added notation, given any n x n complex
+matrix M, let 2 CC be a compact set (consisting of more than one point)
+in the complex plane €, with the properties that
+
+1. 0(M) CQ, ie., all eigenvalues of M lie in 2;
+(5.91) 4 2.14 Q;
+3. with Coo := CU {oo}, €.o\2 is simply connected,
+
+and we say that {2 is a covering domain for the eigenvalues of the matrix
+M.
+For each positive integer m, the problem we seek to solve is
+
+(6.92) pie {sx lem( =) Im:
+From compactness considerations, there is always a polynomial fm(z) in Sm
+such that
+
+(5.93) max |pm(2)| =m (m2 1).
+
+Then, a nice connection between complex approximation theory and confor-
+mal mappings is as follows. Let (z) = w be a conformal mapping of C..\2
+in the z-plane onto the exterior of the unit disk {w € C : |w| < 1} in the
+w-plane, with (co) = oo, and set

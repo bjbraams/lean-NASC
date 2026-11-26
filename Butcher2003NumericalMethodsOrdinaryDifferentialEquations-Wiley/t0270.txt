@@ -1,0 +1,39 @@
+258 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+by the example with p = 2,5 = 3 and A= i. For this method, a; = -3,
+Q2 = 7h; and the coefficient tableau is
+
+Exercises 36
+
+36.1 Derive the tableau for the two stage order 2 diagonally implicit method
+satisfying (361a), (361b) with A = 1—- V2 and cp = 3A.
+
+36.2 Rewrite the method in Exercise 36.1 so that the value of Y, in step
+number n is the input and the value of Y; in step n + 1 is the output.
+
+36.3 Show that the method derived in Exercise 36.2 has stage order 2.
+
+36.4 Derive a diagonally implicit method with s = p = 3 and with A= c=
+1 2
+3,2 = §,G=1.
+
+36.5 Derive a diagonally implicit method with s = p = 3,A=1,@ = }
+cg = 1, b = 0.
+
+36.6 Show that for an L-stable method of the type described in Subsection
+364 with p = 3, s = 4, the minimum possible value of A is approximately
+0.2278955169, a zero of the polynomial
+
+185976A!? — 1490400A!? + 4601448A!° — 7257168,A° + 6842853\°
+—4181760X7 + 1724256 — 487296.° +.94176\4 — 12192\3 + 1008)? —48A+1.
+
+37 Order Barriers
+870 Explicit barriers
+
+It is possible, as we have seen, to derive explicit methods with s = p for
+p = 1,2,3,4. These methods are optimal in the sense that s < p is never
+possible and p = 4 is as high as it is possible to go with s = p. We now
+formalize these remarks.
+
+Theorem 370A /f an explicit s stage Runge-Kutta method has order p, then
+S>p.

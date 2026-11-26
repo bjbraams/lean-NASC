@@ -1,0 +1,105 @@
+6.1. Basic CONCEPTS 287
+
+6.1.11 Memory Traffic Overhead
+
+It is important to recognize that overall performance depends strongly on
+the overheads associated with the reads and writes to the global memory.
+If such a data transfer involves m floating point numbers, then we model
+the transfer time by
+t(m) = a, + Hem. (6.1.5)
+
+The parameter a, represents a start-up overhead and (3, is the reciprocal
+transfer rate. We modelled interprocessor communication in the distributed
+environment exactly the same way. (See (6.1.3).)
+
+Accounting for all the shared memory reads and writes in Algorithm
+6.1.4 we see that each processor spends time
+
+n?
+T s (n+3)as+ pe
+
+communicating with global memory.
+
+We organized the computation so that one column of A(row.:) is read
+at a time from shared memory. Jf the local memory is large enough, then
+the loop in Algorithm 6.1.4 can be replaced with
+
+Atoe = A(row, :)
+Yloe = Yloe + AtocTtoc
+This changes the communication overhead to
+
+2
+= n
+Te 3a, + — Bs,
+P
+a significant improvement if the start-up parameter a, is large.
+
+6.1.12 Barrier Synchronization
+
+Let us consider the shared memory version of Algorithm 6.1.4 in which
+the gaxpy is column oriented. Assume n = rp and col = 1+ (p — 1)ripr.
+A reasonable idea is to use a global array W(1:n, 1:p) to house the prod-
+ucts A(:, col}x(col) produced by each processor, and then have some chosen
+processor (say Proc(1)) add its columns:
+
+Atoe = A(:, Ol); toc = 2(cOl); Wie = AtoeTioes W(:, 4) = Wine
+
+ifyp=1
+Yio = ¥
+for j =l:p
+toe = W(:, 9)
+Yioc = Yloe + Woe
+end
+Y= Moc
+end
+
+288 CHAPTER 6, PARALLEL MATRIX COMPUTATIONS
+
+However, this strategy is seriously flawed because there is no guarantee that
+W(l:n, 1:p) is fully initialized when Proc(1) begins the summation process.
+
+What we need is a synchronization construct that can delay the Proc(1)
+summation until all the processors have computed and stored their contri-
+butions in the W array. For this purpose many shared memory systems
+support some version of the barrier construct which we introduce in the
+
+following algorithm:
+
+Algorithm 6.1.5 Suppose A¢ R°™", x € R", and y € R® reside in a
+global memory accessible to p processors. If n = rp and each processor
+executes the following algorithm, then upon completion y is overwritten by
+y+ Az. Assume the following initializations in each local memory: p, 4
+(the node id), and n.
+
+r= n/p; col =1+ (pe - Uripr; Atoc = A(:, 001); Zioc = z(cal)
+Wioe = AtocTtoe
+W(, 2) = Wee
+barrier
+ifp=1
+Ytoc = Y
+for j = l:p
+Wtoc = W(:,9)
+Yloe = YWloe + Woe
+end
+¥ = Moe
+end
+
+To understand the barrier, it is convenient to regard a processor as either
+blocked or free. A processor is blocked and suspends execution when it
+executes the barrier. After the pth processor is blocked, all the processors
+return to the “free state” and resume execution. Think of the barrier as
+treacherous stream to be traversed by all p processors. For safety, they
+all congregate on the bank before attempting to cross. When the last
+member of the party arrives, they ford the stream in unison and resume
+their individual treks.
+
+In Algorithm 6.1.5, the processors are blocked after computing their
+portion of the matrix-vector product. We cannot predict the order in which
+these blockings occur, but once the last processor reaches the barrier, they
+are all released and Proc(1) can carry out the vector summation.
+
+6.1.13. Dynamic Scheduling
+
+Instead of having one processor in charge of the vector summation, it is
+tempting to have each processor add its contribution directly to the global
+variable y. For Proc(j), this means executing the following:

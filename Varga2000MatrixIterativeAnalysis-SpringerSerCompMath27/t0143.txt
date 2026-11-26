@@ -1,0 +1,38 @@
+4.4 Extensions of the 2-Cyclic Theory of Matrices 135
+
+In motivating the construction of the function hg(a), we have already
+established that if B is a consistently ordered cyclic matrix of index 2, then
+hp(a) = 1. The converse depends on a combinatorial argument like that of
+Lemma 4.12, and is omitted. (See Exer. 9.)
+
+The importance of the result of Theorem 4.14 is that it gives rise to a new
+graph-theoretic interpretation of the concept of a consistently ordered cyclic
+matrix of index 2. From Lemma 4.12, hg(c) = 1 for all real a is equivalent
+to the statement that every nonzero product
+
+Ym (a) = efmtvm
+
+of the matrix Pg(e%) is such that gm = 0 for all m > 1. Let G[B] be the
+directed graph} of type 2 for the matrix B := [b;,;], so constructed that if
+bi; # 0, then the arc from the node P;, to the node P; is denoted by a double-
+
+Fig. 4.5.
+
+arrowed arc (see Fig. 4.5) only if j > i; otherwise, a single-arrowed arc used as
+in our previous graphs. The former arcs can be called major paths; the other
+arcs can be called minor paths. Then, the matrix B is consistently ordered
+only if every closed path of its directed graph G[B] has an equal number of
+major and minor arcs. To illustrate this, the point Jacobi matrix B of (1.10)
+has the following directed graph of type 2:
+
+A B
+A
+G(B):
+P B
+Fig. 4.6.
+
+If the indices 2 and 3 are permuted we denote the corresponding point
+Jacobi matrix by By which, in reality, turns out to be the matrix Bo of (4.46)
+with a= a Its associated directed graph is
+
+183 This terminology is taken from Harary (1955).

@@ -1,0 +1,40 @@
+38 2. Nonnegative Matrices
+
+(2.21) and (2.22) now follow directly from Lemma 2.8. Although we must
+certainly have from (2.21) and (2.22) that
+
+n n
+4,525 Qi, j TG
+5U5
+j=l j=l
+
+. in |2=-—__| $ < p(A) < inf Fe
+
+choosing the positive eigenvector y € P*, corresponding to the eigenvalue
+p(A), shows that equality is valid throughout (2.24), completing the proof of
+Theorem 2.9. il
+
+As in Corollary 1.14 of Theorem 1.11, we obviously could have made
+comparable statements about the column sums of A in both Lemma 2.8 and
+Theorem 2.9, since AT is a nonnegative irreducible n x n matrix if A is.
+
+For a simple illustration of the results of Theorem 2.9, let us return to the
+problem of estimating the spectral radii of the matrices B and A~? defined
+respectively in (1.10) and (1.12). Both of these matrices are nonnegative and
+irreducible, and as their row (and column) sums are all equal, we conclude
+by direct observation that
+
+This method will be of considerable practical value to us in that both upper
+and lower bounds for the spectral radius of a nonnegative irreducible matrix
+can be obtained by the simple arithmetic methods of Theorem 2.9, without
+resorting to the determination of the characteristic polynomial of the matrix.
+
+Exercises
+1. Consider the matrix
+
+1 4 1+0.9a
+A(a) = | 3 0.8a 3 , a>0.
+a 5 1
+
+Show that, as a increases, p[A(q)] is strictly increasing for all a > 0,
+and determine upper and lower bounds for p[A(q)] for all a > 0.

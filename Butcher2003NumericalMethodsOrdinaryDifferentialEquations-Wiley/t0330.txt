@@ -1,0 +1,49 @@
+LINEAR MULTISTEP METHODS 319
+
+421 Further remarks on error growth
+
+In Subsection 420 we gave an informal argument that, over many steps, there is
+a contribution to the accumulated error from step number n of approximately
+—a'(1)~1Cpiry?’t)) (en)hP+!. Since we are interested in the effect of this
+contribution at some future point Z, we can consider the differential equation
+
+y'(z) = f(z, y(z)),
+
+with two possible initial values at the point « = xp. These possible initial
+values are, respectively,
+
+@: ylan) and (ii): y(n) + "(LC pry? TY (eg) Pte
+
+and correspond (i) to the exact solution and (ii) to the solution perturbed by
+the error introduced in step number n.
+
+This suggests the possibility of analysing the development of numerical
+errors through the differential equation
+
+2'(a) = ee) +yPtD (2), 2z(ao) = 0. (421a)
+Using this equation, we might hope to be able to approximate the error after
+n steps have been performed as
+
+—al(1)*Cpy1hPz(tn),
+
+because the linear term in (421a) expresses the rate of growth of the separation
+of an already perturbed approximation and the non-linear term, when scaled
+by —a!(1)~1Cp41h?, expresses the rate at which new errors are introduced
+as further steps are taken. The negative sign is consistent with the standard
+convention that errors are interpreted to mean the exact solution minus the
+approximation.
+
+To turn this idea into a formal result it is possible to proceed in two steps. In
+the first step, asymptotic approximations are made. In the second, the errors
+in making these approximations are bounded and estimated so that they can
+all be bundled together in a single term which tends to zero more rapidly as
+h - 0 than the asymptotic approximation to the error.
+
+The second of these steps will not be examined in detail and the first step
+will be described in terms of the diagram given in Figure 421(i). In this figure,
+y(z) is the exact solution and y(z) is the function y(z) + a'(1)—!Cp4.1h?2(2).
+The function %(z) is the exact solution to the differential equation but
+with initial value at x,_1 set to 9(%n_1). In the single step from ¢y_1 to
+2,, the perturbed approximation 9 drifts away from y at an approximate
+rate (Of(y(x))/Oy) (@(x) — y(x)), to reach a value 9(zp). Add to this the
+contribution of local truncation error, corresponding to this step, denoted

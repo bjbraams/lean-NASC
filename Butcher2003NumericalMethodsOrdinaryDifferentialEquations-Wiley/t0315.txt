@@ -1,0 +1,42 @@
+304 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+403 Stability
+
+For a general initial value problem, the computed solution satisfies
+
+k k
+Yn =D 0itn-i th D> Bif (Gui, Yn-i)-
+f=1 i=0
+However, for the one-dimensional problem for which f(x,y) = 0, we have the
+simpler difference equation
+
+Yn = O1Yn—-1 + O2Yn—2 +--+ OLYn—k- (403a)
+Definition 403A A linear multistep method [a, B] is ‘stable’ if the difference
+equation (403a) has only bounded solutions.
+
+Because stability concepts of one sort or another abound in the theory of
+initial value problems, ‘stability’ is often referred to as ‘zero-stability’ (for
+example, in Lambert (1991)) or as ‘stability in the sense of Dahlquist’.
+
+404 Consistency
+
+Just as the initial value problem y'(x) = 0, with initial condition y(zo) = 0,
+motivated the concept of stability, so the same problem, with initial value
+y(xo) = 1, can be used to introduce preconsistency. We want to ensure that
+this problem can be solved exactly, starting from the exact initial value.
+Suppose the numerical solution is known to have the correct value at x =
+En—k, Tn—k+1)+++;€n—1 80 that y; = y(z;) = 1, fori = n—k,n—-k+1,...,n-1.
+Under these assumptions, the result computed at step number n will be
+
+Yn = 1 + OQ +--+ + OR
+and this will equal the correct value y, = 1 if and only if
+
+L=a, +ag+--++ax. (404a)
+
+Definition 404A A linear multistep method satisfying (404a) is said to be
+‘preconsistent’.
+Now consider the differential equation
+y'(z)=1, — (x0) = 0,
+with exact solution at the step values
+
+i= hi.

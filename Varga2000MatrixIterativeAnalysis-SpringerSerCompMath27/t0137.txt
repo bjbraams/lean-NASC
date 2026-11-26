@@ -1,0 +1,44 @@
+*6.
+
+4.3 Theoretical Determination of an Optimum Relaxation Factor 129
+
+Consider the divergent Jacobi matrix
+
+01
+where —a = |r| > 1. Using the fact that the matrix B is a consis-
+tently ordered weakly cyclic matrix of index 2, show that the associ-
+ated successive overrelaxation matrix L,, is convergent for some real
+w,0 <w < 2. Determine an optimum relaxation factor w, which maxi-
+
+mizes the asymptotic rate of convergence R,o(L.,) for such convergent
+matrices L,,.
+
+Let the matrices A and B satisfy the hypotheses of Theorem 4.7 for p =
+2. If the spectral radius of the Jacobi matrix B satisfies 0 < p(B) <1,
+if wy is defined as in (4.30), and if p(L,,) is the spectral radius of the
+successive overrelaxation method, prove that d(p(L,,))/dw becomes
+unbounded as w increases to wp.
+
+It has been shown that the optimum relaxation factor wy for the case
+p = 2 of (4.30) is obtained by finding the value of w for which the
+straight line (A + w — 1)/w is tangent to \\/2p(B). Show that the
+general formula of (4.29) for wy is similarly obtained as the value of w
+for which (A + w — 1)/w is tangent to \(?-1)/P p(B).
+
+For the 3 x 3 matrix (3.97) with 0 < a < 1, construct the normal form
+(2.43) of its corresponding Gauss-Seidel matrix £,. Similarly, construct
+the normal form (2.43) of the Gauss-Seidel matrix £; obtained from
+the matrix B of (4.40). Show that the spectral radii of L, and L;
+are obtained respectively from a cyclic (of index 2) submatrix and a
+primitive submatrix of these normal forms.
+
+Let B = L+U > O be an irreducible and convergent n x n matrix,
+where L and U are respectively strictly lower and strictly upper tri-
+angular matrices. If the spectral radius of the reducible Gauss-Seidel
+matrix (I—L)~1U is obtained from a primitive submatrix of its normal
+form (2.43), prove that the value of w which minimizes
+
+pf(I — wL)“*(wW + (1—w)1)}
+
+is necessarily greater than unity. (Hint: use Exer. 4 of Sect. 3.6 and
+continuity.)

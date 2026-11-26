@@ -1,0 +1,97 @@
+6.1. Basic CONCEPTS 283
+
+Vioc = y(pip:n), and assume that the contiguous x-subvectors circulate as
+before. If at some stage Zto¢ contains z(1 + (7 — l)r:rr), then the update
+
+Moc = Yor + Aloc(:, 1 + (7 — 1)r:77)Zive
+implements
+y(ucpen) = y(pepin) + A(uipin, 1+ (7 — Ursrr)z(1 + (7 — Irvrr).
+
+To exploit the triangular structure of A in the yjo¢ computation, we express
+the gaxpy as a double loop:
+
+for a= 1
+for § = L:r
+Moe(@) = Ytoe(a@) + Atce(a, A + (7 - 1)F)2t0c(8)
+end
+end
+
+The Aloc reference refers to A(u+(a—1)p, 8+(7 —-1)r) which is zero unless
+the column index is less than or equal to the row index. Abbreviating the
+inner loop range with this in mind we obtain
+
+Algorithm 6.1.2 Suppose 4 € IR"**, x € IR” and y & RR” are given and
+that z = y+ Az. Assume that n = rp and that A is lower triangular. If
+each processor in a p-processor ring executes the following node program,
+then upon completion Proc(j) houses z(y:p:) in yioc. Assume the following
+local memory initializations: p, u (the node id), left and right (the neighbor
+id’s), n, Atoe = A(pep:n,:), Yioe = y(yip:n), and tee = 2(1 + (pw — 1)riyr).
+r=nlp
+for t = l:p
+send(Zise, Tight)
+recv(Zioc, left)
+rop-t
+ifr <0
+r= Tt+p
+end
+{Zio = 2(1 + (7 - 1)rirr)}
+for a= hr
+for 6 = liyz+(a—1l)p-—(7r-1)r
+Boel) = Yioc(@) + Atoc(a, B + (7 — Ur) tive(4)
+end
+end
+end
+
+Having to map indices back and forth between “node space” and “global
+space” is one aspect of distributed matrix computations that requires care
+and (hopefully) compiler assistance.
+
+284 CHAPTER 6. PARALLEL MATRIX COMPUTATIONS
+
+6.1.8 Tradeoffs
+
+As we did in §1.1, let us develop a column-oriented gaxpy and anticipate
+its performance. With the block column partitioning
+
+A = [Aj,...,A5] A, ER" r=n/p
+the gaxpy z = y + Az becomes
+
+P
+z=yt)> Aut,
+
+aml
+
+where z, = 2(1+(u— 1)rzyr). Assume that Proc() contains A, and z,.
+Its contribution to the gaxpy is the product A,2, and involves local data.
+However, these products must be summed. We assign this task to Proc(1)
+which we assume contains y. The strategy is thus for each processor to
+compute A,z,, and to send the result to Proc(1).
+
+Algorithm 6.1.3 Suppose 4 € R°™", x € R® and y € R" are given and
+that z = y + Az. If each processor in a p-processor network executes the
+following node program and n = rp, then upon completion Proc(1) houses
+z. Assume the following local memory initializations: p, » (the node id),
+N, Zoe = 21+ (we — Lripr), Ato = AG, 1+ (wu — Lryr), and (in Proc(1)
+only) Ytoe = y-
+ifp=l
+Yloe = Yloe + AtocTloe
+for t = 2:p
+Fecv(Wioc, t)
+Yloc = Yloe + Woe
+end
+else
+Woe = AtoeTioc
+send (woe, 1)
+end
+
+At first glance this seems to be much less attractive than the row-oriented
+Algorithm 6.1.1. The additional responsibilities of Proc(1) mean that it
+has more arithmetic to perform by a factor of about
+
+ant/p tmp _
+Qntfp an
+
+and more messages to process by a factor of about p. This imbalance be-
+comes lesa critical if n >> p and the communication parameters ag and fa
+factors are small enough. Another possible mitigating factor is that Algo-
+rithm 6.1.3 manipulates length n vectora whereas Algorithm 6.1.1 works

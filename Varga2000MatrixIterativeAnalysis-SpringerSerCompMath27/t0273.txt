@@ -1,0 +1,45 @@
+266 7. Alternating-Direction Implicit Iterative Methods
+
+nor does it essentially increase the arithmetic work required in carrying out
+the Peaceman-Rachford iterative method. The reason for introducing this
+positive diagonal matrix F is to “help” the associated matrices more nearly
+commute. Consider now the Wachspress-Habetler variant of the Peaceman-
+Rachford iterative method defined by
+
+(7.81) (Ai +rmyi Fut?) = (ry F — Via +k, m>0,
+
+and
+
+(7.82) (VittmgiF)u = (tm F — Hy)u"t/?) +k, m>0.
+
+Defining Fiu:= v, this variant takes the more familiar form
+
+(7.83) (Hi +rmil)vOrt') = (rmoil — Viv + F-Mk, m2 0,
+
+and
+
+(7.84) (Vit Pmt )vorr) = (tml - Hy)virt4/2) + Fk, m>0,
+where
+
+(7.85) Ay:= FOPH FM, Vis FO Yy Fo?,
+
+In order to apply the theory for the commutative case of Sect. 7.2 to (7.83)
+and (7.84), we now ask if oo
+(7.86) MV, =Vih,
+
+or equivalently, using (7.85), if
+
+(7.87) H,FOY, =VjFO Hy.
+
+In effect, as the diagonal entries of the matrix F are parameters that are to
+be chosen, it is clear that there is a class of matrix problems for which H, and
+V, do not commute, but there exists a positive diagonal matrix F for which
+(7.87) is satisfied. Indeed, Wachspress and Habetler (1960) have shown, for
+the separable boundary-value problem of (7.1) and (7.2), that one can take
+unequal mesh spacings in each coordinate direction for the discrete case, and
+yet find a positive diagonal matrix F for which (7.87) is valid. On the other
+hand, the method of proof of 7.9 shows that such extensions of the commu-
+tative theory are still restricted to rectangular domains. Whether or not the
+discrete mesh region is rectangular, Wachspress and Habetler recommend the
+use of such a positive diagonal matrix F because they consider the effect of
+this matrix in (7.85) as a matrix conditioning of the matrices H; and Vj.

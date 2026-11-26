@@ -1,0 +1,50 @@
+212 6. Derivation and Solution of Elliptic Difference Equations
+
+was not taken in place of (6.37), where Q(z,y) > 0 in R. Briefly, it can be
+verified (Exer. 6) that all steps of the previous derivation similarly follows,
+except when § > 0 on Ih, and the normal to I, makes an angle 6 to the
+z-axis, where sin 20 # 0. In this case, the boundary condition of (6.38) is not
+the “natural” boundary condition, and (6.38) should now include a tangential
+derivative as well.
+
+To show the similarity of the results of the previous derivation with the
+two-dimensional use of the variational principle, consider again the differen-
+tial equation of (6.37) with, for simplicity, boundary conditions a = 1 and
+8 =0 in (6.38), so that u(x, y) = 7(z,y) is specified on I’. By analogy with
+(6.14), define
+
+1 ; ,
+(6.53) F(w) = 3 I / {P(z,y)(wz)? + P(x, y)(wy)
+
++ow? — 2wf}dady,
+
+where w(z, y) is any sufficiently smooth function, defined in R, which satisfies
+the boundary conditions w(z, y) = 7(z,y), (z,y) € I’. If we write
+
+w(z,y) = u(z,y) + €(z,y),
+
+where u(z, y) is the unique solution of (6.37)-(6.38), then the two-dimensional
+analogue of integrating by parts in Sect. 6.1 is now Green’s theorem (6.44),
+from which we verify!! that
+
+(6.54) F(w) = F(u) + 5, [Per + Pley)? +0€?}dtdy > F(u),
+
+so that F(u) again minimizes F(w). This relationship can also be used in
+deriving finite difference approximations to (6.37) -(6.38). In fact, we merely
+state that an approximation of F(w), analogous to F’(w) in Sect. 6.1, can be
+made which, when minimized, is identical to the matrix equation of (6.50).
+
+It is also of some interest to mention that the Ritz form of the variational
+method, introduced in Sect. 6.1, can be applied in two dimensions by again
+restricting attention to the class of piecewise linear functions. Geometrically,
+the region R,, is first decomposed into triangular subregions, as shown in
+Fig. 6.10, the mesh points of unknowns remaining the same. For any choice
+of values w;,; at mesh points (x;,y;) of Rp, where w(z,y) is not specified,
+we can then define a function w(z, y) in R;, so that w(z,y) is continuous in
+Rp, and linear in each triangular subregion of Rp. Referring to the shaded
+triangular subregion of Fig. 6.10,
+
+w(x, y) == wig + (aos) (y—y) + (Sets) (2-23).
+‘J 7
+
+1] See Exer. 7.

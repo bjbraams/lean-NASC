@@ -1,0 +1,42 @@
+Chapter 2
+
+Numerical Differential Equation
+Methods
+
+20 The Euler Method
+200 Introduction to the Euler method
+
+The famous method of Euler was published in his three volume work
+Institutiones Calculi Integralis in the years 1768 to 1770, republished in his
+collected works (Euler, 1913). This fundamental idea is based on a very simple
+principle. Suppose that a particle is moving in such a way that, at time zo,
+its position is equal to yo and that, at this time, the velocity is known to be
+vo. The simple principle is that, in a short period of time, so short that there
+has not been time for the velocity to change significantly from vp, the change
+in position will be approximately equal to the change in time multiplied by
+Vo-
+
+If the motion of the particle is governed by a differential equation, the value
+of vp will be known as a function of zp and yo. Hence, given xz» and yo, the
+solution at 21, assumed to be close to zo, can be calculated as
+
+Yr = Yo + (21 — to)r,
+
+which can be found from known values only of xo, 21 and yo. Assuming that 1,
+found using the differential equation from the values x1 and y1, is sufficiently
+accurate, a second step can be taken to find y2, an approximate solution at
+22, using the formula
+
+Yo = yi + (@2 — 21).
+
+A sequence of approximations y1, y2, y3, .--, to the solution of the differential
+
+equation at 21, £2, Z3, ..., is intended to lead eventually to acceptable
+approximations, at increasingly distant times from where the initial data was
+given.
+
+Of course, the interpretation of Euler’s method is much wider than in the
+description of the motion of a single particle, moving in time along a line. Even
+
+Numerical Methods for Ordinary Differential Equations. J.C. Butcher
+Copyright © 2003 John Wiley & Sons, Ltd. ISBN: 0-471-96758-0

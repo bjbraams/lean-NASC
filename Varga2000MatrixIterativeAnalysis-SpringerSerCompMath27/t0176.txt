@@ -1,0 +1,44 @@
+168 5. Semi-Iterative Methods
+
+Since €(™) = fm(M)e), these observations, with the definition of the error
+vector 6(”) in (5.65), allow us to write
+
+(5.67) 6) := B,(M)-€, m>1,
+where
+
+- _ [0 |sm—1(FF") + F
+(5.68) Pm(M) = E rma F*FY |? m>1.
+
+In this particular form, direct computation of the matrix product
+(Pn(M))* - Pm(M),
+coupled with the definitions of (5.66), shows that
+
+(5.69) [| Pn(M)Il = {IlB2m—1(M) II? + |lBom(M)II?}/7, m>1,
+
+where we have already evaluated ||fm(/M)|| in (5.26). With (5.26), we conclude
+that this sequence of matrix norms must be strictly decreasing. On the other
+hand, it has been shown by Sheldon (1959) that
+
+(5.70) CEI) = (=a + a + : -(ws—1)™, m>0,
+
+where L,,, is the n x n successive overrelaxation matrix of (5.62). This shows
+that the norms ||£7; || can be initially increasing for p(M) sufficiently close
+to unity. It was Sheldon’s idea (Sheldon (1959)) that the simple device of
+using w = 1 for the first complete iteration of (5.62) and using w = wy,
+for all subsequent relaxation factors of the successive overrelaxation iterative
+method would improve upon the behavior of the matrix norms ||L7, ||, and
+indeed he showed that
+
+(5.71) Cet Lill = {8m ten e?, m>1,
+
+where
+
+(5.72) tr := (wy — 1)O*-Y/29(M) - (1+ (m-1)V1— p2(M)), m>1;
+
+it can be readily verified that the norms ||C™~1- £;|| are strictly decreasing.
+As the cyclic Chebyshev semi-iterative method of (5.64) also uses w = 1 as
+its first relaxation factor, direct comparisons of these various norms above is
+indicted. These comparisons, unlike those in Sect. 5.2, do not depend solely on
+the uniqueness of the polynomials p(x) in Theorem 5.1; instead, they involve
+direct algebraic comparisons of these norms, which we omit. The major result,
+however, is

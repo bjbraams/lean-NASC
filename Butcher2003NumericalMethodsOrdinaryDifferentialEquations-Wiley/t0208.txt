@@ -1,0 +1,45 @@
+196 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+for which the non-propagated approximation has good stability properties is
+unnecessary.
+
+Exercises 33
+
+33.1 To overcome the perceived disadvantage of using Richardson extrapo-
+lation as in Subsection 331, is it feasible to modify the method so that
+a proportion of the estimated error (331c) is subtracted from the result
+
+Yn:
+
+33.2 Find a problem for which the Merson method gives reasonable error
+estimating performance.
+
+33.3 Find a problem which exposes the error estimating deficiencies of the
+Merson method.
+
+33.4 Find a method of order 3 embedded in order 4, based on equations
+(333h) to (333k) with B = 2, co = 3, cs = }.
+
+33.5 Find an example of a differential equation system for which the methods
+given in Subsection 334 are likely to have misleading error estimates.
+
+34 Implicit Runge-Kutta Methods
+340 Introduction
+
+The possibility that the coefficient matrix A in a Runge-Kutta method might
+not be strictly lower triangular has very important consequences. These more
+general methods, known as ‘implicit Runge-Kutta methods’, are difficult
+to actually use, because the explicit stage-by-stage implementation scheme
+enjoyed by explicit methods is no longer available and needs to be replaced
+by an iterative computation. However, there are several very good reasons,
+both theoretical and practical, for moving these methods into the centre of
+our attention. Perhaps the most important theoretical reason for regarding
+implicit methods as the standard examples of Runge-Kutta methods is the
+fact that implicit methods have a group structure. We explore this in detail
+in Section 38. In the explicit case, methods do not have explicit methods
+as inverses, and thus explicit methods possess only a semi-group structure.
+Stiff problems cannot be solved efficiently using explicit methods: this fact is
+the most important practical reason for paying special attention to implicit
+methods. However, there are other problem classes, such as differential-
+algebraic equations, for which implicit Runge~Kutta methods also have a
+vital role.

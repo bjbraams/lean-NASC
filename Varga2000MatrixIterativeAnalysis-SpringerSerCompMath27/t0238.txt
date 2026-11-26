@@ -1,0 +1,27 @@
+230 6. Derivation and Solution of Elliptic Difference Equations
+
+Roo ( £e line)
+Ro ( wry
+so that the use of multiline iterative methods may be indicated in practical
+studies.
+More recently, Parter (1961b) has shown, for problems which include the
+model problem as a special case, that
+
+(6.92) ~ V2, N-0©,
+
+1
+
+(6.93) Reo ( LEE Hine) ~ 2/8 a(§ A(Ay) )
+
+where A is the fundamental (or minimal) eigenvalue of the Helmholtz equation
+
+Ure +Uyy+Au=0, (z,y) ER,
+u(z,y)=0, (a,y) eT.
+
+For the model problem, A = 27, and this result of (6.93), generalizing (6.92),
+then shows how the ratio of the asymptotic convergence rates of different
+line successive overrelaxation iterative methods behaves as a function of k.
+Practically, little is gained, for example, by choosing k = 10, since arithmetic
+requirements now also increase linearly with k, as pointed out by Parter.
+
+(6.94)

@@ -1,0 +1,50 @@
+282 8. Matrix Methods for Parabolic Partial Differential Equations
+
+Definition 8.1. A real n x n matrix Q = [qi,;] is essentially positive if
+4i,j = 0 for alli # j,1 Si, <n, and Q is irreducible.
+
+With this definition, it is clear that Q is an essentially positive matrix if
+and only if (Q + sI) is a nonnegative, irreducible, and primitive matrix for
+all sufficiently large s > 0. Similarly, we have
+
+Theorem 8.2. A matriz Q is essentially positive if and only if exp(tQ) > O
+for all t>0.
+
+Proof. If the matrix exp(tQ) = I+tQ+t?Q?/2!+--- has only positive entries
+for all t > 0, then Q is evidently irreducible. Otherwise, Q, and all its powers
+are reducible, which implies that exp(tQ) would have some zero entries. If
+there exists a q;,; < 0 for some i # j, then clearly exp(tQ) =I+tQ+---
+has a negative entry for all sufficiently small t > 0. Thus, exp(tQ) > O
+implies that Q is essentially positive. On the other hand, assume that Q is
+essentially positive. Then Q + sI is nonnegative, irreducible, and primitive
+for all sufficiently large s > 0. Since the powers of Q + sI are nonnegative
+and all sufficiently high powers of Q + sI are positive by Frobenius’ Theorem
+2.18, then exp(Q + sI) > O. But it is easily verified!* that
+
+exp(tQ) = exp(—st) exp(t(Q + sI)) > O,
+which completes the proof.
+
+As an immediate application of this result, note that as the matrix C~!A
+of (8.13) is, by construction, an irreducible M-matrix for all sufficiently fine
+mesh regions Rp, then Q := —C~A is necessarily essentially positive. Thus,
+the semi-discrete approximation of (8.17), which can be expressed as
+
+(8.21) v(t) = exp(—tC7!A)v(0) + {I — exp(—tC71A4)} A7!s,
+
+couples (through positive coefficients), for sufficiently fine mesh regions Rp,
+each component of v(t) to every component of v(0) for all t > 0, and is the
+matrix analogue of the behavior noted for the infinite thin rod.
+
+Closely related to the Perron-Frobenius Theorem 2.7 is
+
+Theorem 8.3. Let Q be an essentially positive n x n matrix. Then, Q has
+a real eigenvalue ¢(Q) such that
+
+1. To ¢(Q) there corresponds an eigenvector x > 0.
+
+2. If a is any other eigenvalue of Q, then Rea < ¢(Q).
+3. ¢(Q) increases when any element of Q increases.
+
+4. ¢(Q) is a simple eigenvalue of Q.
+
+13 See Exer. 1 of Sect. 8.1.

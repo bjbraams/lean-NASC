@@ -1,0 +1,110 @@
+3.3. ROUNDOFF ANALYSIS OF GAUSSIAN ELIMINATION 107
+
+Proof. From (3.1.1) and (3.1.2) we have
+
+(E+ F)g = 6 IFI
+(U+G)e = 9 |G}
+
+nu|L| + O(u?)
+nul0| + O(u?)
+
+IA IA
+
+and thus
+(L+F\(0+G)2 = (204+ FU +1G+ FG)z =.
+
+From Theorem 3.3.1 _.
+LU =A+H,
+
+with |H| < 3(n ~ 1)u(|A] + {£||0|) + O(u?), and so by defining
+E = H+FU+iG+FG
+we find (A + £)% = b. Moreover,
+(El Ss [BI +IFIIG) + [£|IG) + Ofu?)
+3nu (Al + 12101) +2nu (11101) +0(u). o
+
+IA
+
+Were it not for the possibility of a large |Z{|J7| term, (3.3.9) would compare
+favorably with the ideal bound in (3.3.1). (The factor n is of no conse-
+quence, cf, the Wilkinson quotation in §2.4.6.) Such a poasibility exists, for
+there is nothing in Gaussian elimination to rule out the appearance of smal!
+pivots. If a small pivot is encountered, then we can expect large numbers
+to be present in £ and UY.
+
+We stress that small pivots are not necessarily due to ill-conditioning as
+t 5 bears out. Thus, Gaussian elimination can give
+arbitrarily poor results, even for well-conditioned problems. The method is
+unstable. .
+
+In order to repair this shortcoming of the algorithm, it is necessary to
+introduce row and/or column interchanges during the elimination process
+with the intention of keeping the numbers that arise during the calculation
+suitably bounded. This idea is pursued in the next section.
+
+the example A = [
+
+Example 3.3.1 Suppose § = 10,t = 3, floating point arithmetic ia used to solve:
+001 1.00 a] _ [ 1.00 ’
+1.00 2.00 z2 | | 300 4°
+
+Applying Gaussian elimination we get
+
+; 1 0 . 1 1
+& = [ 600 | a=[% 1000 |
+
+108 CHAPTER 3. GENERAL LINEAR SYSTEMS
+1o-* 001
+Moreover, 8 107? 1.0001 is the bounding matrix in (3.3.4), not a severe overesti-
+
+mate of |H|. If we go on to solve the problem using the triangular system solvers of §3.1,
+then using the same precision arithmetic we obtain a computed solution 2 = (0,1)7.
+This is in contrast to the exact solution x = (1.002...,.998...)7.
+
+Problems
+
+P3.3.1 Show that if we drop the assumption that A is a floating point matrix in
+Theorem 3.3.1, then (3.3.4) hoids with the coefficient “3” replaced by “4.”
+
+PS.3.2 Suppose A is an n-by-n matrix and that £ and U are produced by Algorithm
+3.2.1. (a) How many flops are required to compute || |£{ (UI lla? (b) Show fi{L||O|) <
+(1 + nu) [£0] + O(u?).
+
+P3.3.3 Suppase z = A~'b. Show that if e = z — # (the error) and r = 6 — Az (the
+residual), then
+
+tril “1
+TAN S fell s HAT HM rd.
+
+Assume consistency between the matrix and vector norm.
+P3.3.4 Using 2-digit, base 10, floating point arithmetic, compute the LU factorization
+of
+7 6
+a={2 8].
+For this example, what is the matrix H in (3.3.3)?
+
+Notes and References for Sec. 3.3
+The original roundoff analysis of Gaussian elimination appears in
+
+J.H. Wilkinson (1961). “Error Analysis of Direct Methods of Matrix Inversion,” J. ACM
+8, 281-330.
+
+Various improvements in the bounds and simplifications in the analysis have occurred
+over the years. See
+
+B.A. Chartres and J.C. Geuder (1967). “Computable Error Bounds for Direct Solution
+of Linear Equations,” J. ACM 14, 63-71.
+
+J.K. Reid (1971}. “A Note on the Stability of Gaussian Elimination,” J. inst. Math.
+Applic. 8, 374-75.
+
+C.C. Paige (1973). “An Error Analysis of a Method for Solving Matrix Equations,”
+Math. Comp. #7, 355-59.
+
+C. de Boor and A. Pinkus (1977). “A Backward Error Analysis for Totally Positive
+Linear Systems,” Numer. Math. £7, 485-90.
+
+H.H. Robertson (1977). “The Accuracy of Exror Eatimates for Systems of Linear Alge-
+braic Equations,” J. inst. Math. Applic. 20, 409-14.
+
+J.J. Du Cros and N.J. Higham (1992). “Stability of Methods for Matrix Inversion,” IMA
+J. Num. Anal 12, 1-19.

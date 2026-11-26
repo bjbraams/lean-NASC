@@ -1,0 +1,48 @@
+DIFFERENTIAL AND DIFFERENCE EQUATIONS 25
+
+This bound on the growth of initial perturbations may be too pessimistic in
+particular circumstances. Sometimes it can be improved upon by the use of
+‘one-sided Lipschitz conditions’. This will be discussed in Subsection 112.
+
+111 Linear systems of differential equations
+
+Linear differential equations are important because of the availability of a
+superposition principle. That is, it is possible for a linear differential equation
+system to combine known solutions to construct new solutions. The standard
+form of a linear system is
+
+@ = Alay + (2), (11a)
+
+where A(z) is a possible time-dependent linear operator. The corresponding
+‘homogeneous’ system is
+
+dy
+
+= = A(z)y. 111b
+dg 7 Ay (111b)
+The superposition principle, which is trivial to verify, states that
+
+Theorem 111A If @ is a solution to (111la) and y1,y2,..., yx are solutions
+to (111b), then for any constants a1, 02,...,Q%, the function y given by
+
+k
+y(a) = H(z) + Dawila),
+i=l
+is a solution to (111a).
+
+The way this result is used is to attempt to find the solution which matches
+a given initial value, by combining known solutions.
+
+Many linear problems are naturally formulated in the form of a single high-
+order differential equation
+
+Y) (x) — C(x) YY (2) — Ca(z)¥™-) (a) — --- — Cn ()¥ (2) = g(z)-
+(111c)
+By identifying Y(x) = y:(x),Y"(2) = yo(x),...,¥"-) = ym(z), we can
+rewrite the system in the form
+
+yi(z) yi (x)
+4 on = A(z) “oe +4(2),
+
+where the ‘companion matrix’ A(x) and the ‘inhomogeneous term’ ¢(a) are
+given by

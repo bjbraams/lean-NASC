@@ -1,0 +1,47 @@
+268 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+we write [rn] for the equivalence class containing m. The notation m = 7 will
+signify that m and ™ are equivalent methods.
+
+We are interested in multiplication of equivalent classes, rather than of
+particular methods within these classes. Hence, we attempt to use the method
+given by (382a) as defining a new class of equivalent methods, which we can use
+as the product of the original two classes. The only possible difficulty could
+be that the result might depend on the particular choice of representative
+member for the two original classes. That no such difficulty arises follows
+from the following theorem:
+
+Theorem 382A Let m;, mo, 771, M2 denote Runge-Kutta methods, such
+that
+
+m,=™m, and mz=™Mb2. (382£)
+Then
+
+[m1 - mo] = [Fit - Me].
+
+Proof. We note that an equivalent statement is
+my, mM, =™M + Me. (382g)
+
+Let yi and y2 denote the output values over the two steps for the sequence
+of steps constituting m, -m2, and 7, and ¥, denote the corresponding output
+values for 771 - 772. If f satisfies a Lipschitz condition and if h is sufficiently
+small, then y; = 7, because m; = 77i,, and yo = J, because mz = 72. Hence,
+(382g), and therefore (382f) follows. Oo
+
+Having constructed a multiplicative operation, we now construct an identity
+element and an inverse for equivalence classes of Runge-Kutta methods. For
+the identity element we consider the class containing any method mo that
+maps an initial value to an equal value, for a problem defined by a Lipschitz
+continuous function, provided that h is sufficiently small. It is clear that
+[mo-m] = [m-mo] = [m] for any Runge-Kutta method m. It will be convenient
+to write the identity equivalence class by the symbol 1, where it will be clear
+from the context that this meaning is intended.
+
+To define the inverse of an equivalence class, start’ with a particular
+representative m = (A,b",c), with s stages, and consider the tableau
+
+1 ~ jar bj j 11 —b1 diz—be +++ Gig ~ de
+€2 — Dijat bj | G21 — br 22 — bg +++ a5 ~ By
+Ce — Dian bj Q@si — by Asa —bz +++ Ges — bg
+
+—b bo see —b,

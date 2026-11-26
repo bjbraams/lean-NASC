@@ -1,0 +1,45 @@
+8.3 Matrix Approximations for exp(—tS) 287
+
+10. Let Q be an essentially positive n x n matrix. If ¢(Q) is the eigenvalue
+of Q characterized in Theorem 8.3, show that ¢(Q) has a min-max
+representation analogous to that of Theorem 2.9:
+
+n n
+> 4,525 Y 94,55
+j=l
+
+. j=l .
+max ¢ min ————— } = ((Q) = min 4 max ——— },
+xeP* )1<i<n Xj xeP* )1<i<n Xj
+
+where P* is the hyperoctant of vectors x > 0. (See (Beckenbach and
+Bellman (1961), p. 84).)
+
+8.3 Matrix Approximations for exp(—tS)
+
+The exponentials of matrices, introduced in this chapter to solve the semi-
+discrete approximations of Sect. 8.1, had the attractive features of uniform
+boundedness in norm, as well as the positive couplings from one time step
+to the next. Unfortunately, the direct determination of these exponentials
+of matrices, relative to even large computers, seems impractical in two- or
+three-dimensional problems!® because of the enormous storage problem cre-
+ated by the positivity of these matrices. To illustrate this, suppose that a
+two-dimensional problem (8.1) is approximated on a mesh consisting of 50
+subdivisions in each coordinate direction. To completely specify the matrix
+A of (8.11) would require (using symmetry) only 7500 nonzero coefficients.
+To specify the matrix exp(—tC~1A), on the other hand, would require ap-
+proximately 3 - 10° nonzero coefficients.
+
+We now consider matrix approximations of exp(—tS), where S := C~1A,
+from the construction of Sect. 8.1, is necessarily a sparse matrix. First, we
+shall consider some well-known numerical methods for solving parabolic par-
+tial differential equations. As we shall see, we can consider these methods as
+either matrix approximations for the matrix exp(—AtS) in
+
+(8.31)  v(to + At) = exp(—AtS)v(to) + {1 — exp(—AtS)}A74s,
+or discrete approximations in time of the ordinary matrix differential equation
+
+dv(t) _ _ Ay s
+(8.32) oD = - Avit) +s.
+
+18 For one-space variable problems, it may not be so impractical.

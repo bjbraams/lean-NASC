@@ -1,0 +1,41 @@
+362 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+The matrix representing the method now becomes
+
+l Bol 1 fr Bo Bs ++ Bea Be |
+Bo|1 Bi Bo Bs +++ Bea Be
+1/0 0 0 0 :-- 0 0
+0;0 1 0 0 =: 0 0
+010 0 1 0 -::- 0 0
+0;0 0 0 0 -:- 0 0
+0/0 0 0 0 -::- 1 0
+
+Because yl") and yl"; occur in the combination y!"—") + B,y!";" in each
+
+of the two places where these quantities are used, we might try to simplify
+the method by transforming using the matrix
+
+100: O f&
+010: 0 0
+001 0 0
+T=
+000 -.. 1 0
+000-0 1
+The transformed coefficient matrices become
+[ Gol 1 Br Bo Bs --- Bar 0]
+Bo|1 fi Bo Bs +*> Beit+Be 0
+1/0 0 0 0 ::: 0 0
+A UT7} 0/0 1 0 0 -::- 0 0
+Ee re | 0/0 0 1 0 ©: 0 0
+0/0 0 0 0 -::- 0 0
+[| o|;0 0 0 0 --- 1 0 |
+
+and we see that it is possible to reduce r from k+1 to k, because input vector
+number k + 1 is never used in the calculation.
+
+The well-known technique of implementing an implicit linear multistep
+method by combining it with a related explicit method to form a predictor-
+corrector pair fits easily into a general linear formulation. Consider, for
+example, the third order PECE Adams-Bashforth Adams—Moulton predictor-
+corrector pair. Denote the predicted approximation by y*% and the corrected
+value by yn. We then have

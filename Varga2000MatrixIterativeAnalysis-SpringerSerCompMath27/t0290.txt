@@ -1,0 +1,53 @@
+8.2 Essentially Positive Matrices 283
+
+Proof. If Q is essentially positive, then the matrix T := Q + sI is nonnega-
+tive, irreducible, and primitive for some real s > 0. Thus, from the Perron-
+Frobenius Theorem 2.7, there exists a vector x > 0 such that Tx = p(T)x.
+But this implies that
+
+Qx = (p(T) — s)x =: €(Q)x.
+
+The other conclusions of this theorem follow similarly from the Perron-
+Frobenius Theorem 2.7. i
+
+Physically, using the infinite thin rod of Sect. 8.1 as an example, we know
+that the temperature of the rod is bounded for all t > 0 and that there is
+a steady-state temperature of the rod, i.e., jim u(z;t) exists for all -co <
+
++00,
+
+xz < +o. Analogously, we ask if the semi-discrete approximations of Sect. 8.1
+possess these basic properties. In order to answer this, we first determine the
+general asymptotic behavior of exp(tQ) for essentially positive matrices Q,
+in terms of norms. With the explicit matrices of (3.37), the following lemma
+is readily established, along the lines of the proof of Lemma 3.2.
+
+Lemma 8.4. Let J be the upper bi-diagonal px p complex matriz of the form
+
+1
+vA 1
+
+(8.22) J=
+
+-1
+
+x
+Then,
+tpo}
+
+(8.23) || exp(tJ)|| ~ poi wrt Rex), t— +00.
+
+Let Q be an n x n essentially positive matrix. If S is the nonsingular
+n X n matrix such that Q = SJS~1, where J is the Jordan normal form
+of Q, then we apply Lemma 8.4 to the diagonal blocks of the matrix J.
+Since Q is essentially positive, the unique eigenvalue of Q with the largest
+real part, ¢(Q), is simple from Theorem 8.3, which in turn implies that the
+corresponding diagonal submatrix of J is 1 x 1. Then, as
+
+exp(tQ) = Sexp(tJ)S7!
+
+holds, and as (8.23) applies to each block diagonal of exp(tJ), we have the
+result of
+
+Theorem 8.5. Let Q be ann x n essentially positive matrix. If ¢(Q) is the
+eigenvalue of Theorem 8.3, then

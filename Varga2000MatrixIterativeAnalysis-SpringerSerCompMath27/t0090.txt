@@ -1,0 +1,44 @@
+82 3. Basic Iterative Methods and Comparison Theorems
+
+dominant was a sufficient condition for the convergence of the point Jacobi
+and point Gauss-Seidel iterative methods. Whereas p(M) < 1 is both a nec-
+essary and sufficient condition that M be a convergent matrix, in this section
+we examine results of Ostrowski (1954) and Reich (1949) which give differ-
+ent necessary and sufficient conditions for the convergence of the successive
+overrelaxation and Gauss-Seidel iterative methods in a form which will be
+very useful in future chapters. We begin with the following result of Kahan
+(1958).
+
+Theorem 3.11. Let B be any n x n compler matrix with zero diagonal en-
+tries which we write in the form B = L+U, where L and U are, respectively,
+strictly lower and strictly upper triangular matrices. If
+
+Ly = (I-wL)71 {wu + (1-w)I},
+then for any real or compler number w,
+(3.53) plCn) > bw — 1,
+with equality holding only if all eigenvalues of L,, are of modulus |w — 1|.
+
+Proof. Let (A) := det(AI — L,,) be the characteristic polynomial of L,,.
+Since L is strictly lower triangular, then (J — wL) is nonsingular, and as
+det(I —wL) = 1, then
+
+g(A) = det(I — wL) - det(AI — £,,) = det {(A + w — 1)I —wrAL —w}.
+
+The constant term p of ¢(A), the product of the negatives of the eigenvalues
+of L,,, is obtained by setting \ = 0 in this expression. Thus,
+
+(3.54) p= Tox = det {(w — 1)J —wU} = (w-1)”.
+Therefore, -
+(3.55) plu) = max [Xs(w)| > Jo — 1),
+
+with equality possible only if all eigenvalues of £,, are of modulus |w — 1],
+which completes the proof. ll
+
+If in the general case our goal is to determine the real value of w which
+minimizes p(L,,), then the above result of Kahan shows that we need only
+consider the open interval 0 < w < 2 for values of w such that L,, is conver-
+gent.
+
+In order to solve iteratively the matrix equation Ax = k, we now assume
+that the n x n matrix A is Hermitian, ie., A = A*, and can be expressed in
+the form

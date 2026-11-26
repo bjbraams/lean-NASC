@@ -1,0 +1,102 @@
+6.3. FACTORIZATIONS 303
+
+2 and that the corresponding values of col(q) are 7, 5, and 6 :
+
+1 1 4
+Q@) Ga G7 Gig a a a:
+{a | a 5 ae a1 | a3 da ag]
+Proc(1) Proc(2) Proe(3}
+
+Proc(2) now generates the fifth G-column and increment its q to 3.
+The decision to pass a received G-column to the right neighbor needs
+to be explained. Two conditions must be fulfilled:
+
+¢ The right neighbor must not be the processor which generated the CG
+column. This way the circulation of the received G-column is properly
+terminated.
+
+The right neighbor must still have more G-columns to generate. Oth-
+erwise, a G-column will be sent to an inactive processor.
+
+This kind of reasoning is quite typical in distributed memory matrix com-
+putations.
+
+Let us examine the behavior of Algorithm 6.3.1 under the assumption
+that n > p. It is not hard to show that Proc(u) performs
+
+L
+Plu) = Y12%n— (w+ (kVp) + (Vp) &
+
+kml
+flops. Each processor receives and sends just about every G-column. Us-
+ing our communication overhead model (6.1.3), we see that the time each
+processor spends communicating is given by
+
+nm
+my = > 2ag + Balm — 9) % 2agn + Ban?.
+j=l
+If we assume that computation proceeds at R flops per second, then the
+computation/communication ratio for Algorithm 6.3.1 is approximately
+given by (n/p)(1/3R0z). Thus, communication overheads diminish in im-
+portance as n/p grows.
+
+6.3.2 A Shared Memory Cholesky
+
+Next we consider a shared memory implementation of the outer product
+Cholesky algorithm:
+
+for k = iin
+A(kin, k) = A(kin, k)/+/A(k, &)
+for j=k+1n
+
+Ain, j) = AGin, 7) — Ain, K)AG,&)
+end
+end
+
+304 CHAPTER 6. PARALLEL MATRIX COMPUTATIONS
+
+The j-loop oversees an outer product update. The n — k saxpy operations
+that make up its body are independent and easily parallelized. The scaling
+A(kin, k) can be carried out by a single processor with no threat to load
+balancing.
+
+Algorithm 6.3.2 Suppose A ¢ R°™" is a symmetric positive definite
+matrix stored in a shared memory accessible to p processors. If each pro-
+cessor executes the following algorithm, then upon completion the lower
+triangular part of A is overwritten with its Cholesky factor. Assume the
+following initializations in each local memory: n, p and ys (the node id).
+
+for k =1:n
+ifp=1
+Vioc(kin) = A(k:n)
+Voc (Kin) = Utoe(kin)/+/Utoc(k)
+A(kn, k) = ttoc(k:n)
+end
+barrier
+Vtoc(k + lin) = A(k + L:n, k)
+for j = (K+ y):p:n
+Wtoeljin) = A(j:n, 7)
+Wiel Fn) = WioelF:) — ttoc(J)Mtoc(J:n)
+A(j:n, 3) = Wtoe(jin)
+end
+barrier
+end
+The scaling before the j-loop represents very little work compared to the
+outer product update and so it is reasonable to assign that portion of the
+computation to a single processor. Notice that two barrier statements are
+required. The first ensures that a processor does not begin working on the
+kth outer product update wntil the kth column of G is made available by
+Proc(1). The second barrier prevents the processing of the k+st step to
+begin until the &th step is completely finished.
+
+Problems
+
+P6.3.2 It is possible to formulate » block version of Algorithm 6.3.1. Suppose n = rN.
+For k = 1: we (a) have Proc(t) generate G(;,1+(k—1)r:kr) and (b) have all processors
+participate in the rank r update of the trailing submatrix A(kr+1:n, kr+1:n). See §4.2.6.
+The coarser granularity may improve performance if the individual processors lilo: level-3
+operations.
+
+P€.3.2 Develop « shared memory QR factorization patterned after Algorithm 6.3.2.
+Proc(1) should generate the Householder vectors and all processors should share in the
+ensuing Householder update.

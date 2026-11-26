@@ -1,0 +1,42 @@
+2.1 Spectral Radii of Nonnegative Matrices 37
+
+where O < B< Aand B# A. As all the row sums of B are equal to a, we
+can apply the result of (2.19) to the matrix B, so that p(B) = a. Now, by
+statement 3 of Theorem 2.7, we must have that p(B) < p(A); whence,
+
+On the other hand, we can similarly construct a nonnegative irreducible nxn
+matrix C = [c;,;] by increasing certain of the positive entries of A so that all
+the row sums of the matrix C are equal, where C > A and C # A. It follows
+that
+
+p(A) < AC = 2, day ’
+
+and the combination of these inequalities gives the desired result of (2.20). i
+
+Theorem 2.9. Let A = [a;,;] > O be an irreducible n x n matrix, and let
+P* be the hyperoctant of vectors x > 0. Then for any x € P*, either
+
+n n
+> 94,505 > 15,5
+
+. | j=l j=l
+. — A So
+(2.21) i, | a | CA) < ma | a
+
+or
+
+(2.22) ——— =/(A) foralll<i<n.
+
+Moreover,
+
+n n
+y } Qj, 525 » 94,525
+c rar
+
+=1
+2.23 in | =| 5, = (A) = inf
+Proof. For any positive vector x € P*, set
+D := diag(z1,22,°+-,2n);
+
+and consider, as in the proof of Corollary 1.14 of Theorem 1.11, the matrix
+B = D"'AD. It is clear that B is a nonnegative irreducible matrix, and

@@ -1,0 +1,40 @@
+174 5. Semi-Iterative Methods
+
+In this case, p(Dz!E2) = i, and the ratio of the asymptotic convergence
+rates of Dy 1k» and F*F is 1.404, indicating a 40% improvement.
+
+Exercises
+
+1. Verify that
+
+lim(F*F)I| = (ws — 1) fescesate m>0.
+
+2. Let
+
+From the matrix M?, which determines F*F, evaluate the norms
+|lpm(F*F)|| of (5.87) for each m > 0. If D denotes the positive
+diagonal matrix formed from the diagonal entries of J — F*F, set
+I-—F*F := D-E, which is a regular splitting of I— F*F. Apply the
+Chebyshev semi-iterative method of Sect. 5.1to the iteration matrix
+D~1E, and compute the norms ||f,(D~1!£)|| for each m > 0 from
+(5.26). In particular, how do the asymptotic rates of convergence of
+these iterative methods compare as a function of a?
+
+3. With the particular polynomials f,, (t) of (5.21) with a = 0,b = p?(M),
+determine the norms
+llBm(L1)Ih
+
+for all m > 0, where the matrix L; is given in (5.79).
+
+5.5 Semi-Iterative Methods Applied to the Successive
+Overrelaxation Method
+
+It is natural to ask if anything can be gained by applying optimal semi-
+iteration to an n x n complex matrix M when all that is known is that M is
+convergent, i.e., p(M) < 1, so that all eigenvalues A of M satisfy |A| < p(M).
+E. H. Zarentonello showed in this case, in the paper of Varga (1957a), that if
+Sm is the set of all complex polynomials p,(z) of degree m with pm(1) = 1,
+then
+
+5.90 i =p™ > 1).
+(5.90) min {mae tom} = (a) (all m > 1)

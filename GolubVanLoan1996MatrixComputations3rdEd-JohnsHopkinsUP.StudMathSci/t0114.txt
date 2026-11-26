@@ -1,0 +1,113 @@
+4.7. TOEPLITZ AND RELATED SYSTEMS 199
+
+kKRkEeERKkKEE kRkKER KE
+kkk RERKE kKkeERKE
+prsym. | ko ko ou u ko Kl ars) | k ku k RK
+—* Tek uuk ki ORR RRERE
+kKkREeEREKE kKkeERE Kk
+kk eEREK kKkKekERR:
+
+kKkReEERK
+
+kkk kRE
+
+persym | kK kk OK KK
+
+“kek kK
+
+kkkRKk
+
+kKeERKEERE
+
+Of course, when computing a matrix that is both symmetric and persym-
+metric, such as T,7', it is only necessary to compute the “upper wedge” of
+the matrix—e.g.,
+
+(n= 6}
+
+x x x
+x xXx xK
+x
+
+With this last observation, we are ready to present the overall algorithm.
+
+Algorithm 4.7.3 (Trench) Given real numbers 1 = rq,71,--.,7n such
+that T = (ry-4)) € R"*° is positive definite, the following algorithm com-
+putes B = Tz!. Only those 6; for which ¢ < j and i+ j S n+ 1 are
+computed.
+
+Use Algorithm 4.7.1 to solve Ta-1y = -(11,---)Tn-1)"-
+y= Uf (lL+r(in - 1)? y(i:n - 1)
+u(lin - 1) =-yy(n — 1: -— 1:1)
+Bil, 1l=7
+B(1, 2:n) = v(n — 1: — 1:1)7
+for i = 2:floor((n — 1)/2)+1
+for jsin-it+l
+B(i,j) = B(i— 1,5 -1)+
+(v(n+1—j)o(nt+1-+%)-v(i-1)eG-1)/7
+end
+end
+
+This algorithm requires 13n?/4 flops.
+
+Example 4.7.3 If the above algorithm is applied to compute the inverse B of the
+positive definite Toeplitz matrix
+
+1 6 2
+6 Ll 5S],
+2 85 1
+
+200 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+
+then we obtain 7 = 75/56, ti = 75/56, b12 = —5/7, big = 5/86, and baz = 12/7.
+
+4.7.5 Stability Issues
+
+Error analyses for the above algorithms have been performed by Cybenko
+(1978), and we briefly report on some of his findings.
+
+The key quantities turn out to be the a, in (4.7.1). In exact arithmetic
+these scalars satisfy
+
+lax] <1
+and can be used to bound || T-! jj, :
+
+1 1
+pods 2 vat < | Tr} I< wT 1 + layl (4.7.6
+max [Ia - 3) T[a-a,) £1% <4 L Jas} 7.6)
+jel at =
+
+Moreover, the solution to the Yule- Walker system T,y = —r(1:n) satisfies
+
+yl = (Ita +00) -1 (4.7.7)
+
+eh
+
+provided all the a, are non-negative.
+
+Now if z is the computed Durbin solution to the Yule- Walker equations
+then rp = T,2 +17 can be bounded as follows
+
+(roll su T] + léel)
+
+kml
+
+where dG, is the computed version of a,. By way of comparison, since
+each |r;| is bounded by unity, it follows that || r¢ || = ull y ||, where ro is
+the residual associated with the computed solution obtained via Cholesky.
+Note that the two residuals are of comparable magnitude provided (4.7.7)
+holds, Experimental evidence suggests that this is the case even if some of
+the o; are negative. Similar comments apply to the numerical behavior of
+the Levinson algorithm.
+
+For the Trench method, the computed inverse B of Ty! can be shown
+to satisfy
+
+7st - Bay Py itll
+aes | ern
+
+kesl
+
+In light of (4.7.7) we see that the right-hand side is an approximate upper
+bound for ulj 7,7) || which is approximately the size of the relative error
+when T~! is calculated using the Cholesky factorization.

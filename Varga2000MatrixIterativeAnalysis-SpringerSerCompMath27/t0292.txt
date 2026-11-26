@@ -1,0 +1,46 @@
+8.2 Essentially Positive Matrices 285
+
+(8.29) Cc a) =-Av+s, t2>0,
+
+subject to the initial vector condition v(0), is uniformly bounded in norm for
+allt > 0, and satisfies
+
+P — 4-l
+
+(8.30) jim, v(t) = A's.
+
+Proof. Let Q := —C~1A. Then Q is a nonsingular essentially positive matrix.
+Using Theorem 8.3, let Qx = ¢(Q)x where x > 0. It follows that
+
+A?lCx= (ae) x.
+
+But by the hypotheses, A~!C is a positive matrix, so that ¢(Q) is necessarily
+a negative real number, which proves that Q is subcritical. The remainder
+then follows from Theorem 8.7.
+
+We have thus shown that for sufficiently fine mesh regions Rp, the
+semi-discrete approximations (8.29), as introduced in Sect. 8.1, possess
+solutions which are uniformly bounded in norm for all t > 0, and possess
+finite steady-state solutions, as suggested by the example of the infinite
+thin rod. Furthermore, the semi-discrete approximations for the partial
+differential equation of (8.1) possess the positive couplings noted for this
+physical example.
+
+Exercises
+
+1. Arealn xn matrix Q = [q,;] is essentially nonnegative if g;,; > 0 for
+alli 4 j,1 < i,j <n. Prove that Q is essentially nonnegative if and
+only if exp(tQ) > O for all t > 0.
+
+2. Prove that Q is essentially positive if and only if —Q + sJ is an irre-
+ducible M-matrix for some real s.
+
+3. Complete the proof of Theorem 8.3.
+
+4. Prove Lemma 8.4.
+
+5. Let Q be an arbitrary n x n complex matrix with eigenvalues
+A1,A2,°*+,;An, Where Re Ay < Re »2 < --: < Re An. Extending
+
+Lemma 8.4, find a necessary and sufficient condition that || exp(tQ)||
+be bounded for all t > 0.

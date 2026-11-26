@@ -1,0 +1,41 @@
+Chapter 1
+
+Differential and Difference
+Equations
+
+10 Differential Equation Problems
+100 Introduction to differential equations
+
+As essential tools in scientific modelling, differential equations are familiar to
+every educated person. In this introductory discussion we do not attempt to
+restate what is already known, but rather to express commonly understood
+ideas in the style that will be used for the rest of this book.
+
+The aim will always be to understand, as much as possible, what we expect
+to happen to a quantity which satisfies a differential equation. At the most
+obvious level, this means predicting the value this quantity will have at some
+future time. However, we are also interested in more general questions such
+as the adherence to possible conservation laws or perhaps stability of the
+long-term solution. Since we emphasize numerical methods, we often discuss
+problems with known solutions mainly to illustrate qualitative and numerical
+behaviour.
+
+Even though we sometimes refer to ‘time’ as the independent variable, that
+is as the variable on which the value of the ‘solution’ depends, there is no
+reason for insisting on this interpretation. However, we generally use x to
+denote the ‘independent’ or ‘time’ variable and y to denote the ‘dependent
+variable’. Hence, differential equations will typically be written in the form
+
+y'(z) = f(z, y(2)), (100a)
+where
+
+dy
+fo
+y= dz’
+Sometimes, for convenience, we omit the x in y(z).
+
+The terminology used in (100a) is misleadingly simple, because y could be
+a vector-valued function. Thus, if we are working in RY, and z is permitted
+
+Numerical Methods for Ordinary Differential Equations. J.C. Butcher
+Copyright © 2003 John Wiley & Sons, Ltd. ISBN: 0-471-96758-0

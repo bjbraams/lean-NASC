@@ -1,0 +1,24 @@
+332 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Now look at the stability regions of the backward difference methods of
+orders 2 and 3. The first of these, shown in Figure 432(iv) indicates that the
+second order method is A-stable and the second, Figure 432(v), shows that
+the third order method is not A-stable.
+
+Figure 432(v) Stability region for the third order backward difference method
+
+433 Examples of the Schur criterion
+
+We first recompute the stability region of the second order Adams—Bashforth
+method. We need to find for what values of the complex number z the
+polynomial agw? + a, w + az has its zeros in the open unit disc, where
+
+a =1, a =—1—- 52, ay =<.
+The condition |ao|? — |ag|? > 0 is equivalent to
+lel <2, (433a)
+while the second condition (|a9|? — |a2|*)? — |@o@1 — a2@1|? > 0 simplifies to
+
+Re(z)(3|z|? — 4) < lef? (433b)
+
+It is easy to verify that (433b) implies (433a). Thus, by plotting the points
+for which (433b) holds, we recover Figure 430(i).

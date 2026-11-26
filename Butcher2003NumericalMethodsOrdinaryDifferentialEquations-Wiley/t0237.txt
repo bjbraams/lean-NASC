@@ -1,0 +1,29 @@
+RUNGE-KUTTA METHODS 225
+
+Figure 354(ii) Relation between order arrows and order stars
+
+Remark 354C For a method of order p, the ares {r exp(i(j + 3)m/(p +1) :
+0 <r}, where j = 0,1,...,2p +1, are tangential to the boundary of S at
+0, because exp(—z)R(z) = 1+ Cz?+! + O(|z|P+?) so that | exp(—z)R(z)| =
+14 Re(Cz?t) + Of|z|Pt?).
+
+It is possible that m bounded fingers can join together to make up a finger
+of multiplicity m. Similarly, m dual fingers in S can combine to form a dual
+finger with multiplicity m.
+
+Remark 354D Each bounded finger of S, with multiplicity m, contains
+at least m poles, counted with their multiplicities, because, by the Cauchy-
+Riemann conditions, the argument of exp(—z)R(z) increases monotonically
+as the boundary of the order star is traced out in a counter-clockwise direction.
+
+In the following subsection, we introduce a slightly different tool for
+studying stability questions. The basic idea is to use, rather than the fingers
+and dual fingers as in order star theory, the lines of steepest ascent and descent
+from the origin. Since these lines correspond to values for which R(z) exp(—z)
+is real and positive, we are, in reality, looking at the set of points in the
+complex plane where this is the case.
+
+We illustrate this by presenting, in Figure 354(ii), a modified version of
+Figure 354(i), in which the boundary of the order star is shown in a dotted
+line and the ‘order arrows’, as we call them, are shown with arrow heads
+showing the direction of ascent.

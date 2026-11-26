@@ -1,0 +1,111 @@
+4.4. SYMMETRIC INDEFINITE SYSTEMS 173
+
+M.T. Jones and M.L. Patrick (1993). “Bunch-Keutman Factorization for Real Symmetric
+Indefinite Banded Matrices,” SIAM J. Matriz Anal. Appl. 14, 553-559.
+
+Because “future” columns must be scanned in the pivoting process, it is awkward (but
+posible) to obtain a gaxpy-rich diagonal pivoting algorithm. On the other hand, Assen's
+method. is naturally rich in gaxpy’s. Block versions of both procedures are poasible. LA-
+PACK uses the diagonal pivoting method. Various performance issues are discussed in
+
+V. Barwell and J.A, George (1976). “A Comparison of Algorithms for Solving Symmetric
+Indefinite Systems of Linear Equations,” ACM Trans. Math. Soft. 2, 242-51.
+
+M.T. Jones and M.L. Patrick (1994). “Factoring Symmetric Indefinite Matrices on High-
+Performance Architectures,” SIAM J. Matrix Anal. Appl. 15, 273-283.
+
+Another idea for a cheap pivoting strategy utilizes error bounds based on more liberal
+interchange criteria, an ides borrowed from some work done in the ares of sparse elimi-
+nation methods. See
+
+R. Fletcher (1976), “Factorizing Symmetric Indefinite Matrices,” Lin. Alg. and Its
+Applic. 14, 257-72.
+
+Before using any symmetric Az = 5 solver, it may be advisable to equilibrate A. An
+O(n?) algorithm for sccomplishing this task is given in
+
+J.R. Bunch (1971). “Equilibration of Symmetric Matrices in the Max-Norm,"J, ACM
+18, 566-72.
+
+Anslogues of the symmetric indefinite solvers that we have presented exist for skew-
+symmetric systems. See
+
+J.R. Bunch (1982). “A Note on the Stable Decomposition of Skew Symmetric Matrices,”
+Math. Comp. 158, 475-480.
+
+The equilibrium system litersture if scattered among the several application areas where
+it has an important role to play. Nice overviews with pointers to this literature include
+
+G. Strang (1988). “A Framework for Equilibrium Equatious,” SIAM Review 30, 283-297.
+S.A. Vavesis (1994). “Stable Numerical Algorithms for Equilibrium Systema,” SIAM J.
+Matriz Anal, Appl. 15, 1108-1131.
+
+Other papers include ©
+
+C.C. Paige (1979). “Fast Numerically Stable Computations for Generalized Linear Least
+Squares Problems,” SIAM J. Num. Anel 16, 165-71.
+
+A. Bjérck and LS, Duff (1980). “A Direct Method for the Solution of Sparse Linear
+Least Squares Problems,” Lin. Alg. and Its Applic. 24, 43-67.
+
+A. Bjarek (1992). “Pivoting and Stability in the Augmented System Method,” Proceed-
+ings of the 14th Dundee Conference, D.F. Griffitha and G.A. Watson (eds), Longman
+
+P.D. Hough and S.A. Vavasis (1996). “Complete Orthogonal Decomposition for Weighted
+Least Squares,” SIAM J. Matriz Anal. Appl, to appear.
+
+Some of these papers make use of the QR factorization and other least squares ideas
+that are discussed in the next chapter and §12.1.
+
+Probjems with structure abound in matrix computations and perturbation theory
+has a key role to play in the search for stable, efficient algorithms. For equilibrium sys-
+tems, there are several results like (4.4.15) that underpin the moat effective algorithms.
+See
+
+174 CHAPTER 4. SPECIAL LINEAR SYSTEMS
+
+A. Foregren (1995). “On Linear Least-Squares Problems with Diagonally Dominant
+Weight Matrices,” Technical Report TRITA-MAT-1995-OS2, Department of Mathe-
+matics, Royal Institute of Technology, S-100 44, Stockholm, Sweden.
+
+and the included references, A discussion of (4.4.15) may be found in
+
+G.W. Stewart (1989). “On Scaled Projections and Peeudoinverses,” Lin. Alg. and Ita
+Applic. 112, 189-193.
+
+D.P. O'Leary (1990). “On Bounds for Scaled Projections and Paeudoinverses,” Lin. Aly.
+and Ite Applic. 192, 115-117.
+
+M.J. Todd (1990). “A Dantzig-Wolfe-like Variant of Karmarker’s Interior-Point Linear
+Programming Algorithm,” Operations Research 38, 1006-1018.
+
+4.5 Block Systems
+
+Tn meny application areas the matrices that arise have exploitable block
+structure. As a case study we have chosen to discuss block tridiagonal
+systems of the form
+
+mn F oo 0 1 by
+
+Ey Dz *. : 2X2 be
+Hoos : fed: (4.5.1)
+
+: sofe Fa-1 : :
+
+Qos En-1 Dn Zn bn
+
+Here we assume that all blocks are q-by-q and that the x; and 6; are in
+RY, In this section we discuss both a block LU approach to this problem as
+well as a divide and conquer scheme known as cyclic reduction. Kronecker
+product systems are briefly mentioned.
+
+4.5.1 Block Tridiagonal LU Factorization
+
+We begin by considering a block LU factorization for the matrix in (4.5.1).
+Define the block tridiagonal matrices A, by
+Dn Le 0
+E, Dz :
+A, = Ste tay k=imn. (4.5.2)
+
+: . : Fee
+Qo... Ey-1 Dt

@@ -1,0 +1,186 @@
+Normal form:
+
+— Cyclic matrix 44
+
+— Reducible matrix 51
+Normal matrix 15
+
+Norms:
+
+— Consistent matrix norm 10
+— Euclidean vector 7
+
+— Properties of 7
+
+— Subordinate matrix norm 10
+— Unitarily invariant 15, 28
+
+O
+
+w-routine 316
+
+Ordering vector 117
+
+Ordinary matrix differential equation
+277
+
+Orientation of mesh lines 226
+
+Orthonormal set of eigenvectors 10
+
+Oscillation matrices 232
+
+Ostrowski’s theorem 83
+
+Ovals of Cassini 24, 25
+
+Overrelaxation 65
+
+P
+
+Padé:
+
+— Rational approximations 292
+
+— Table 292
+
+Path 19
+
+p-cyclic matrix 113
+
+Peaceman-Rachford:
+
+— Matrix 238
+
+— Method 237, 299
+
+Perron-Frobenius theorem 35
+
+Point:
+
+— Gauss-Seidel method 65
+
+— Jacobi method 64, 297
+
+— Single-step method 65
+
+— Successive overrelaxation method 66,
+298
+
+— Total step method 64
+
+Poisson’s boundary value problem 321
+
+Polynomial acceleration method 151
+
+Positive:
+
+— Matrix 31
+
+— Vector 31
+
+Power method 316
+
+Primitive:
+
+— Graph 56
+
+— Matrix 43
+
+Principal square submatrix 35
+
+Property A 111, 113
+
+Property A” 111, 113
+
+Index 357
+
+R
+
+Rate of convergence 69
+Rayleigh quotients 320
+Reducible matrix 50
+Regular splitting 88
+Relaxation factor 65, 111
+Relaxation method 1
+Removal cross section 276
+Richardson’s method 157
+Ritz method 191
+Rotational symmetry 216
+Rounding errors 28, 221
+
+iS)
+
+Schwarz-Christoffel mapping 182
+
+— generalized 182
+
+Second order Richardson method 180
+
+Semi-discrete approximations 278
+
+Semi-explicit 277
+
+Semi-group theory 309
+
+Semi-iterative method 150, 180
+
+Sparse matrix 1
+
+Spectral norm 7
+
+Spectral radius 8
+
+Splittings of a matrix:
+
+— nonnegative 107
+
+— multisplittings 108
+
+— regular 95
+
+— weak regular 95
+
+Stable matrix 290
+
+Stability 277, 299, 310
+
+Stein-Rosenberg theorem 74
+
+Stieltjes matrix 91
+
+Stochastic matrix 60
+
+Strictly diagonally dominant 23
+
+Strictly upper triangular matrix 51
+
+Strongly connected directed graph 19
+
+Subcritical matrix 284
+
+Subordinate matrix norm 10
+
+Successive:
+
+~ Line overrelaxation (SLOR) 223
+
+— Overrelaxation matrix 66
+
+— Overrelaxation method 66, 119
+
+- 2line overrelaxation (S2LOR) 233
+
+Supercritical matrix 284
+
+Systematic overrelaxation 66
+
+Symmetrically non-negative matrix 48
+
+Symmetric successive overrelaxation
+301
+
+T
+
+Three-point approximations 200
+Total step method 64

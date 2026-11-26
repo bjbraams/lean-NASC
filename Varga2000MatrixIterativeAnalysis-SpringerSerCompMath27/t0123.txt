@@ -1,0 +1,47 @@
+4.1 p-Cyclic Matrices 115
+
+This simple idea of the relationship between block directed graphs and
+p-cyclic matrices will be quite useful in Chap. 6 where matrix properties of
+difference equations derived from partial differential equations are considered.
+
+Since the block Jacobi matrix B of (4.4) must necessarily have zero diag-
+onal entries, we can again express the matrix B as B = L + U, where L and
+U are respectively strictly lower and strictly upper triangular matrices.
+
+Definition 4.3. If the matrix A of (4.2) is p-cyclic, then the matrix A is
+consistently ordered? if all the eigenvalues of the matrix
+
+B(a) :=aL+ a7 Dy,
+
+derived from the Jacobi matrix B = L + U, are independent of a, for a # 0.
+We then also say that the matrix B is consistently ordered. Otherwise,
+the matrices A and B are inconsistently ordered.
+
+Let us consider the matrices B; and By of (4.7) and (4.8). With
+
+O 0 0O- O a B»
+Bj, O O-- O O
+(49) Byla):= |; os
+O O O = aByp1  O
+
+it can be verified by direct multiplication that B?(a) = B? for all a 4 0.
+Thus, as the eigenvalues of Bi(a) are independent of a, we conclude that the
+matrix A; of (4.5) is a consistently ordered p-cyclic matrix. Similarly, if
+
+B2(a)x = Ax
+where x # 0, we can partition the vector x, relative to the partitioning of
+(4.8), so that this is equivalent to the set of equations
+1 .
+(4.10) Bj 5-1X 5-1 + 7 Bi sti Xj+1 = AX, 1SISN,
+
+where Bio and By,n+1 are defined to be null matrices. Defining Z; :=
+(1/a3-1)X;,1 <j <.N, (4.10) takes the form
+
+(4.11) Bj j-125-1 + Byj41Zj41 =AZj, LS ISN,
+
+so that any eigenvalue A of Bo(q) is, for any a # 0, an eigenvalue of Bp. But as
+Bz is independent of a, then Ag is, from Definition 4.3, a consistently ordered
+2-cyclic matrix. In other words, assuming nonsingular diagonal submatrices,
+
+3 For an eigenvalue-independent definition of the concept of a consistent ordering,
+see Exer. 9 of this section.

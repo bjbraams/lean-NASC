@@ -1,0 +1,47 @@
+LINEAR MULTISTEP METHODS 323
+
+The general solution to (423c) is
+
+Un = AN" + By”, (423d)
+where
+
+X = -h+VI+R w= 1-h+4h?  w& exp(-h),
+
+po= -h-VI+h® w -1-h-3h? w —exp(h),
+
+where A and B depend on initial values. Substitute the approximate values
+of \ and p into (423d) and we find
+
+Yn © Aexp(—nh) + B(—1)” exp(nh).
+
+For high values of n, the second term, which represents a parasitic solution,
+eventually dominates the solution in produces a very poor approximation.
+This is in contrast to what happens for the differential equation y' = y,
+for which the solution to the corresponding difference equation takes the
+form y, ~ Aexp(nh) + B(-1)" exp(—nh). In this case, the first term again
+corresponds to the true solution, but the second term will always be less
+significant.
+
+424 Variable stepsize
+
+If a sequence of approximations has already been computed using a specific
+stepsize and, for some reason, a decision is made to alter the stepsize, then
+a number of options arise as to how this might be done. For example,
+if a doubling of the stepsize is called for, then the necessary data might
+already be available without further computation. Halving the stepsize is not
+so convenient because new approximations to y(x) and y'(x) are required
+at points intermediate to the information that has already been computed.
+However, both these are special cases and it usually required to change the
+stepsize by a ratio that is perhaps greater than 0.5 and less than 2.0. We
+consider a very simple model example in which new values are simply found by
+interpolation and the integration resumed using the modified data. Another
+approach which we will also consider is where a generalized version of the
+numerical method is defined specific to whatever sequence of stepsizes actually
+arises.
+
+We now examine some basic stability questions arising from the
+interpolation option applied to an Adams method. At the end of step n,
+besides an approximation to y(tn), approximations are available for hy'(zn),
+hy'(an — h), ..., hy'(t@n — (p — 1)h). We need to replace these derivative
+approximations by approximations to rhy’(rn), rhy’(tn — rh), ..., rhy'(@n —
+(p — 1)rh), and these can be evaluated by the interpolation formula

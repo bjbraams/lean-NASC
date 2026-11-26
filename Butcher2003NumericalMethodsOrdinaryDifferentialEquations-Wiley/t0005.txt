@@ -1,0 +1,59 @@
+vi
+
+21
+
+22
+
+23
+
+24
+
+25
+
+CONTENTS
+
+200 Introduction to the Euler method ...........-.. 45
+201 Some numerical experiments ............... 47
+202 Calculations with stepsize control. ............ 52
+203 Calculations with mildly stiff problems .......... 54
+204 Calculations with the implicit Euler method ..... . . 57
+Analysis of the Euler Method ................ 59
+210 Formulation of the Euler method ............. 59
+211  ~=Local truncation error... 1. ee 60
+212 Global truncation error... 2... 0. oe ee eee 61
+213 Convergence of the Euler method 2... ..0....0. 62
+214 Order of convergence... 2... 00.0.2. 63
+215 Asymptotic error formula .............0200. 66
+216 Stability characteristics ©... 0 .0.000000000040. 68
+217 Local truncation error estimation. ............ 72
+218 Rounding error... 2... ee eee 74
+Generalizations of the Euler Method ............ 78
+220 =Introduction.. 2... ee 78
+221 + More computations ina step ............... 79
+222 Greater dependence on previous values .........-. 80
+223 ‘Use of higher derivatives... 2.2.2... 0.00-0.-. 82
+224  Multistep-multistage-multiderivative methods .... . . 82
+225 Implicit methods ..............0002 00s 83
+226  LLocal error estimates... ......--.-0000004 85
+Runge-Kutta Methods....................-. 86
+230 Historical introduction... ...........-20-. 86
+231 Second order methods ... 1... 0... ce eee 86
+232 The coefficient tableau... ......-...-2--20-- 87
+233 Third order methods .........0.5 004 e nee 88
+234 Introduction to order conditions. ............. 88
+235 Fourth order methods .. 1... 0... eee ee 90
+2386 Higher orders... 0... ee ee 91
+237 Implicit Runge-Kutta methods ...........2.-. 92
+238 Stability characteristics ©... 6... .00.-000005- 93
+239 Numerical examples ........000.. 0000000 e 95
+Linear Multistep Methods................... 97
+240 Historical introduction... 2... .00-0002.-00-. 97
+241 Adams methods... 2... ee ee ee 98
+242 General form of linear multistep methods ........ 99
+243 Consistency, stability and convergence .......... 100
+244 Predictor-corrector Adams methods............ 102
+245 The Milne device... 2... . ee es 104
+246 Starting methods ..........0-.0 000 eee 105
+247 Numerical examples .... 2... 0.00200 -0000, 106
+
+Taylor Series Methods ...............-..264 107

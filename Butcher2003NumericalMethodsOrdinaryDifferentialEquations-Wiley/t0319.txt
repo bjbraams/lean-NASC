@@ -1,0 +1,51 @@
+308 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+406 Sufficiency of conditions for convergence
+
+Given that a linear multistep is stable and consistent, we prove that it is
+convergent. We assume that the differential equation under consideration has
+the autonomous form
+
+y'(z) = f(y(2)) (406a)
+
+and that f satisfies a Lipschitz condition with constant L. These assumptions
+can be weakened in various ways with no change to the final result, but
+with considerable complication to the details. If the Lipschitz condition holds
+only locally, then it becomes necessary to restrict the stepsize so that it is
+possible to guarantee that all approximations which enter into the discussion
+are sufficiently close to the exact trajectory for the condition to apply. If the
+problem is not autonomous, so that f(y) is replaced by f(z,y), then it is
+possible to allow f to be Lipschitz continuous in the y variable, but merely
+continuous in z.
+
+However, we now press ahead with consideration of the possible convergence
+of the solution to (406a), together with the initial information given at x and
+the requirement that the approximate solution is to be evaluated at F. We
+always assume that Z > zo, to avoid the inconvenience of having to allow for
+negative stepsizes.
+
+For the rest of this subsection, it will be assumed, without further comment,
+that the differential equation we are attempting to solve is (406a) and that
+the solution is to be approximated on the interval [zo,%] with initial value
+information given at ro. The stepsize A will always be positive, and the
+Lipschitz condition holds with constant LZ. We refer to the problem as ‘the
+standard initial value problem’. One further notation we use throughout is to
+write M for a bound on || f(y(z))|| for « € [20,2]. Such a bound clearly exists,
+because
+
+IIF(u(@)) — F(v@o))Il < Elly) — yo) IL,
+
+and the latter quantity is bounded.
+
+As a first step towards understanding the relationship between an
+approximation to y(#) and the exact value of this quantity, we consider a
+quantity which measures the error generated in a single step.
+
+Definition 406A Let [a,f] be a consistent linear multistep method. The
+{local truncation error’ associated with a differentiable function y at a point x
+with stepsize h is the value of
+
+k k
+Lly, 2, h) = y(x) - Dawe —ih)—h >> Biy'(@ — th).
+
+i=l i=0

@@ -1,0 +1,104 @@
+2.6. PROJECTIONS AND THE CS DECOMPOSITION 7?
+
+Analogously, by working with Q? (which is also orthogonal) it is possible
+
+to show that 2
+ll core lz =1- Omin(QIy)?-
+
+and therefore
+Qua 13 = 2 — omin(Qu1)?.
+
+Thus, || Qa1 llg = {I Q1z ll, 9
+Note that if S, and Sz are subspaces in IR" with the same dimension, then
+
+0 < dist(S,,5) < 1.
+
+The distance is zero if $, = Sz and one if S; {}S+ # {0}.
+
+A more refined analysis of the blocks of the @ matrix above sheds more
+light on the difference between a pair of subspaces. This requires a special
+SVD-like decomposition for orthogonal matrices.
+
+2.6.4 The CS Decomposition
+
+The blocks of an orthogonal matrix partitioned into 2-by-2 form have highly
+related SVDs. This is the gist of the CS decomposition. We prove a very
+useful special case first.
+
+Theorem 2.6.2 (The CS Decomposition (Thin Version)) Consider the
+
+matriz Q
+_ 1
+= a |
+
+where m, >n and mg > n. If the columns of Q are orthonormal, then there
+exist orthogonal matrices U, € R™"™ Uy Ee R™*™, and V, € R™" such
+
+Qe R™*", Qa e R™*"
+
+that r
+m4 0 Cc
+[oa] [e)e-[5]
+where
+C = disg(cos(#:),.--,0os(8n)),
+S = diag(sin(@,),...,sin(@,)),
+and
+
+050 <M <--- SO <
+
+vl
+
+Proof. Since |] Qi1 ll < {| Q ll, = 1, the singular values of Q;, are all in
+the interval (0, 1]. Let
+. i, 0 t
+UT Qi; = C =ding(er,...,¢n) = [% 2 mint
+tn-t
+
+78 CHAPTER 2. MATRIX ANALYSIS
+
+be the SVD of Q; where we assume
+Lee SS > Oy 20 By 20.
+
+To complete the proof of the theorem we must construct the orthogonal
+matrix U2. If
+@=(M WwW]
+t n-t '
+
+Hm OT aly|o
+0 7 Qa} .
+ma W, Wa
+Since the columns of this matrix have unit 2-norm, W; = 0. The columns
+of W are nonzero and mutually orthogonal because
+
+WIW. = Inet — ETE = diag(1 — 2,,,...,1 — 2)
+is nonsingular. If 5, = /1—- o for k = 1:n, then the columns of
+Z = Wy diag(1/se41,.--,1/$n)
+
+are orthonormal. By Theorem 2.5.1 there exists an orthogonal matrix
+Uz €IR™*™ with U2(:,t + 1:n) = Z. It is easy to verify that
+
+UT QM = disg(s1,...,8n) = 5.
+
+Since c? +s? = 1 for k = 1:n, it follows that these quantities are the required
+cosines and sines. 0
+
+then
+
+Using the same sort of techniques it is possible to prove the following more
+general version of the decomposition:
+
+Theorem 2.6.3 (CS Decomposition (General Version)) If
+
+Qu |-Qi2 |
+Qu
+
+ts a 2-by-2 (arbitrary) partitioning of an n-by-n orthogonal matriz, then
+there exist orthogonal
+
+_{ Mu} 9 _ {vio
+v= [Ot rr and ve[% al
+
+such that
+
+uTQV =
+

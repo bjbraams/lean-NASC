@@ -1,0 +1,71 @@
+x CONTENTS
+460 Survey of implementation considerations. ........ 349
+
+461 Representation of data... ..........--.-.. 349
+
+462 Variable stepsize for Nordsieck methods ......... 353
+
+463 Local error estimation... 2.2... 0.00002 0004 354
+
+5 General Linear Methods.................... 357
+50 Representing Methods in General Linear Form .... . 357
+500 Multivalue multistage methods... ......0....4.. 357
+
+501 Transformations of methods. ............0406 358
+
+502 Runge-Kutta methods as general linear methods... . . 360
+
+508 Linear multistep methods as general linear methods . . . 361
+
+504 Some known unconventional methods........... 364
+
+505 Some recently discovered general linear methods... . . 366
+
+51 Consistency, Stability and Convergence .......... 369
+510 Definitions of consistency and stability. ......... 369
+
+511 Covariance of methods. ..............00-. 370
+
+512 Definition of convergence .... 0.0.0.0. 00208. 371
+
+513 The necessity of stability... ......2-..0-00.. 372
+
+514 The necessity of consistency... 2... 2.0.00 20 373
+
+515 Stability and consistency imply convergence ....... 374
+
+52 The Stability of General Linear Methods ......... 381
+520 Introduction... 6... ee ee 381
+
+521 Methods with maximal stability order... ......-. 383
+
+53 The Order of General Linear Methods........... 387
+530 Possible definitions of order... 2.02... 0 eee 387
+
+531 Algebraic analysis of order... .........-.02-.% 389
+
+532 An example of the algebraic approach to order... ... 390
+
+533 The underlying one-step method ............. 392
+
+54 Methods with Runge-Kutta stability............ 394
+540 Design criteria for general linear methods ........ 394
+
+541 The types of DIMSIM methods .............. 394
+
+542 Runge-Kutta stability 2.2... .-... 0.020000. 397
+
+5438 Almost Runge-Kutta methods... ........0..0. 400
+
+544 Fourth order, four stage ARK methods. ......... 403
+
+545 Doubly companion matrices... 1... 0.0.0.0 a ee 405
+
+546 Inherent Runge-Kutta stability ........-..0.2.. 407
+
+547 Derivation of methods with IRK stability... .. 2... 409
+
+548 Some nonstiff methods... ...........-0004 410
+
+549 Some stiff methods ...........00222.000. All
+References ........0 000.0000 0c eee ee 415

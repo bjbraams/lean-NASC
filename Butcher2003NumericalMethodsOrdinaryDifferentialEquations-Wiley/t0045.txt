@@ -1,0 +1,49 @@
+32 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+special case in which C = 0. In this case, the equation becomes linear in
+the sense that known solutions can be combined by linear combinations. The
+simplified equation in matrix-vector form is
+
+Yn = 3-2 Yn-1
+Yn-1 1 0 Yn—2 |?
+which can be re-written as
+Yn — Yn-1 = 2 0 Yn—-1 — Yn—-2
+—Yn + 2Yn-1 01 —Yn-1 + 2Yyn—2 ;
+with solution defined by
+
+Yn — Yn-1 = Ar},
+“Yn + 2yn-1 = B,
+
+for constants A and B. By eliminating y,_1, we find
+Yn = A2° +B
+
+for the general solution. The fact that this combines powers of 2 and 1, the
+eigenvalues of the matrix
+
+(121b)
+
+suggests that we can look for solutions for the original formulation in the
+form X” without transforming to the matrix-vector formulation. Substitute
+this trial solution into (121a), with C = 0, and we find, apart from a factor
+"2. that the condition on 2 is
+
+-3A4+2=0.
+
+This is the characteristic polynomial of the matrix (121b), but it can be read
+off immediately from the coefficients in (121a).
+
+To find the general solution to (121a), if C # 0, it is easy to see that we
+only need to find one special solution to which we can add the terms A2"+B
+to obtain all possible solutions. A special solution is easily found, if 94 1 and
+6 # 2, in the form
+
+cent
+in = @-NO-2
+This type of special solution is not available if 9 equals either 1 or 2. In these
+cases a special solution can be found as a multiple of n or n2”, respectively.
+The general solution is found in these and the previous case to be
+
+A2"+B-Cn, g=1,
+Yn = 4 AM+ B+ 2Cn2, 6=2,
+2
+AM + B+ Gin”, OF 10742.

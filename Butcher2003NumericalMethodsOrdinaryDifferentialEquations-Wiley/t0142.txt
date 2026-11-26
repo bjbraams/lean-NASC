@@ -1,0 +1,44 @@
+130 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+Theorem 302C Let An = Dyan Ot); Bn = Dyan A(t) then
+
+A,=(n-1)!, Be= art,
+
+Proof. Let X,, denote the set of vectors of the form [z1,z2,...,%n—-1] and Y,
+the set of vectors of the form [y1,y2,---,Y¥n—1], where xj € {1,2,...,i} and
+yi € {1,2,...,n}, for i = 1,2,...,n. It is easy to see that the cardinalities
+of these sets are #X, = (n —1)!, #¥n = n"~!. We conclude the proof by
+showing how to define bijections between the monotonically labelled rooted
+trees of order n and X, and between the fully labelled rooted trees of order
+n and Y,,. In each case, given a labelled rooted tree, let v denote the leaf with
+greatest label and assign, as the value of 2n_1 or yn_1, respectively, the label
+attached to the parent of v. Delete the leaf v and continue the process until
+only the root remains. That is, in step i = 1,2,...,7—1, we work with a tree
+with n +1 —i vertices. We assign to 2n—i (or to Yn—i, respectively) the label
+attached to the parent of the leaf with the highest remaining label, and then
+delete this leaf to yield a tree with n — 7 vertices. Oo
+
+Table 302(H) The bijection relating a monotonically labelled tree t and
+2 €X,, forn=4
+
+e  ¢ | « ¢ | « ¢
+
+4 4
+3
+[1.1.1] \yr4 1,2] 992 aia) 248
+
+3 3 4
+[1,21] ave (1,2,2] Ye [1,2,3]
+1 1
+
+Table 302(III) The bijection relating a fully labelled tree t and y € Y3
+
+BN we
+
+y t y t y t
+3 2
+1,1 1,2 1,3)
+3 1
+2,1 2,2 2,3
+(2, 1] h [2,2] vy [2,3] f
+(3, 1] fi [3, 2] f [3,3] 14 p2
+

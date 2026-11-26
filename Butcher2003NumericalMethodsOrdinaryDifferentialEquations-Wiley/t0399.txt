@@ -1,0 +1,56 @@
+GENERAL LINEAR METHODS 389
+
+531 Algebraic analysis of order
+
+Associated with each of the components of the vector of starting methods,
+is a member of the algebra G introduced in Subsection 385. Denote &,
+i = 1,2,...,r, as the member corresponding to S;. That is, & is defined
+by
+
+&,(0) = 58,
+&(t) =O), tET,
+
+where the elementary weight @((t) is defined from the tableau (530).
+Associate n; € G, with stage number i = 1,2,...,s, and define this recursively
+by
+
+& r
+ni = Yo agngD + D1 UigsG- (531a)
+j=l j=l
+Having computed 7 and 7,D, i = 1,2,...,8, we are now in a position to
+compute the members of G representing the output approximations. These
+are given by
+
+s r
+
+So bigngD + D Vig, 7 1,2,.--57 (531b)
+j=l jel
+
+If the method is of order p, this will correspond to E£;, within Hy. Hence,
+
+we may write the algebraic counterpart to the fact that the method M is of
+
+order p, relative to the starting method S, as
+
+8 r
+BE = biyngD + VigG, in G/ Hp, i =1,2,...,7. (881)
+j=l j=l
+
+Because (531b) represents a Taylor expansion, the expression
+
+8 r
+EG — > bijnjgD - So Vybi, 6 1,2,--.47, (531d)
+j=l j=l
+represents the amount by which yl" falls short of the value that would be
+found if there were no truncation error. Hence, (531d) is closely related to the
+local truncation error in approximation number #.
+Before attempting to examine this in more detail, we introduce a vector
+notation which makes it possible to simplify the way formulae such as (531a)
+and (531c) are expressed. The vector counterparts are
+
+n= AnD + UE, (531e)
+E€=BynD+ VE, (531)
+where these formulae are to be interpreted in the space G/Hp. That is, the
+
+two sides of (531e) and of (5314) are to be equal when evaluated for all t ¢ T#
+such that r(t) < p.

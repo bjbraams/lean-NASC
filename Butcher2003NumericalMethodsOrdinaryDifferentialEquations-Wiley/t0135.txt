@@ -1,0 +1,42 @@
+Chapter 3
+
+Runge-Kutta Methods
+
+30. =Preliminaries
+300 Rooted trees
+
+We saw in Section 23 that the graphs known as ‘rooted trees’ play a central
+role in the analysis of the accuracy of Runge-Kutta methods. We regard a
+rooted tree as a pair (V, £), where V is a finite set of ‘vertices’ and E a set of
+‘edges’. The edges consist of ordered pairs of members of V, subject to certain
+conditions. The first condition is that every member of V, except one element
+known as the ‘root’, occurs exactly once amongst the second member in each
+pair in E. The special root vertex does not occur as the second member of
+any pair. For the final condition, for (V, E) to be a rooted tree, there are two
+alternatives, which are known to be equivalent. The first is that the graph
+defined by (V, £) is connected, and the second is that (V, £) defines a partial
+ordering.
+
+It will be convenient, throughout this discussion, to refer to members of V
+which do not occur as the first member of any pair in V. For a given edge
+[x,y] € E, x will be referred to as the ‘parent’ of y and y will be referred
+to as a ‘child’ of x. Thus, a vertex may have one or more children but, if it
+has none, it is a leaf. Similarly every vertex, except the root, has exactly one
+parent, whereas the root has no parent.
+
+We do not pursue the formal properties of graphs, and of rooted trees in
+particular, because they are formulated in specialist books on this subject
+and are easily appreciated through examples and diagrams. In diagrammatic
+depictions of a directed graph, the vertices are represented as points and the
+edges by arrowed line segments joining pairs of points, with the arrow pointing
+from the first to second member of the pair. We illustrate these ideas in Figure
+300(i), where a number of rooted trees are shown. In contrast, Figure 300(ii)
+shows some graphs which are not rooted trees. In these figures, the members
+of V are chosen to be positive integers. Wherever possible, the diagrams are
+arranged so that the root, if it exists, is at the bottom of the picture and so
+that all arrows are pointing in a direction with an upwards component.
+
+Even though we are representing rooted trees using points, labelled by
+
+Numerical Methods for Ordinary Differential Equations. J.C. Butcher
+Copyright © 2003 John Wiley & Sons, Ltd. ISBN: 0-471-96758-0

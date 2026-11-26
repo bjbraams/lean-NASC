@@ -1,0 +1,34 @@
+Contents
+
+Matrix Properties and Concepts.....................0.008 1
+1.1 Introduction ........ 0... ccc cece eects 1
+1.2 A Simple Example................. 0... cece eee eee eee 3
+1.3 Norms and Spectral Radii ............ 00.0 cece cece 7
+1.4 Bounds for the Spectral Radius of a Matrix and Directed
+Graphs... 2. e eee eee eens 16
+1.5 Diagonally Dominant Matrices .................. 0. cece eee 22
+1.6 Ovals of Cassini ......... 00.0 e eee 24
+
+Nonnegative Matrices ............. 00sec c cece cence eens
+2.1 Spectral Radii of Nonnegative Matrices......
+2.2 Cyclic and Primitive Matrices..............
+2.3 Reducible Matrices .............. 000 e eee
+2.4 Nonnegative Matrices and Directed Graphs
+
+Basic Iterative Methods and Comparison Theorems ...... 63
+3.1 The Point Jacobi, Gauss-Seidel, and Successive Overrelax-
+ation Iterative Methods ............ 0... c cece cece eens 63
+3.2 Average Rates of Convergence ............0c cece ee eee eee 68
+3.3. The Stein-Rosenberg Theorem .............. 0000 cee eens 74
+3.4 The Ostrowski-Reich Theorem ............. 00.0 cess eens 81
+3.5 Stieltjes Matrices, M-Matrices and H-Matrices ............. 87
+3.6 Regular and Weak Regular Splittings of Matrices........... 94
+Successive Overrelaxation Iterative Methods.............. 111
+4.1 p-Cyclic Matrices ....... 00.66 cece cece teen eens 111
+4.2 The Successive Overrelaxation Iterative Method for p-Cyclic
+Matrices 0.0.0... ccc ccc eect eee e eee n eens 119
+4.3 Theoretical Determination of an Optimum Relaxation Factor 123
+4.4 Extensions of the 2-Cyclic Theory of Matrices.............. 130
+4.5 Asymptotic Rates of Convergence ...............0.0 0c eee 141
+
+4.6 CO(q,r) and GCO(q,r): Generalized Consistent Orderings .. 143

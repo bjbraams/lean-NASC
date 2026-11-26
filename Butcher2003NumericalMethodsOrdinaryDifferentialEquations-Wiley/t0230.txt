@@ -1,0 +1,40 @@
+218
+
+NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Table 352(I) Padé approximations Nim/Dtm for l,m = 0,1, 2,3
+
+t
+m|{ 0 1 2 3
+0 1 142 L+z+$27 142+ 5274228
+1 Li }z 14224427 148243274 28
+1 1l-z 1-32 1l—3z 1-42
+1 1452 14p2+ 2? 1+ $2t+ He? +ayz%
+2 Ith? 1-3 z+ §27 152+ G52? 1—¢2+ 2?
+3 1 ltiz 142243427 1tdet e742?
+et g-tes eel 1-Fa §2-§3 1h hs
+Table 352(II) Diagonal members of the Padé table Nim/Dmm for
+m=0,1,2,...,7
+m Nam
+Dinm
+0 1
+1
+2
+3
+1 3,24 1,34 1 44
+4 1+ 92+ ge2° + gaz" + yea?
+—~i B72. 1534 _1 44
+i at at 3 a * e807
+1,4gl 1 1 _1_ 45
+5 1+ 92+ 92° + 79%" + qo08? + sooa0?
+—i 1,2_ 1,34 1 _,4_ _1_,5
+1 get or met Toos* — 302407
+ly4 5524 1,534 1 44 1_ 35 146
+6 L+ 524 qq2" + ge?" + 792" + tesa?” + sesaH0
+i 5,2 1,34 1.54 _ _1_,54, _1 46
+\ 1 yet a? 367 + 7937 158407 o 305280” :
+1,4 3,524 5,3 5 6 7
+7 L+ 92+ 362° + 3192" + gagp® + tram?” + soess0? + TreeraIO7
+—i 342 _ 5 534 _5 54 _ _1__45 1 6. 1 a
+1— 32+ 962? — 33929 + 34392" — raga?” + s0asa02° ~ i7ze7a807
+

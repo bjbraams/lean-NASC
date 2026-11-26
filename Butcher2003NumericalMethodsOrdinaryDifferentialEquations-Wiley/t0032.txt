@@ -1,0 +1,30 @@
+DIFFERENTIAL AND DIFFERENCE EQUATIONS 19
+
+Figure 106(ii) Van der Pol problem with p = 3
+
+two variables represent the time-dependent populations of which v is the
+population of predators which feed on prey whose population is denoted by u.
+It is assumed that u would have been able to grow exponentially without limit,
+if the predator had not been present, and that the factor 2 — v represents the
+modification to its growth rate because of harvesting by the predator. The
+predator in turn, in the absence of prey, would die out exponentially, and
+requires at least a prey population of u = 1 to feed upon to be able to grow.
+Of the two stationary solutions, (u,v) = (0,0) and (u,v) = (1,2), the second
+is more interesting because small perturbations from this point will lead to
+periodic orbits around the stationary point. By dividing (107a) by (107b), we
+obtain a differential equation for the path traced out by (u,v). The solution
+is that I(u, v) is constant, where
+
+I(u,v) = log(u) + 2log(v) —u — v.
+
+It is interesting to try to calculate values of the period T, for a given starting
+point (up, vo). To calculate T', change to polar coordinates centred at the
+stationary point
+
+u=1+rcos(@), v=2+rsin(@)
+
+and calculate the integral f>” $(6)d0, where
+
+$(0) = 1
+
+vcos?(6) + usin2(6)” (2107)

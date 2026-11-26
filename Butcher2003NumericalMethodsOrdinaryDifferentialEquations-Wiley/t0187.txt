@@ -1,0 +1,49 @@
+RUNGE-KUTTA METHODS 175
+
+As we have pointed out in Subsection 316, the order conditions for a
+scalar first order differential equation are less restrictive than for the general
+vector case, if orders of five or more are under consideration. This suggests
+the existence of methods whose orders, when applied to a single first order
+differential equation, may be five, whereas it is only four when applied to a
+higher dimensional system. An example of such a method is given in Butcher
+(1995).
+
+325 Methods of order six
+
+The first methods of order six were derived by Huta (1956, 1957). Although
+his methods used s = 8 stages, it is possible to find methods of this order with
+s = 7. Just as for order five, we assume the modified C(2) condition and the
+D(1) condition. We also assume the quadrature conditions so that the only
+order conditions that remain are &(¢) = 1/-+(¢) for the trees
+
+t= YB ¥ oa of
+
+Linear combinations of these with other order conditions whose truth
+is automatic, appear in (325h)—(325k) below, where we have listed all the
+conditions we need to specify a method:
+
+bz = 0, (325a)
+7
+7 bi(1 = c)(ci — €6) (ci — €3)(€4 — 4): =
+i=1 1 Cg teg tg | C3C4 + C3Cg + C4Cg — C3C4Cg (325b)
+30 20 12 6”
+
+7
+1 +
+dm — ei) (ci — ca) (ci — cae, = 0 os > + aS, (325c)
+
+7
+1
+Dot - eles - eee = 5 - F, (325d)
+t=1
+7
+Soi - ca)es = > (325¢e)
+i=l
+7 1
+> bici = 5, (325f)
+é 2
+i=1
+7
+Sob =1, (325g)
+
+a=1

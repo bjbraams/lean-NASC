@@ -1,0 +1,51 @@
+GENERAL LINEAR METHODS 359
+
+a second method for which the input quantities, and the corresponding
+output quantities, are replaced by linear combinations of the subvectors in
+y!-1], or of yl”, with the rows of T supplying the coefficients in the linear
+combinations. These ideas are well-known in the case of Adams methods,
+where it is common practice to represent the data passed between steps in a
+variety of configurations. For example, the data imported into step number
+nm may consist of approximations to y(@j—1) and further approximations to
+hy'(tn-i), for i = 1,2,...,k. Alternatively it might, as in Bashforth and
+Adams (1883) , be expressed in terms of y(%n—1) and of approximations to a
+sequence of backward differences of the derivative approximations. It is also
+possible, as proposed in Nordsieck (1962), to replace the approximations to
+the derivatives at equally spaced points in the past by linear combinations
+which will approximate scaled first and higher derivatives at ty-1.
+
+Let ged, 4=1,2,...,r denote a component of the transformed input data
+where
+
+.
+fds SD tigyl
+j=l
+
+Written more compactly in the form, with a similar transformation for the
+output approximations, we have
+
+2 pyln-t} tn) < pyle,
+
+Hence the method which uses the y data and the coefficients (A,U, B,V),
+could be rewritten to produce formulae for the stages in the form
+
+Y¥ =hAF + Uy" = hAF + UT HZ, (501a)
+
+The formula for yl"] = hBF + Vyl"—], when transformed to give the value of
+2I"], becomes
+
+all = T(ABF + Vy") =a(TB)F + (TVT-)z™-4_—(501b)
+
+Combine (501a) and (501b) into the single formula to give
+
+Y |_| A ur AF
+
+ail | | TB TvT-t || ele |
+Thus, the method with coefficient matrices (A, UT—!,TB, TVT—') is related
+to the original method (A,U,B,V) by an equivalence relationship with a
+natural computational significance. The significance is that a sequence of
+approximations, using one of these formulations, can be transformed into the
+
+sequence that would have been generated using the alternative formulation.
+It is important to ensure that any definitions concerning the properties of a
+

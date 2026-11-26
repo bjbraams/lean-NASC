@@ -1,0 +1,40 @@
+66 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+Table 214(II) An example of reduced order for the problem (214c)
+
+n |Error| Ratio
+8 | 0.3012018700 | 1 4539
+16 | 0.2072697687 | 1 4376
+32 | 0.1441738248 | 1 4979
+64 | 0.1009724646 | 4 4009
+128 | 0.0710078789 | 1 41396
+256 | 0.0500556444 | 1 4166
+512 | 0.0353341890 | 4 4455
+1024 | 0.0249615684 | 1 4149
+2048 | 0.0176414532 | 4 4146
+4096 | 0.0124709320 | 4 4144
+8192 | 0.0088169646 | 1 4143
+16384 | 0.0062340372 | 4 4143
+32768 | 0.0044079422
+
+which simplifies to
+1
+2—h
+Thus, the order 3 behaviour can be explained just by the error contributed
+by the last step.
+A second computation, for the solution at = 3, causes no difficulty and
+both results are shown in Figure 214(ii).
+
+h? ws —272h?.
+
+215 Asymptotic error formula
+
+In a numerical approximation to the solution to a differential equation, using
+the Euler method, contributions to the total error are typically produced in
+every step. In addition to this, there may be errors introduced at the very
+start of the integration process, due to an inaccuracy in the numerical initial
+value. We attempt to model the development of this error using an asymptotic
+approach. That is, we assume that the magnitude of all contributions to the
+error are bounded in terms of some small parameter. We consider only the
+limiting case, as all stepsizes tend to zero. Consider a step which advances
+the approximate solution from z to z + h. Because the local truncation error

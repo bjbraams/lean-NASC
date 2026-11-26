@@ -1,0 +1,119 @@
+6.1. Basic Concepts 289
+
+r=n/p; col =1+ (p—1)ripr; Aloe = A(:, 001); Ztoe = x(col)
+Woe = AtocTtoc
+Voc = Yi Moc = Yloc + Wlocs ¥ = VYtoc
+
+However, a problem concerns the read-update-write triplet
+Noe = Yi Moc = Moc + Woes ¥ = Noe
+
+Indeed, if more than one processor is executing this code fragment at the
+same time, then there may be a loss of information. Consider the following
+sequence:
+
+Proc(1) reads y
+Proc(2) reads y
+Proc(1) writes y
+Proc(2) writes y
+
+The contribution of Proc(1) is lost because Proc(1) and Proc(2) obtain the
+same version of y. As a result, the effect of the Proc(1) write is erased by
+the Proc(2) write.
+
+To prevent this kind of thing from happening most shared memory
+systems support the idea of a critical section. These are special, isolated
+portions of a node program that require a “key” to enter. Throughout the
+system, there is only one key and so the net effect is that only one processor
+can be executing in a critical section at any given time.
+
+Algorithm 6.1.6 Suppose A ¢ R"%", réR”, and y € R" reside in a
+global memory accessible to p processors. If n = pr and each processor
+executes the following algorithm, then upon completion, y is overwritten
+by y+ Az. Assume the following initializations in each local memory: p, y
+(the node id), and-n.
+
+r=n/p; col = 14 (4 — Uripr; Ato = A(:, 001); Zioe = Z(col)
+Woe = Aloclioe
+begin critical section
+Voc = ¥
+Yloe = Ylor + Wioc
+Y¥ = Woe
+end critical section
+
+This use of the ¢ritical section concept controls the update of y in a way
+that ensures correctness. The algorithm is dynamically scheduled because
+the order in which the summations occur is determined as the computation
+unfolds. Dynamic scheduling is very important in problems with irregular
+structure.
+
+290 CHAPTER 6. PARALLEL MATRIX COMPUTATIONS
+
+Problems
+
+P6.1.1 Modify Algorithm 6.1.1 so that it can handle arbitrary n.
+
+P8.1.2 Modify Algorithm 6.1.2 80 that it efficiently handles the upper triangular cape.
+P6.1.3 (a) Modify Algorithms 6.1.3 and 6.1.4 ao that they overwrite y with x = y+ A™z
+for a given positive integer m that is avnilable to euch processor. (b) Modify Algorithms
+6.1.3 and 6.1.4 so that y in overwritten by z = y + AT Az.
+
+P6.1.4 Modify Algorithm 6.1.3 so that upon completion, the local array Ajo, in Proc(y)
+houses the th block column of A+ zy7.
+
+P6.1.5 Modify Algorithm 6.1.4 so that (a) A is averwritten by the outer product update
+A+cy?, (b) = ia overwritten with A?z, (c) y is overwritten by a unit 2-norm vector in
+the direction of y+ A*z, and (d) it efficiently handles the case when A is lower triangular.
+
+Notes and References for Sec. 6.1
+
+General references on parallel computations that include several chapters on matrix
+
+computations include
+
+G. C. Fax, M. A. Johnson, G. A. Lyzenga, S. W. Otto, J. K. Salmon and D. W. Walker
+(1988). Solving Problems on Concurrent Processors, Volume 1. Prentice Hall, En-
+glewood Cliffs, NJ.
+
+D. P. Bartsekas and J. N. Tsitsiklis (1989). Parallel and Distributed Computation:
+Numerical Methods, Prentice Hall, Englewood Cliffs, NJ.
+
+S. Lakshmivarahan and S. K, Dhall (1990). Analysis and Design of Parallel Algorithms:
+Arithmetic and Matriz Problems, McGraw-Hill, New York.
+
+T. L. Freeman and C. Phillipe (1992). Parallel Numerical Algorithms, Prentice Hall,
+New York.
+
+F.T. Leighton (1992). Introduction to Parallel Algorithms and Architectures, Morgan
+Kaufmann, San Mateo, CA.
+
+G. C. Fox, R. D. Williams, and P. C. Messina (1994). Parallel Computing Works!,
+Morgan Kaufmann, San Francisco.
+
+Vv. Kumar, A. Grama, A. Gupta and G. Karypis (1994). Introduction to Parallel Com-
+puting: Design and Analysis of Algorithms, Benjamin/Cummings, Reading, MA.
+ELF. Van de Velde (1994). Concurrent Scientific Computing, Springer-Verlag, New York.
+M. Cosnerd and D. Trystram (1995). Parallel Algorithma and Architectures, Interns
+
+tional Thomson Computer Prem, New York.
+
+Here are some general references that are more specific to parallel matrix computations:
+
+V. Fadesva and D. Fadeev (1977). “Parallel Computations in Linoar Algebra,” Kiber-
+netica 6, 278-40.
+
+D. Heller (1978). “A Survey of Parallel Algorithms in Numerical Linear Algebra,” SIAM
+Review £0, 740-777.
+
+J.M. Ortega and R.G. Voigt (1985). “Solution of Partial Differential Equations on Vector
+and Parallel Computers,” SIAM Review 27, 149-240.
+
+J.J. Dongarra and D.C, Sorensen (1986). “Linear Algebra on High Performance Con
+puters,” App. Math. and Comp. 20, 57-88.
+
+K.A, Gallivan, RJ. Plemmons, and A.H. Sameh (1990). “Parallel Algorithms for Dense
+Linear Algebra Computations,” SIAM Review 32, 54-135.
+
+J.W. Demmei, M.T. Heath, and H.A. van der Vorst (1993) “Parallel Numerical Linear
+Algebra,” in Acta Numerica 1993, Cambridge University Press.
+
+See also

@@ -1,0 +1,52 @@
+102 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+p lie in the closed unit disc {z : |z| < 1} and that all repeated zeros lie in
+the open unit disc {z : |z| < 1}. Because the zeros of a are the reciprocals of
+those of p we can equally state these conditions as (i) all zeros of a lie outside
+the open unit disc, and (ii) all repeated zeros of a lie outside the closed unit
+disc.
+
+‘Convergence’ refers to the ability of a method to approximate the solution
+to a differential equation to any required accuracy, if sufficiently many small
+steps are taken. Of course, any numerical result computed by a linear multistep
+method will depend not only the particular coefficients of the method and the
+differential equation, but also on the procedure used to obtain starting values.
+In the formal definition of this concept, we will not impose any conditions on
+how the starting values are approximated except to require that, as h + 0
+the errors in the starting values tend to zero. Because the exact solution is
+continuous, this is equivalent to requiring that the starting values all converge
+to the initial value specified for the problem.
+
+Divide the interval [z9, Z] into n steps each of size h = (—29)/n, for every
+positive integer n. Solve a standard initial value problem using starting values
+Yo, Yi, «++» Yk-1 Which depend on h and converge to y(zo) as h - 0. Let the
+error in the approximation computed at F be denoted by en. The method is
+convergent if necessarily €, + 0 as n — 00.
+
+We discuss this property, and its relationship to other concepts introduced
+in this Subsection, in Chapter 4. In the meantime, we state without proof the
+important result expressed in the following.
+
+Theorem 243A A linear multistep method is convergent if and only if it is
+stable and consistent.
+
+244 Predictor-corrector Adams methods
+
+Continuing the discussion of Adams-Bashforth and Adams-Moulton methods
+from Subsection 241 we present in tabular form, the coefficients of these
+methods for orders as high as 8. In the Adams—Bashforth case this means
+presenting the methods as far as k = 8 and in the Moulton case as far as
+k=7.
+
+Along with the coefficients of the methods, the value is given of the error
+constants. For example, in the case of the Adams—Bashforth method with
+order 2 we can write
+
+ule) = w(tnaa) + (Sy! en-1) — 50 enn) + Chy9)(en) + OCH),
+
+where the error constant is equal to C = =: The values for the Adams—
+Bashforth methods are given in Table 244(I) and for the Adams-Moulton
+methods in Table 244(II).
+
+The Adams methods are usually implemented in ‘predictor-corrector’ form.
+That is, a preliminary calculation is carried out using the Bashforth form

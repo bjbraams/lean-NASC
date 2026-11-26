@@ -1,0 +1,48 @@
+LINEAR MULTISTEP METHODS 309
+
+We estimate the value of L(y, x,h) when y is the exact solution to (406a),
+and where, not only z, but also each of x ~ hi for i = 1,2,...,k, lies in the
+interval [xo, Z].
+
+Lemma 406B [fy is the exact solution to the standard initial value problem
+and xz € [to + kh, ZI, then
+
+k
+[C0251 < Yo (5sPlaa| + ite, — 61) LA.
+
+i=l
+Proof. We first estimate y(x) — y(z — ih) — ihy’(x) using the identity
+
+0
+u(a) — ya — ih) hiy'(a) =h f (sue + hg) - Flu(@))) a6,
+
+so that
+
+0
+lly(x) — y(e — th) — thy'(x)|| SAL fF lly(e + hE) — yall ag,
+
+and noting that for € < 0,
+
+O
+lly + hg) — y(a)ll < nf WF (w+ hé)lid€ < AleiM, (406b)
+so that
+lly() — yl — th) — thy'(2)|| < 3? RLM.
+From (406b), we see also that
+Ifu(@)) -— F(y(@ — th))|| < ALM.
+Because of the consistency of the method, we have 7f_,a; = 1 and
+yok, (ios — Bi) = Bo. We now write L(y, ,h) in the form
+k
+L(y, 2h) = >> ou(y(x) — y(a — ih) — ihy'(2))
+i=1 k
++ b>" (be — Bi)(y'(w) — y'(@ — ih);
+
+i=1
+
+this is bounded by
+
+k k
+1
+3 So PlaLMi +S” ilies — Bi|LMh?
+i=1 i=1
+
+and the result follows. Oo

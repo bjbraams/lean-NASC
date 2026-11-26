@@ -1,0 +1,41 @@
+6.1 A Simple Two-Point Boundary-Value Problem 185
+
+and
+y fit vite + Oh)
+Ye fa —h2 | yO (a2 + Ooh
+(6) y=]. |ake=] 2 fyr=
+: : 12 :
+YN int f& yO (ay + Onh)
+
+Basic properties of the matrix A are easily recognized from (6.5). The
+matrix A is real, symmetric, and tridiagonal, and as o(x) > 0 by assumption,
+then A is, from Definition 1.10, diagonally dominant with positive diagonal
+entries. Furthermore, the directed graph of A, as shown in Fig. 6.2, is clearly
+strongly connected, implying that A is irreducible, and, as there is strict
+diagonal dominance in the first and last rows of A, we can state more precisely
+that A is irreducibly diagonally dominant. Thus from the Corollary 1.22, A
+is then positive definite. As the off-diagonal entries of A are nonpositive, A
+is an irreducible Stieltjes matriz,? so that A~1 > O.
+
+Fig. 6.2.
+
+The point Jacobi matrix B = [b;,;], derived from A, is given explicitly by
+
+0 1/(2 + o1h?)
+
+1/(2 + o2h?) 0 1/(2 + ogh?)
+(6.7) B= .
+1/(2 + on—1h?)
+
+1/(2+ owh?) 0
+
+which is clearly nonnegative, irreducible, and tridiagonal, with row sums sat-
+isfying De 15:3 <1, for all 1 <i < N, with strict inequality for i = 1 and
+i= N. But then (Theorem 3.10), B is necessarily convergent.
+
+Other properties of the matrix B are also evident. The results of Sect. 4.1
+can now be directly applied, since B is a special case of the matrix of (4.8)
+(where the matrices B;,; in (4.8) are, in this case, all 1 x 1 matrices), which
+was shown to be weakly cyclic of index 2 and consistently ordered. It is more
+
+3 See Definition 3.23 and Corollary 3.24 of Sect. 3.5.

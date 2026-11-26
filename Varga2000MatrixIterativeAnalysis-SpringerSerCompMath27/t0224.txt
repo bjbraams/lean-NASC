@@ -1,0 +1,52 @@
+216
+
+6. Derivation and Solution of Elliptic Difference Equations
+
+Exercises
+
+1.
+
+Consider the solution of the Laplace equation ~V?u = S, in the unit
+square 0 < x,y <1, with the following boundary conditions:
+
+u(t,0) = u(0,t), O<t<1,
+Ou to)
+
+— =-— <t<
+
+By) Hq ut), 0<t<1,
+u(t,1)=u(1,t)=1, O<t<1.
+
+Such a problem is said to have rotational symmetry. With a uniform
+mesh 2; = yj = j/(N +1),0 <j < N +1, for this region, derive a
+system of linear equations approximating this boundary-value problem
+of the form
+
+Az =k,
+
+where A is an m x m real, symmetric, and positive definite matrix
+with m = N(N +1) +1, and each row of A has at most five nonzero
+entries. Show that A and its point Jacobi matrix (for some ordering)
+satisfy the results of Theorem 6.5. Show also that each unknown mesh
+point is not always coupled to its nearest four mesh points.
+
+To show the effect of abrupt changes in mesh spacings on rates of
+convergence, consider the solution of the Dirichlet problem, i.e., V?u =
+0 in the unit square, with boundary values u = 1. With four interior
+mesh points as shown, and with the mesh spacings as indicated, where
+2a +¢€=1,€> 0, derive a system of linear equations of the form
+
+A(eju =k,
+1/3
+
+1 2
+
+e e
+1/3
+
+éo6
+1/3
+
+Qa € Qa
+
+Fig. 6.13.

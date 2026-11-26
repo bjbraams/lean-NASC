@@ -1,0 +1,47 @@
+392 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+533 The underlying one-step method
+
+In much the same way as a formal one-step method could be constructed as an
+underlying representation of a linear multistep method, as in Subsection 422,
+a one-step method can be constructed with the same underlying relationship
+to a general linear method. Consider a general linear method (A, U, B, V) and
+suppose that the preconsistency vector is u. We can ask if it is possible to
+find € € X" and 7 € Xf, such that (53le) and (531) hold exactly but with E
+replaced by 9 € X1; that is such that
+
+n(t) = A(nD)(t) + UE(t), (533a)
+(9€)() = BD) (t) + VE(E), (533b)
+
+for all t € T*. In this case we can interpret @ as representing an underlying
+one-step method. The notional method represented by @ is not unique, because
+another solution can be found equal to 9 = ¢~16¢, where ¢ € X; is arbitrary.
+We see this by multiplying both sides of (533a) and (533b) by $7! to arrive
+at the relations
+
+Ale) = AD) (t) + UE),
+G8)(t) = B@D)(t) + VEE),
+
+with é = $—1€. We want to explore the existence and uniqueness of the
+underlying one-step method subject to an additional assumption that some
+particular component of € has a specific value. As a step towards this aim,
+we remark that (533a) and (533b) transform in a natural way if the method
+itself is transformed in the sense of Subsection 501. That is, if the method
+(A, U, B, V) is transformed to (A,UT—!, TB, TVT—1), and (533a) and 533b)
+hold, then, in the transformed method, € transforms to Té and @ transforms
+to TéT—1, Thus
+
+n(t) = A(pD)(t) + (UT )(TE)(H), (533c)
+((LET-)(TE))(t) = TBD) (t) + V(TE(E). (533d)
+
+This observation means that we can focus on methods for which u = e;, the
+first member of the natural basis for R" in framing our promised uniqueness
+result.
+
+Theorem 533A Let (A,U,B,V) denote a consistent general linear method
+such that u =e, and such that
+
+~ 1 oT
+v=[1 &], v-[) 7 |:
+where 1 ¢ o(V). Then there exists a unique solution to (593a) and (533b) for
+which € = 1.

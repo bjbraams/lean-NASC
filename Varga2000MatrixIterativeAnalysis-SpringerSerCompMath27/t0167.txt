@@ -1,0 +1,56 @@
+5.2 Relationship of Semi-Iterative Methods to SOR Iterative Methods 159
+
+(5.33) a= [¥], 5= [at n=[f,
+
+The 2n x 2n matrix J is evidently weakly cyclic of index 2, and as
+
+ao _ [M20
+2
+® [one
+
+it follows that p(J) = p(M) < 1. Thus, the matrix equation (5.32) possesses
+a unique solution vector z, and we see that the vector components x and y
+of z are necessarily both equal to the vector solution of x = Mx + g.
+
+With Definition 4.3 of Sect. 4.1, we immediately see that the matrix J ;
+as partitioned in (5.33), is a consistently ordered weakly cyclic matrix of
+index 2, and the knowledge that J is convergent with real eigenvalues allows
+us to apply rigorously the results of Sect. 4.3. Specifically, the successive
+overrelaxation iterative method applied to the matrix problem of (5.31) is
+
+x41) ay {My +g- x(™)} +x,
+
+=
+ym) = {Mx 4 g— yim} 4 yim), ™20
+
+(5.34) ,
+and if £,, is the associated 2n x 2n successive overrelaxation iteration matrix,
+then we have, directly from Theorem 4.7,
+
+Theorem 5.2. Let M be ann x n convergent matrix with real eigenvalues.
+If L,, is the 2n x 2n successive overrelaxation iteration matrix derived from
+the matrix J of (5.33), then
+
+(5.35) Reo(Lu) < Roo(Lu,) = —In(ws — 1)
+
+for all real w # wy, where
+
+2
+
+(5.36) Wp: i+ Viz way
+
+Our first conclusion from Theorem 5.2 is that the theoretical results of
+Sect. 4.3 are more generally applicable than we may have thought. This
+application of the results of Sect. 4.3, however, was made at the expense of
+dealing with matrices of twice the order of those of (5.2). From a practical
+point of view, the iterative method of (5.34) is best carried out in the following
+manner. As we recall, the unique solution of (5.32) was such that x = y, where
+x is the unique vector solution of (5.2). Thus, as both sets of vector iterates
+{x} and {ym} of (5.34) converge (for 0 < w < 2) to the same
+
+limit vector x of (5.2), we define the new set of vector iterates {om}
+
+m=0
+by means of
+
+(5.37) C2) = xO, CPHD yO, 1>0.

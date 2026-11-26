@@ -1,0 +1,100 @@
+3.2. Tue LU FacrorizaTIon 95
+
+and we define
+M, =I-—ref, (3.2.1)
+then
+1 tt) 0 0 a1 a
+_ {0 1 0 0 Tk _ Zk
+Miz = | 9 —ns1 1 0] | sun |— | 0
+Q --- -m% OO 1 tn 0
+
+In general, a matrix of the form M;, = I — ref € R°** is a Gauss trans-
+formation if the first & components of r € R® are zero. Such a matrix is
+unit lower triangular. The components of r(k + 1:n) are called muléipliers.
+The vector 7 is called the Gauss vector.
+
+3.2.2. Applying Gauss Transformations
+
+Multiplication by a Gauss transformation is particularly simple. If C ¢ R"*"
+
+and M, =I — ref is a Gauss transform, then
+
+MC = (I-ref)G = C-r(ePC) = C-1C(k,:).
+
+is an outer product update. Since 7(1:4) = 0 only C(k + 1:n,:) is affected
+and the update C = M,C can be computed row-by-row as follows:
+
+fori=k+lm
+Cli, :) = Cli, :) -— nC(k,)
+end
+
+This computation requires 2(n — 1)r flops.
+
+Example 3.2.1
+
+14 7 0)
+C=/]25 8il,re= 1] > U-re?)c=
+3 6 10 -1
+
+3.2.3. Roundoff Properties of Gauss Transforms
+
+If # is the computed version of an exact Gauss vector 7, then it is easy to
+verify that
+
+nee
+-
+Sra
+a
+Qe
+
+oo
+
+f=Trte lel < ult].
+
+96 CHAPTER 3. GENERAL LINEAR SYSTEMS
+
+If 7 is used in a Gauss transform update and fI{(I ~ 7e2)C) denotes the
+computed result, then
+
+fl(U -#eZ)C) = I~ ref)C+E,
+where
+JE| < 3u(|C] + [r|lC(&,:)|) + O(u?).
+
+Clearly, if + has large components, then the errors in the update may be
+large in comparison to |C|. For this reason, care must be exercised when
+Gauss transformations are employed, a matter that is pursued in §3.4.
+
+3.2.4 Upper Triangularizing
+
+Assume that A € IR". Gauss transformations M,,...,M,—1 can usually
+be found such that M,-1---M2M,A = JU is upper triangular. To see this
+we first look at the n = 3 case. Suppose
+
+14 7
+A=/{2 5 8].
+3.6 10
+
+If
+100
+M = —2 1 0],
+-3 0 1
+then
+1 4 7
+MA=1]0 -3 -6].
+0 -6 -11
+Likewise,
+1 00 1 4 7
+Mz =|]0 10 => Mo{M,A) = | 0 -3 -6].
+o -2 1 0 60 1
+
+Extrapolating from this example observe that during the kth step
+
+e We are confronted with a matrix A) = My_,---M,A that is
+upper triangular in columns 1 to k — 1.
+
+e The multipliers in M, are based on A(*-1)(k 4 1:n,k). In particular,
+
+we need ali) # 0 to proceed.
+
+Noting that complete upper triangularization is achieved after n - 1 steps
+we therefore obtain

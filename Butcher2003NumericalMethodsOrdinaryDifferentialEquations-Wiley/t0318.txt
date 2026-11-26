@@ -1,0 +1,58 @@
+LINEAR MULTISTEP METHODS 307
+
+using n steps, is equal to yn = Mn. Since this converges to 1 as n + ov, it
+follows that for any € > 0, there exists an n sufficiently large so that |y;—1| < €
+fori=n—k,n—k+1,..., n. Hence,
+k
+Wn ONn-t
+i=1
+k
+
+=(14+ } Jaale.
+i=1
+
+Because this can be arbitrarily small, it follows that
+
+|1~ay — a2 — +--+ 0% | <
+
+k
++ ( + > a) €
+1
+
+1—ay — a2 —++:-—a, = 0. oO
+
+Theorem 405C A convergent linear multistep is consistent.
+
+Proof. We note first that
+Q, + 2aq+---+ ka, #0,
+
+since, if the expression were zero, the method would not be stable. Define the
+sequence 7 by
+
+— bot fit: + Pe
+a1 + 2a2 +--+ + kay?
+Consider the numerical solution of the initial value problem
+
+y'(z)=1, —_y(0) =9,
+
+with the output computed at F = 1, and with n steps computed with stepsize
+h =1/n. Choose starting approximations as
+
+4=0,1,2,....
+
+i
+
+1
+v= ot (405a)
+
+for i = 0,1,2,...,4 —1 so that these values converge to zero as n —> oo. We
+verify that the computed solution for all values of i = 0,1,2,...,n is given
+also by (405a), and it follows that the approximation at z = 1 is
+
+Bot Bi +++: + Be
+a1 + a2 +--+ + kay,’
+
+independent of n. Because convergence implies that the limit of this is 1, it
+follows that
+
+Bo + Br +--+ + Be = 01 + 2az +--+ ke. Oo

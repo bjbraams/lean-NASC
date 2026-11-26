@@ -1,0 +1,96 @@
+5.3. THE FuLL Rank LS PROBLEM 239
+
+Let us consider the accuracy of the computed normal equations solution
+Zzg. For clarity, assume that no roundoff errors occur during the formation
+of C = ATA and d = A™b, (On many computers inner products are accu-
+mulated in double precision and so this is not a terribly unfair assumption.)
+It follows from what we know about the roundoff properties of the Cholesky
+factorization (cf. §4.2.7) that
+
+(ATA+E)éns = AT,
+where || E {| * ull A? [fall All, = ull A7A ||, and thus we can expect
+N@us ~ tus lly mt wre(ATA) = une(A)*. (5.3.2)
+lzzs lle
+
+In other words, the accuracy of the computed normal equations solution
+depends on the square of the condition. This seems to be consistent with
+Example 5.3.1 but more refined comments follow in §5.3.9.
+
+Example 5.3.2 [t should be noted that the formation of A7 A can result in a severe
+loss of information.
+
+1 1 2
+A= 10-3 0 andb = 10-7
+0 10-3 1973
+
+then x9(A) 14-108, tps = [1 1]7, and prs = 0. If the normal equations method is
+executed with base 10, t = 6 arithmetic, then a divide-by-zero occurs during the solution
+process, since
+
+ra fil
+natay=[t 7 |
+is exactly singular. On the other hand, if 7-digit,arithmetic is used, then ?z5 =
+{2.000001 , 0]? and [f zs — xzs [la/ll zzs lly * wea(A)?.
+
+5.3.3 LS Solution Via QR Factorization
+
+Let A€ R™*" with m > n and b € R™ be given and suppose that an
+orthogonal matrix Q € IR™~™ has been computed such that
+
+QrasR= [e| men (5.3.3)
+is upper triangular. If
+e n
+QT = [3] mn
+
+then
+
+Az 613 =(|Q7Ar—Q7OI2 = Rie—cll} + Hele
+
+240 CHAPTER 5. ORTHOGONALIZATION AND LEAST SQUARES
+
+for any 2 ¢ IR", Clearly, if rank(A) = rank(R,) = n, then zz¢ is defined
+by the upper triangular system Rizzis = c. Note that
+
+pis =| 4llz-
+
+We conclude that the full rank LS problem can be readily solved once we
+have computed the QR factorization of A. Details depend on the exact QR
+procedure. If Householder matrices are used and Q? is applied in factored
+form to b, then we obtain
+
+Algorithm 5.3.2 (Householder LS Solution) If A € IR™*” has full
+column rank and b € R™, then the following algorithm computes a vector
+zis © B® such that |{ Ars ~ 6 (| is minimum.
+
+Use Algorithm 5.2.1 to overwrite A with its QR factorization.
+for j=1:n
+uj) = 1; ug + Lim) = AG + lem, 3)
+b(§:m) = (Im—s41 — Byvv7 )o(j:m)
+end
+Solve A(1:n, 1:n)zzs = 6(1:n) using back substitution.
+
+This method for solving the full rank LS problem requires 2n?(m — n/3)
+flops. The O(mn) flops associated with the updating of b and the O(n?)
+flops associated with the back substitution are not significant compared to
+the work required to factor A.
+
+Tt can be shown that the computed 7,5 solves
+
+min|j (A + 6A)z — (b+ 68) [l, (5.3.4)
+where
+6A llp < (6m —3n 4 41)nulj A |p + O(n?) (5.3.5)
+and
+|] 6b J. < (6m — 3n + 40)nul] b ||, + O(u?). (5.3.6)
+
+These inequalities are established in Lawson and Hanson (1974, p.90ff) and
+show that #,5 satisfies a “nearby” LS problem. (We cannot address the
+relative error in ¢z9 without an LS perturbation theory, to be discussed
+shortly.) We mention that similar results hold if Givens QR is used.
+
+5.3.4 Breakdown in Near-Rank Deficient Case
+
+Like the method of normal equations, the Householder method for solving
+the LS problem breaks down in the back substitution phase if rank(A) < n.
+Numerically, trouble can be expected whenever «9(A) = «2(R) = 1/u.
+This is in contrast to the normal equations approach, where completion
+of the Cholesky factorization becomes problematical once x2(A) is in the

@@ -1,0 +1,58 @@
+30 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+that Ly = Lz, it follows that the two functions y and z are essentially the
+same.
+
+Using the information we have learned about the Laplace transform, we can
+use it, as a tool to solve an initial value problem.
+
+Given that
+
+d
+(%-4) ule) =exw(te), (0) =6
+we deduce that
+
+1
+(s — a)(Ly)(s) —c= 38’
+and it follows that
+
+(Cu)(s) = (c+
+
+implying that
+
+1 1 _ ea—b)+1 1 + 1 1
+b/s-a a-b s-a’' b-as—d’
+
+y(z) = Aen exp(ar) + =
+
+The final property of the Laplace transform that we consider concerns the
+convolution of two functions. Define the convolution of y and z by the formula
+
+(y*z)(z) = [ ° y(t)2(a — t)dt.
+
+The Laplace transform of y * z is just the product of the Laplace transforms
+of y and z.
+We verify this as follows, where the substitution z = ¢ + u is made:
+
+Ly * z)(s) = i exp(—sz) f y(t)z(a — t)dtdx
+
+= ie i_ exp(—s(t + u))y(t)z(u)dtdu
+0 0
+= Ly(s)L£2(s).
+
+a exp(bz).
+
+Exercises 11
+
+11.1 Show how to modify Theorem 110C so that the Lipschitz condition holds
+only in a neighbourhood of yp and where the solution is only required
+to exist on (a, 6], where b satisfies a < b <b.
+
+11.2 By finding two vectors a and f so that the equation system
+
+010 sin(z)
+y(e)=] 1 0 0 | y(z)+ 0 ;
+001 cos(x)
+
+has a solution of the form #(x) = sin(x)a + cos(x)@, find the general
+solution to this problem.

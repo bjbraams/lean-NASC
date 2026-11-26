@@ -1,0 +1,52 @@
+RUNGE-KUTTA METHODS 223
+
+354 Order stars
+
+We have identified some members of the Padé table for the exponential
+function for which the corresponding numerical methods are A-stable. We
+would like to consider the question as to whether there are other members of
+the table with this property. It will be seen that everything hinges on the value
+of m ~ l, the degree of the denominator minus the degree of the numerator.
+It is clear that if m —1 <0, A-stability is impossible, because in this case
+
+|R(z)| + 00,
+
+as z —> co and hence for some z satisfying Rez < 0, |R(z)| > 1. For
+m-—I € {0,1,2}, A-stability follows from Theorem 353A. Special cases
+satisfying m —1 > 2 suggest that these members of the Padé table are not A-
+stable. For the third sub-diagonal, this was proved by Ehle (1969), and for the
+fourth and fifth sub-diagonals by Ngrsett (1974). Based on these observations,
+Ehle (1973) conjectured that no case with m —! > 2 can be A-stable. This
+result was eventually proved by Wanner, Hairer and Norsett (1978), and we
+devote this subsection to introducing the methods used in that paper and to
+proving the Ehle conjecture.
+
+In Subsection 216, we touched on the idea of an order star. Associated with
+the stability function R(z) for a Runge-Kutta method, we consider the set of
+point in the complex plane such that
+
+|exp(—z)R(z)| > 1.
+
+This is known as the ‘order star’ of the method, and the set of points such
+that
+
+lexp(-z)R(z)| <1
+
+is the ‘dual order star’. The common boundary of these two sets traces out
+an interesting path, as we see illustrated in Figure 354(i), for the case of the
+(1,3) Padé approximation given by
+1+ dz
+
+1-324 422-32
+In this diagram, the dual order star, which can also be described as the
+‘relative stability region’, is the interior of the un-shaded region. The order
+star is the interior of the shaded region.
+
+In Butcher (1987), an attempt was made to present an informal survey
+of order stars leading to a proof of the Ehle result. In the present volume,
+the discussion of order stars will be even more brief, but will serve as an
+
+introduction to the use of an alternative approach to achieve similar results.
+In additional to Wanner, Hairer and Norsett (1978), the reader is referred
+
+R(z) =

@@ -1,0 +1,54 @@
+2.1 Spectral Radii of Nonnegative Matrices 39
+
+Let A > O be ann x n irreducible matrix, and let x be an arbitrary
+column vector with n positive components. Defining
+
+xO) = Ax) ee ATX, op >,
+
+_ grt) net)
+Ar = max + and A, := min | + }.
+1<i<n ao) sign \
+
+4
+
+let
+
+Show that Ay < Ay < Ay < ++: S$ A(A) S++) S Ae SA S Dd.
+Thus, the inequalities for p(A) of Theorem 2.9 can be improved by
+this method.
+
+Applying the method of the previous exercise to the matrix A(q) of
+Exer. 1, find bounds l(a) < p[A(a)] < u(a) such that
+
+(
+
+1< “@) 101,
+(a)
+
+uniformly in0d<a<1l.
+
+For any n > 1, let H, be the n x n matrix with entries
+
+1
+
+hig = isj-1’ for 1 <i,j <n.
+
+H,, is called the nth segment of the (infinite) Hilbert matriz. Prove
+that p(H,) is strictly increasing with n.
+
+If A > 0 is an irreducible n x n matrix, prove that the matrix A can-
+not have two linearly independent eigenvectors with nonnegative real
+components (Hint: Apply Theorem 2.9 and statement 4 of Theorem
+2.7 to linear combinations of these eigenvectors.)
+
+Prove the result of Corollary 1.19, using Lemma 2.4 and Theorem 2.9.
+
+Let A > O be an irreducible n x n matrix. With the notation of
+Theorem 2.9, prove that p(A) can also be characterized by
+
+T T
+max { mip y a = (A) = min {m™ =}
+
+xeP* |yeP* yTx xeP* [yeP* yTx
+
+(Birkhoff and Varga (1958)).

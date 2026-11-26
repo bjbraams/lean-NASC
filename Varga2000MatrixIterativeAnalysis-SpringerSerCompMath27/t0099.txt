@@ -1,0 +1,49 @@
+3.5 Stieltjes Matrices, M-Matrices and H-Matrices 91
+
+Corollary 3.20. If A = [a;,;] is a real, irreducibly diagonally dominant nxn
+matrix with aj; < 0 for alli # j, and ajy > 0 for all1 <i <n, then
+A?l>0.
+
+Proof. From Theorem 3.10, we have that the point Jacobi matrix B (see
+(3.52), associated with the matrix A, is convergent. From the hypotheses
+of this corollary, this point Jacobi matrix B is nonnegative and irreducible.
+But as the diagonal entries of A are positive, it follows that the matrix B of
+Theorem 3.19 is precisely the point Jacobi matrix B, and the result follows
+now from Theorem 3.19. i
+
+Corollary 3.21. If A = [a;,;] is a real, symmetric and nonsingular n x n
+irreducible matriz, where ai; <0 for alli # j, then A~! > O if and only if
+A is positive definite.
+
+Proof. Let A~! = [rj]. As A has nonpositive off-diagonal entries, then
+A-! > O implies again from (3.78) that the diagonal entries of A are posi-
+tive real numbers. But similarly, A being positive definite also implies this.
+With the positivity of the diagonal entries of the matrix A, the n x n ma-
+trix B defined in Theorem 3.19 is evidently nonnegative and irreducible and
+is just the point Jacobi matrix associated with A. Employing Theorem 3.19,
+A! > O if and only if p(B) < 1, and from the Stein-Rosenberg Theorem 3.8,
+we conclude then that A~! > O if and only if the point Gauss-Seidel matrix
+is convergent. Remembering that the diagonal entries of A are positive, then
+from Reich’s Corollary 3.13, A~! > O if and only if A is positive definite,
+which completes the proof.
+
+We now make some definitions which we shall use frequently in subsequent
+sections.
+
+Definition 3.22. A real n x n matrix A = {a;,;] with a,; < 0 for all i # j
+is an M-matrix if A is nonsingular and A~! > O.
+
+Definition 3.23. A real n x n matrix A = [a;,;] with a,j; < 0 for alli 4 j
+is a Stieltjes matrix if A is symmetric and positive definite.
+
+As a consequence of the last definition and Corollary 3.21, we easily de-
+duce the
+
+Corollary 3.24. If A is a Stieltjes matriz, then it is also an M-matria.
+Moreover, A is irreducible if and only if A~! > O.
+
+As an interesting and useful way of obtaining M-matrices, we include
+
+Theorem 3.25. Let A be ann x n M-matriz, and let C be any matriz ob-
+tained from A by setting certain off-diagonal entries of the matrix A to zero.
+Then, C is also an M-matriz.

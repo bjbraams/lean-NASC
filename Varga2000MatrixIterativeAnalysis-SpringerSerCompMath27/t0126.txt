@@ -1,0 +1,54 @@
+118
+
+#8.
+
+4. Successive Overrelaxation Iterative Methods
+
+Prove that the matrix
+
+RalH On
+
+>
+ll
+AI ORI RS
+|
+OFF Bale
+
+alF EAI OS
+
+partitioned so that its diagonal submatrices are all 1 x 1 matrices, is
+2-cyclic, but inconsistently ordered.
+
+Show that the matrix B of (3.97), partitioned so that all its diagonal
+submatrices are 1 x 1 matrices, is cyclic of index 3, but inconsistently
+ordered.
+
+Let the matrix A, partitioned in the form (4.2), be expressed as D —
+E-—F, where D is the block diagonal matrix of (4.3), and the matrices
+E and F are respectively strictly lower and strictly upper triangular
+matrices. If A is a consistently ordered p-cyclic matrix and if D is
+nonsingular, prove that
+
+det{D — aE — BF} = det{D — (a?-18)”?(E + F)},
+where @ and # are arbitrary complex constants.
+
+Show that the matrix
+
+20-4-4-1 0 0
+-4 20-1-4 0 0
+—-4-1 20-4-4-1
+
+-1-4-4 20-1-4]’
+0 0-4-1 20-4
+0 0-1-4-4 20
+
+partitioned so that its diagonal submatrices are all 1 x 1 matrices, is
+not p-cyclic for any p > 2. On the other hand, if A is partitioned so
+that its diagonal submatrices are all 2 x 2 matrices, show that A is a
+consistently ordered 2-cyclic matrix.
+
+Consider the matrix Ag of (4.6), which was shown to be a consistently
+ordered 2-cyclic matrix when its diagonal submatrices are nonsingular.
+Show Friedman (1957) that any permutation, of rows and columns by
+blocks of A, leaves invariant this property of being consistently ordered
+and 2-cyclic. [Hint: Follow the approach of 4.10)].

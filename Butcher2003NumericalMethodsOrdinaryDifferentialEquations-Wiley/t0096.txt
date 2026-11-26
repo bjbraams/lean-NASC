@@ -1,0 +1,41 @@
+NUMERICAL DIFFERENTIAL EQUATION METHODS 83
+
+|E|
+
+1219-19 10-8 1078 10-4 107?
+
+107
+
+rl L 1
+o-* 107® 10-4 h 1078 107? 10-"
+Figure 223(i) Errors in problem (223a) using Taylor series with orders
+p=1,2,3,4
+
+The most well-known combination of the use of higher derivatives with
+Runge-Kutta methods is in Rosenbrock methods, (Rosenbrock, 1963). This is
+actually a greater generalization, in the sense that derivatives of f are used.
+These must be regarded as more general, because y" can be found in the case
+of an autonomous problem as y"(z) = f'(y(z))(f(y(z))). On the other hand,
+it is not possible to compute f'(y(x)) from values of the various y derivatives.
+Rosenbrock methods have a role in the solution of stiff problems.
+
+Other potentially useful combinations certainly exist but, in this book, we
+mainly confine ourselves to combinations of multistage and multiderivative
+methods. These we refer to as ‘general linear methods’. The various methods
+that come under the classifications we have discussed here can be seen in
+a diagrammatic representation in Figure 224(i). The Euler method can be
+thought of as the infimum of all the method classes, and is shown at the lowest
+point of this diagram. On the other hand, the class of general linear methods
+is the supremum of all multistage and multivalue methods. The supremum of
+all methods, including also those with a multiderivative nature, is represented
+by the highest point in Figure 224(i).
+
+225 Implicit methods
+
+We have already seen, in Subsection 204, that the implicit Euler method has
+a role in the solution of stiff problems. Implicitness also exists in the case of
+linear multistep and Runge-Kutta methods. For example, the second order
+linear multistep method, in the backward difference family
+
+2 4 1
+Yn = gh f (en, Yn) + g¥n-1 — g¥n-2 (225a)

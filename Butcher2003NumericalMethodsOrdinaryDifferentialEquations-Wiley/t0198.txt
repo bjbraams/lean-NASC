@@ -1,0 +1,53 @@
+186 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+0
+c2 aa
+c3 | 431 a32
+(333b)
+Cs Ast As2 ttt As,s-1
+
+Gs41,1 %+1,2 ‘'* Qstijs—1 Gsti,s
+
+has order p.
+
+Even though this method formally has s + 1 stages, in terms of
+computational cost, it can be regarded as having only s, because the derivative
+calculation needed for stage number s + 1 is identical to the first derivative
+calculation in the succeeding step. It is convenient to write order conditions
+for the embedded method pair in terms of the number B = 6,4; and the
+artificial tableau
+
+0
+C2 | Gai
+cz | @31 432
+(333c)
+Cs 1 Gs1 Gs2_*"*  @s,5—1
+[br bp) Bs by
+
+Because an elementary weight, computed using this tableau, differs from that
+of the full method by B multiplied the derivative formed from the order p
+result found by the method represented by (333b). This enables us to form
+modified order conditions for (333c), which will ensure that both (333a) and
+(333b) satisfy the correct conditions. We denote the elementary weights for
+(333c) by &(t).
+
+Theorem 333A If (333b) has order p and (333a) has order p+ 1 and
+
+B = b541, then
+
+1- Br(t)
+Oa
+
+Conversely, if (333d) holds with cs #1 and B #0 and, in addition,
+
+5(t) = r(t) Spt. (333d)
+
+bst1 = B, (333e)
+As+i,8 = B™d,(1 _ Cs), (3336)
+
+s
+As41,5 = Bo (1.0 —¢%)- Ya) ,  j=1,2,...,8-1, (333g)
+
+i=l
+
+then (333b) has order p and (333a) has order p+ 1.

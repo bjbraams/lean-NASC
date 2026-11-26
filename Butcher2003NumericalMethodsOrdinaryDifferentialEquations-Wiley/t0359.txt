@@ -1,0 +1,50 @@
+348 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+458 Effective order interpretation
+
+The concept of effective order, introduced in Subsections 365 and 389,
+gives an alternative interpretation of the relationship between the computed
+approximation and the exact solution.
+
+Define the function y(z) by
+
+k “1
+yz) = (dofew(-i)) =wtuz+ pe +---,
+i-0
+
+where yo = 1, and the starting approximation by
+
+P
+S(y)(2) = 0 vuehty (2),
+=0
+assuming the linear multistep method [a, f] has order p. Write #(x) = S(y)(z).
+We then have
+
+k k
+Hen) — D) aGleni) = bY Gif (tus D> BG len-)) + OCP).
+
+k
+i=1 i=0
+
+454 Concluding remarks on G-stability
+
+It might be suspected that amongst A-stable linear multistep methods, G-
+stable methods stand out as being in some way superior. Such considerations
+turn out to be vacuous because a linear multistep method is A-stable if and
+only if it is G-stable. That G-stable methods are A-stable is shown simply as
+in Theorem 454A below. However, the converse result is much deeper. This
+was proved in Dahlquist (1978). Now the easy result:
+
+Theorem 454A A G-stable linear multistep method is A-stable.
+Proof. We use the criterion that if |w| < 1, then z = a(w)/f(w) is in the
+
+right half-plane. Form the inner product W*MW, where M is the matrix
+given by (451c) and
+
+We find that
+
+k
+a(@)B(w) + a(w) B®) = W* MW + (1~ |wl?) 5° 93%? w'* > 0,
+gla
+
+so that Re(a(w)/8(w)) > 0. Oo

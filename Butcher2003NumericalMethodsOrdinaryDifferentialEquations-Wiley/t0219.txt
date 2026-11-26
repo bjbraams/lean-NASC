@@ -1,0 +1,47 @@
+RUNGE-KUTTA METHODS 207
+
+Table 344(I) Methods in the Radau and Lobatto families
+
+Name Choice of 8’ andce — Choice of A
+
+Radau I Radau I quadrature C(s)
+
+Radau IA Radau I quadrature The reflections of Radau II
+
+Radau II Radau II quadrature D(s)
+
+Radau ITA Radau II quadrature The reflections of Radau I
+
+Lobatto III Lobatto quadrature C(s—1), ais = Gog = - ++ = Ogg = 0
+
+Lobatto IIIA Lobatto quadrature C(s)
+Lobatto IIIB Lobatto quadrature D(s)
+Lobatto HIC Lobatto quadrature The reflections of Lobatto IIT
+
+of the same order as for the underlying quadrature formula remains. The
+most obvious choice, of making the methods as close to explicit as possible,
+is inappropriate for stiff problems, but makes the method more efficient for
+nonstiff problems. Other choices can be made in terms of the C and D
+conditions, and in terms of specific choices of specific elements of A. To
+distinguish these from the simple (closest to explicit) choices, a letter A, B or
+C is added to the designation for the method.
+
+A summary of many of the methods in the Radau and Lobatto families is
+given in Table 344(I).
+
+Selected examples of these methods are as follows, where we note that
+Lobatto IIIB with s = 2 does not exist:
+
+Radau I: s=2, p=3,
+
+Radau IA: s=2, p=3,
+
+L
+4
+1
+4
+L
+4
+
+Radau IT: s=2, p=3,
+

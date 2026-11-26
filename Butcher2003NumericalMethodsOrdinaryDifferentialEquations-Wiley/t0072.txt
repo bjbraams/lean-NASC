@@ -1,0 +1,50 @@
+NUMERICAL DIFFERENTIAL EQUATION METHODS 59
+
+2
+oe
+=
+7
+— of
+=e
+a
+Le
+2
+S
+”
+is 7 1 .
+7i9-3 2 <1 0
+10 10 10 10°
+
+h
+
+Figure 204(i) Norm error against stepsize h for the ‘mildly stiff’ problem (203a)
+using the method (204a)
+
+20.2 Write the initial value problem (200b) in the form
+
+#@ = 1l+a, z(0) = 0,
+B@ = y-2y’, y(0) = 3.
+
+Using this alternative formulation, recalculate the solution, using five
+equal steps of the Euler method, from ¢ = 0 to t = In2. Plot the solution
+points after each step on a graph in the (z, y) plane.
+
+20.3 Continue the calculations in Table 201(I) to the point x = 1.
+
+20.4 It is known that E = }(y3 + yf) — 1/./y? + y3, the total energy, and
+A= yiys — yoy3, the angular momentum, are invariants of the system
+(201d); that is, for any value of x the values of each of these will be
+equal respectively to the values they had at the initial time. The quality
+of a numerical method for solving this problem can be measured by
+calculating by how much these theoretical invariants actually change in
+the numerical computation. Repeat the calculations in Tables 201(I),
+201(III) and 201(1V) but with the deviation in the values of each of
+these quantities used in place of the errors.
+
+21 Analysis of the Euler Method
+210 Formulation of the Euler method
+Consider a differential equation system
+y'(z) =f(a,y(z)), —-y(0) = yo, (210a)
+
+where f : [a,b] x RY —> RY is continuous and satisfies a Lipschitz condition
+\If(@, y)—- F(a, 2)|| < L|ly—z||, for all 2 in a neighbourhood of zo and y and z in

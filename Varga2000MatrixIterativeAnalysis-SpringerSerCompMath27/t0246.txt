@@ -1,0 +1,57 @@
+7.1 The Peaceman-Rachford Iterative Method 239
+
+To bound the norms of the product matrices of (7.18), we recall that both H;
+and V; aren xn Stieltjes matrices, which implies that they are Hermitian and
+positive definite. Denoting the (positive) eigenvalues of Hy by 43,1 <j <n,
+it is readily verified that the matrix (rI — H,)(rI + H,)~? is Hermitian, with
+
+eigenvalues
+r—A;
+l<j<n.
+( + x) , SJisn
+
+Thus, from Corollary 1.8, we can write
+
+=);
+r+A;
+
+(rT — Hy)(Ai +71)“ || = max <1.
+
+1<jgn
+
+The same argument applied to the corresponding matrix product in V;, shows
+that ||(rI —Vi)(Vi + rI)~1|| < 1, and we therefore conclude from (7.18) that
+p(T;) < 1. To obtain a more general result, note that it is sufficient in this
+development only to have Hj, say, be Hermitian and positive definite, and
+that V; be Hermitian and nonnegative definite, which gives us
+
+Theorem 7.1. Let H; and V, ben x n Hermitian nonnegative definite ma-
+trices, where at least one of the matrices H, and V, is positive definite. Then,
+for any r > 0, the Peaceman-Rachford matrix T, of (7.13) is convergent.
+
+It is clear that we could once again consider more general partial differen-
+tial equations and boundary conditions, which, when approximated by finite
+differences, give rise to matrices H, = H + 32 andV; =V+ 35, satisfying
+the hypotheses of Theorem 7.1. Such extensions will be considered in the
+exercises at the end of this section.
+
+In many ways, this first convergence theorem for alternating-direction
+implicit methods follows the pattern of our previous discussion of iterative
+methods. For a fixed single parameter r > 0, it is analogous to the point suc-
+cessive overrelaxation iterative method where but one acceleration parameter
+is selected for rapid convergence. For this simple Peaceman-Rachford itera-
+tive procedure with a single acceleration parameter r > 0, we consider the
+model problem to see how it compares with the point successive overrelax-
+ation iterative method. To make the comparison equitable, we minimize the
+spectral radius of each iteration matrix as a function of its single parameter.
+
+For the model problem, the special case a = 0 of (7.1), and (7.2), there
+are N := 1/h equal subdivisions in each coordinate direction, which gives
+(N —1)? linear equations in (N — 1)? unknowns. If the vector a) (see Sect.
+6.5) is defined so that its component for the ith column and jth row of the
+mesh is
+
+(k,l) . [kri . [la
+On = Yk, Sin WV * sin Wi?
+
+1<ij<N-1,1<kI1<N-1,

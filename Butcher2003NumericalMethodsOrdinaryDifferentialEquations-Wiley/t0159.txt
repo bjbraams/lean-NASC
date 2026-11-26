@@ -1,0 +1,52 @@
+RUNGE-KUTTA METHODS 147
+
+Table 314(I) Trees to order 4 with corresponding differential equations
+
+a
+
+tj H= Si
+U} vi =1,
+(t1] w= Ns
+[7] vs = but,
+[2] V4 = Y2,
+(1 yb = gut,
+
+1
+Vv
+t
+v
+Vo [atl y=,
+:
+
+[és] Yr = Ys,
+
+ony on oO FF WO NY
+
+[ts] Ye = Ya
+
+Theorem 314A The values of the elementary differentials for the differential
+equation (314b), evaluated at the initial value are given by
+
+F(t:)(y(xo)) = e:, i=1,2,...,N.
+
+Because the natural basis vectors €;,¢€2,...,en are independent, there
+cannot be any linear relation between the elementary differentials for an
+arbitrary differential equation system.
+
+We illustrate this theorem in the case that U consists of the eight trees
+with up to four vertices. Table 314(I) shows the trees numbered from i = 1
+to i = 8, together with their recursive definitions in the form (314a) and the
+corresponding differential equations. Note that the construction given here is
+given as an exercise in Hairer, Nersett and Wanner (1993) .
+
+315 Conditions for order
+
+Now that we have expressions for the Taylor expansions of the exact solution,
+and also of the computed solution, we have all we need to find conditions
+for order. If the exact solution has Taylor series given by (311d) and the
+approximate solution has Taylor series given by (313e), then we need only
+compare these term by term to arrive at the principal result on the order of
+Runge-Kutta methods.
+
+Theorem 315A A Runge-Kutta method with elementary weights
+@:TOR,

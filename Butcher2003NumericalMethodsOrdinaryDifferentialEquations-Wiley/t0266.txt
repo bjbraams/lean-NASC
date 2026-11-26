@@ -1,0 +1,48 @@
+254 NUMERICAL METHODS FOR ORDINARY DIFFERENTIAL EQUATIONS
+
+point, we look in detail at a single Newton iteration for this method. Let
+M =I-hXf'(yn-1). Here the Jacobian matrix f’ is supposed to have been
+evaluated at the start of the current step. In practice, a Jacobian evaluated
+at an earlier time value might give satisfactory performance, but we do not
+dwell on this point here. If the method were to be implemented with no special
+use made of its singly-implicit structure, then we would need, instead of the
+Nx N matrix M,a2N x 2N matrix M given by
+
+M- T-hayf'(yn-1)  —haraf'(yn-1)
+—han f'(yn—1) I — haze f'(yn—1) |”
+In this ‘fully-implicit’ situation, a single iteration would start with the input
+approximation y,—1 and existing approximations to the stage values and stage
+derivatives Y;, Yo, hF, and hF». It will be assumed that these are consistent
+with the requirements that
+
+Yi =Yn-1 + uh, +a2hFh, Yo =Yyn-1tanhFy + ahh,
+
+and the iteration process will always leave these conditions intact.
+
+364 Generalizations of singly-implicit metheds
+
+In an attempt to improve the performance of existing singly-implicit methods,
+Butcher and Cash (1990) considered the possibility of adding additional
+diagonally-implicit stages. For example, if s = p+ 1 is chosen, then the
+coefficient matrix has the form
+
+A 0
+A= ;
+where A is the matrix
+
+A=T(I-J)TO.
+
+An appropriate choice of X is made by balancing various considerations.
+The first of these is good stability, and the second is a low error constant.
+Minor considerations would be convenience, the avoidance of coefficients
+with abnormally large magnitudes or with negative signs, where this can be
+avoided, and a preference for methods in which the ¢; lie in [0, 1]. We illustrate
+these ideas for the case p = 2 and s = 3, for which the general form for a
+method would be
+
+A(2 — v2) AL - ¢Vv2) A(L - $¥2) 0
+A(2 + V2) A(1 + 8V2) A(1 + $2) 0
+1 243V% _ AL+V2) _ YR 2-3v2 _ Ad=vV2) 4, vB
+4 2 8r 4 2 8r
+| a43v2 _ Mi+v2) _ v2 2-3v2 _ A=V2) | v2 y
+4 2 8r 4 2 8X

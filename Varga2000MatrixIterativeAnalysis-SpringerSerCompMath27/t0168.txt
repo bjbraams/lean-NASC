@@ -1,0 +1,48 @@
+160 5. Semi-Iterative Methods
+
+In terms of the vectors ¢("), we can write (5.34) in the simpler form
+(5.38) ™ swf{Mg~™ +g—c™ Dh 4 CY, m>1,
+
+where €© = x), ¢() = y), are the initial vector approximations of x of
+(5.2). But this is identical in form with the Chebyshev semi-iterative method
+of (5.23), the only exception being that the relaxation factor w in (5.38) is
+held fixed throughout the course of iteration, whereas w is varied in a precise
+way (5.24) in the Chebyshev semi-iterative method. Thus, actual comput-
+ing machine applications of (5.38) and the Chebyshev semi-iterative method
+are identical in terms of vector and matrix storage as well as in terms of
+arithmetic calculations. In terms of the direct application of the successive
+overrelaxation iterative method to the original matrix equation (5.2), how-
+ever, it is clear that the use of (5.38), or (5.23), requires an additional vector
+iterate of storage over that of the successive overrelaxation iterative method,
+which is of rather minor importance.
+
+Our second conclusion, derived from Theorem 5.2, is that for very large
+numbers of iterations, there is very little difference between (5.38) with w =
+w, and (5.23), since we know that the sequence of constants wm of (5.24) are
+monotonically decreasing to w, for m > 2. In fact, Golub (1959) has pointed
+out that, with a finite number of significant figures on a given computing
+machine, the Chebyshev semi-iterative method of (5.23) degenerates precisely
+into the successive overrelaxation iterative method of (5.38).
+
+Because of the strong similarity of these two iterative methods, we now
+look carefully at their average and asymptotic rates of convergence, under the
+assumption that the matrix M of (5.2) is Hermitian and convergent. We first
+denote the error vectors for the vector iterates of the successive overrelaxation
+iterative method of (5.38) by
+
+(5.39) am) —™ _x, m>0,
+
+where x is the unique solution of the matrix equation x = Mx+g. But, from
+(5.38) we obtain the following recurrence relation for the error vectors am);
+
+(5.40) et) = ome 4 (1- we), m>1.
+
+With € and e& arbitrary initial error vectors, corresponding to the fact
+that both vectors x and y) in (5.34) can be independent initial approxi-
+mations of the unique vector x, we can express the error vector a) asa
+sum of two polynomials in the matrix M applied respectively to the initial
+error vectors € and é). Specifically, we can verify by induction that
+(5.41) €") = am_1(M)Ee + (1 —w)am—2(M)e, m>2,
+
+where the polynomials a,,(M) are defined from a9(M) = I,a1(M) = wM,
+and

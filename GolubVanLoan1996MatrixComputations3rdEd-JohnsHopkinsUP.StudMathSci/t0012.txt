@@ -1,0 +1,111 @@
+REFERENCES xxiii
+
+R.W. Farebrother (1987). Linear Least Squares Computations, Marcel
+Dekker, New York.
+
+The Gauss and Gause—-Jordan Methods. Matrix Analysis of Gauss’s Method: The
+Choleaky and Doolittle Decompositions. The Linear Algebraic Model: The Method
+of Averages and the Method of Least Squares. The Cauchy-Bienayme, Laplace,
+and Schmidt Procedures. Householder Procedures. Givens Procedures. Updating
+the QU Decomposition. Pseudorandom Numbers. The Standard Linear Model.
+Condition Numbers. Instrumental Variable Estimators. Generalized Least Squares
+Estimation. Iterative Solutions of Linear and Nonlinear Least Squares Problems.
+Canonical Expressions for the Least Squares Estimators and Test Statistics. Tra-
+ditional Expressions for the Least Squares Updating Formulas and test Statistics.
+Least Squares Estimation Subject to Linsar Constrainta.
+
+8. Van Huffel and J. Vandewalle (1991). The Total Least Squares Problem:
+Computational Aspects and Analysis, SLAM Publications, Philadelphia,
+PA.
+
+Introduction. Basic Principles of the Total Least Squares Problem. Extensions of the
+Basic Total Least Squares Problem. Direct Speed Improvement of the Total Least
+Squares Computations. Iterative Speed Improvement for Solving Slowly Varying
+Total Least Squares Problems. Algebraic Connections Between Total Least Squares
+and Least Squares Problems. Sensitivity Analysis of Total Least Squares and Least
+Squares Problems in the Presence of Errora in All Data. Statistical Properties of the
+Total Least Squares Problem. Algebraic Connections Between Total Least Squares
+Estimation and Classical Linear Regression in Multicollinearity Problems. Conclu-
+Mons.
+
+A. Bjérck (1996). Numerical Methods for Least Squares Problems, SLAM
+Publications, Philadelphia, PA.
+Mathematical and Statistical Properties of Least Squares Solutions. Basic Numerical
+Methods. Modified Leest Squares Problems. Generalized Least Squares Problems.
+Constrained Least Squares Problems. Direct Methods for Sparse Least Squares Prob-
+lems. Iterative Methods for Least Squares Problems. Least Squares with Special
+Bases. Nonlinear Least Squares Problems.
+
+Eigenvalue Problems
+
+B.N. Parlett (1980). The Symmetric Eigenvalue Problem, Prentice-Hall,
+Englewood Clifiz, NJ.
+
+Eigenvalues. Simple Vector Iterations. Deflation. Useful Orthogonal Matrices.
+Tridiagona! Form. The QL and QR Algorithms. Jacobi Methods. Eigenvalue
+Bounds. Approximation from a Subspace. Krylov Subepaces. Lanczos Algorithms.
+Subspace Iteration. The General Linear Eigenvalue Problem.
+
+3. Cullum and R.A. Willoughby (1985a). Lanczos Algorithms for Large
+Symmetric Eigenvalue Computations, Vol. I Theory, Birkhaiiser, Boston.
+Preliminaries: Notation and Definitions. Real Symmetric Problems. Lancsos Pro-
+cedures, Real Symmetric Problems. Tridiagonal Matrices. Lanczos Procedures with
+No Reorcthogonalisstion for Symmetric Problems. Real Rectangular Matrices. Non-
+
+Defective Complex Symmetric Matrices. Block Lanczos Procedures, Real Symmetric
+Matrices.
+
+xxiv REFERENCES
+
+J. Cullum and R.A. Willoughby (1985b). Lenezos Algorithms for Large
+
+Symmetric Eigenvalue Computations, Vol. II Programs, Birkhaiiser,
+Boston.
+Lanczos Procedures. Real Symmetric Matrices. Hermitian Matrices. Factored In-
+verses of Real Symmetric Matrices. Real Symmetric Generalized Problems. Real
+Rectangular Problems. Nondefective Complex Symmetric Matrices. Real Symmet-
+ric Matrices, Block Lanczos Code. Factored Inverses, Real Symmetric Matrices,
+Block Lanczos Code.
+
+Y. Saad (1992). Numerical Methods for Large Eigenvalue Problems: Theory
+and Algorithms, John Wiley and Sons, New York.
+
+Background in Matrix Theory and Linear Algebra. Perturbation Theory and Er-
+ror Analysis. The Tools of Spectral Approximation. Subspace Iteration. Krylov
+Subspace Methods. Acceleration Techniques and Hybrid Methods. Precondition-
+ing Techniques. Non-Standard Eigenvalue Problems. Origins of Matrix Eigenvalue
+Problems.
+
+F. Chatelin (1993). Eigenvalues of Matrices, John Wiley and Sons, New
+York.
+Supplements from Linear Algebra. Elements of Spectral Theory. Why Compute
+
+Eigenvalues. Error Analysis. Foundations of Methods for Computing Eigenvalues.
+Numerical Methods for Large Matrices. Chebyshev’s Iterative Methods.
+
+High Performance
+
+W. Schénauer (1987). Scientific Computing on Vector Computers, North
+Holland, Amsterdam.
+
+Intreduction. The First Commercially Significant Vector Computer. The Arithmetic
+Performance of the First Commercially Significant Vector Computer. Hockney’s n!/?
+and Timing Formulae. Fortran and Autovectorization. Behavior of Programs. Some
+Basic Algorithms, Recurrences. Matrix Operations. Systems of Linear Equations
+with Full Matrices. Tridiagonal Linear Systems. The Iterative Solution of Linear
+Equations. Special Applications. The Fujitsu VPs and Other Japanese Vector Com-
+puters. The Cray-2. The ISM VF and Other Vector Processors. The Convex C1.
+
+R.W. Hockney and C.R. Jesshope (1988). Parallel Computers 2, Adam
+Hilger, Bristol and Philadelphia.
+
+Introduction. Pipelined Computers. Processor Arrays. Parallel Languages. Parallel
+Algorithms. Future Developments.
+
+J.J. Modi (1988). Parallel Algorithms and Matriz Computation, Oxford Uni-
+versity Press, Oxford.
+
+General Principles of Parallel Computing. Parallel Techniques and Algorithms. Par-
+allel Sorting Algorithms. Solution of a System of Linear Algebraic Equations. The
+Symmetric Eigenvalue Problem: Jacobi’s Method. QR Factorization. Singular Value
+Decomposition and Related Problems.

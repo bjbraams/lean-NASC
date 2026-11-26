@@ -1,0 +1,74 @@
+References 343
+
+Golub, Gene H. and Varga, Richard S. (1961a) Chebyshev semi-iterative meth-
+ods, successive overrelaxation iterative methods, and second order Richardson
+iterative methods, Part I, Numer. Math. 3, 147-156. [164, 165, 180, 181]
+
+Golub, Gene H. and Varga, Richard S. (1961b) Chebyshev semi-iterative meth-
+ods, successive overrelaxation iterative methods, and second order Richardson
+iterative methods, Part I], Numer. Math. 3, 157-168. /169, 181]
+
+Gonchar, A. A. and Rakhmanov, E. A. (1987) Equilibrium distribution and the
+degree of rational approximation of analytic functions (in Russian), Mat. Sbornik
+134 (176), 306-352. English translation in Math. USSR Sbornik 62 (1989), 305-
+348. [306]
+
+Guilinger, W. H. (1965) The Peaceman-Rachford method for small mesh incre-
+ments, J. Math. Anal. Appl. 11, 261-277. [273]
+
+Gutknecht, M. H., Niethammer, W. and Varga, R. S. (1986) k-Step iterative meth-
+ods for solving nonlinear systems of equations, Numer. Math. 48, 699-712. /182/
+
+Habetler, G. J. and Martino, M. A. (1961) Existence theorems and spectral theory
+for the multigroup diffusion model, Proceedings of Symposia in Applied Math.
+11, Nuclear Reactor Theory, Amer. Math. Soc., Providence, 127-139. /310]
+
+Habetler, G. J. and Wachspress, E. L. (1961) Symmetric successive over-
+relaxation in solving diffusion difference equations, Math of Comp. 15, 356-362.
+[302, 904, 312]
+
+Hackbusch, W. (1991) Iterative Lésung grosser schwachbesetzter Gleichungssys-
+teme, B. G. Teubner, Stuttgart. /59/
+
+Hadamard, Jacques (1952) Lectures on Cauchy’s Problem in Linear Partial Differ-
+ential Equations, Dover Publications, New York, 316 pp. [276]
+
+Hageman, Louis A. and Varga, Richard S. (1964) Block iterative methods for cycli-
+cally reduced matrix equations, Numer. Math. 6, 106-119. /181]
+
+Halphen, G.-H. (1886) Traité des Fonctions Elliptiques et de Leurs Applications,
+Gauthier-Villars, Paris. [306]
+
+Harary, Frank (1955) The number of linear, directed, rosted, and connected graphs,
+Trans. Amer. Math. Soc. 78, 445-463. [1385]
+
+Harary, Frank (1959) A graph theoretic method for the complete reduction of a
+matrix with a view toward finding its eigenvalues, J. Math. Phys. 38, 104-111.
+[29, 62]
+
+Harary, Frank (1960) On the consistency of precedence matrices, J. Assoc. Comput.
+Mach. 7, 255-259. [29]
+
+Hartree, D. R. and Womersley, J. R. (1937) A method for the numerical or me-
+chanical solution of certain types of partial differential equations, Proc. Roy. Soc.
+London, Ser. A161, 353-366. /309]
+
+Heller, J. (1957) Ordering properties of linear successive iteration schemes applied
+to multi-diagonal type linear systems, J. Soc. Indust. Appl. Math. 5, 238-243.
+[147]
+
+Heller, J. (1960) Simultaneous, successive, and alternating direction iteration
+schemes, J. Soc. Indust. Appl. Math. 8, 150-173. /224, 238, 274]
+
+Henrici, P. (1960) Estimating the best over-relaxation factor, NN-144, Ramo-
+Woodridge Technical Memo, 7 pp. [327]
+
+Henrici, P. (1962) Discrete Variable Methods in Ordinary Differential Equations,
+John Wiley & Sons, Inc., New York, 407 pp. / 184, 232]
+
+Herstein, I. N. (1954) A note on primitive matrices, Amer. Math. Monthly 61, 18-20.
+46, 61]
+
+Hildebrandt, T. W. (1955) On the reality of the eigenvalues for a one-group, N-
+region, diffusion problem, Report 55-6-35, Oak Ridge National Laboratory, Oak
+Ridge, TN, 6 pp. [231]

@@ -1,0 +1,55 @@
+166 5. Semi-Iterative Methods
+
+Roo(Lu,) = — Ine — 1),
+
+where L£,,, is the associated n x n successive overrelaxation iteration matrix.
+
+The assumption of the cyclic nature of M dispenses with the need for the
+artifice in Sect. 5.2 of doubling the size of the matrices in question so as to
+permit a rigorous application of the successive overrelaxation theory. On the
+other hand, if we now apply the Chebyshev semi-iterative method of Sect. 5.1
+without modifications to the matrix equation x = Mx + g, we would obtain
+from (5.29) an asymptotic rate of convergence
+
+lim Rifm(M)] = — 4 In(us — 1),
+m-—00 2
+
+which is now smaller than the asymptotic rate of convergence of the successive
+overrelaxation iterative method, by a factor of 2. Moreover, such a direct
+application of the Chebyshev semi-iterative method suffers from the practical
+problem of requiring additional vector storage.
+
+To modify appropriately the Chebyshev semi-iterative method in ‘this
+cyclic case, first consider the direct application of the Chebyshev semi-
+iterative method of (5.23) to the matrix equation x = Mx + g. With parti-
+tioning of the vector iterates, this becomes
+
+xint) = wma {Fx +g1- xm} + xm)
+
+5.63
+( ) xint)) = Wma {Frx™ + £o- xf} + xo), m>1,
+
+where x) =F. «(0 + gi and xs) =F #0) + 82, and these equations deter-
+mine the vector sequences {xi }ee_g and fx) }o0_,. But, it is interesting
+
+2m+1) poo (2m) y 00
+
+to note that the proper subsequences {x‘ _, and {x3°""”}°_, can be
+
+generated from
+
+2m) — og {PRO + gy — x 2D} 4 2D om > 1,
+
+x
+5.64) “1.
+( ) xem?) = Wam42{ F*x2mt) + Bo - x2} + x2”, m>0,
+
+where again x() = Fx®) + g1. This process is indicated schematically in
+Fig. 5.1 below. We shall call this particular iterative method the cyclic
+
+(0) (1) (2) (3)
+xy xy xy xy
+Fig. 5.1.
+
+Chebyshev semi-iterative method, since it makes use of the cyclic na-
+ture of the matrix M. For practical purposes, note that this iterative method

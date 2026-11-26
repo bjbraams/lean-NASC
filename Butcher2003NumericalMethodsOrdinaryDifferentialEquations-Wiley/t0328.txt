@@ -1,0 +1,43 @@
+LINEAR MULTISTEP METHODS 317
+Exercises 41
+
+41.1 Given a2, find a;, 6, and $2 such that the linear multistep method
+(1 — a2 — a22z?, Biz + B22) has order 2. What are the bounds on a2
+for which the method is convergent?
+
+41.2 Show that all backward difference methods with k < 6 are stable.
+41.3 Show that the order 7 backward difference method is not stable.
+
+41.4 Find a stable seventh order linear multistep method of the form
+(1 — az — ag2? —---— az, Bo).
+
+42 Errors and Error Growth
+420 Introduction
+
+The result computed in a step is generally not exact, even if we ignore any
+errors introduced in previous steps. However, once a significant departure from
+the exact solution has occurred, we are in effect solving a different problem.
+Hence, a proper analysis of error takes account of errors generated locally, and
+also the accumulated effect of errors generated in previous steps. We carry out
+a simplified discussion of this phenomenon in this subsection, and discuss the
+limitations of this discussion in Subsection 421.
+Suppose a sequence of approximations has been computed
+
+m1 & y(t),
+y2 © y(z2),
+
+Yn-1 © y(Tn-1);
+
+and we are now computing step number n. If, for the moment, we ignore errors
+in previous steps, the value of y, can be evaluated using a Taylor expansion
+where, for implicit methods, we need to take account of the fact that f(yn) is
+also being calculated.
+
+We have
+
+y(tn) ~ Solon i) aSo Bi (tn-1),
+i=0
+
+which is equal to
+
+CpgthP tty) (an) + O(n? *?).

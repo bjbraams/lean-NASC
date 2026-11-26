@@ -1,0 +1,85 @@
+1.4, VECTORIZATION AND Re-Use Issues 41
+
+1.4.5 Thinking About Data Motion
+
+Another important attribute of a matrix algorithm concerns the actual vol-
+ume of data that has to be moved around during execution. Matrices sit
+in memory but the computations that involve their entries take place in
+functional units. The control of memory traffic is crucial to performance
+in many computers. To continue with the factory metaphor used at the
+beginning of this section: Can we keep the superfast arithmetic units busy
+with enough deliveries of matrix data and can we ship the results back to
+memory fast enough to avoid backlog? FiG.1.4.3 depicts the typical situa-
+tion in an advanced uniprocessor environment. Details vary from machine
+
+Fic. 1.4.3 Memory Hierarchy
+
+to machine, but two “axioms;; prevail:
+
+e Each level in the hierarchy has a limited capacity and for economic
+reasons this capacity is usually smaller as we ascend the hierarchy.
+
+e There is a cost, sometimes relatively great, associated with the moving
+of data between two levels in the hierarchy.
+
+The design of an efficient matrix algorithm requires careful thinking about
+the flow of data in between the various levels of storage. The vector touch
+and data re-use issues are important in this regard.
+
+1.4.6 The Vector Touch Issue
+
+In many advanced computers, data is moved around in chunks, e.g., vectors.
+The time required to read or write a vector to memory is comparable to
+the time required to engage the vector in a dot product or saxpy. Thus, the
+number of vector touches associated with e matrix code is a very important
+statistic. By a “vector touch” we mean either a vector load or store.
+
+42 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+Let’s count the number of vector touches associated with an m-by-n
+outer product. Assume that m = mv, and n = njv, where v,is the vector
+hardware length. (See §1.4.3.) In this environment, the outer product
+update A = A+ zy? would be arranged as follows:
+
+for a = Ll:m,
+i=(a—-1)y, + Lev,
+for 8 = lin,
+J=(8-1)u. + fu,
+AG, j) = A(i, j) + 2(i)y(9)”
+end
+end
+
+Each column of the submatrix A(i, 7) must be loaded, updated, and then
+stored. Not forgetting to account for the vector touches associated with z
+and y we see that approximately
+
+x ( + sa + 2».)) = min
+
+ant A=
+
+vector touches are required. (Low order terms do not contribute to the
+analysis.)
+
+Now consider the gaxpy update y = Ar+y where y € R™, 2 € IR” and
+AéR™*". Breaking this computation down into segments of length v,
+gives
+
+for a = l:m,
+t= (a-1)y, 4+ lay,
+for G = lin,
+j= (8—}De, + 1:8,
+v(t) = y(t) + AG, 3)2(3)
+end
+end
+
+Again, each column of submatrix A(i,j) must be read but the only writing
+to memory involves subvectors of y. Thus, the number of vector touches
+for an m-by-n gaxpy is
+
+x (+ sa +») = min.
+
+asl A=
+
+This is half the number required by an identically-sized the outer product.
+Thus, if a computation can be arranged in terms of either outer products
+or gaxpys, then the former is preferable from the vector touch standpoint.

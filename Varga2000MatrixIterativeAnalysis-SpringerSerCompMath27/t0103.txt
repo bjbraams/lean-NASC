@@ -1,0 +1,59 @@
+3.6 Regular and Weak Regular Splittings of Matrices 95
+
+D: N=E+F,
+D-E; N=F,
+1(D-wE);N=1(WwF+(1-w)D), #0,
+
+give in (3.82) respectively the point Jacobi, point Gauss-Seidel, and point
+successive overrelaxation iterative methods. Similar remarks are valid for the
+block iterative methods of Sect. 3.4. While we may have been inclined to
+call the iterative methods of (3.82) a generalized Jacobi iterative method, we
+see that such splittings (3.81) of the matrix A in reality cover all iterative
+methods previously described.
+
+Special properties of the matrices M and N, defining a splitting of the
+matrix A, have been of considerable use in Sect. 3.5. There we in essence
+assumed that D is a positive diagonal matrix, and that E+F is a nonnegative
+matrix. Clearly, for 0 < w <1 this guarantees that the different splittings of
+(3.84) share the common properties that M~1 > O and N > O, or M-1 > O
+and M-!N > O, which brings us to
+
+M
+(3.84) M
+M
+
+Definition 3.28. For n x n real matrices A,M, and N,A=M-Nisa
+regular splitting of the matrix A if M is nonsingular with M~1 > O and
+N > O. Similarly, A = M — N is a weak regular splitting of the matrix
+A if M is nonsingular with M~! > O and M-1N > O.
+
+We remark that a regular splitting of A is automatically a weak regular
+splitting of A, but the converse is not true in general. (See Exer. 6.)
+
+First, we shall gather results for regular splittings, and then, to complete
+the picture, we shall show how some of these results for regular splittings
+extend to weak regular splittings.
+
+In terms of the iteration matrix M~1N of (3.83), we can, from (3.81),
+express this matrix product in the form
+
+(3.85) MN =(A+N)"1N,
+
+and if A is nonsingular, we can write this as
+
+(3.86) MN=(I1+G)'G, G:=A™1N.
+
+Because of this relation, if x is any eigenvector of G corresponding to the
+eigenvalue 7, then 1 + 7 # 0 from (3.86) and also
+
+T
+
+Gx = 1x and (I+ G)"!Gx =
+1+7
+
+xX.
+
+It follows that x is also an eigenvector of M~!N, corresponding to the eigen-
+value p given by
+
+(3.87) p=

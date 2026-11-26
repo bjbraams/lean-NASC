@@ -1,0 +1,49 @@
+2.1 Spectral Radii of Nonnegative Matrices 33
+
+Ay > Txy,
+
+and we conclude from (2.4) that ry > rx. Therefore, the quantity r of (2.5)
+can be defined equivalently as
+
+(2.6) r =sup{ry}.
+
+yeQ
+As P is a compact set of vectors, so is Q, and as ry is a continuous function
+on Q, there necessarily exists a positive vector z for which
+
+(2.7) Az > rz,
+
+and no vector w > 0 exists for which Aw > rw. We shall call all nonnegative
+nonzero vectors z satisfying (2.7) extremal vectors of the matrix A.
+
+Lemma 2.3. If A> O is an irreducible n x n matriz, the quantity r of (2.5)
+is positive. Moreover, each extremal vector z is a positive eigenvector of the
+matrix A with corresponding eigenvalue r, i.e., Az =rzandz>0.
+
+Proof. If € is the positive vector whose components are all unity, then since
+the matrix A is irreducible, no row of A can vanish, and consequently no
+component of A€ can vanish. Thus, r¢ > 0, proving that r > 0.
+
+For the second part of this lemma, let z be an extremal vector with
+Az —1Tz =, where n > 0. If 7 # 0, then some component of 77 is positive,
+and multiplying through by the matrix (I + A)"~? gives
+
+Aw —rw>0O,
+
+where w := (I+A)"—1z > 0. It would then follow that ry > r, contradicting
+the definition of r in (2.6). Thus, Az = rz, and since w > 0 and w =
+(I + A)"~1z, then z > 0, completing the proof.
+
+Lemma 2.4. Let A = [a;,;] > O be an irreducible n x n matrix, and let
+B = [b,j] be ann x n complex matrix with |B| < A. If B is any eigenvalue
+of B, then
+
+(2.8) \Bl <r,
+
+where r is the positive constant of (2.5). Moreover, equality is valid in (2.8),
+ie, B = re*® for some real ¢, if and only if |B| = A, and where B has the
+form
+
+(2.9) B=e'*DAD™,
+
+and where D is a diagonal matrix whose diagonal entries have modulus unity.

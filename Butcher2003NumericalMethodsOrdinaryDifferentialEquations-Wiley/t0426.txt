@@ -1,0 +1,75 @@
+REFERENCES 417
+
+ordinary differential equations, Math. Scand., 4: pp. 33-53.
+
+Dahlquist G. (1963) A special stability problem for linear multistep methods, BIT,
+3: pp. 27-43.
+
+Dahlquist G. (1976) Error analysis for a class of methods for stiff non-linear initial
+value problems. In Lecture Notes in Math., Numerical Analysis, Proceedings
+Dundee 1975, Springer, pp. 60-72.
+
+Dahlquist G. (1978) G-stability is equivalent to A-stability, BIT, 18: pp. 384-401.
+
+Dahlquist G. (1983) On one-leg multistep methods, SIAM J. Numer. Anal., 20: pp.
+1130-1138.
+
+Dahlquist G. and Jeltsch R. (1979) Generalized disks of contractivity for explicit
+and implicit Runge-Kutta methods, Technical Report TRITA NA-7906, Dept. of
+Numer. Anal. and Computing Sc., Roy. Inst. Tech..
+
+Daniel J. W. and Moore R. EB. (1970) Computation and Theory in Ordinary
+Differential Equations, W. H. Freeman.
+
+Davis P. J. and Rabinowitz P. (1984) Methods of numerical integration, Academic
+Press, New York.
+
+Donelson J. and Hansen E. (1971) Cyclic composite multistep predictor—corrector
+methods, SIAM J. Numer. Anal., 8: pp. 137-157.
+
+Dormand J. R. and Prince P. J. (1980) A family of embedded Runge-Kutta formulae,
+J. Comput Appl, Math., 6: pp. 19-26.
+
+Ehle B. L. (1969) On Padé approximations to the exponential function and A-stable
+methods for the numerical solution of initial value problems, Research Rep. CSRR
+2010, Dept. of AACS, University of Waterloo, Ontario, Canada..
+
+Ehle B. L. (1973) A-stable methods and Padé approximations to the exponential,
+SIAM J. Math. Anal., 4: pp. 671-680.
+
+Ehle B. L. and Picel Z. (1975) Two parameter, arbitrary order, exponential
+approximations for stiff equations, Math. Comp., 29: pp. 501-511.
+
+Euler L. (1913) De integratione aequationum differentialium per approximationem.
+In Opera Omnia, 1st series, Vol. 11, Institutiones Calculi Integralis, Teubner,
+Leipzig and Berlin, pp. 424-434.
+
+Fehlberg E. (1968) Classical fifth, sixth, seventh and eighth order Runge-Kutta
+formulas with stepsize control, NASA TR R-287.
+
+Fehlberg E. (1969) Klassische Runge-Kutta-Formein fiinfter und siebenter Ordnung
+mit Schrittweiten—Kontrolle, Computing, 4: pp. 93-106.
+
+Gear C. W. (1965) Hybrid methods for initial value problems in ordinary differential
+equations, SIAM J. Numer. Anal., 2: pp. 69-86.
+
+Gear C. W. (1967) The numerical integration of ordinary differential equations,
+Math. Comp., 21: pp. 146-156.
+
+Gear C. W. (1971) Numerical Initial Value Problems in Ordinary Differential
+Equations, Prentice-Hall, Englewood Cliffs, New Jersey.
+
+Gear C. W. (1971a) Algorithm 407, DIFSUB for solution of ordinary differential
+equations, Comm. ACM, 14: pp. 185-190.
+
+Gear C. W. (1980) Runge-Kutta starters for multistep methods, ACM Trans. Math.
+Software, 6: pp. 263-279.
+
+Gibbons A. (1960) A program for the automatic integration of differential equations
+using the method of Taylor series, Comput. J., 3: pp. 108-111.
+
+Gill S. (1951) A process for the step-by-step integration of differential equations in
+an automatic computing machine, Proc. Cambridge Philos. Soc., 47: pp. 96-108.
+
+Gragg W. B. and Stetter H. J. (1964) Generalized multistep predictor—corrector
+methods, J. Assoc. Comput. Mach., 11: pp. 188-209.

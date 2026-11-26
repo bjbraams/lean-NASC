@@ -1,0 +1,50 @@
+98 3. Basic Iterative Methods and Comparison Theorems
+
+A7!N2 > A7!N, > O,
+
+equality excluded. We now complete the proof of this theorem under the
+assumption that A~1Nj is irreducible, the reducible case being left as an
+exercise. But as some entry of the irreducible nonnegative matrix A~!N, is
+increased in passing to A~!No, then from the Perron-Frobenius Theorem 2.7,
+we immediately conclude that
+
+p(A7!N2) > p(A71 Ny >0,
+which completes the proof in the irreducible case. ll
+
+In terms of asymptotic rates of convergence, Theorem 3.32 immediately
+gives us
+
+Corollary 3.33. If A= M, — Ni = Mz — No are two regular splittings of A
+where A~1 > O, and No > N; > O, equality excluded, then
+
+Roo(My1N1) > Roo(Mz 1No) > 0.
+
+Thus, the theory of regular splittings leads to another basic comparison
+of asymptotic convergence rates between two iterative methods. For Stieltjes
+matrices, we have
+
+Corollary 3.34. Let A be an irreducible n x n Stieltjes matrix and let M,
+and Mz be nxn matrices, each obtained by setting certain off-diagonal entries
+of A to zero. If A= M,—N, and A = M2 — No, and N,; > N2 > O, equality
+excluded, then
+
+0 < p(Mz1Ne2) < p(My'M) <1.
+
+Proof. This is an immediate consequence of Theorem 3.32 and Corollary 3.20
+of Theorem 3.19 Mf
+
+To introduce another type of comparison theorem, we begin with
+Lemma 3.35. Let A = M; — Ni = M2 — N2 be two regular splittings of A,
+where A~! > O. Then,
+
+(3.93) No > Ni implies that My} > My}.
+
+Proof. Assuming that N2 > N, gives that No — Ni > O. Since N; = M;- A
+for 1 = 1,2, then No — Ny = M2 — M; > O, where M2 — M; can be factored
+as
+
+M2 — Mi = M,(M,! — Mz')M2 > O.
+
+Since My 1> O and My 1 > O by hypothesis, then premultiplying in the
+above display by My, 1 and postmultiplying by My 1 gives that M, 1 1 —My I>
+O, or M7! > M;1.

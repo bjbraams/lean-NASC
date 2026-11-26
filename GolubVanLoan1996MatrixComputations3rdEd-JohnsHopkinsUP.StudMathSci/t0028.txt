@@ -1,0 +1,100 @@
+1.3. BLOCK MATRICES AND ALGORITHMS 27
+
+and we partition the product C = AB as follows,
+
+Cu... Cir m
+
+c= : : ;
+Co Ce ™g
+ny th
+
+then :
+Cag = Ss AayBrg a=lq, f=.
+yl
+
+Proof. See P1.3.7. 0
+A very important special case arises if we set s = 2, r = 1, and ny = 1:
+An Az 1 | _ | Auti + Areze. |
+Az, Aga | | 22 Anzi + Azoze
+This partitioned matrix-vector product is used over and over again in sub-
+sequent chapters.
+
+1.3.3 Submatrix Designation
+
+As with “ordinary” matrix multiplication, block matrix multiplication can
+be organized in several ways. To specify the computations precisely, we
+need some notation.
+Suppose 4 € R™*" and that i = (i,...,i,) and j = (j1,---,jc) are
+
+integer vectors with the property that
+
+Co nn a {1,2,...,m}
+
+FiseeerJe € {1,2,..., 0}.
+We let A(i, 7) denote the r-by-c submatrix
+
+Alin ji) +++ Ais de)
+Alii) +++ Aléps Jc)
+
+If the entries in the subscript vectors i and 7 are contiguous, then the
+“colon” notation can be used to define A(i, j) in terms of the scalar entries
+in A. In particular, if 1 < 4) < ig < mand 1 < fj) < jo <n, then
+Alissia, j1:99) is the submatrix obtained by extracting rows i; through 72
+and columns 7; through jo, eg,
+
+931 32
+A(3:5, 1:2) = | G4, Gaz .
+
+251 252
+
+28 CHAPTER 1. MATRIX MULTIPLICATION PROBLEMS
+
+While on the subject of submatrices, recall from §1.1.8 that if i and j are
+scalars, then A(i,:) designates the ith row of A and A(:,7) designates the
+jth column of A.
+
+1.3.4 Block Matrix Times Vector
+
+An important situation covered by Theorem 1.3.3 is the case of a block
+matrix times vector. Let us consider the details of the gaxpy y = Az +y
+where A € R™*", zc € R", y € R™, and
+Ay my yn my
+A=]: y= i
+
+Ag |] my Ye | ™q
+We refer to A, as the ith block row. If m.vec = (m1,...,7™9) is the vector
+of block row “heights”, then from
+
+w A ni
+:f=fi let]:
+L Yq Ay Yq
+we obtain
+last = 0
+for i = lig
+first = last +1
+last = first + m.vec(i) -1 (1.3.1)
+y(first:last) = A( first:last, :)x + y(first:last)
+end
+
+Each time through the loop an “ordinary” gaxpy is performed so Algorithms
+1.1.3 and 1.1.4 apply.
+
+Another way to block the gaxpy computation is to partition A and z as
+follows:
+
+1 Ty
+
+A= [ Ate Ae | z
+
+m ne Zp | Me
+
+In this case we refer to A; as the jth block column of A. If n.vec =
+(ny,...,Mp) is the vector of block column widths, then from
+
+Ty
+
+y = [Ai,..., Ae] +y = WA; ty
+
+Lp jul
+
+we obtain
