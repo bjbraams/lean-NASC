@@ -13,6 +13,8 @@ public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 
 B-spline recursion and collocation, cubic spline estimates, and radial kernel positivity
 and interpolation in the native Hilbert space. See gaps 11.2–11.13.
+The kernel interpolation error proof uses Mathlib's self-adjointness identity for
+orthogonal projection.
 -/
 
 public section
@@ -35,14 +37,89 @@ def bSpline (t : ℕ → ℝ) : ℕ → ℕ → ℝ → ℝ
 their half-open knot support. -/
 theorem bSpline_nonneg_and_eq_zero (t : ℕ → ℝ) (ht : Monotone t) (m i : ℕ) (x : ℝ) :
     0 ≤ bSpline t m i x ∧ (x ∉ Ico (t i) (t (i + m + 1)) → bSpline t m i x = 0) := by
-  sorry
+  induction m generalizing i with
+  | zero =>
+      simp only [bSpline, Nat.add_zero, mem_Ico]
+      split <;> simp_all
+  | succ m ih =>
+      have h₀ := ih i
+      have h₁ := ih (i + 1)
+      have hleft : t i ≤ t (i + 1) := ht (Nat.le_succ _)
+      have hright : t (i + m + 1) ≤ t (i + (m + 1) + 1) := ht (by omega)
+      have hshift : i + 1 + m + 1 = i + (m + 1) + 1 := by omega
+      constructor
+      · rw [bSpline]
+        apply add_nonneg
+        · by_cases hi : x ∈ Ico (t i) (t (i + m + 1))
+          · exact mul_nonneg (div_nonneg (sub_nonneg.mpr hi.1)
+              (sub_nonneg.mpr (ht (by omega)))) h₀.1
+          · rw [h₀.2 hi, mul_zero]
+        · by_cases hi : x ∈ Ico (t (i + 1)) (t (i + 1 + m + 1))
+          · rw [hshift] at hi
+            exact mul_nonneg (div_nonneg (sub_nonneg.mpr hi.2.le)
+              (sub_nonneg.mpr (ht (by omega)))) h₁.1
+          · rw [h₁.2 hi, mul_zero]
+      · intro hx
+        have hnot₀ : x ∉ Ico (t i) (t (i + m + 1)) :=
+          fun hi ↦ hx ⟨hi.1, hi.2.trans_le hright⟩
+        have hnot₁ : x ∉ Ico (t (i + 1)) (t (i + 1 + m + 1)) := by
+          rw [hshift]
+          exact fun hi ↦ hx ⟨hleft.trans hi.1, hi.2⟩
+        rw [bSpline, h₀.2 hnot₀, h₁.2 hnot₁, mul_zero, mul_zero, add_zero]
 
 /-- **Gap 11.3.** Curry--Schoenberg partition of unity on the interior of the active
 knot interval. Here $n$ is the number of active basis functions. -/
 theorem sum_bSpline_eq_one (t : ℕ → ℝ) (ht : Monotone t) {m n : ℕ} {x : ℝ}
     (hx : x ∈ Ico (t m) (t n)) :
     ∑ i ∈ Finset.range n, bSpline t m i x = 1 := by
-  sorry
+  classical
+  induction m with
+  | zero =>
+      let F := fun i : ℕ ↦ if t i ≤ x then (1 : ℝ) else 0
+      have hs (k : ℕ) : (∑ i ∈ Finset.range k, bSpline t 0 i x) = F 0 - F k := by
+        induction k with
+        | zero => simp only [Finset.range_zero, Finset.sum_empty, sub_self]
+        | succ k ih =>
+            rw [Finset.sum_range_succ, ih, bSpline]
+            by_cases h₁ : t k ≤ x
+            · by_cases h₂ : t (k + 1) ≤ x
+              · simp only [F, h₁, h₂, true_and, not_lt.mpr h₂, ite_true, ite_false, add_zero]
+              · simp only [F, h₁, h₂, true_and, lt_of_not_ge h₂, ite_true, ite_false, sub_zero]
+                ring
+            · have h₂ : ¬t (k + 1) ≤ x := fun h ↦ h₁ ((ht (Nat.le_succ k)).trans h)
+              simp only [F, h₁, h₂, false_and, ite_false, add_zero]
+      simp only [hs, F, hx.1, not_le.mpr hx.2, ite_true, ite_false, sub_zero]
+  | succ m ih =>
+      let F := fun i : ℕ ↦ (x - t i) / (t (i + m + 1) - t i) * bSpline t m i x
+      let G := fun i : ℕ ↦ (t (i + m + 1) - x) / (t (i + m + 1) - t i) * bSpline t m i x
+      have hFG (i : ℕ) : F i + G i = bSpline t m i x := by
+        dsimp only [F, G]
+        by_cases hi : x ∈ Ico (t i) (t (i + m + 1))
+        · rw [← add_mul, ← add_div]
+          have hnum : x - t i + (t (i + m + 1) - x) = t (i + m + 1) - t i := by ring
+          rw [hnum, div_self (sub_ne_zero.mpr (hi.1.trans_lt hi.2).ne'), one_mul]
+        · rw [(bSpline_nonneg_and_eq_zero t ht m i x).2 hi, mul_zero, mul_zero, add_zero]
+      have hG0 : G 0 = 0 := by
+        have hnot : x ∉ Ico (t 0) (t (0 + m + 1)) := by
+          intro h
+          exact (not_lt.mpr hx.1) (by simpa only [Nat.zero_add] using h.2)
+        dsimp only [G]
+        rw [(bSpline_nonneg_and_eq_zero t ht m 0 x).2 hnot, mul_zero]
+      have hGn : G n = 0 := by
+        dsimp only [G]
+        rw [(bSpline_nonneg_and_eq_zero t ht m n x).2
+          (fun h ↦ (not_le.mpr hx.2) h.1), mul_zero]
+      have hsum := (Finset.sum_range_succ' G n).symm.trans (Finset.sum_range_succ G n)
+      rw [hG0, hGn, add_zero, add_zero] at hsum
+      calc
+        _ = ∑ i ∈ Finset.range n, (F i + G (i + 1)) := by
+          refine Finset.sum_congr rfl fun i _ ↦ ?_
+          have hi : i + 1 + m + 1 = i + m + 2 := by omega
+          simp only [bSpline, F, G, hi]
+        _ = ∑ i ∈ Finset.range n, (F i + G i) := by
+          rw [Finset.sum_add_distrib, Finset.sum_add_distrib, hsum]
+        _ = ∑ i ∈ Finset.range n, bSpline t m i x := Finset.sum_congr rfl fun i _ ↦ hFG i
+        _ = 1 := ih ⟨(ht (Nat.le_succ m)).trans hx.1, hx.2⟩
 
 /-- **Gap 11.4.** Schoenberg--Whitney criterion for nonsingular spline collocation. -/
 theorem det_bSpline_collocation_ne_zero_iff {n : ℕ} (m : ℕ)
@@ -129,6 +206,8 @@ theorem abs_kernelInterpolation_error_le {H X : Type*}
     let V := Submodule.span ℝ (range (feature ∘ sites))
     let P := V.topologicalClosure.starProjection
     |inner ℝ u (feature x) - inner ℝ (P u) (feature x)| ≤ ‖feature x - P (feature x)‖ * ‖u‖ := by
-  sorry
+  dsimp only
+  rw [Submodule.inner_starProjection_left_eq_right, ← inner_sub_right]
+  exact (abs_real_inner_le_norm u _).trans_eq (mul_comm _ _)
 
 end NASC

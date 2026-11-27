@@ -5,11 +5,14 @@ public import Mathlib.Analysis.Calculus.Gradient.Basic
 public import Mathlib.Analysis.Convex.Function
 public import Mathlib.Analysis.InnerProductSpace.Adjoint
 
+import TauCeti.Analysis.Convex.Differentiability
+
 /-!
 # Numerical optimization
 
 Constrained optimality, Wolfe and Dennis--Moré conditions, gradient and proximal methods,
 primal-dual splitting, self-concordance, and finite transport duality.
+The gradient descent estimate uses TauCeti's supporting-plane bound for a convex function.
 -/
 
 public section
@@ -88,6 +91,61 @@ theorem tendsto_error_ratio_iff_dennisMore {f : H → ℝ} (hf : ContDiff ℝ 2 
         atTop (nhds 0) := by
   sorry
 
+/-- A Lipschitz gradient gives a quadratic bound on the affine model error. -/
+theorem abs_gradientModel_error_le {f : H → ℝ} (hf : Differentiable ℝ f)
+    {L : ℝ≥0} (hLip : LipschitzWith L (gradient f)) (x y : H) :
+    |f y - f x - inner ℝ (gradient f x) (y - x)| ≤ (L : ℝ) / 2 * ‖y - x‖ ^ 2 := by
+  let d := y - x
+  let e := fun s : ℝ ↦ f (x + s • d) - f x - s * inner ℝ (gradient f x) d
+  have hd (s : ℝ) :
+      HasDerivAt e (inner ℝ (gradient f (x + s • d) - gradient f x) d) s := by
+    have hp := hasDerivAt_along_add_smul (hf (x + s • d)).hasFDerivAt
+    simp only [← inner_gradient_left] at hp
+    simpa only [e, inner_sub_left, one_mul, id_eq] using
+      (hp.sub_const (f x)).fun_sub ((hasDerivAt_id s).mul_const (inner ℝ (gradient f x) d))
+  have hnorm : ‖e 1 - e 0‖ ≤ ((L : ℝ) * ‖d‖ ^ 2) / 2 := by
+    apply norm_sub_endpoints_le_half (fun s _ ↦ hd s)
+    intro s hs
+    have h := hLip.dist_le_mul (x + s • d) x
+    simp only [dist_eq_norm, add_sub_cancel_left, norm_smul, Real.norm_eq_abs,
+      abs_of_nonneg hs.1] at h
+    calc
+      _ ≤ ‖gradient f (x + s • d) - gradient f x‖ * ‖d‖ := norm_inner_le_norm _ _
+      _ ≤ (L : ℝ) * (s * ‖d‖) * ‖d‖ :=
+        mul_le_mul_of_nonneg_right h (norm_nonneg _)
+      _ = _ := by ring
+  simp only [Real.norm_eq_abs, e, d, one_smul, one_mul, add_sub_cancel, zero_smul,
+    add_zero, sub_self, zero_mul, sub_zero] at hnorm
+  linarith only [hnorm]
+
+/-- A gradient step with reciprocal smoothness trades objective error for squared distance. -/
+theorem gradient_step_sub_le {f : H → ℝ} (hf : Differentiable ℝ f)
+    (hcv : ConvexOn ℝ univ f) {L : ℝ≥0} (hL : 0 < L)
+    (hLip : LipschitzWith L (gradient f)) (x y : H) :
+    let p := x - ((L : ℝ)⁻¹) • gradient f x
+    f p - f y ≤ (L : ℝ) / 2 * (‖x - y‖ ^ 2 - ‖p - y‖ ^ 2) := by
+  let g := gradient f x
+  let p := x - ((L : ℝ)⁻¹) • g
+  have hl : (L : ℝ) ≠ 0 := NNReal.coe_ne_zero.mpr hL.ne'
+  have hmod := le_of_abs_le (abs_gradientModel_error_le hf hLip x p)
+  have hcv' := hcv.inner_gradient_sub_le (hf x) y
+  have hs : inner ℝ g (p - y) = inner ℝ g (p - x) - inner ℝ g (y - x) := by
+    simp only [inner_sub_right]
+    ring
+  have hp₁ : x - y = (p - y) + (L : ℝ)⁻¹ • g := by
+    dsimp only [p]
+    abel
+  have hp₂ : p - x = -((L : ℝ)⁻¹ • g) := by
+    dsimp only [p]
+    abel
+  have he : (L : ℝ) / 2 * (‖x - y‖ ^ 2 - ‖p - y‖ ^ 2) =
+      inner ℝ g (p - y) + (L : ℝ) / 2 * ‖p - x‖ ^ 2 := by
+    rw [hp₁, hp₂, norm_add_sq_real, norm_neg, real_inner_smul_right,
+      real_inner_comm g (p - y)]
+    field_simp [hl]
+    ring
+  exact le_trans (by linarith only [hmod, hcv', hs]) he.ge
+
 /-- **Gap 9.7.** The objective error of gradient descent at step $1/L$ is bounded
 by the initial squared distance divided by the number of steps. -/
 theorem gradientDescent_objective_error_le {f : H → ℝ} (hf : Differentiable ℝ f)
@@ -95,7 +153,43 @@ theorem gradientDescent_objective_error_le {f : H → ℝ} (hf : Differentiable 
     {x₀ z : H} (hz : ∀ y, f z ≤ f y) {k : ℕ} (hk : 0 < k) :
     let step := fun y ↦ y - ((L : ℝ)⁻¹) • gradient f y
     f (step^[k] x₀) - f z ≤ (L : ℝ) * ‖x₀ - z‖ ^ 2 / (2 * k) := by
-  sorry
+  let step := fun y : H ↦ y - ((L : ℝ)⁻¹) • gradient f y
+  let u := fun j : ℕ ↦ step^[j] x₀
+  let q := fun j : ℕ ↦ f (u j) - f z
+  let E := fun j : ℕ ↦ (L : ℝ) / 2 * ‖u j - z‖ ^ 2
+  have hu (j : ℕ) : u (j + 1) = step (u j) := Function.iterate_succ_apply' ..
+  have hw (j : ℕ) : q (j + 1) ≤ E j - E (j + 1) := by
+    dsimp only [q, E]
+    rw [hu j]
+    have h := gradient_step_sub_le hf hcv hL hLip (u j) z
+    linarith only [h]
+  have hmono (j : ℕ) : q (j + 1) ≤ q j := by
+    dsimp only [q]
+    rw [hu j]
+    have h := gradient_step_sub_le hf hcv hL hLip (u j) (u j)
+    simp only [sub_self, norm_zero, zero_pow (n := 2) (by decide), zero_sub] at h
+    have hnon := mul_nonneg (by positivity : (0 : ℝ) ≤ (L : ℝ) / 2)
+      (sq_nonneg ‖step (u j) - u j‖)
+    linarith only [h, hnon]
+  have hq (j : ℕ) : |q j| = q j := abs_of_nonneg (sub_nonneg.mpr (hz _))
+  have htel (j : ℕ) : (j : ℝ) * |q j| ≤ E 0 - E j := by
+    induction j with
+    | zero => simp
+    | succ j ih =>
+      rw [hq j] at ih
+      rw [Nat.cast_succ, hq (j + 1)]
+      have hm := mul_le_mul_of_nonneg_left (hmono j) (Nat.cast_nonneg j : 0 ≤ (j : ℝ))
+      linarith only [hm, ih, hw j]
+  have hE : 0 ≤ E k := by
+    dsimp only [E]
+    positivity
+  have hk' : 0 < (k : ℝ) := Nat.cast_pos.mpr hk
+  have h := htel k
+  rw [hq k] at h
+  apply (le_div_iff₀ (mul_pos two_pos hk')).mpr
+  have h0 : E 0 = (L : ℝ) / 2 * ‖x₀ - z‖ ^ 2 := rfl
+  rw [h0] at h
+  linarith only [h, hE]
 
 /-- Membership in the affine span model for first-order methods. -/
 def IsSpanFirstOrder (f : H → ℝ) (x : ℕ → H) : Prop :=

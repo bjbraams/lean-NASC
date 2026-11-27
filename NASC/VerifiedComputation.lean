@@ -6,11 +6,14 @@ public import Mathlib.Order.Interval.Basic
 public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 public import Mathlib.Analysis.Calculus.ContDiff.Defs
 
+import Mathlib.Analysis.Calculus.Deriv.MeanValue
+
 /-!
 # Interval arithmetic and verified computation
 
 Endpoint arithmetic, inclusion over expression trees, interval Newton and Krawczyk
 certificates, and a Banach-space existence certificate. See section 7 of the gap catalogue.
+The interval Newton proof uses Mathlib's real mean value and intermediate value theorems.
 -/
 
 public section
@@ -87,6 +90,128 @@ def variableOccurrences : IntervalExpr ι → List ι
   | .add a b | .sub a b | .mul a b | .div a b => a.variableOccurrences ++ b.variableOccurrences
   | .unary _ _ a => a.variableOccurrences
 
+/-- Evaluation of a point in the box belongs to the natural enclosure. -/
+theorem eval_mem_enclosure (e : IntervalExpr ι) {X : ι → NonemptyInterval ℝ} {x : ι → ℝ}
+    (hx : ∀ i, x i ∈ X i) : e.eval x ∈ e.enclosure X := by
+  induction e with
+  | var i => exact hx i
+  | const t => exact Set.mem_singleton t
+  | unary f domain a ha => exact ⟨a.eval x, ha, rfl⟩
+  | add a b ha hb => exact ⟨a.eval x, ha, b.eval x, hb, rfl⟩
+  | sub a b ha hb => exact ⟨a.eval x, ha, b.eval x, hb, rfl⟩
+  | mul a b ha hb => exact ⟨a.eval x, ha, b.eval x, hb, rfl⟩
+  | div a b ha hb => exact ⟨a.eval x, ha, b.eval x, hb, rfl⟩
+
+/-- A smaller box preserves admissibility and shrinks the associated enclosure. -/
+theorem admissible_enclosure_mono (e : IntervalExpr ι) {X Y : ι → NonemptyInterval ℝ}
+    (h : e.Admissible X) (hYX : ∀ i, Y i ≤ X i) :
+    e.Admissible Y ∧ e.enclosure Y ⊆ e.enclosure X := by
+  induction e with
+  | var i => exact ⟨trivial, NonemptyInterval.coe_subset_coe.mpr (hYX i)⟩
+  | const t => exact ⟨trivial, Subset.rfl⟩
+  | unary f domain a ha =>
+    have ha' := ha h.1
+    exact ⟨⟨ha'.1, ha'.2.trans h.2.1, h.2.2⟩, image_mono ha'.2⟩
+  | add a b ha hb =>
+    have ha' := ha h.1
+    have hb' := hb h.2
+    exact ⟨⟨ha'.1, hb'.1⟩, image2_subset ha'.2 hb'.2⟩
+  | sub a b ha hb =>
+    have ha' := ha h.1
+    have hb' := hb h.2
+    exact ⟨⟨ha'.1, hb'.1⟩, image2_subset ha'.2 hb'.2⟩
+  | mul a b ha hb =>
+    have ha' := ha h.1
+    have hb' := hb h.2
+    exact ⟨⟨ha'.1, hb'.1⟩, image2_subset ha'.2 hb'.2⟩
+  | div a b ha hb =>
+    have ha' := ha h.1
+    have hb' := hb h.2.1
+    exact ⟨⟨ha'.1, hb'.1, fun hy ↦ h.2.2 (hb'.2 hy)⟩, image2_subset ha'.2 hb'.2⟩
+
+/-- Evaluation depends only on the entries of the variables occurring in the expression. -/
+theorem eval_eq_of_eqOn_occurrences (e : IntervalExpr ι) {x y : ι → ℝ}
+    (h : ∀ i ∈ e.variableOccurrences, x i = y i) : e.eval x = e.eval y := by
+  induction e with
+  | var i => exact h i List.mem_cons_self
+  | const t => rfl
+  | unary f domain a ha => exact congrArg f (ha h)
+  | add a b ha hb =>
+    exact congrArg₂ (· + ·)
+      (ha fun i hi ↦ h i (List.mem_append_left _ hi))
+      (hb fun i hi ↦ h i (List.mem_append_right _ hi))
+  | sub a b ha hb =>
+    exact congrArg₂ (· - ·)
+      (ha fun i hi ↦ h i (List.mem_append_left _ hi))
+      (hb fun i hi ↦ h i (List.mem_append_right _ hi))
+  | mul a b ha hb =>
+    exact congrArg₂ (· * ·)
+      (ha fun i hi ↦ h i (List.mem_append_left _ hi))
+      (hb fun i hi ↦ h i (List.mem_append_right _ hi))
+  | div a b ha hb =>
+    exact congrArg₂ (· / ·)
+      (ha fun i hi ↦ h i (List.mem_append_left _ hi))
+      (hb fun i hi ↦ h i (List.mem_append_right _ hi))
+
+/-- Independent subexpressions can realize any pair from their respective enclosures together. -/
+theorem image2_enclosure_subset_range {a b : IntervalExpr ι} {X : ι → NonemptyInterval ℝ}
+    (op : ℝ → ℝ → ℝ) (hd : a.variableOccurrences.Disjoint b.variableOccurrences)
+    (ha : a.enclosure X ⊆ a.eval '' {x | ∀ i, x i ∈ X i})
+    (hb : b.enclosure X ⊆ b.eval '' {x | ∀ i, x i ∈ X i}) :
+    image2 op (a.enclosure X) (b.enclosure X) ⊆
+      (fun x ↦ op (a.eval x) (b.eval x)) '' {x | ∀ i, x i ∈ X i} := by
+  classical
+  rintro t ⟨r, hr, s, hs, rfl⟩
+  obtain ⟨x, hx, rfl⟩ := ha hr
+  obtain ⟨y, hy, rfl⟩ := hb hs
+  let z := fun i ↦ if i ∈ a.variableOccurrences then x i else y i
+  have hz : ∀ i, z i ∈ X i := by
+    intro i
+    by_cases hi : i ∈ a.variableOccurrences
+    · simpa only [z, ite_eq_left hi] using hx i
+    · simpa only [z, ite_eq_right hi] using hy i
+  have haz : a.eval z = a.eval x :=
+    a.eval_eq_of_eqOn_occurrences fun i hi ↦ ite_eq_left hi
+  have hbz : b.eval z = b.eval y :=
+    b.eval_eq_of_eqOn_occurrences fun i hi ↦ ite_eq_right fun ha' ↦ List.disjoint_left.mp hd ha' hi
+  exact ⟨z, hz, congrArg₂ op haz hbz⟩
+
+/-- An enclosure of an expression is attained on the box when each variable occurs at most once. -/
+theorem enclosure_subset_range_of_nodup (e : IntervalExpr ι) {X : ι → NonemptyInterval ℝ}
+    (h : e.variableOccurrences.Nodup) :
+    e.enclosure X ⊆ e.eval '' {x | ∀ i, x i ∈ X i} := by
+  classical
+  induction e with
+  | var i =>
+    intro t ht
+    refine ⟨Function.update (fun j ↦ (X j).fst) i t, ?_, Function.update_self ..⟩
+    intro j
+    by_cases hj : j = i
+    · subst j
+      rw [Function.update_self, ← SetLike.mem_coe]
+      simpa only [enclosure] using ht
+    · rw [Function.update_of_ne hj]
+      exact ⟨le_rfl, (X j).fst_le_snd⟩
+  | const t =>
+    rintro s (rfl : s = t)
+    exact ⟨fun i ↦ (X i).fst, fun i ↦ ⟨le_rfl, (X i).fst_le_snd⟩, rfl⟩
+  | unary f domain a ha =>
+    rintro s ⟨t, ht, rfl⟩
+    obtain ⟨x, hx, rfl⟩ := ha h ht
+    exact ⟨x, hx, rfl⟩
+  | add a b ha hb =>
+    have hs := List.nodup_append'.mp h
+    exact image2_enclosure_subset_range (· + ·) hs.2.2 (ha hs.1) (hb hs.2.1)
+  | sub a b ha hb =>
+    have hs := List.nodup_append'.mp h
+    exact image2_enclosure_subset_range (· - ·) hs.2.2 (ha hs.1) (hb hs.2.1)
+  | mul a b ha hb =>
+    have hs := List.nodup_append'.mp h
+    exact image2_enclosure_subset_range (· * ·) hs.2.2 (ha hs.1) (hb hs.2.1)
+  | div a b ha hb =>
+    have hs := List.nodup_append'.mp h
+    exact image2_enclosure_subset_range (· / ·) hs.2.2 (ha hs.1) (hb hs.2.1)
+
 /-- **Gap 7.3.** The natural interval extension encloses the range, is inclusion isotone,
 and is exact for expressions with no repeated variable. -/
 theorem range_subset_enclosure (e : IntervalExpr ι) {X : ι → NonemptyInterval ℝ}
@@ -96,7 +221,10 @@ theorem range_subset_enclosure (e : IntervalExpr ι) {X : ι → NonemptyInterva
       (∀ Y : ι → NonemptyInterval ℝ, (∀ i, Y i ≤ X i) →
         e.Admissible Y ∧ e.enclosure Y ⊆ e.enclosure X) ∧
       (e.variableOccurrences.Nodup → e.enclosure X = (fun x ↦ e.eval x) '' box) := by
-  sorry
+  have hr : e.eval '' {x | ∀ i, x i ∈ X i} ⊆ e.enclosure X :=
+    by rintro y ⟨x, hx, rfl⟩; exact e.eval_mem_enclosure hx
+  exact ⟨hr, fun Y hYX ↦ e.admissible_enclosure_mono h hYX,
+    fun hn ↦ (e.enclosure_subset_range_of_nodup hn).antisymm hr⟩
 
 /-- The same domain tests as admissibility, with a Lipschitz bound for each primitive
 on its argument enclosure. -/
@@ -145,6 +273,32 @@ theorem meanValueEnclosure_excessWidth_le {n : ℕ} (f : (Fin n → ℝ) → ℝ
         2 * n * L * ‖fun i ↦ (X i).snd - (X i).fst‖ ^ 2 := by
   sorry
 
+/-- A secant slope between two points in an interval belongs to any interval enclosing
+all derivatives. For a repeated point one may take any member of the derivative interval. -/
+theorem exists_intervalSlope {f : ℝ → ℝ} (X D : NonemptyInterval ℝ)
+    (hf : ContinuousOn f (X : Set ℝ))
+    (hderiv : ∀ x ∈ X, ∃ d ∈ D, HasDerivWithinAt f d (X : Set ℝ) x)
+    {a b : ℝ} (ha : a ∈ X) (hb : b ∈ X) :
+    ∃ d ∈ D, f b - f a = d * (b - a) := by
+  have ho {u v : ℝ} (hu : u ∈ X) (hv : v ∈ X) (huv : u < v) :
+      ∃ d ∈ D, f v - f u = d * (v - u) := by
+    have hs : Icc u v ⊆ (X : Set ℝ) := Icc_subset_Icc hu.1 hv.2
+    have hd {x : ℝ} (hx : x ∈ Ioo u v) :
+        ∃ d ∈ D, HasDerivAt f d x := by
+      obtain ⟨d, hdD, hd⟩ := hderiv x (hs (Ioo_subset_Icc_self hx))
+      exact ⟨d, hdD, hd.hasDerivAt <|
+        Filter.mem_of_superset (Icc_mem_nhds hx.1 hx.2) hs⟩
+    obtain ⟨x, hx, he⟩ := exists_deriv_eq_slope f huv (hf.mono hs)
+      (fun x hx ↦ (hd hx).choose_spec.2.differentiableAt.differentiableWithinAt)
+    obtain ⟨d, hdD, hd⟩ := hd hx
+    rw [hd.deriv] at he
+    exact ⟨d, hdD, ((eq_div_iff (sub_ne_zero.mpr huv.ne')).mp he).symm⟩
+  rcases lt_trichotomy a b with hlt | rfl | hgt
+  · exact ho ha hb hlt
+  · exact ⟨D.fst, ⟨le_rfl, D.fst_le_snd⟩, by simp⟩
+  · obtain ⟨d, hd, he⟩ := ho hb ha hgt
+    exact ⟨d, hd, by linarith only [he]⟩
+
 /-- **Gap 7.8.** The interval Newton image encloses all zeros, and inclusion of that
 image in the input interval certifies a unique zero. -/
 theorem intervalNewton_univariate {f : ℝ → ℝ} (X D : NonemptyInterval ℝ) {x₀ : ℝ}
@@ -154,7 +308,45 @@ theorem intervalNewton_univariate {f : ℝ → ℝ} (X D : NonemptyInterval ℝ)
     let N := (fun d ↦ x₀ - f x₀ / d) '' (D : Set ℝ)
     {x ∈ (X : Set ℝ) | f x = 0} ⊆ N ∧
       (N ⊆ (X : Set ℝ) → ∃! x, x ∈ X ∧ f x = 0) := by
-  sorry
+  have hd0 {d : ℝ} (hd : d ∈ D) : d ≠ 0 := fun he ↦ hD (he ▸ hd)
+  have hsign : (∀ d ∈ D, 0 < d) ∨ (∀ d ∈ D, d < 0) := by
+    by_cases h : D.snd < 0
+    · exact Or.inr fun d hd ↦ hd.2.trans_lt h
+    · have hp : 0 < D.fst := lt_of_not_ge fun he ↦ hD ⟨he, le_of_not_gt h⟩
+      exact Or.inl fun d hd ↦ hp.trans_le hd.1
+  have hsl {a b : ℝ} (ha : a ∈ X) (hb : b ∈ X) :=
+    exists_intervalSlope X D hf.continuousOn hderiv ha hb
+  refine ⟨?_, ?_⟩
+  · rintro y ⟨hy, hry⟩
+    obtain ⟨d, hd, hs⟩ := hsl hx hy
+    refine ⟨d, hd, ?_⟩
+    have he : f x₀ / d * d = f x₀ := div_mul_cancel₀ _ (hd0 hd)
+    have hmul : d * (x₀ - f x₀ / d - y) = 0 := by linarith only [hs, hry, he]
+    exact sub_eq_zero.mp ((mul_eq_zero.mp hmul).resolve_left (hd0 hd))
+  · intro hN
+    have hsignAt {y : ℝ} (hy : y ∈ X) :
+        ∃ d ∈ D, x₀ - f x₀ / d ∈ X ∧ f y = d * (y - (x₀ - f x₀ / d)) := by
+      obtain ⟨d, hd, hs⟩ := hsl hx hy
+      refine ⟨d, hd, hN ⟨d, hd, rfl⟩, ?_⟩
+      linarith only [hs, div_mul_cancel₀ (f x₀) (hd0 hd)]
+    obtain ⟨dl, hdl, hl, hl'⟩ := hsignAt ⟨le_rfl, X.fst_le_snd⟩
+    obtain ⟨dr, hdr, hr, hr'⟩ := hsignAt ⟨X.fst_le_snd, le_rfl⟩
+    have hz : (0 : ℝ) ∈ f '' (X : Set ℝ) := by
+      rcases hsign with hpos | hneg
+      · apply intermediate_value_Icc X.fst_le_snd hf.continuousOn
+        exact ⟨by rw [hl']; exact mul_nonpos_of_nonneg_of_nonpos (hpos _ hdl).le
+                   (sub_nonpos.mpr hl.1),
+          by rw [hr']; exact mul_nonneg (hpos _ hdr).le (sub_nonneg.mpr hr.2)⟩
+      · apply intermediate_value_Icc' X.fst_le_snd hf.continuousOn
+        exact ⟨by rw [hr']; exact mul_nonpos_of_nonpos_of_nonneg (hneg _ hdr).le
+                   (sub_nonneg.mpr hr.2),
+          by rw [hl']; exact mul_nonneg_of_nonpos_of_nonpos (hneg _ hdl).le
+                   (sub_nonpos.mpr hl.1)⟩
+    obtain ⟨z, hzX, hzf⟩ := hz
+    refine ⟨z, ⟨hzX, hzf⟩, fun y hy ↦ ?_⟩
+    obtain ⟨d, hd, hs⟩ := hsl hzX hy.1
+    have he : d * (y - z) = 0 := by rw [← hs, hy.2, hzf, sub_self]
+    exact sub_eq_zero.mp ((mul_eq_zero.mp he).resolve_left (hd0 hd))
 
 /-- The product box of a family of real intervals. -/
 def intervalBox {n : ℕ} (X : Fin n → NonemptyInterval ℝ) : Set (Fin n → ℝ) :=

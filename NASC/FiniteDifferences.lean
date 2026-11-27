@@ -45,7 +45,39 @@ theorem fivePoint_nonpos_of_boundary_nonpos {n : ℕ} {h : ℝ} (hh : 0 < h)
     (v : ℕ → ℕ → ℝ) (hb : GridBoundaryNonpos n v)
     (hsub : ∀ i j, 0 < i → i < n → 0 < j → j < n → 0 ≤ fivePointLaplacian h v i j) :
     ∀ i j, i ≤ n → j ≤ n → v i j ≤ 0 := by
-  sorry
+  let S := Finset.Iic n ×ˢ Finset.Iic n
+  obtain ⟨⟨a, b⟩, hab, hmax⟩ := Finset.exists_max_image S
+    (fun p : ℕ × ℕ ↦ v p.1 p.2) ⟨(0, 0), by simp [S]⟩
+  have hupper (i j : ℕ) (hi : i ≤ n) (hj : j ≤ n) : v i j ≤ v a b :=
+    hmax (i, j) (by simpa [S] using And.intro hi hj)
+  obtain ⟨ha, hbmax⟩ : a ≤ n ∧ b ≤ n := by simpa [S] using hab
+  have hleft : ∀ k ≤ n, v k b = v a b → v a b ≤ 0 := by
+    intro k
+    induction k using Nat.strong_induction_on with
+    | ind k ih =>
+      intro hk hkv
+      by_cases hki : 0 < k ∧ k < n
+      · by_cases hbi : 0 < b ∧ b < n
+        · have hL := hupper (k - 1) b (by omega) hbmax
+          have hR := hupper (k + 1) b (by omega) hbmax
+          have hD := hupper k (b - 1) hk (by omega)
+          have hU := hupper k (b + 1) hk (by omega)
+          have hs := (le_div_iff₀ (pow_pos hh 2)).mp (hsub k b hki.1 hki.2 hbi.1 hbi.2)
+          simp only [zero_mul] at hs
+          have heq : v (k - 1) b = v a b := le_antisymm hL (by
+            linarith only [hR, hD, hU, hs, hkv])
+          exact ih (k - 1) (by omega) (by omega) heq
+        · rcases (by omega : b = 0 ∨ b = n) with h | h
+          · rw [← hkv, h]
+            exact (hb k hk).1
+          · rw [← hkv, h]
+            exact (hb k hk).2.1
+      · rcases (by omega : k = 0 ∨ k = n) with h | h
+        · rw [← hkv, h]
+          exact (hb b hbmax).2.2.1
+        · rw [← hkv, h]
+          exact (hb b hbmax).2.2.2
+  exact fun i j hi hj ↦ (hupper i j hi hj).trans (hleft a ha rfl)
 
 /-- **Gap 16.4.** A uniform truncation defect and exact boundary data give
 the five-point error bound with the square barrier constant $1/8$. -/
@@ -57,7 +89,56 @@ theorem fivePoint_error_le_of_defect {n : ℕ} (hn : 0 < n)
       |fivePointLaplacian (n : ℝ)⁻¹ (fun i j ↦ u i j - U i j) i j| ≤
         (n : ℝ)⁻¹ ^ 2 * M / 12) :
     ∀ i j, i ≤ n → j ≤ n → |u i j - U i j| ≤ (n : ℝ)⁻¹ ^ 2 * M / 96 := by
-  sorry
+  let h : ℝ := (n : ℝ)⁻¹
+  let K := h ^ 2 * M / 12
+  let B := fun i : ℕ ↦ K / 2 * ((i : ℝ) * h) * (1 - (i : ℝ) * h)
+  have hn' : 0 < (n : ℝ) := Nat.cast_pos.mpr hn
+  have hh : 0 < h := inv_pos.mpr hn'
+  have hK : 0 ≤ K := by dsimp only [K]; positivity
+  have hnh : (n : ℝ) * h = 1 := mul_inv_cancel₀ hn'.ne'
+  have hB (i : ℕ) (hi : i ≤ n) : 0 ≤ B i := by
+    have hle := mul_le_mul_of_nonneg_right (Nat.cast_le.mpr hi : (i : ℝ) ≤ n) hh.le
+    rw [hnh] at hle
+    exact mul_nonneg (mul_nonneg (div_nonneg hK two_pos.le)
+      (mul_nonneg (Nat.cast_nonneg _) hh.le)) (sub_nonneg.mpr hle)
+  have hBmax (i : ℕ) : B i ≤ K / 8 := by
+    have hs := mul_nonneg hK (sq_nonneg ((i : ℝ) * h - 1 / 2))
+    dsimp only [B]
+    linarith only [hs]
+  have hshift (w : ℕ → ℕ → ℝ) (i j : ℕ) (hi : 0 < i) :
+      fivePointLaplacian h (fun a b ↦ w a b - B a) i j = fivePointLaplacian h w i j + K := by
+    have hpred : ((i - 1 : ℕ) : ℝ) = (i : ℝ) - 1 := by
+      simpa only [Nat.cast_one] using (Nat.cast_sub hi : ((i - 1 : ℕ) : ℝ) = (i : ℝ) - ↑(1 : ℕ))
+    simp only [fivePointLaplacian, B, Nat.cast_add, Nat.cast_one, hpred]
+    field_simp [hh.ne']
+    ring
+  have hcmp (w : ℕ → ℕ → ℝ) (hw : GridBoundaryNonpos n w)
+      (hL : ∀ i j, 0 < i → i < n → 0 < j → j < n → -K ≤ fivePointLaplacian h w i j)
+      (i j : ℕ) (hi : i ≤ n) (hj : j ≤ n) : w i j ≤ B i := by
+    have hwB : GridBoundaryNonpos n (fun a b ↦ w a b - B a) := by
+      intro a ha
+      obtain ⟨h₁, h₂, h₃, h₄⟩ := hw a ha
+      exact ⟨sub_nonpos.mpr (h₁.trans (hB a ha)), sub_nonpos.mpr (h₂.trans (hB a ha)),
+        sub_nonpos.mpr (h₃.trans (hB 0 (Nat.zero_le n))), sub_nonpos.mpr (h₄.trans (hB n le_rfl))⟩
+    refine sub_nonpos.mp (fivePoint_nonpos_of_boundary_nonpos hh _ hwB (fun a b ha han hb hbn ↦ ?_)
+      i j hi hj)
+    rw [hshift w a b ha]
+    linarith only [hL a b ha han hb hbn]
+  intro i j hi hj
+  have hf₂ : ∀ a b, 0 < a → a < n → 0 < b → b < n →
+      -K ≤ fivePointLaplacian h (fun x y ↦ U x y - u x y) a b := by
+    intro a b ha han hb hbn
+    have heq : fivePointLaplacian h (fun x y ↦ U x y - u x y) a b =
+        -fivePointLaplacian h (fun x y ↦ u x y - U x y) a b := by
+      dsimp only [fivePointLaplacian]
+      ring
+    rw [heq]
+    exact neg_le_neg (abs_le.mp (hdef a b ha han hb hbn)).2
+  have h₁ := (hcmp _ hb
+    (fun a b ha han hb hbn ↦ (abs_le.mp (hdef a b ha han hb hbn)).1) i j hi hj).trans (hBmax i)
+  have h₂ := (hcmp _ hb' hf₂ i j hi hj).trans (hBmax i)
+  dsimp only [K, h] at h₁ h₂
+  exact abs_le.mpr ⟨by linarith only [h₂], by linarith only [h₁]⟩
 
 /-- **Gap 16.5.** Stability and strong convergence are equivalent for the
 consistent linear approximation of bounded solution operators on a time interval. -/
@@ -134,7 +215,31 @@ theorem shuOsher_nonneg {n s : ℕ} (F : ℝ → (Fin n → ℝ) → (Fin n → 
       (∑ j ∈ Finset.univ.filter (· < i), p i j) = 1 ∧
       v i = ∑ j ∈ Finset.univ.filter (· < i), (p i j • v j + (h * q i j) • F (t j) (v j))) :
     ∀ i, 0 ≤ v i := by
-  sorry
+  intro i
+  induction i using WellFoundedLT.induction with
+  | ind i ih =>
+    by_cases hi : i = 0
+    · simpa only [hi] using hv
+    rw [(hstage i hi).2]
+    intro k
+    simp only [Pi.zero_apply, Finset.sum_apply]
+    apply Finset.sum_nonneg
+    intro j hj
+    have hji := (Finset.mem_filter.mp hj).2
+    obtain ⟨hp, hq, hqle⟩ := hpos i j hji
+    obtain ⟨a, ha, heq⟩ : ∃ a ∈ Icc (0 : ℝ) H, h * q i j = p i j * a := by
+      by_cases hp₀ : p i j = 0
+      · have hz : h * q i j = 0 := le_antisymm
+          (by simpa only [hp₀, mul_zero] using hqle) (mul_nonneg hh hq)
+        exact ⟨0, ⟨le_rfl, hH.le⟩, by simpa only [mul_zero] using hz⟩
+      · have hp' := lt_of_le_of_ne hp (Ne.symm hp₀)
+        refine ⟨h * q i j / p i j, ⟨div_nonneg (mul_nonneg hh hq) hp,
+          (div_le_iff₀ hp').mpr hqle⟩, ?_⟩
+        field_simp
+    have hval := hF (t j) (v j) a (ih j hji) ha k
+    simp only [Pi.zero_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul] at hval ⊢
+    rw [heq, mul_assoc, ← mul_add]
+    exact mul_nonneg hp hval
 
 /-- Viscosity subsolution expressed by all smooth upper tests on the domain. -/
 def IsViscositySubsolution {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]

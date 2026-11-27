@@ -8,7 +8,8 @@ public import Mathlib.Topology.ContinuousMap.Compact
 # Integral equations
 
 Fredholm compatibility and approximation, Nyström nodal equations, and collocation
-for Volterra equations on uniform and graded meshes.
+for Volterra equations on uniform and graded meshes. The compact-operator obstruction uses
+Mathlib's finite-dimensionality criterion from a totally bounded neighborhood.
 -/
 
 public section
@@ -18,7 +19,7 @@ noncomputable section
 namespace NASC
 
 open Set Filter MeasureTheory Polynomial
-open scoped BigOperators Topology Interval Matrix
+open scoped BigOperators Topology Interval Matrix NNReal
 
 /-- **Gap 21.1.** A continuous-kernel operator on continuous functions over a compact
 space is compact for any finite integration measure. -/
@@ -162,6 +163,15 @@ theorem not_exists_lowerBound_of_isCompactOperator {X Y : Type*}
     [NormedAddCommGroup X] [NormedSpace ℝ X] [NormedAddCommGroup Y] [NormedSpace ℝ Y]
     (A : X →L[ℝ] Y) (hA : IsCompactOperator A) (hX : ¬FiniteDimensional ℝ X) :
     ¬∃ C : ℝ, ∀ x, ‖x‖ ≤ C * ‖A x‖ := by
-  sorry
+  rintro ⟨C, hC⟩
+  let K : ℝ≥0 := ⟨max C 0, le_max_right C 0⟩
+  have hanti : AntilipschitzWith K A := AntilipschitzWith.of_le_mul_dist fun x y ↦ by
+    rw [dist_eq_norm, dist_eq_norm, ← map_sub]
+    exact (hC (x - y)).trans (mul_le_mul_of_nonneg_right (le_max_left C 0) (norm_nonneg _))
+  have hU := hanti.isUniformInducing A.uniformContinuous
+  have hball := (hA.isCompact_closure_image_closedBall 1).totallyBounded
+  exact hX (FiniteDimensional.of_totallyBounded_nhds_zero ℝ
+    (Metric.closedBall_mem_nhds 0 zero_lt_one)
+    ((totallyBounded_image_iff hU).mp (hball.subset subset_closure)))
 
 end NASC

@@ -3,11 +3,14 @@ module
 public import NASC.IntegralEquations
 public import Mathlib.Analysis.InnerProductSpace.Adjoint
 
+import Mathlib.Analysis.InnerProductSpace.LaxMilgram
+
 /-!
 # Linear inverse problems and regularization
 
 Picard's range criterion, the generalized inverse, convergence under parameter selection,
-Tikhonov and discrepancy methods, and Landweber iteration.
+Tikhonov and discrepancy methods, and Landweber iteration. Tikhonov existence uses
+Mathlib's Lax--Milgram equivalence in the pivot Hilbert space.
 -/
 
 public section
@@ -54,6 +57,7 @@ theorem exists_generalizedInverse_closedGraph (K : X →L[ℝ] Y) :
         (Continuous P ↔ IsClosed (range K)) := by
   sorry
 
+omit [CompleteSpace X] [CompleteSpace Y] in
 /-- **Gap 22.5.** Noise amplification and exact-data consistency give regularization
 convergence for an a priori parameter choice. -/
 theorem regularization_tendsto_of_noise_control (K : X →L[ℝ] Y)
@@ -63,7 +67,53 @@ theorem regularization_tendsto_of_noise_control (K : X →L[ℝ] Y)
     (hnoise : ∀ᶠ δ in 𝓝[>] (0 : ℝ), ‖data δ - K x‖ ≤ δ)
     (hsmall : Tendsto (fun δ ↦ δ * ‖R (α δ)‖) (𝓝[>] (0 : ℝ)) (𝓝 0)) :
     Tendsto (fun δ ↦ R (α δ) (data δ)) (𝓝[>] (0 : ℝ)) (𝓝 x) := by
-  sorry
+  have hbase := hR.comp hα
+  have herror : Tendsto (fun δ ↦ R (α δ) (data δ - K x)) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+    refine squeeze_zero_norm' ?_ hsmall
+    filter_upwards [hnoise] with δ hd
+    calc
+      _ ≤ ‖R (α δ)‖ * ‖data δ - K x‖ := (R (α δ)).le_opNorm _
+      _ ≤ ‖R (α δ)‖ * δ := mul_le_mul_of_nonneg_left hd (R (α δ)).opNorm_nonneg
+      _ = _ := mul_comm _ _
+  simpa only [map_sub, Function.comp_apply, sub_add_cancel, zero_add] using herror.add hbase
+
+/-- Testing the normal operator against a vector gives its coercive bilinear form. -/
+theorem tikhonov_normal_inner (K : X →L[ℝ] Y) (α : ℝ) (v w : X) :
+    inner ℝ (α • v + K.adjoint (K v)) w = α * inner ℝ v w + inner ℝ (K v) (K w) := by
+  rw [inner_add_left, real_inner_smul_left, K.adjoint_inner_left]
+
+/-- Testing the normal equation against the solution gives the Tikhonov noise budget. -/
+theorem norm_le_of_tikhonov_normal (K : X →L[ℝ] Y) {α : ℝ} (hα : 0 < α)
+    {x : X} {y : Y} (h : α • x + K.adjoint (K x) = K.adjoint y) :
+    ‖x‖ ≤ ‖y‖ / (2 * Real.sqrt α) := by
+  have heq := congrArg (fun v : X ↦ inner ℝ v x) h
+  simp only [tikhonov_normal_inner, K.adjoint_inner_left, real_inner_self_eq_norm_sq] at heq
+  have hbound := heq.le.trans (real_inner_le_norm y (K x))
+  have hsq : 4 * α * ‖x‖ ^ 2 ≤ ‖y‖ ^ 2 := by
+    nlinarith only [hbound, sq_nonneg (‖K x‖ - ‖y‖ / 2)]
+  apply (le_div_iff₀ (mul_pos two_pos (Real.sqrt_pos.mpr hα))).mpr
+  apply (sq_le_sq₀ (by positivity) (norm_nonneg y)).mp
+  rw [mul_pow, mul_pow, Real.sq_sqrt hα.le]
+  nlinarith only [hsq]
+
+/-- The normal equation gives the exact Tikhonov objective difference. -/
+theorem tikhonov_objective_eq_add_error (K : X →L[ℝ] Y) (α : ℝ) (y : Y) (x v : X)
+    (h : α • x + K.adjoint (K x) = K.adjoint y) :
+    ‖K v - y‖ ^ 2 + α * ‖v‖ ^ 2 =
+      (‖K x - y‖ ^ 2 + α * ‖x‖ ^ 2) + (‖K (v - x)‖ ^ 2 + α * ‖v - x‖ ^ 2) := by
+  have heq := congrArg (fun z : X ↦ inner ℝ z (v - x)) h
+  simp only [tikhonov_normal_inner, K.adjoint_inner_left] at heq
+  have hcancel : inner ℝ (K x - y) (K (v - x)) + α * inner ℝ x (v - x) = 0 := by
+    rw [inner_sub_left]
+    linarith only [heq]
+  have hs : x + (v - x) = v := by abel
+  have hKs : (K x - y) + K (v - x) = K v - y := by rw [map_sub]; abel
+  have hn := norm_add_sq_real x (v - x)
+  have hKn := norm_add_sq_real (K x - y) (K (v - x))
+  rw [hs] at hn
+  rw [hKs] at hKn
+  rw [hn, hKn]
+  nlinarith only [hcancel]
 
 /-- **Gap 22.6.** Tikhonov regularization is the unique quadratic minimizer.
 The regularized inverse has the bound $1/(2\sqrt{\alpha})$. -/
@@ -72,7 +122,49 @@ theorem exists_tikhonov_normalSolve (K : X →L[ℝ] Y) {α : ℝ} (hα : 0 < α
       α • R y + K.adjoint (K (R y)) = K.adjoint y ∧
       ∀ x : X, x ≠ R y →
         ‖K (R y) - y‖ ^ 2 + α * ‖R y‖ ^ 2 < ‖K x - y‖ ^ 2 + α * ‖x‖ ^ 2 := by
-  sorry
+  let N : X →L[ℝ] X := α • (1 : X →L[ℝ] X) + K.adjoint.comp K
+  have hN (v : X) : N v = α • v + K.adjoint (K v) := by
+    simp only [N, add_apply, smul_apply, one_apply_eq_self,
+      ContinuousLinearMap.comp_apply]
+  let B : X →L[ℝ] StrongDual ℝ X := (innerSL ℝ).comp N
+  have hB (v w : X) : B v w = inner ℝ (N v) w := by
+    simp only [B, ContinuousLinearMap.comp_apply, innerSL_apply_apply]
+  have hco : IsCoercive B := by
+    refine ⟨α, hα, fun v ↦ ?_⟩
+    rw [hB, hN, tikhonov_normal_inner, real_inner_self_eq_norm_sq, real_inner_self_eq_norm_sq]
+    nlinarith only [sq_nonneg ‖K v‖]
+  let A := hco.continuousLinearEquivOfBilin
+  have hA (v : X) : A v = N v :=
+    (hco.unique_continuousLinearEquivOfBilin (fun w ↦ (hB v w).symm)).symm
+  let R := (A.symm : X →L[ℝ] X).comp K.adjoint
+  have hR (y : Y) : α • R y + K.adjoint (K (R y)) = K.adjoint y := by
+    rw [← hN, ← hA]
+    exact A.apply_symm_apply (K.adjoint y)
+  refine ⟨R, R.opNorm_le_bound (by positivity) ?_, fun y ↦ ⟨hR y, ?_⟩⟩
+  · intro y
+    simpa only [div_eq_mul_inv, mul_comm ‖y‖] using norm_le_of_tikhonov_normal K hα (hR y)
+  · intro v hv
+    rw [tikhonov_objective_eq_add_error K α y (R y) v (hR y)]
+    exact lt_add_of_pos_right _ (add_pos_of_nonneg_of_pos (sq_nonneg _)
+      (mul_pos hα (sq_pos_of_pos (norm_pos_iff.mpr (sub_ne_zero.mpr hv)))))
+
+/-- Applying a Tikhonov solver to exact data is a contraction on the source space. -/
+theorem norm_tikhonov_exactData_le (K : X →L[ℝ] Y) {α : ℝ} (hα : 0 < α)
+    {z w : X} (h : α • z + K.adjoint (K z) = K.adjoint (K w)) : ‖z‖ ≤ ‖w‖ := by
+  by_cases hz : z = 0
+  · simpa only [hz, norm_zero] using norm_nonneg w
+  have htest := congrArg (fun x : X ↦ inner ℝ x (w - z)) h
+  simp only [tikhonov_normal_inner, K.adjoint_inner_left] at htest
+  have hprod : α * inner ℝ z (w - z) = ‖K (w - z)‖ ^ 2 := by
+    rw [← real_inner_self_eq_norm_sq, map_sub K w z, inner_sub_left]
+    rw [map_sub] at htest
+    linarith only [htest]
+  have hnn : 0 ≤ inner ℝ z (w - z) :=
+    nonneg_of_mul_nonneg_right (hprod.symm ▸ sq_nonneg _) hα
+  rw [inner_sub_right, real_inner_self_eq_norm_sq] at hnn
+  apply (mul_le_mul_iff_right₀ (norm_pos_iff.mpr hz)).mp
+  rw [← pow_two]
+  exact (sub_nonneg.mp hnn).trans (real_inner_le_norm z w)
 
 /-- **Gap 22.7.** Tikhonov error under the order-one source condition.
 The inequality separates data noise from approximation bias. -/
@@ -81,7 +173,31 @@ theorem tikhonov_error_le_of_adjoint_source (K : X →L[ℝ] Y) (w : X) (y : Y)
     (hR : ∀ d, α • R d + K.adjoint (K (R d)) = K.adjoint d)
     (hnoise : ‖y - K (K.adjoint (K w))‖ ≤ δ) :
     ‖R y - K.adjoint (K w)‖ ≤ δ / (2 * Real.sqrt α) + α * ‖w‖ := by
-  sorry
+  let x := K.adjoint (K w)
+  let z := R (K w)
+  let N : X →L[ℝ] X := α • (1 : X →L[ℝ] X) + K.adjoint.comp K
+  have hN (v : X) : N v = α • v + K.adjoint (K v) := by
+    simp only [N, add_apply, smul_apply, one_apply_eq_self, ContinuousLinearMap.comp_apply]
+  have hR' (d : Y) : N (R d) = K.adjoint d := (hN _).trans (hR d)
+  have hinj : Function.Injective N := by
+    intro a b hab
+    have he : α • (a - b) + K.adjoint (K (a - b)) = K.adjoint 0 := by
+      rw [← hN, map_sub, hab, sub_self, map_zero]
+    have hnorm := norm_le_of_tikhonov_normal K hα he
+    exact sub_eq_zero.mp (norm_le_zero_iff.mp (by simpa only [norm_zero, zero_div] using hnorm))
+  have hbias : x - R (K x) = α • z := by
+    apply hinj
+    rw [map_sub, hR', map_smul, hR', hN]
+    exact add_sub_cancel_right _ _
+  have hsplit : R y - x = R (y - K x) - α • z := by rw [← hbias, map_sub]; abel
+  have hnoise' : ‖R (y - K x)‖ ≤ δ / (2 * Real.sqrt α) :=
+    (norm_le_of_tikhonov_normal K hα (hR (y - K x))).trans
+      (div_le_div_of_nonneg_right hnoise (by positivity))
+  have hb : ‖α • z‖ ≤ α * ‖w‖ := by
+    rw [norm_smul, Real.norm_of_nonneg hα.le]
+    exact mul_le_mul_of_nonneg_left (norm_tikhonov_exactData_le K hα (hR (K w))) hα.le
+  rw [hsplit]
+  exact (norm_sub_le _ _).trans (add_le_add hnoise' hb)
 
 /-- **Gap 22.8.** The minimum-norm solution in a discrepancy ball is a
 Tikhonov solution at positive discrepancy parameter when zero is infeasible. -/

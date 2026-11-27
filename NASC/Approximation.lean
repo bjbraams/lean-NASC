@@ -8,11 +8,19 @@ public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 public import Mathlib.Analysis.Analytic.Basic
 public import Mathlib.Topology.UniformSpace.UniformConvergence
 
+import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+import Mathlib.Analysis.Calculus.LocalExtr.Rolle
+import Mathlib.Analysis.Calculus.ContDiff.Polynomial
+import Mathlib.Analysis.Calculus.Deriv.Polynomial
+
 /-!
 # Polynomial and rational approximation
 
 Haar spaces, alternation, interpolation estimates, Bernstein ellipses and Padé approximation.
 See section 10 of the gap catalogue.
+The Haar-space proof uses Mathlib's finite-dimensional injectivity-surjectivity
+criterion for evaluation. The interpolation remainder uses Mathlib's nodal
+polynomial and Rolle's theorem.
 -/
 
 public section
@@ -36,7 +44,27 @@ theorem isHaarSpace_iff_no_many_zeros {K : Type*} [TopologicalSpace K]
     [FiniteDimensional ℝ V] :
     IsHaarSpace V n ↔
       ∀ (v : V) (x : Fin n → K), Function.Injective x → (∀ i, v.val (x i) = 0) → v = 0 := by
-  sorry
+  constructor
+  · intro h v x hx hv
+    obtain ⟨w, _, hw⟩ := h x (fun _ ↦ 0) hx
+    have hzero : ∀ i, (0 : V).val (x i) = 0 := fun _ ↦ rfl
+    exact (hw v hv).trans (hw 0 hzero).symm
+  · intro h x y hx
+    let E : V →ₗ[ℝ] Fin n → ℝ :=
+      { toFun := fun v i ↦ v.val (x i)
+        map_add' := fun _ _ ↦ rfl
+        map_smul' := fun _ _ ↦ rfl }
+    have hE : Function.Injective E := by
+      intro u v huv
+      apply sub_eq_zero.mp
+      apply h (u - v) x hx
+      intro i
+      exact sub_eq_zero.mpr (congrFun huv i)
+    have hn : Module.finrank ℝ V = Module.finrank ℝ (Fin n → ℝ) := by
+      rw [hdim, Module.finrank_pi, Fintype.card_fin]
+    obtain ⟨v, hv⟩ :=
+      (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hn).mp hE y
+    exact ⟨v, congrFun hv, fun w hw ↦ hE ((funext hw).trans hv.symm)⟩
 
 /-- Supremum of the absolute error over a compact interval on which the function is
 continuous. Callers of the uniform approximation results supply this continuity. -/
@@ -56,6 +84,94 @@ theorem isMinOn_polyError_iff_alternation {f : ℝ → ℝ} {a b : ℝ}
         intervalError a b (fun t ↦ f t - p.eval t) := by
   sorry
 
+/-- A real function with $n+1$ ordered zeros on an interval has a zero of its
+$n$-th derivative there. -/
+theorem exists_iteratedDeriv_eq_zero_of_strictMono {n : ℕ} {a b : ℝ} (f : ℝ → ℝ)
+    (hf : ContDiff ℝ n f) (x : Fin (n + 1) → ℝ) (hm : StrictMono x)
+    (hx : ∀ i, x i ∈ Icc a b) (hz : ∀ i, f (x i) = 0) :
+    ∃ z ∈ Icc a b, iteratedDeriv n f z = 0 := by
+  induction n generalizing f with
+  | zero => exact ⟨x 0, hx 0, by simpa only [iteratedDeriv_zero] using hz 0⟩
+  | succ n ih =>
+      have h (i : Fin (n + 1)) :
+          ∃ z ∈ Ioo (x i.castSucc) (x i.succ), deriv f z = 0 :=
+        exists_deriv_eq_zero (hm Fin.castSucc_lt_succ) hf.continuous.continuousOn
+          ((hz i.castSucc).trans (hz i.succ).symm)
+      choose z hI hzero using h
+      have hmono : StrictMono z := by
+        intro i j hij
+        exact (hI i).2.trans_le
+          ((hm.monotone (Fin.succ_le_castSucc_iff.mpr hij)).trans (hI j).1.le)
+      have hmem (i) : z i ∈ Icc a b :=
+        ⟨(hx i.castSucc).1.trans (hI i).1.le, (hI i).2.le.trans (hx i.succ).2⟩
+      have hd : ContDiff ℝ n (deriv f) := (contDiff_succ_iff_deriv.mp hf).2.2
+      simpa only [iteratedDeriv_succ'] using ih (deriv f) hd z hmono hmem hzero
+
+/-- The iterated analytic derivative of polynomial evaluation agrees with iterated
+formal differentiation. -/
+theorem iteratedDeriv_polynomial_eval {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    (n : ℕ) (p : 𝕜[X]) :
+    iteratedDeriv n (fun t ↦ p.eval t) = fun x ↦ (derivative^[n] p).eval x := by
+  induction n generalizing p with
+  | zero => simp only [iteratedDeriv_zero, Function.iterate_zero_apply]
+  | succ n ih =>
+      have he : deriv (fun t ↦ p.eval t) = fun x ↦ p.derivative.eval x :=
+        funext fun _ ↦ Polynomial.deriv p
+      rw [iteratedDeriv_succ', he, Function.iterate_succ_apply]
+      exact ih _
+
+/-- At the degree bound, the derivative is the top coefficient multiplied by the
+factorial of its index. -/
+theorem iteratedDeriv_polynomial_eval_of_natDegree_le (p : ℝ[X]) {n : ℕ}
+    (h : p.natDegree ≤ n) (x : ℝ) :
+    iteratedDeriv n (fun t ↦ p.eval t) x = (n.factorial : ℝ) * p.coeff n := by
+  have hzero : (derivative^[n] p).natDegree ≤ 0 :=
+    (natDegree_iterate_derivative p n).trans (by rw [Nat.sub_eq_zero_of_le h])
+  have he := congrArg (Polynomial.eval x) (eq_C_of_natDegree_le_zero hzero)
+  rw [iteratedDeriv_polynomial_eval]
+  dsimp only
+  rw [he, eval_C, coeff_iterate_derivative, zero_add, Nat.descFactorial_self, nsmul_eq_mul]
+
+/-- Real polynomial evaluation is smooth. -/
+theorem contDiff_polynomial_eval (n : ℕ) (p : ℝ[X]) :
+    ContDiff ℝ n (fun t ↦ p.eval t) := by
+  have he : (fun t : ℝ ↦ aeval t p) = fun t ↦ p.eval t :=
+    funext fun t ↦ congrFun (coe_aeval_eq_eval t) p
+  rw [← he]
+  exact Polynomial.contDiff_aeval p n
+
+/-- Subtracting the interpolating polynomial and a nodal correction creates
+an additional zero at the evaluation point. -/
+theorem exists_iteratedDeriv_eq_zero_of_nodal_correction {n : ℕ}
+    (nodes : Fin n → ℝ) (hn : Function.Injective nodes) {a b x : ℝ}
+    (hx : x ∈ Icc a b) (ha : ∀ i, nodes i ∈ Icc a b) (hnode : ¬ ∃ i, nodes i = x)
+    (f : ℝ → ℝ) (hf : ContDiff ℝ n f) (p q : ℝ[X]) (c : ℝ)
+    (hp : ∀ i, p.eval (nodes i) = f (nodes i)) (hq : ∀ i, q.eval (nodes i) = 0)
+    (hc : f x - p.eval x = c * q.eval x) :
+    ∃ t ∈ Icc a b, iteratedDeriv n (fun u ↦ f u - (p + C c * q).eval u) t = 0 := by
+  classical
+  let s := insert x (Finset.univ.image nodes)
+  have hcard : s.card = n + 1 := by
+    have hxmem : x ∉ Finset.univ.image nodes := by
+      simpa only [Finset.mem_image, Finset.mem_univ, true_and] using hnode
+    simp only [s, Finset.card_insert_of_notMem hxmem, Finset.card_image_of_injective _ hn,
+      Finset.card_univ, Fintype.card_fin]
+  let r := p + C c * q
+  let g := fun t ↦ f t - r.eval t
+  have hrDiff := contDiff_polynomial_eval n r
+  have hroots {t : ℝ} (ht : t ∈ s) : t ∈ Icc a b ∧ g t = 0 := by
+    simp only [s, Finset.mem_insert, Finset.mem_image, Finset.mem_univ, true_and] at ht
+    rcases ht with rfl | ⟨i, rfl⟩
+    · refine ⟨hx, ?_⟩
+      simp only [g, r, eval_add, eval_mul, eval_C]
+      linarith only [hc]
+    · refine ⟨ha i, ?_⟩
+      simp only [g, r, eval_add, eval_mul, eval_C, hp i, hq i, mul_zero, add_zero, sub_self]
+  let z := s.orderEmbOfFin hcard
+  exact exists_iteratedDeriv_eq_zero_of_strictMono g (hf.sub hrDiff) z z.strictMono
+    (fun i ↦ (hroots (s.orderEmbOfFin_mem hcard i)).1)
+    (fun i ↦ (hroots (s.orderEmbOfFin_mem hcard i)).2)
+
 /-- **Gap 10.5.** Lagrange interpolation has the classical derivative remainder at
 distinct real nodes. Any compact interval containing the nodes and evaluation point suffices. -/
 theorem exists_lagrange_remainder {n : ℕ} (nodes : Fin n → ℝ) (hn : Function.Injective nodes)
@@ -64,7 +180,46 @@ theorem exists_lagrange_remainder {n : ℕ} (nodes : Fin n → ℝ) (hn : Functi
     ∃ z ∈ Icc a b,
       f x - (Lagrange.interpolate Finset.univ nodes (f ∘ nodes)).eval x =
         iteratedDeriv n f z / n.factorial * ∏ i, (x - nodes i) := by
-  sorry
+  classical
+  let p := Lagrange.interpolate Finset.univ nodes (f ∘ nodes)
+  have hp : p.degree < n := by
+    simpa only [Finset.card_univ, Fintype.card_fin] using
+      Lagrange.degree_interpolate_lt (s := Finset.univ) (f ∘ nodes) hn.injOn
+  have hnodal (i : Fin n) : p.eval (nodes i) = f (nodes i) :=
+    Lagrange.eval_interpolate_at_node _ hn.injOn (Finset.mem_univ _)
+  by_cases hnode : ∃ i, nodes i = x
+  · obtain ⟨i, rfl⟩ := hnode
+    refine ⟨nodes i, ha i, ?_⟩
+    have hprod : (∏ j, (nodes i - nodes j)) = 0 :=
+      Finset.prod_eq_zero (Finset.mem_univ i) (sub_self _)
+    rw [hnodal i, sub_self, hprod, mul_zero]
+  let q := Lagrange.nodal Finset.univ nodes
+  have hqN : q.natDegree = n := by
+    simp only [q, Lagrange.natDegree_nodal, Finset.card_univ, Fintype.card_fin]
+  have hqEval : q.eval x ≠ 0 :=
+    Lagrange.eval_nodal_not_at_node (fun i _ h ↦ hnode ⟨i, h.symm⟩)
+  let c := (f x - p.eval x) / q.eval x
+  let r := p + C c * q
+  have hrD : r.natDegree ≤ n := by
+    simpa only [max_self] using natDegree_add_le_of_le (natDegree_le_of_degree_le hp.le)
+      ((natDegree_C_mul_le c q).trans hqN.le)
+  have hrC : r.coeff n = c := by
+    have hqC : q.coeff n = 1 :=
+      hqN ▸ (Lagrange.nodal_monic (s := Finset.univ) (v := nodes)).coeff_natDegree
+    simp only [r, coeff_add, coeff_C_mul, coeff_eq_zero_of_degree_lt hp, hqC, mul_one, zero_add]
+  obtain ⟨t, htab, htz⟩ := exists_iteratedDeriv_eq_zero_of_nodal_correction
+    nodes hn hx ha hnode f hf p q c hnodal
+    (fun i ↦ Lagrange.eval_nodal_at_node (Finset.mem_univ i)) (div_mul_cancel₀ _ hqEval).symm
+  have hrDiff := contDiff_polynomial_eval n r
+  have hder : iteratedDeriv n f t = (n.factorial : ℝ) * c := by
+    rw [iteratedDeriv_fun_sub hf.contDiffAt hrDiff.contDiffAt,
+      iteratedDeriv_polynomial_eval_of_natDegree_le r hrD, hrC] at htz
+    exact sub_eq_zero.mp htz
+  refine ⟨t, htab, ?_⟩
+  have hfac : (n.factorial : ℝ) ≠ 0 := by positivity
+  rw [hder, mul_comm (n.factorial : ℝ), mul_div_cancel_right₀ _ hfac,
+    ← Lagrange.eval_nodal]
+  exact (div_mul_cancel₀ _ hqEval).symm
 
 /-- **Gap 10.7.** For any triangular array of distinct nodes there is a continuous
 function whose polynomial interpolants fail to converge uniformly. -/
@@ -181,5 +336,11 @@ theorem exists_padePair_of_stieltjes {μ : Measure ℝ} [IsFiniteMeasure μ]
 /-- Best approximation error from a nonempty family of approximants. -/
 def bestApproximationError {E : Type*} [NormedAddCommGroup E] (A : Set E) (x : E) : ℝ :=
   sInf ((fun y ↦ ‖x - y‖) '' A)
+
+/-- The best approximation error is the infimum of the distances to the approximants. -/
+theorem bestApproximationError_def {E : Type*} [NormedAddCommGroup E] (A : Set E) (x : E) :
+    bestApproximationError A x = sInf ((fun y ↦ ‖x - y‖) '' A) := by
+  unfold bestApproximationError
+  rfl
 
 end NASC

@@ -9,6 +9,7 @@ public import Mathlib.NumberTheory.Bernoulli
 
 Moment orthogonality, Gaussian quadrature and its spectral construction, derivative error
 formulas, and the analytic trapezoidal rule. See section 12 of the gap catalogue.
+The Gauss-rule proof uses Mathlib's nodal polynomial, Lagrange basis, and integral positivity.
 -/
 
 public section
@@ -25,10 +26,117 @@ def HasInfiniteMomentSupport (μ : Measure ℝ) : Prop :=
   (∀ k : ℕ, Integrable (fun x : ℝ ↦ x ^ k) μ) ∧
     ∀ s : Finset ℝ, ¬(∀ᵐ x ∂μ, x ∈ s)
 
+/-- A moment measure integrates every real polynomial. -/
+theorem HasInfiniteMomentSupport.integrable_eval {μ : Measure ℝ}
+    (hμ : HasInfiniteMomentSupport μ) (p : ℝ[X]) :
+    Integrable (fun x ↦ p.eval x) μ := by
+  induction p using Polynomial.induction_on' with
+  | add p q hp hq =>
+      exact (hp.add hq).congr (.of_forall fun x ↦ by simp only [Pi.add_apply, eval_add])
+  | monomial n c => simpa only [eval_monomial] using (hμ.1 n).const_mul c
+
+/-- The real bilinear pairing of two polynomials under a moment measure. -/
+def polynomialMomentPair (μ : Measure ℝ) (p q : ℝ[X]) : ℝ :=
+  ∫ x, p.eval x * q.eval x ∂μ
+
+/-- The polynomial moment pairing is the integral of the product. -/
+theorem polynomialMomentPair_def (μ : Measure ℝ) (p q : ℝ[X]) :
+    polynomialMomentPair μ p q = ∫ x, p.eval x * q.eval x ∂μ := by
+  unfold polynomialMomentPair
+  rfl
+
+/-- Products of two polynomial evaluations are integrable under a moment measure. -/
+theorem HasInfiniteMomentSupport.integrable_eval_mul {μ : Measure ℝ}
+    (hμ : HasInfiniteMomentSupport μ) (p q : ℝ[X]) :
+    Integrable (fun x ↦ p.eval x * q.eval x) μ := by
+  simpa only [eval_mul] using hμ.integrable_eval (p * q)
+
+/-- The polynomial moment pairing is symmetric. -/
+theorem polynomialMomentPair_comm (μ : Measure ℝ) (p q : ℝ[X]) :
+    polynomialMomentPair μ p q = polynomialMomentPair μ q p := by
+  simp only [polynomialMomentPair_def, mul_comm (p.eval _) (q.eval _)]
+
+/-- The moment pairing respects subtraction in its first argument. -/
+theorem HasInfiniteMomentSupport.polynomialMomentPair_sub_left {μ : Measure ℝ}
+    (hμ : HasInfiniteMomentSupport μ) (p q r : ℝ[X]) :
+    polynomialMomentPair μ (p - q) r =
+      polynomialMomentPair μ p r - polynomialMomentPair μ q r := by
+  simp only [polynomialMomentPair_def, eval_sub, sub_mul]
+  exact integral_sub (hμ.integrable_eval_mul p r) (hμ.integrable_eval_mul q r)
+
+/-- Multiplication by a constant scales the moment pairing. -/
+theorem polynomialMomentPair_C_mul_left (μ : Measure ℝ) (c : ℝ) (p q : ℝ[X]) :
+    polynomialMomentPair μ (C c * p) q = c * polynomialMomentPair μ p q := by
+  simp only [polynomialMomentPair_def, eval_mul, eval_C, mul_assoc, integral_const_mul]
+
+/-- The square of a nonzero polynomial has positive integral under a moment
+measure with no finite set of full measure. -/
+theorem HasInfiniteMomentSupport.polynomialMomentPair_self_pos {μ : Measure ℝ}
+    (hμ : HasInfiniteMomentSupport μ) {p : ℝ[X]} (hp : p ≠ 0) :
+    0 < polynomialMomentPair μ p p := by
+  classical
+  rw [polynomialMomentPair_def]
+  have hnonneg : 0 ≤ fun x ↦ p.eval x * p.eval x := fun x ↦ mul_self_nonneg _
+  have hint := hμ.integrable_eval_mul p p
+  by_contra! h
+  have hz := (integral_eq_zero_iff_of_nonneg hnonneg hint).mp
+    (le_antisymm h (integral_nonneg hnonneg))
+  apply hμ.2 p.roots.toFinset
+  filter_upwards [hz] with x hx
+  rw [Multiset.mem_toFinset, Polynomial.mem_roots hp]
+  exact mul_self_eq_zero.mp hx
+
 /-- Monic polynomials of successive degrees orthogonal for the given moment measure. -/
 def AreMonicOrthogonal (μ : Measure ℝ) (p : ℕ → ℝ[X]) : Prop :=
   (∀ n, (p n).Monic ∧ (p n).natDegree = n) ∧
     ∀ i j, i ≠ j → (∫ x, (p i).eval x * (p j).eval x ∂μ) = 0
+
+/-- A monic sequence spanning all lower degrees tests orthogonality against
+any polynomial of degree strictly below the cutoff. -/
+theorem polynomialMomentPair_eq_zero_of_degree_lt {μ : Measure ℝ}
+    (hμ : HasInfiniteMomentSupport μ) {n : ℕ} (p : ℕ → ℝ[X]) (u q : ℝ[X])
+    (hp : ∀ i < n, (p i).Monic ∧ (p i).natDegree = i)
+    (horth : ∀ i < n, polynomialMomentPair μ (p i) u = 0) (hq : q.degree < n) :
+    polynomialMomentPair μ q u = 0 := by
+  induction n generalizing q with
+  | zero =>
+      have hzero : q = 0 := AddMonoidAlgebra.ext <| Finsupp.ext fun i ↦
+        ((degree_lt_iff_coeff_zero q 0).mp hq i (Nat.zero_le i)).trans (coeff_zero _).symm
+      simp only [hzero, polynomialMomentPair_def, eval_zero, zero_mul, integral_zero]
+  | succ n ih =>
+      let r := q - C (q.coeff n) * p n
+      have hpn := hp n (Nat.lt_succ_self n)
+      have hpnC : (p n).coeff n = 1 :=
+        (congrArg (p n).coeff hpn.2.symm).trans hpn.1.coeff_natDegree
+      have hr : r.degree < n := (degree_lt_iff_coeff_zero _ _).mpr fun k hk ↦ by
+        rcases hk.eq_or_lt with rfl | hk
+        · simp only [r, coeff_sub, coeff_C_mul, hpnC, mul_one, sub_self]
+        · dsimp only [r]
+          rw [coeff_sub, coeff_C_mul,
+            (degree_lt_iff_coeff_zero _ _).mp hq k (by omega),
+            coeff_eq_zero_of_natDegree_lt (hpn.2.trans_lt hk), mul_zero, sub_zero]
+      have hzero := ih r (fun i hi ↦ hp i (Nat.lt_succ_of_lt hi))
+        (fun i hi ↦ horth i (Nat.lt_succ_of_lt hi)) hr
+      simpa only [r, hμ.polynomialMomentPair_sub_left, polynomialMomentPair_C_mul_left,
+        horth n (Nat.lt_succ_self n), mul_zero, sub_zero] using hzero
+
+/-- Monicity and orthogonality against all lower degrees determine a polynomial
+uniquely. -/
+theorem eq_of_monic_polynomialMomentPair_eq_zero {μ : Measure ℝ}
+    (hμ : HasInfiniteMomentSupport μ) {n : ℕ} {p q : ℝ[X]}
+    (hp : p.Monic) (hq : q.Monic) (hpD : p.natDegree = n) (hqD : q.natDegree = n)
+    (hpO : ∀ r : ℝ[X], r.degree < n → polynomialMomentPair μ r p = 0)
+    (hqO : ∀ r : ℝ[X], r.degree < n → polynomialMomentPair μ r q = 0) : p = q := by
+  have hpd : p.degree = n := by rwa [degree_eq_natDegree hp.ne_zero, Nat.cast_inj]
+  have hqd : q.degree = n := by rwa [degree_eq_natDegree hq.ne_zero, Nat.cast_inj]
+  have hr : (p - q).degree < n := hpd ▸
+    degree_sub_lt_left (hpd.trans hqd.symm) hp.ne_zero (hp.trans hq.symm)
+  have hzero : polynomialMomentPair μ (p - q) (p - q) = 0 := by
+    rw [hμ.polynomialMomentPair_sub_left,
+      polynomialMomentPair_comm μ p (p - q), polynomialMomentPair_comm μ q (p - q),
+      hpO _ hr, hqO _ hr, sub_self]
+  by_contra h
+  exact (hμ.polynomialMomentPair_self_pos (sub_ne_zero.mpr h)).ne' hzero
 
 /-- **Gap 12.1.** The sequence of monic orthogonal polynomials exists and is unique. -/
 theorem existsUnique_monicOrthogonal (μ : Measure ℝ) (hμ : HasInfiniteMomentSupport μ) :
@@ -89,7 +197,52 @@ theorem IsGaussRule.roots_and_weights {n : ℕ} {μ : Measure ℝ}
     (p : ℕ → ℝ[X]) (hp : AreMonicOrthogonal μ p) :
     (p n).roots = Multiset.ofList (List.ofFn x) ∧ ∀ i,
       0 < w i ∧ w i = ∫ z, (Lagrange.basis Finset.univ x i).eval z ^ 2 ∂μ := by
-  sorry
+  classical
+  let q := Lagrange.nodal Finset.univ x
+  have hqD : q.natDegree = n := by rw [Lagrange.natDegree_nodal, Finset.card_univ, Fintype.card_fin]
+  have hqM : q.Monic := Lagrange.nodal_monic
+  have hq0 (i : Fin n) : q.eval (x i) = 0 := Lagrange.eval_nodal_at_node (Finset.mem_univ i)
+  have hqO (j : ℕ) (hj : j < n) : polynomialMomentPair μ (p j) q = 0 := by
+    have hdeg : (p j * q).natDegree < 2 * n := natDegree_mul_le.trans_lt (by
+      rw [(hp.1 j).2, hqD]
+      omega)
+    have he := h.2 (p j * q) hdeg
+    simpa only [polynomialMomentPair_def, eval_mul, hq0, mul_zero, Finset.sum_const_zero] using he
+  have hpO (j : ℕ) (hj : j < n) : polynomialMomentPair μ (p j) (p n) = 0 :=
+    hp.2 j n hj.ne
+  have hpq : p n = q :=
+    eq_of_monic_polynomialMomentPair_eq_zero hμ (hp.1 n).1 hqM (hp.1 n).2 hqD
+      (fun r hr ↦ polynomialMomentPair_eq_zero_of_degree_lt hμ p (p n) r
+        (fun j _ ↦ hp.1 j) hpO hr)
+      (fun r hr ↦ polynomialMomentPair_eq_zero_of_degree_lt hμ p q r
+        (fun j _ ↦ hp.1 j) hqO hr)
+  constructor
+  · rw [hpq]
+    dsimp only [q]
+    rw [Lagrange.nodal_eq, roots_prod _ _ hqM.ne_zero]
+    simp only [roots_X_sub_C, Multiset.bind_singleton, Finset.val_univ_fin, List.ofFn_eq_map,
+      Multiset.map_coe]
+  · intro i
+    let B := Lagrange.basis Finset.univ x i
+    have hBi : B.eval (x i) = 1 := Lagrange.eval_basis_self h.1.injOn (Finset.mem_univ i)
+    have hBne : B ≠ 0 := Lagrange.basis_ne_zero h.1.injOn (Finset.mem_univ i)
+    have hBD : B.natDegree = n - 1 := by
+      simpa only [Finset.card_univ, Fintype.card_fin] using
+        Lagrange.natDegree_basis (s := Finset.univ) h.1.injOn (Finset.mem_univ i)
+    have hBdeg : (B ^ 2).natDegree < 2 * n := natDegree_pow_le.trans_lt (by
+      rw [hBD]
+      have hi := i.isLt
+      omega)
+    have hW : (∫ z, B.eval z ^ 2 ∂μ) = w i := by
+      simp only [← eval_pow]
+      rw [h.2 _ hBdeg, Finset.sum_eq_single i]
+      · rw [eval_pow, hBi, one_pow, mul_one]
+      · intro j _ hj
+        have hzero : B.eval (x j) = 0 := Lagrange.eval_basis_of_ne hj.symm (Finset.mem_univ j)
+        rw [eval_pow, hzero, zero_pow (by decide), mul_zero]
+      · exact fun hi ↦ (hi (Finset.mem_univ i)).elim
+    exact ⟨hW ▸ (by simpa only [polynomialMomentPair_def, pow_two] using
+      hμ.polynomialMomentPair_self_pos hBne), hW.symm⟩
 
 /-- **Gap 12.7.** Golub--Welsch constructs an exact Gauss rule using the first
 row of an orthogonal diagonalization of the Jacobi matrix. -/

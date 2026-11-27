@@ -88,7 +88,32 @@ theorem IsQRIteration.exists_accumulatedFactors {𝕜 : Type*} [RCLike 𝕜] {n 
         P (k + 1) = P k * Q k ∧ U (k + 1) = R k * U k ∧
         B (k + 1) = (P (k + 1))ᴴ * A * P (k + 1) ∧ A ^ k = P k * U k ∧
         A * P k = P (k + 1) * R k := by
-  sorry
+  obtain ⟨h0, hstep⟩ := h
+  let P : ℕ → Matrix (Fin n) (Fin n) 𝕜 := fun k ↦ Nat.rec 1 (fun i p ↦ p * Q i) k
+  let U : ℕ → Matrix (Fin n) (Fin n) 𝕜 := fun k ↦ Nat.rec 1 (fun i u ↦ R i * u) k
+  have hP₀ : P 0 = 1 := rfl
+  have hU₀ : U 0 = 1 := rfl
+  have hP (k : ℕ) : P (k + 1) = P k * Q k := rfl
+  have hU (k : ℕ) : U (k + 1) = R k * U k := rfl
+  have hPB (k : ℕ) : (P k)ᴴ * P k = 1 ∧ A * P k = P k * B k := by
+    induction k with
+    | zero => simp only [hP₀, h0, conjTranspose_one, one_mul, mul_one, and_self]
+    | succ k ih =>
+      obtain ⟨hQ, -, hk, hnext⟩ := hstep k
+      have hs : (Q k)ᴴ * Q k = 1 := Unitary.star_mul_self_of_mem hQ
+      constructor
+      · rw [hP, conjTranspose_mul, Matrix.mul_assoc, ← Matrix.mul_assoc (P k)ᴴ, ih.1,
+          one_mul, hs]
+      · rw [hP, ← Matrix.mul_assoc, ih.2, hk, hnext]
+        simp only [Matrix.mul_assoc]
+  have hAP (k : ℕ) : A * P k = P (k + 1) * R k := by
+    rw [hP, Matrix.mul_assoc, ← (hstep k).2.2.1, (hPB k).2]
+  have hpow (k : ℕ) : A ^ k = P k * U k := by
+    induction k with
+    | zero => simp only [hP₀, hU₀, pow_zero, mul_one]
+    | succ k ih => rw [pow_succ', ih, ← Matrix.mul_assoc, hAP, hU, Matrix.mul_assoc]
+  refine ⟨P, U, rfl, rfl, fun k ↦ ⟨hP k, hU k, ?_, hpow k, hAP k⟩⟩
+  rw [Matrix.mul_assoc, (hPB (k + 1)).2, ← Matrix.mul_assoc, (hPB (k + 1)).1, one_mul]
 
 /-- **Gap 4.7.** Unshifted QR converges, modulo diagonal phases, to the triangular
 conjugate of an eigenbasis whose inverse admits elimination without pivoting. -/
@@ -128,6 +153,36 @@ theorem shiftedQR_upperHessenberg {n : ℕ} (H Q R : Matrix (Fin n) (Fin n) ℂ)
       ∀ i j, i.val = j.val + 1 → B i j ≠ 0 := by
   sorry
 
+/-- Unitary similarity preserves the Euclidean operator norm. -/
+theorem l2_opNorm_unitary_mul_mul_conjTranspose {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
+    {W : Matrix (Fin n) (Fin n) 𝕜} (hW : W ∈ unitary (Matrix (Fin n) (Fin n) 𝕜))
+    (Y : Matrix (Fin n) (Fin n) 𝕜) : ‖W * Y * Wᴴ‖ = ‖Y‖ := by
+  have bound {U Z : Matrix (Fin n) (Fin n) 𝕜}
+      (hU : U ∈ unitary (Matrix (Fin n) (Fin n) 𝕜)) : ‖U * Z * Uᴴ‖ ≤ ‖Z‖ := by
+    have hstar : Uᴴ * U = 1 := Unitary.star_mul_self_of_mem hU
+    have hs := Matrix.l2_opNorm_conjTranspose_mul_self U
+    rw [hstar] at hs
+    have hle : ‖(1 : Matrix (Fin n) (Fin n) 𝕜)‖ ≤ 1 := by
+      rw [← Matrix.l2_opNorm_toEuclideanCLM, map_one]
+      exact ContinuousLinearMap.norm_id_le
+    have hsq : ‖U‖ * ‖U‖ ≤ 1 := hs ▸ hle
+    have hu : ‖U‖ ≤ 1 := by nlinarith only [hsq, norm_nonneg U]
+    calc
+      ‖U * Z * Uᴴ‖ ≤ ‖U * Z‖ * ‖Uᴴ‖ := Matrix.l2_opNorm_mul ..
+      _ ≤ ‖U * Z‖ := by
+        rw [Matrix.l2_opNorm_conjTranspose]
+        exact mul_le_of_le_one_right (norm_nonneg _) hu
+      _ ≤ ‖U‖ * ‖Z‖ := Matrix.l2_opNorm_mul ..
+      _ ≤ ‖Z‖ := mul_le_of_le_one_left (norm_nonneg _) hu
+  refine le_antisymm (bound hW) ?_
+  have hstar : Wᴴ * W = 1 := Unitary.star_mul_self_of_mem hW
+  have hconj : Wᴴ * (W * Y * Wᴴ) * W = Y := by
+    rw [← Matrix.mul_assoc Wᴴ (W * Y), ← Matrix.mul_assoc Wᴴ W, hstar, one_mul,
+      Matrix.mul_assoc Y, hstar, mul_one]
+  have hWU : Wᴴ ∈ unitary (Matrix (Fin n) (Fin n) 𝕜) := Unitary.star_mem hW
+  have hbound := bound (Z := W * Y * Wᴴ) hWU
+  rwa [conjTranspose_conjTranspose, hconj] at hbound
+
 /-- **Gap 4.10.** Backward errors for successive unitary reductions add, with the
 second error budget scaled by the first perturbed matrix norm. -/
 theorem norm_conjTranspose_mul_sub_le_of_reductions {n : ℕ}
@@ -136,7 +191,41 @@ theorem norm_conjTranspose_mul_sub_le_of_reductions {n : ℕ}
     (hQ : Q ∈ unitary (Matrix (Fin n) (Fin n) ℂ)) (hbu : 0 ≤ b * u)
     (h₁ : ‖P * H * Pᴴ - A‖ ≤ a * u * ‖A‖) (h₂ : ‖Q * D * Qᴴ - H‖ ≤ b * u * ‖H‖) :
     ‖(P * Q) * D * (P * Q)ᴴ - A‖ ≤ (a + b * (1 + a * u)) * u * ‖A‖ := by
-  sorry
+  let E₂ := D - Qᴴ * H * Q
+  have hQQ : Q * Qᴴ = 1 := Unitary.mul_star_self_of_mem hQ
+  have hQres : Q * E₂ * Qᴴ = Q * D * Qᴴ - H := by
+    dsimp only [E₂]
+    rw [Matrix.mul_sub, Matrix.sub_mul, ← Matrix.mul_assoc Q (Qᴴ * H), ← Matrix.mul_assoc Q Qᴴ,
+      hQQ, one_mul, Matrix.mul_assoc H, hQQ, mul_one]
+  have h₂' : ‖E₂‖ ≤ b * u * ‖H‖ := by
+    rwa [← hQres, l2_opNorm_unitary_mul_mul_conjTranspose hQ] at h₂
+  have hH : ‖H‖ ≤ (1 + a * u) * ‖A‖ := by
+    calc
+      ‖H‖ = ‖P * H * Pᴴ‖ := (l2_opNorm_unitary_mul_mul_conjTranspose hP H).symm
+      _ ≤ ‖P * H * Pᴴ - A‖ + ‖A‖ := norm_le_norm_sub_add _ _
+      _ ≤ (1 + a * u) * ‖A‖ := by nlinarith only [h₁]
+  have hres : (P * Q) * E₂ * (P * Q)ᴴ = P * (Q * D * Qᴴ - H) * Pᴴ := by
+    rw [← hQres, conjTranspose_mul]
+    simp only [Matrix.mul_assoc]
+  have hsplit : (P * Q) * D * (P * Q)ᴴ - A =
+      (P * Q) * E₂ * (P * Q)ᴴ + (P * H * Pᴴ - A) := by
+    rw [hres]
+    simp only [conjTranspose_mul, Matrix.mul_sub, Matrix.sub_mul]
+    rw [sub_add_sub_cancel]
+    simp only [Matrix.mul_assoc]
+  have hscalar (t : ℝ) : b * u * ((1 + a * u) * t) + a * u * t =
+      (a + b * (1 + a * u)) * u * t := by ring
+  calc
+    ‖(P * Q) * D * (P * Q)ᴴ - A‖
+      ≤ ‖(P * Q) * E₂ * (P * Q)ᴴ‖ + ‖P * H * Pᴴ - A‖ := by
+        rw [hsplit]
+        exact norm_add_le ((P * Q) * E₂ * (P * Q)ᴴ) (P * H * Pᴴ - A)
+    _ = ‖E₂‖ + ‖P * H * Pᴴ - A‖ := by
+      rw [l2_opNorm_unitary_mul_mul_conjTranspose (mul_mem hP hQ)]
+    _ ≤ b * u * ‖H‖ + a * u * ‖A‖ := add_le_add h₂' h₁
+    _ ≤ b * u * ((1 + a * u) * ‖A‖) + a * u * ‖A‖ :=
+      add_le_add (mul_le_mul_of_nonneg_left hH hbu) le_rfl
+    _ = _ := hscalar ‖A‖
 
 /-- The span of the first $k$ iterates of a vector under an endomorphism. -/
 def krylovSubmodule {𝕜 E : Type*} [Field 𝕜] [AddCommGroup E] [Module 𝕜 E]

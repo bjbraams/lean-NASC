@@ -160,7 +160,6 @@ theorem IsRounding.monotone_and_eq {mode : RoundingMode} {rnd : ℝ → EReal}
         · exact down_mono hxy (h.1 x hx) (h.1 y (hx.trans hxy))
         rcases le_total y 0 with hy | hy
         · exact up_mono hxy (h.2 x hx) (h.2 y hy)
-        have hz : rnd 0 = (0 : ℝ) := le_antisymm (h.1 0 le_rfl).1.2 (h.2 0 le_rfl).1.2
         exact (up_mono hx (h.2 x hx) (h.2 0 le_rfl)).trans (down_mono hy (h.1 0 le_rfl) (h.1 y hy))
       · rcases le_total 0 x with h₀ | h₀
         · exact le_antisymm (h.1 x h₀).1.2 ((h.1 x h₀).2 ⟨hex x hx, le_rfl⟩)
@@ -256,12 +255,28 @@ def HasRelativeError (u exact computed : ℝ) : Prop :=
 theorem hasRelativeError_iff (u x y : ℝ) :
     HasRelativeError u x y ↔ ∃ δ : ℝ, |δ| ≤ u ∧ y = x * (1 + δ) := Iff.rfl
 
-/-- **Gap 1.8.** A signed product of rounding factors satisfies the accumulated bound. -/
-theorem hasRelativeError_prod_zpow {u : ℝ} {n : ℕ} (hn : (n : ℝ) * u < 1)
-    {δ : Fin n → ℝ} (hδ : ∀ j, |δ j| ≤ u) {s : Fin n → ℤ}
-    (hs : ∀ j, s j = 1 ∨ s j = -1) :
-    HasRelativeError (roundingGamma u n) 1 (∏ j, (1 + δ j) ^ s j) := by
-  sorry
+/-- The absolute error in the scalar model is at most the budget times the input magnitude. -/
+theorem HasRelativeError.abs_sub_le {u a b : ℝ} (h : HasRelativeError u a b) :
+    |b - a| ≤ u * |a| := by
+  obtain ⟨δ, hδ, rfl⟩ := h
+  have heq : a * (1 + δ) - a = a * δ := by ring
+  rw [heq, abs_mul, mul_comm u]
+  exact mul_le_mul_of_nonneg_left hδ (abs_nonneg _)
+
+/-- A perturbed scalar sum and one rounding multiplication compose their error bounds. -/
+theorem abs_mul_one_add_sub_le_of_abs_sub_le {a b δ p q w : ℝ}
+    (hab : |a - b| ≤ p * w) (hb : |b| ≤ w) (hδ : |δ| ≤ q) :
+    |a * (1 + δ) - b| ≤ (p + q + p * q) * w := by
+  have ha : |a| ≤ p * w + w := by
+    rw [← sub_add_cancel a b]
+    exact (abs_add_le _ _).trans (add_le_add hab hb)
+  have heq : a * (1 + δ) - b = (a - b) + a * δ := by ring
+  rw [heq]
+  calc
+    _ ≤ |a - b| + |a| * |δ| := by simpa only [abs_mul] using abs_add_le (a - b) (a * δ)
+    _ ≤ p * w + (p * w + w) * q :=
+      add_le_add hab (mul_le_mul ha hδ (abs_nonneg _) ((abs_nonneg _).trans ha))
+    _ = _ := by ring
 
 /-- **Gap 1.8.** Two error factors compose with the sum of their budgets. -/
 theorem roundingGamma_add_bound {u : ℝ} {j k : ℕ} (hu : 0 ≤ u)
@@ -290,6 +305,82 @@ theorem roundingGamma_add_bound {u : ℝ} {j k : ℕ} (hu : 0 ≤ u)
   rw [heq, ← hfrac a ha'.ne', ← hfrac b hb'.ne',
     ← hfrac (a + b) hden.ne'] at hle
   linarith only [hle]
+
+/-- Rounding factors have a nonnegative accumulated budget in its domain. -/
+theorem roundingGamma_nonneg {u : ℝ} {k : ℕ} (hu : 0 ≤ u) (hk : (k : ℝ) * u < 1) :
+    0 ≤ roundingGamma u k :=
+  div_nonneg (mul_nonneg (Nat.cast_nonneg _) hu) (sub_nonneg.mpr hk.le)
+
+/-- The budget is monotone in the number of rounding factors below the pole. -/
+theorem roundingGamma_mono {u : ℝ} {j k : ℕ} (hu : 0 ≤ u) (hj : j ≤ k)
+    (hk : (k : ℝ) * u < 1) : roundingGamma u j ≤ roundingGamma u k := by
+  have hjk : (j : ℝ) * u ≤ (k : ℝ) * u :=
+    mul_le_mul_of_nonneg_right (Nat.cast_le.mpr hj) hu
+  rw [roundingGamma_def, roundingGamma_def]
+  apply (div_le_div_iff₀ (sub_pos.mpr (hjk.trans_lt hk)) (sub_pos.mpr hk)).mpr
+  linarith only [hjk]
+
+/-- A single forward error factor satisfies the accumulated rounding budget. -/
+theorem le_roundingGamma_one {u : ℝ} (h : u < 1) : u ≤ roundingGamma u 1 := by
+  simp only [roundingGamma_def, Nat.cast_one, one_mul]
+  exact (le_div_iff₀ (sub_pos.mpr h)).mpr <| by nlinarith only [sq_nonneg u]
+
+/-- The error of a product of two factors is bounded by their errors and the cross term. -/
+theorem abs_mul_sub_one_le {a b p q : ℝ} (ha : |a - 1| ≤ p) (hb : |b - 1| ≤ q) :
+    |a * b - 1| ≤ p + q + p * q := by
+  have h : a * b - 1 = (a - 1) + (b - 1) + (a - 1) * (b - 1) := by ring
+  rw [h]
+  calc
+    _ ≤ |a - 1| + |b - 1| + |(a - 1) * (b - 1)| :=
+      (abs_add_le _ _).trans (add_le_add (abs_add_le _ _) le_rfl)
+    _ ≤ _ := by
+      rw [abs_mul]
+      exact add_le_add (add_le_add ha hb)
+        (mul_le_mul ha hb (abs_nonneg _) ((abs_nonneg _).trans ha))
+
+/-- A single signed factor is bounded by the single-operation budget. -/
+theorem abs_zpow_one_add_sub_one_le {u δ : ℝ} (hu : 0 ≤ u) (h : u < 1)
+    (hδ : |δ| ≤ u) {s : ℤ} (hs : s = 1 ∨ s = -1) :
+    |(1 + δ) ^ s - 1| ≤ roundingGamma u 1 := by
+  rcases hs with rfl | rfl
+  · simp only [zpow_one, add_sub_cancel_left]
+    exact hδ.trans (le_roundingGamma_one h)
+  · have hd : 0 < 1 + δ := by linarith only [(abs_le.mp hδ).1, h]
+    have heq : 1 - (1 + δ) = -δ := by ring
+    simp only [zpow_neg, zpow_one, ← one_div, div_sub_one hd.ne', heq,
+      abs_div, abs_neg, abs_of_pos hd, roundingGamma_def, Nat.cast_one, one_mul]
+    exact (div_le_div_of_nonneg_right hδ hd.le).trans
+      (div_le_div_of_nonneg_left hu (sub_pos.mpr h) (by linarith only [(abs_le.mp hδ).1]))
+
+/-- **Gap 1.8.** A signed product of rounding factors satisfies the accumulated bound. -/
+theorem hasRelativeError_prod_zpow {u : ℝ} {n : ℕ} (hn : (n : ℝ) * u < 1)
+    {δ : Fin n → ℝ} (hδ : ∀ j, |δ j| ≤ u) {s : Fin n → ℤ}
+    (hs : ∀ j, s j = 1 ∨ s j = -1) :
+    HasRelativeError (roundingGamma u n) 1 (∏ j, (1 + δ j) ^ s j) := by
+  induction n with
+  | zero =>
+      exact ⟨0, by simp [roundingGamma_def], by simp⟩
+  | succ n ih =>
+      have hu : 0 ≤ u := (abs_nonneg _).trans (hδ 0)
+      have hu' : u < 1 := by
+        have h : (1 : ℝ) ≤ (↑(n + 1) : ℝ) := by exact_mod_cast Nat.succ_pos n
+        exact ((by simpa only [one_mul] using mul_le_mul_of_nonneg_right h hu) :
+          u ≤ (↑(n + 1) : ℝ) * u).trans_lt hn
+      have htail : (n : ℝ) * u < 1 := by
+        rw [Nat.cast_succ, add_mul, one_mul] at hn
+        exact (le_add_of_nonneg_right hu).trans_lt hn
+      obtain ⟨ε, hε, hprod⟩ := ih htail (fun i ↦ hδ i.succ) (fun i ↦ hs i.succ)
+      simp only [one_mul] at hprod
+      have htail_bound : |(∏ j : Fin n, (1 + δ j.succ) ^ s j.succ) - 1| ≤
+          roundingGamma u n := by
+        simpa only [hprod, add_sub_cancel_left] using hε
+      rw [Fin.prod_univ_succ]
+      have hadd := roundingGamma_add_bound hu (j := n) (k := 1) hn
+      refine ⟨_, (abs_mul_sub_one_le (abs_zpow_one_add_sub_one_le hu hu' (hδ 0) (hs 0))
+        htail_bound).trans ?_, ?_⟩
+      · simpa only [add_comm (roundingGamma u n) (roundingGamma u 1),
+          mul_comm (roundingGamma u n) (roundingGamma u 1)] using hadd
+      · rw [one_mul, add_sub_cancel]
 
 /-- A finite summation tree records addition order and preserves multiplicities. -/
 inductive SumTree (ι : Type*)
@@ -322,12 +413,74 @@ def HasStableEvaluation (rnd : ℝ → ℝ) (x : ι → ℝ) (u : ℝ) : SumTree
     a.HasStableEvaluation rnd x u ∧ b.HasStableEvaluation rnd x u ∧
     HasRelativeError u (a.eval rnd x + b.eval rnd x) ((branch a b).eval rnd x)
 
+/-- The absolute value of a leaf sum is bounded by the sum of leaf magnitudes. -/
+theorem abs_sum_le_sum_abs_leaves (t : SumTree ι) (x : ι → ℝ) :
+    |(t.leaves.map x).sum| ≤ (t.leaves.map fun i ↦ |x i|).sum := by
+  induction t with
+  | leaf i => simp [leaves]
+  | branch a b iha ihb =>
+      simp only [leaves, List.map_append, List.sum_append]
+      exact (abs_add_le _ _).trans (add_le_add iha ihb)
+
+/-- A tree with preperturbed leaves has the leaf error budget plus its depth in additions. -/
+theorem abs_eval_sub_sum_le_of_leaf_error (t : SumTree ι)
+    {rnd : ℝ → ℝ} {x y : ι → ℝ} {u : ℝ} {k : ℕ} (hu : 0 ≤ u)
+    (hd : ((k + t.depth : ℕ) : ℝ) * u < 1) (ht : t.HasStableEvaluation rnd x u)
+    (hleaf : ∀ i, |x i - y i| ≤ roundingGamma u k * |y i|) :
+    |t.eval rnd x - (t.leaves.map y).sum| ≤
+      roundingGamma u (k + t.depth) * (t.leaves.map fun i ↦ |y i|).sum := by
+  induction t with
+  | leaf i => simpa only [depth, eval, leaves, Nat.add_zero, List.map_cons, List.map_nil,
+      List.sum_cons, List.sum_nil, add_zero] using hleaf i
+  | branch a b iha ihb =>
+      rw [HasStableEvaluation] at ht
+      obtain ⟨ha, hb, δ, hδ, hnode⟩ := ht
+      let d := k + max a.depth b.depth
+      have hd' : ((d + 1 : ℕ) : ℝ) * u < 1 := by simpa only [depth, ← Nat.add_assoc] using hd
+      have hlt {i : ℕ} (hi : i ≤ d + 1) : (i : ℝ) * u < 1 :=
+        (mul_le_mul_of_nonneg_right (Nat.cast_le.mpr hi) hu).trans_lt hd'
+      have hweaken {i : ℕ} (hi : i ≤ d) (w : ℝ) (hw : 0 ≤ w) :
+          roundingGamma u i * w ≤ roundingGamma u d * w :=
+        mul_le_mul_of_nonneg_right (roundingGamma_mono hu hi (hlt (Nat.le_succ d))) hw
+      have ha' : k + a.depth ≤ d := Nat.add_le_add_left (le_max_left _ _) k
+      have hb' : k + b.depth ≤ d := Nat.add_le_add_left (le_max_right _ _) k
+      have hnonneg (v : SumTree ι) : 0 ≤ (v.leaves.map fun i ↦ |y i|).sum :=
+        List.sum_nonneg fun _ h ↦ by
+          obtain ⟨i, _, rfl⟩ := List.mem_map.mp h
+          exact abs_nonneg _
+      have hdiff : |a.eval rnd x + b.eval rnd x - (a.leaves.map y ++ b.leaves.map y).sum| ≤
+          roundingGamma u d * ((a.leaves ++ b.leaves).map fun i ↦ |y i|).sum := by
+        rw [List.map_append, List.sum_append, List.sum_append, mul_add]
+        have heq : a.eval rnd x + b.eval rnd x - ((a.leaves.map y).sum + (b.leaves.map y).sum) =
+            (a.eval rnd x - (a.leaves.map y).sum) + (b.eval rnd x - (b.leaves.map y).sum) := by ring
+        rw [heq]
+        exact (abs_add_le _ _).trans (add_le_add
+          ((iha (hlt (ha'.trans (Nat.le_succ d))) ha).trans (hweaken ha' _ (hnonneg a)))
+          ((ihb (hlt (hb'.trans (Nat.le_succ d))) hb).trans (hweaken hb' _ (hnonneg b))))
+      rw [hnode, leaves, List.map_append]
+      have hu' : u < 1 := by simpa only [Nat.cast_one, one_mul] using hlt (Nat.succ_le_succ
+        (Nat.zero_le d))
+      have hδ' := hδ.trans (le_roundingGamma_one hu')
+      exact (abs_mul_one_add_sub_le_of_abs_sub_le hdiff
+        (by simpa only [leaves, List.map_append] using (branch a b).abs_sum_le_sum_abs_leaves y)
+        hδ').trans (mul_le_mul_of_nonneg_right (roundingGamma_add_bound hu hd')
+          (hnonneg (branch a b)))
+
+/-- Every finite binary sum tree has more leaves than the number of additions on any path. -/
+theorem depth_lt_length_leaves (t : SumTree ι) : t.depth < t.leaves.length := by
+  induction t with
+  | leaf i => simp [depth, leaves]
+  | branch a b iha ihb =>
+      simp only [depth, leaves, List.length_append]
+      omega
+
 /-- **Gap 1.9.** Summation on a tree of depth $d$ has budget $\gamma_d$. -/
 theorem abs_eval_sub_sum_le (t : SumTree ι) {rnd : ℝ → ℝ} {x : ι → ℝ} {u : ℝ}
     (hu : 0 ≤ u) (hd : (t.depth : ℝ) * u < 1) (ht : t.HasStableEvaluation rnd x u) :
     |t.eval rnd x - (t.leaves.map x).sum| ≤
       roundingGamma u t.depth * (t.leaves.map fun i ↦ |x i|).sum := by
-  sorry
+  simpa only [Nat.zero_add] using t.abs_eval_sub_sum_le_of_leaf_error (k := 0) (y := x)
+    hu (by simpa only [Nat.zero_add] using hd) ht (fun i ↦ by simp [roundingGamma_def])
 
 /-- The absolute sum of computed internal nodes, including the root when it is a branch. -/
 def sumAbsComputed (rnd : ℝ → ℝ) (x : ι → ℝ) : SumTree ι → ℝ
@@ -351,16 +504,8 @@ theorem abs_eval_sub_sum_le_computed (t : SumTree ι) {rnd : ℝ → ℝ} {x : �
   | branch a b iha ihb =>
       rw [HasInverseRelativeError] at ht
       obtain ⟨ha, hb, hnode⟩ := ht
-      obtain ⟨δ, hδ, hlocal⟩ := (hasRelativeError_iff _ _ _).mp hnode
-      have hdiff :
-          (branch a b).eval rnd x - (a.eval rnd x + b.eval rnd x) =
-            -(branch a b).eval rnd x * δ := by
-        linarith only [hlocal]
-      have hlocal_bound :
-          |(branch a b).eval rnd x - (a.eval rnd x + b.eval rnd x)| ≤
-            u * |(branch a b).eval rnd x| := by
-        rw [hdiff, abs_mul, abs_neg, mul_comm u]
-        exact mul_le_mul_of_nonneg_left hδ (abs_nonneg _)
+      have hlocal_bound := hnode.abs_sub_le
+      rw [abs_sub_comm] at hlocal_bound
       rw [leaves, List.map_append, List.sum_append, sumAbsComputed]
       calc
         _ = |((branch a b).eval rnd x - (a.eval rnd x + b.eval rnd x)) +
@@ -375,6 +520,75 @@ theorem abs_eval_sub_sum_le_computed (t : SumTree ι) {rnd : ℝ → ℝ} {x : �
         _ ≤ _ := by
           simpa only [mul_add] using add_le_add (add_le_add hlocal_bound (iha ha)) (ihb hb)
 
+/-- A scalar dot-product error within a weighted budget can be assigned to perturbations
+of the first factor, with the same relative budget at every entry. -/
+theorem exists_dotProduct_perturbation {ι : Type*} [Fintype ι] (x y : ι → ℝ) {e γ : ℝ}
+    (hγ : 0 ≤ γ) (hbound : |e| ≤ γ * ∑ i, |x i * y i|) :
+    ∃ dx : ι → ℝ, (∀ i, |dx i| ≤ γ * |x i|) ∧ (∑ i, dx i * y i) = e := by
+  let p := fun i ↦ x i * y i
+  let S := ∑ i, |p i|
+  have hs : 0 ≤ S := Finset.sum_nonneg fun _ _ ↦ abs_nonneg _
+  have hb : |e| ≤ γ * S := hbound
+  by_cases hS : S = 0
+  · have he : e = 0 := abs_eq_zero.mp <| le_antisymm
+      (by simpa only [hS, mul_zero] using hb) (abs_nonneg _)
+    refine ⟨fun _ ↦ 0, fun i ↦ ?_, ?_⟩
+    · simpa only [abs_zero] using mul_nonneg hγ (abs_nonneg (x i))
+    · simp [he]
+  have hpos := lt_of_le_of_ne hs (Ne.symm hS)
+  let dx : ι → ℝ := fun i ↦ if 0 ≤ y i then e / S * |x i| else -(e / S * |x i|)
+  have habs : |e / S| ≤ γ := by
+    rw [abs_div, abs_of_pos hpos]
+    exact (div_le_iff₀ hpos).mpr hb
+  refine ⟨dx, fun i ↦ ?_, ?_⟩
+  · by_cases hiy : 0 ≤ y i
+    · simpa only [dx, ite_eq_left hiy, abs_mul, abs_abs] using
+        mul_le_mul_of_nonneg_right habs (abs_nonneg (x i))
+    · simpa only [dx, ite_eq_right hiy, abs_neg, abs_mul, abs_abs] using
+        mul_le_mul_of_nonneg_right habs (abs_nonneg (x i))
+  · have hterm (i : ι) : dx i * y i = e / S * |p i| := by
+      by_cases hiy : 0 ≤ y i
+      · simp only [dx, ite_eq_left hiy, p, abs_mul, abs_of_nonneg hiy, mul_assoc]
+      · simp only [dx, ite_eq_right hiy, p, abs_mul, abs_of_neg (lt_of_not_ge hiy), neg_mul,
+          mul_neg, mul_assoc]
+    simp only [hterm, ← Finset.mul_sum]
+    exact div_mul_cancel₀ _ hS
+
+/-- A sum tree that enumerates a finite dot product gives a componentwise perturbation. -/
+theorem exists_dotProduct_eq_sum_mul_perturbed_of_sums {ι : Type*} [Fintype ι]
+    {m : ℕ} {t : SumTree ι} {x y : ι → ℝ} {u : ℝ} {rnd : ℝ → ℝ}
+    (hu : 0 ≤ u) (hm : (m : ℝ) * u < 1) (hlen : t.leaves.length = m)
+    (hsum : ∀ f : ι → ℝ, (t.leaves.map f).sum = ∑ i, f i)
+    (hmul : ∀ i, HasRelativeError u (x i * y i) (rnd (x i * y i)))
+    (ht : t.HasStableEvaluation rnd (fun i ↦ rnd (x i * y i)) u) :
+    ∃ dx : ι → ℝ, (∀ i, |dx i| ≤ roundingGamma u m * |x i|) ∧
+      t.eval rnd (fun i ↦ rnd (x i * y i)) = ∑ i, (x i + dx i) * y i := by
+  let p := fun i ↦ x i * y i
+  have hdepth := t.depth_lt_length_leaves
+  have hd : 1 + t.depth ≤ m := by omega
+  have hsmall : ((1 + t.depth : ℕ) : ℝ) * u < 1 :=
+    (mul_le_mul_of_nonneg_right (Nat.cast_le.mpr hd) hu).trans_lt hm
+  have hm' : (1 : ℕ) ≤ m := by omega
+  have hmono : u ≤ (m : ℝ) * u := by
+    simpa only [Nat.cast_one, one_mul] using
+      mul_le_mul_of_nonneg_right (Nat.cast_le.mpr hm') hu
+  have hu' : u < 1 := hmono.trans_lt hm
+  have hleaf (i : ι) : |rnd (p i) - p i| ≤ roundingGamma u 1 * |p i| :=
+    (hmul i).abs_sub_le.trans (mul_le_mul_of_nonneg_right (le_roundingGamma_one hu')
+      (abs_nonneg _))
+  let S := ∑ i, |p i|
+  let e := t.eval rnd (fun i ↦ rnd (p i)) - ∑ i, p i
+  have hs : 0 ≤ S := Finset.sum_nonneg fun _ _ ↦ abs_nonneg _
+  have hbound : |e| ≤ roundingGamma u m * S := by
+    have h := t.abs_eval_sub_sum_le_of_leaf_error hu hsmall ht hleaf
+    rw [hsum, hsum] at h
+    exact h.trans (mul_le_mul_of_nonneg_right (roundingGamma_mono hu hd hm) hs)
+  obtain ⟨dx, hdx, hpert⟩ := exists_dotProduct_perturbation x y
+    (roundingGamma_nonneg hu hm) hbound
+  refine ⟨dx, hdx, ?_⟩
+  simp only [add_mul, Finset.sum_add_distrib, hpert, e, p]
+  abel
+
 /-- **Gap 1.10.** A dot product computed with one multiplication per entry admits a
 componentwise backward error under the standard arithmetic model. -/
 theorem exists_dotProduct_eq_sum_mul_perturbed {n : ℕ} {t : SumTree (Fin n)}
@@ -384,7 +598,11 @@ theorem exists_dotProduct_eq_sum_mul_perturbed {n : ℕ} {t : SumTree (Fin n)}
     (ht : t.HasStableEvaluation rnd (fun i ↦ rnd (x i * y i)) u) :
     ∃ dx : Fin n → ℝ, (∀ i, |dx i| ≤ roundingGamma u n * |x i|) ∧
       t.eval rnd (fun i ↦ rnd (x i * y i)) = ∑ i, (x i + dx i) * y i := by
-  sorry
+  refine exists_dotProduct_eq_sum_mul_perturbed_of_sums hu hn
+    (hperm.length_eq.trans List.length_finRange) ?_ hmul ht
+  intro f
+  rw [(hperm.map f).sum_eq, List.finRange, List.map_ofFn, List.sum_ofFn]
+  rfl
 
 /-- **Gap 1.10.** Computing each matrix entry by a rounded inner product
 gives the componentwise matrix multiplication error estimate. -/
@@ -396,7 +614,18 @@ theorem abs_matrixProduct_error_le {m n p : ℕ} (A : Matrix (Fin m) (Fin n) ℝ
     (ht : ∀ i j, (t i j).HasStableEvaluation rnd (fun k ↦ rnd (A i k * B k j)) u) :
     ∀ i j, |(A * B) i j - (t i j).eval rnd (fun k ↦ rnd (A i k * B k j))| ≤
       roundingGamma u n * ∑ k, |A i k| * |B k j| := by
-  sorry
+  intro i j
+  obtain ⟨dx, hdx, heval⟩ :=
+    exists_dotProduct_eq_sum_mul_perturbed hu hn (hperm i j) (fun k ↦ hmul i k j) (ht i j)
+  rw [Matrix.mul_apply, heval, ← Finset.sum_sub_distrib]
+  calc
+    _ ≤ ∑ k, |A i k * B k j - (A i k + dx k) * B k j| := Finset.abs_sum_le_sum_abs _ _
+    _ ≤ roundingGamma u n * ∑ k, |A i k| * |B k j| := by
+      rw [Finset.mul_sum]
+      refine Finset.sum_le_sum fun k _ ↦ ?_
+      have hk : A i k * B k j - (A i k + dx k) * B k j = -(dx k) * B k j := by ring
+      rw [hk, abs_mul, abs_neg, ← mul_assoc]
+      exact mul_le_mul_of_nonneg_right (hdx k) (abs_nonneg _)
 
 end SumTree
 
@@ -428,7 +657,7 @@ theorem abs_kahanAccumulator_sub_sum_le :
   sorry
 
 /-- Rounded forward substitution with error at each row operation and arbitrary addition
-orders within rows. -/
+orders within rows. The first row performs only division. -/
 def IsRoundedForwardSubstitution {n : ℕ} (T : Matrix (Fin n) (Fin n) ℝ)
     (b x : Fin n → ℝ) (rnd : ℝ → ℝ) (u : ℝ) : Prop :=
   ∀ i, ∃ s : ℝ,
@@ -438,8 +667,116 @@ def IsRoundedForwardSubstitution {n : ℕ} (T : Matrix (Fin n) (Fin n) ℝ)
         t.HasStableEvaluation rnd (fun j ↦ rnd (T i j.val * x j.val)) u ∧
         s = t.eval rnd (fun j ↦ rnd (T i j.val * x j.val))) ∧
     (∀ j < i, HasRelativeError u (T i j * x j) (rnd (T i j * x j))) ∧
-    HasRelativeError u (b i - s) (rnd (b i - s)) ∧
-    HasRelativeError u (rnd (b i - s) / T i i) (x i)
+    (if i.val = 0 then HasRelativeError u (b i / T i i) (x i) else
+      HasRelativeError u (b i - s) (rnd (b i - s)) ∧
+      HasRelativeError u (rnd (b i - s) / T i i) (x i))
+
+/-- One division, with an optional rounded numerator, perturbs only the divisor.
+The integer budget is one for an exact numerator and two for a rounded one. -/
+theorem exists_perturbed_divisor {u a t x : ℝ} {k : ℕ} (hu : 0 ≤ u) (hu₁ : u < 1)
+    (hk : (k : ℝ) * u < 1) (ht : t ≠ 0)
+    (hx : (k = 1 ∧ HasRelativeError u (a / t) x) ∨
+      (k = 2 ∧ ∃ b, HasRelativeError u a b ∧ HasRelativeError u (b / t) x)) :
+    ∃ d, |d| ≤ roundingGamma u k * |t| ∧ (t + d) * x = a := by
+  have perturb (r : ℝ) (hr : |r - 1| ≤ roundingGamma u k) (he : r * t * x = a) :
+      ∃ d, |d| ≤ roundingGamma u k * |t| ∧ (t + d) * x = a := by
+    refine ⟨(r - 1) * t, ?_, ?_⟩
+    · rw [abs_mul]
+      exact mul_le_mul_of_nonneg_right hr (abs_nonneg _)
+    · calc
+        _ = r * t * x := by ring
+        _ = _ := he
+  have pos {δ : ℝ} (hδ : |δ| ≤ u) : 0 < 1 + δ := by
+    linarith only [(abs_le.mp hδ).1, hu₁]
+  have one {δ : ℝ} (hδ : |δ| ≤ u) : |(1 + δ)⁻¹ - 1| ≤ roundingGamma u 1 := by
+    simpa only [zpow_neg_one] using abs_zpow_one_add_sub_one_le hu hu₁ hδ (Or.inr rfl)
+  rcases hx with ⟨h₁, δ, hδ, hδeq⟩ | ⟨h₂, b, ⟨δ, hδ, hδeq⟩, ⟨ε, hε, hεeq⟩⟩
+  · refine perturb _ (by simpa only [h₁] using one hδ) ?_
+    rw [hδeq]
+    field_simp [(pos hδ).ne', ht]
+  · have herr := abs_mul_sub_one_le (one hδ) (one hε)
+    have hγ := roundingGamma_add_bound hu (j := 1) (k := 1) (by simpa only [h₂] using hk)
+    refine perturb _ (by simpa only [h₂] using herr.trans hγ) ?_
+    rw [hεeq, hδeq]
+    field_simp [(pos hδ).ne', (pos hε).ne', ht]
+
+/-- The strict subdiagonal dot product in a row has a componentwise backward error. -/
+theorem exists_subdiagonal_backwardError {n : ℕ} (T : Matrix (Fin n) (Fin n) ℝ)
+    (x : Fin n → ℝ) {rnd : ℝ → ℝ} {u s : ℝ} (hu : 0 ≤ u) (hn : (n : ℝ) * u < 1)
+    (i : Fin n) (hs : if i.val = 0 then s = 0 else
+      ∃ t : SumTree {j : Fin n // j < i},
+        t.leaves.Perm (Finset.univ.toList : List {j : Fin n // j < i}) ∧
+        t.HasStableEvaluation rnd (fun j ↦ rnd (T i j.val * x j.val)) u ∧
+        s = t.eval rnd (fun j ↦ rnd (T i j.val * x j.val)))
+    (hmul : ∀ j < i, HasRelativeError u (T i j * x j) (rnd (T i j * x j))) :
+    ∃ e : {j : Fin n // j < i} → ℝ, (∀ j, |e j| ≤ roundingGamma u n * |T i j.val|) ∧
+      ∑ j : {j : Fin n // j < i}, (T i j.val + e j) * x j.val = s := by
+  by_cases hi : i.val = 0
+  · rw [ite_eq_left hi] at hs
+    let hEmpty : IsEmpty {j : Fin n // j < i} := ⟨fun j ↦
+      (Nat.not_lt_zero j.val.val) (hi ▸ Fin.lt_def.mp j.prop)⟩
+    refine ⟨fun j ↦ isEmptyElim j, fun j ↦ isEmptyElim j, ?_⟩
+    simp [hs]
+  rw [ite_eq_right hi] at hs
+  obtain ⟨t, hperm, ht, ht_sum⟩ := hs
+  have hcard : Fintype.card {j : Fin n // j < i} = i.val := by
+    rw [Fintype.card_subtype]
+    have hset : (Finset.univ.filter fun j : Fin n ↦ j < i) = Finset.Iio i := by
+      ext j
+      simp
+    rw [hset, Fin.card_Iio]
+  have hlen : t.leaves.length = i.val := by
+    rw [hperm.length_eq, Finset.length_toList, Finset.card_univ, hcard]
+  have hsum (f : {j : Fin n // j < i} → ℝ) : (t.leaves.map f).sum = ∑ j, f j := by
+    rw [(hperm.map f).sum_eq, Finset.sum_eq_multiset_sum, ← Finset.coe_toList,
+      Multiset.map_coe, Multiset.sum_coe]
+  have hsmall : (i.val : ℝ) * u < 1 :=
+    (mul_le_mul_of_nonneg_right (Nat.cast_le.mpr i.isLt.le) hu).trans_lt hn
+  obtain ⟨e, he, hsum⟩ := SumTree.exists_dotProduct_eq_sum_mul_perturbed_of_sums
+    hu hsmall hlen hsum (fun j ↦ hmul _ j.prop) ht
+  refine ⟨e, fun j ↦ (he j).trans (mul_le_mul_of_nonneg_right
+    (roundingGamma_mono hu i.isLt.le hn) (abs_nonneg _)), ?_⟩
+  rw [ht_sum, hsum]
+
+/-- A lower-triangular row is the sum of its diagonal and strict subdiagonal terms. -/
+theorem exists_row_backwardError {n : ℕ} (T : Matrix (Fin n) (Fin n) ℝ)
+    (b x : Fin n → ℝ) {u : ℝ} (hu : 0 ≤ u) (hn : (n : ℝ) * u < 1)
+    (htri : ∀ i j, i < j → T i j = 0) (i : Fin n) {s d : ℝ}
+    (hd : |d| ≤ roundingGamma u n * |T i i|) (hds : (T i i + d) * x i = b i - s)
+    (e : {j : Fin n // j < i} → ℝ) (he : ∀ j, |e j| ≤ roundingGamma u n * |T i j.val|)
+    (hes : ∑ j : {j : Fin n // j < i}, (T i j.val + e j) * x j.val = s) :
+    ∃ r : Fin n → ℝ, (∀ j, |r j| ≤ roundingGamma u n * |T i j|) ∧
+      ∑ j, (T i j + r j) * x j = b i := by
+  let r : Fin n → ℝ := fun j ↦ if j = i then d else if h : j < i then e ⟨j, h⟩ else 0
+  have hsub (j : {j : Fin n // j < i}) : r j.val = e j := by
+    simp only [r, ite_eq_right j.prop.ne, dite_eq_left j.prop]
+  have hdiag : r i = d := by simp [r]
+  refine ⟨r, fun j ↦ ?_, ?_⟩
+  · rcases lt_trichotomy j i with hj | rfl | hj
+    · simpa only [hsub ⟨j, hj⟩] using (he ⟨j, hj⟩)
+    · simpa only [hdiag] using hd
+    · have hzero : r j = 0 := by
+        simp only [r, ite_eq_right hj.ne', dite_eq_right (not_lt_of_ge hj.le)]
+      simp only [hzero, abs_zero]
+      exact mul_nonneg (roundingGamma_nonneg hu hn) (abs_nonneg _)
+  have hsubset : Finset.Iio i ⊆ Finset.univ.erase i := fun j hj ↦
+    Finset.mem_erase.mpr ⟨(Finset.mem_Iio.mp hj).ne, Finset.mem_univ _⟩
+  have heq : (∑ j ∈ Finset.Iio i, (T i j + r j) * x j) =
+      ∑ j ∈ Finset.univ.erase i, (T i j + r j) * x j := by
+    refine Finset.sum_subset hsubset fun j hj hji ↦ ?_
+    have hlt : i < j := lt_of_le_of_ne (le_of_not_gt fun h ↦ hji (Finset.mem_Iio.mpr h))
+      (Finset.mem_erase.mp hj).1.symm
+    simp only [r, ite_eq_right hlt.ne', dite_eq_right (not_lt_of_ge hlt.le),
+      htri _ _ hlt, add_zero, zero_mul]
+  calc
+    _ = (∑ j ∈ Finset.univ.erase i, (T i j + r j) * x j) + (T i i + r i) * x i :=
+      (Finset.sum_erase_add Finset.univ _ (Finset.mem_univ i)).symm
+    _ = s + (b i - s) := by
+      have hsubtype := Finset.sum_subtype (F := inferInstance) (Finset.Iio i)
+        (fun j : Fin n ↦ Finset.mem_Iio) (fun j ↦ (T i j + r j) * x j)
+      rw [hdiag, hds, ← heq, hsubtype]
+      simp only [hsub, hes]
+    _ = b i := by abel
 
 /-- **Gap 1.13.** Forward substitution has a componentwise backward-error certificate. -/
 theorem IsRoundedForwardSubstitution.exists_backwardError {n : ℕ}
@@ -449,6 +786,37 @@ theorem IsRoundedForwardSubstitution.exists_backwardError {n : ℕ}
     (hdiag : ∀ i, T i i ≠ 0) :
     ∃ E : Matrix (Fin n) (Fin n) ℝ, (T + E) *ᵥ x = b ∧
       ∀ i j, |E i j| ≤ roundingGamma u n * |T i j| := by
-  sorry
+  classical
+  have hrow (i : Fin n) :
+      ∃ r : Fin n → ℝ, (∀ j, |r j| ≤ roundingGamma u n * |T i j|) ∧
+        ∑ j, (T i j + r j) * x j = b i := by
+    obtain ⟨s, hs, hmul, hstep⟩ := h i
+    obtain ⟨e, he, hes⟩ := exists_subdiagonal_backwardError T x hu hn i hs hmul
+    let k := if i.val = 0 then 1 else 2
+    have hk : k ≤ n := by
+      by_cases hi : i.val = 0
+      · simpa only [k, ite_eq_left hi] using Nat.one_le_of_lt (hi ▸ i.isLt)
+      · have hi' := i.isLt
+        simp only [k, ite_eq_right hi]
+        omega
+    have hlt {l : ℕ} (hl : l ≤ n) : (l : ℝ) * u < 1 :=
+      (mul_le_mul_of_nonneg_right (Nat.cast_le.mpr hl) hu).trans_lt hn
+    have hu₁ : u < 1 := by
+      simpa only [Nat.cast_one, one_mul] using
+        hlt (Nat.one_le_of_lt (i.val.zero_le.trans_lt i.isLt))
+    obtain ⟨d, hd, hds⟩ := exists_perturbed_divisor hu hu₁ (hlt hk) (hdiag i)
+        (a := b i - s) (x := x i) (by
+      by_cases hi : i.val = 0
+      · rw [ite_eq_left hi] at hs hstep
+        exact Or.inl ⟨ite_eq_left hi, by simpa only [hs, sub_zero] using hstep⟩
+      · rw [ite_eq_right hi] at hstep
+        exact Or.inr ⟨ite_eq_right hi, _, hstep⟩)
+    exact exists_row_backwardError T b x hu hn htri i
+      (hd.trans (mul_le_mul_of_nonneg_right (roundingGamma_mono hu hk hn) (abs_nonneg _)))
+      hds e he hes
+  choose r hr hrs using hrow
+  refine ⟨Matrix.of r, ?_, hr⟩
+  ext i
+  exact hrs i
 
 end NASC

@@ -3,11 +3,14 @@ module
 public import NASC.EigenvalueMethods
 public import Mathlib.Analysis.Normed.Algebra.Spectrum
 
+import Mathlib.Analysis.Normed.Algebra.GelfandFormula
+
 /-!
 # Iterative methods for linear systems
 
 Matrix splittings, polynomial acceleration, conjugate gradients, and GMRES. Convergence of
 Krylov methods is formulated in exact arithmetic.
+The stationary iteration criterion uses Mathlib's Gelfand formula and geometric bound on powers.
 -/
 
 public section
@@ -19,6 +22,43 @@ namespace NASC
 open scoped Matrix BigOperators Matrix.Norms.L2Operator ENNReal InnerProductSpace ComplexOrder
 open Filter Matrix Polynomial
 
+/-- In a complex Banach algebra, powers tend to zero precisely below spectral radius one. -/
+theorem tendsto_pow_atTop_nhds_zero_iff_spectralRadius_lt_one
+    {A : Type*} [NormedRing A] [NormedAlgebra ℂ A] [CompleteSpace A] (a : A) :
+    Tendsto (fun k : ℕ ↦ a ^ k) atTop (nhds 0) ↔ spectralRadius ℂ a < 1 := by
+  rw [spectrum.spectralRadius_eq_gelfandRadius, ENNReal.ofReal_lt_one,
+    tendsto_zero_iff_norm_tendsto_zero]
+  constructor
+  · intro h
+    obtain ⟨k, hk, hnorm⟩ := ((eventually_ne_atTop (0 : ℕ)).and
+      (h.eventually_lt_const zero_lt_one)).exists
+    exact (pow_lt_one_iff_of_nonneg (gelfandRadius_nonneg a) hk).mp
+      ((gelfandRadius_pow_le_norm_pow a hk).trans_lt hnorm)
+  · intro h
+    obtain ⟨q, haq, hq⟩ := exists_between h
+    obtain ⟨C, _, hC⟩ := norm_pow_le_mul_pow_of_gelfandRadius_lt a haq
+    have hlim : Tendsto (fun k : ℕ ↦ C * q ^ k) atTop (nhds 0) := by
+      simpa only [mul_zero] using
+        (tendsto_pow_atTop_nhds_zero_of_lt_one
+          ((gelfandRadius_nonneg a).trans haq.le) hq).const_mul C
+    exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hlim
+      (fun _ ↦ norm_nonneg _) hC
+
+/-- A sequence of square matrices whose action on each coordinate vector tends to zero
+converges to zero in the operator norm. -/
+theorem tendsto_matrix_zero_of_tendsto_toEuclideanLin_single {n : ℕ}
+    {A : ℕ → Matrix (Fin n) (Fin n) ℂ}
+    (h : ∀ j : Fin n, Tendsto (fun k ↦ (A k).toEuclideanLin (EuclideanSpace.single j 1))
+      atTop (nhds 0)) : Tendsto A atTop (nhds 0) := by
+  apply tendsto_pi_nhds.mpr
+  intro i
+  apply tendsto_pi_nhds.mpr
+  intro j
+  have hcoord := (PiLp.continuous_apply 2 (fun _ : Fin n ↦ ℂ) i).continuousAt.tendsto.comp (h j)
+  simpa only [Function.comp_def, EuclideanSpace.single, Matrix.toLpLin_apply, PiLp.ofLp_single,
+    WithLp.ofLp_toLp, Matrix.mulVec_single, MulOpposite.op_one, one_smul, Matrix.col_apply,
+    PiLp.zero_apply, Matrix.zero_apply] using hcoord
+
 /-- **Gap 5.1.** A splitting iteration has the power error formula and converges from
 every starting vector exactly when the iteration matrix has spectral radius below one. -/
 theorem splittingIteration_converges_iff {n : ℕ}
@@ -28,7 +68,46 @@ theorem splittingIteration_converges_iff {n : ℕ}
     let T := fun y ↦ G.toEuclideanLin y + (x - G.toEuclideanLin x)
     (∀ y k, T^[k] y - x = (G ^ k).toEuclideanLin (y - x)) ∧
       ((∀ y, Tendsto (fun k ↦ T^[k] y) atTop (nhds x)) ↔ spectralRadius ℂ G < 1) := by
-  sorry
+  dsimp only
+  let G := (↑M⁻¹ : Matrix (Fin n) (Fin n) ℂ) * N
+  let T := fun y ↦ G.toEuclideanLin y + (x - G.toEuclideanLin x)
+  let L := Matrix.toEuclideanCLM (n := Fin n) (𝕜 := ℂ)
+  have hL (A : Matrix (Fin n) (Fin n) ℂ) (y : EuclideanSpace ℂ (Fin n)) :
+      A.toEuclideanLin y = L A y := by
+    rw [← Matrix.coe_toEuclideanCLM_eq_toEuclideanLin, ContinuousLinearMap.coe_coe]
+  have hstep (y : EuclideanSpace ℂ (Fin n)) : T y - x = L G (y - x) := by
+    dsimp only [T]
+    rw [map_sub, ← hL, ← hL]
+    abel
+  have herr (y : EuclideanSpace ℂ (Fin n)) (k : ℕ) :
+      T^[k] y - x = L (G ^ k) (y - x) := by
+    induction k with
+    | zero =>
+      simp only [Function.iterate_zero_apply, pow_zero, map_one, one_apply_eq_self]
+    | succ k ih =>
+      rw [Function.iterate_succ_apply', hstep, ih, pow_succ']
+      simp only [map_mul L G (G ^ k), mul_apply_eq_comp]
+  refine ⟨fun y k ↦ (herr y k).trans (hL _ _).symm, ?_⟩
+  rw [← tendsto_pow_atTop_nhds_zero_iff_spectralRadius_lt_one]
+  constructor
+  · intro h
+    refine tendsto_matrix_zero_of_tendsto_toEuclideanLin_single fun j ↦ ?_
+    let v := EuclideanSpace.single (𝕜 := ℂ) j 1
+    have he : Tendsto (fun k ↦ T^[k] (v + x) - x) atTop (nhds 0) := by
+      simpa only [sub_self] using (h (v + x)).sub_const x
+    refine he.congr fun k ↦ ?_
+    rw [herr, add_sub_cancel_right, hL]
+  · intro h y
+    have hn := tendsto_zero_iff_norm_tendsto_zero.mp h
+    have hlim : Tendsto (fun k ↦ ‖G ^ k‖ * ‖y - x‖) atTop (nhds 0) := by
+      simpa only [zero_mul] using hn.mul_const ‖y - x‖
+    have hp : Tendsto (fun k ↦ L (G ^ k) (y - x)) atTop (nhds 0) := by
+      apply tendsto_zero_iff_norm_tendsto_zero.mpr
+      exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hlim
+        (fun _ ↦ norm_nonneg _) (fun k ↦ by
+          simpa only [L, Matrix.l2_opNorm_toEuclideanCLM] using (L (G ^ k)).le_opNorm (y - x))
+    have ht := (hp.congr fun k ↦ (herr y k).symm).add_const x
+    simpa only [sub_add_cancel, zero_add] using ht
 
 /-- Spectral radius of a real matrix computed after extending scalars to the complex field. -/
 def realMatrixSpectralRadius {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) : ℝ≥0∞ :=

@@ -6,13 +6,15 @@ public import Mathlib.Analysis.InnerProductSpace.SingularValues
 public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 public import Mathlib.LinearAlgebra.Matrix.Rank
 public import Mathlib.Analysis.Normed.Module.FiniteDimension
+import Mathlib.Analysis.Normed.Module.HahnBanach
 
 /-!
 # Conditioning and matrix perturbations
 
 Local amplification, backward error, perturbations of eigenvalues and singular values,
 pseudospectra and the leading singular subspaces. Singular values use Mathlib's zero-based
-indexing.
+indexing. The conditioning proofs use Mathlib’s converse local Lipschitz estimate for
+Fréchet derivatives and Hahn–Banach norming functionals.
 -/
 
 public section
@@ -49,7 +51,45 @@ theorem HasFDerivAt.absoluteConditionNumber_eq {E F : Type*}
     {f : E → F} {D : E →L[ℝ] F} {s : Set E} {x : E} (hf : HasFDerivAt f D x)
     (hs : s ∈ nhds x) :
     absoluteConditionNumber f s x = ENNReal.ofReal ‖D‖ := by
-  sorry
+  rw [absoluteConditionNumber_def]
+  apply le_antisymm
+  · refine ENNReal.le_of_forall_pos_le_add fun ε hε _ ↦ ?_
+    have hε' : (0 : ℝ) < ε := hε
+    rw [← ENNReal.ofReal_coe_nnreal, ← ENNReal.ofReal_add (norm_nonneg _) hε'.le]
+    obtain ⟨r, hr, hball⟩ := Metric.mem_nhds_iff.mp (hf.isLittleO.bound hε')
+    refine (iInf_le _ ⟨r / 2, half_pos hr⟩).trans ?_
+    refine iSup_le fun y ↦ iSup_le fun hy ↦ ENNReal.ofReal_le_ofReal ?_
+    have hyball : y ∈ Metric.ball x r := by
+      rw [Metric.mem_ball, dist_eq_norm]
+      exact lt_of_le_of_lt hy.2.2 (half_lt_self hr)
+    have hrem : ‖f y - f x - D (y - x)‖ ≤ ε * ‖y - x‖ := hball hyball
+    refine (div_le_iff₀ (norm_pos_iff.mpr (sub_ne_zero.mpr hy.2.1))).mpr ?_
+    calc
+      ‖f y - f x‖ ≤ ‖D (y - x)‖ + ‖f y - f x - D (y - x)‖ := by
+        rw [norm_sub_rev (f y - f x)]
+        exact norm_le_insert _ _
+      _ ≤ ‖D‖ * ‖y - x‖ + ε * ‖y - x‖ := add_le_add (D.le_opNorm _) hrem
+      _ = (‖D‖ + ε) * ‖y - x‖ := (add_mul ..).symm
+  · refine le_iInf fun d ↦ ?_
+    let M := ⨆ y : E, ⨆ (_ : y ∈ s ∧ y ≠ x ∧ ‖y - x‖ ≤ d.val),
+      ENNReal.ofReal (‖f y - f x‖ / ‖y - x‖)
+    obtain htop | hfinite := eq_or_ne M ⊤
+    · calc
+        _ ≤ ⊤ := le_top
+        _ = M := htop.symm
+    refine (ENNReal.ofReal_le_iff_le_toReal hfinite).mpr (hf.le_of_lip' ENNReal.toReal_nonneg ?_)
+    filter_upwards [hs, Metric.ball_mem_nhds x d.prop] with y hys hyball
+    by_cases hy : y = x
+    · simp only [hy, sub_self, norm_zero, mul_zero, le_refl]
+    have hy' : y ∈ s ∧ y ≠ x ∧ ‖y - x‖ ≤ d := by
+      refine ⟨hys, hy, ?_⟩
+      rw [← dist_eq_norm]
+      exact (Metric.mem_ball.mp hyball).le
+    have hle : ENNReal.ofReal (‖f y - f x‖ / ‖y - x‖) ≤ M :=
+      le_iSup_of_le y (le_iSup_of_le hy' le_rfl)
+    have hpos : 0 < ‖y - x‖ := norm_pos_iff.mpr (sub_ne_zero.mpr hy)
+    rw [ENNReal.ofReal_le_iff_le_toReal hfinite, div_le_iff₀ hpos] at hle
+    exact hle
 
 end NormedSpaces
 
@@ -57,6 +97,7 @@ section LinearSystems
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
 
+omit [FiniteDimensional ℝ E] in
 /-- **Gap 2.4.** Normwise forward error when simultaneous perturbations affect the
 operator and right-hand side of a linear solve. -/
 theorem norm_sub_le_of_perturbed_eq (A : E ≃L[ℝ] E) {x y db : E} {dA : E →L[ℝ] E}
@@ -65,15 +106,92 @@ theorem norm_sub_le_of_perturbed_eq (A : E ≃L[ℝ] E) {x y db : E} {dA : E →
     (hsmall : ε * ‖(A.symm : E →L[ℝ] E)‖ * a < 1) :
     ‖x - y‖ / ‖x‖ ≤ ε / (1 - ε * ‖(A.symm : E →L[ℝ] E)‖ * a) *
       (‖(A.symm : E →L[ℝ] E)‖ * b / ‖x‖ + ‖(A.symm : E →L[ℝ] E)‖ * a) := by
-  sorry
+  rcases hε.eq_or_lt with hzero | hpos
+  · have hmap : dA = 0 := norm_eq_zero.mp (le_antisymm
+      (by simpa only [← hzero, zero_mul] using hdA) (norm_nonneg _))
+    have hb : db = 0 := norm_eq_zero.mp (le_antisymm
+      (by simpa only [← hzero, zero_mul] using hdb) (norm_nonneg _))
+    have hxy : y = x := A.injective (by simpa only [hmap, hb, zero_apply,
+      add_zero] using hy)
+    simp only [hxy, sub_self, norm_zero, zero_div, ← hzero, zero_mul, le_refl]
+  let c := ‖(A.symm : E →L[ℝ] E)‖
+  have hc : 0 ≤ c := norm_nonneg _
+  have hxpos : 0 < ‖x‖ := norm_pos_iff.mpr hx
+  have ha : 0 ≤ a := nonneg_of_mul_nonneg_right ((norm_nonneg dA).trans hdA) hpos
+  have hdpos : 0 ≤ ε * a := mul_nonneg hpos.le ha
+  have heq : A (y - x) = db - dA y := by
+    rw [map_sub, sub_eq_sub_iff_add_eq_add]
+    simpa only [add_comm, add_left_comm, add_assoc] using hy
+  have hcalc : ‖y - x‖ ≤ c * (ε * b + ε * a * (‖y - x‖ + ‖x‖)) := by
+    calc
+      ‖y - x‖ = ‖A.symm (db - dA y)‖ := by rw [← heq, A.symm_apply_apply]
+      _ ≤ c * ‖db - dA y‖ := (A.symm : E →L[ℝ] E).le_opNorm _
+      _ ≤ c * (‖db‖ + ‖dA y‖) := mul_le_mul_of_nonneg_left (norm_sub_le ..) hc
+      _ ≤ c * (ε * b + ε * a * (‖y - x‖ + ‖x‖)) := by
+        apply mul_le_mul_of_nonneg_left _ hc
+        apply add_le_add hdb
+        calc
+          ‖dA y‖ ≤ ‖dA‖ * ‖y‖ := dA.le_opNorm y
+          _ ≤ (ε * a) * ‖y‖ := mul_le_mul_of_nonneg_right hdA (norm_nonneg _)
+          _ ≤ (ε * a) * (‖y - x‖ + ‖x‖) :=
+            mul_le_mul_of_nonneg_left (norm_le_norm_sub_add y x) hdpos
+  have hden : 0 < 1 - ε * c * a := sub_pos.mpr hsmall
+  rw [norm_sub_rev, div_mul_eq_mul_div, le_div_iff₀ hden]
+  field_simp [ne_of_gt hxpos]
+  dsimp only [c] at hcalc ⊢
+  nlinarith only [hcalc]
 
+omit [FiniteDimensional ℝ E] in
 /-- **Gap 2.5.** Rigal--Gaches sharp attained weighted normwise backward error. -/
 theorem isLeast_normwiseBackwardError (A : E →L[ℝ] E) (x b : E) {a c : ℝ}
     (ha : 0 ≤ a) (hc : 0 ≤ c) (h : 0 < a * ‖x‖ + c) :
     IsLeast {ε : ℝ | 0 ≤ ε ∧ ∃ dA : E →L[ℝ] E, ∃ db : E,
       (A + dA) x = b + db ∧ ‖dA‖ ≤ ε * a ∧ ‖db‖ ≤ ε * c}
       (‖b - A x‖ / (a * ‖x‖ + c)) := by
-  sorry
+  let d := a * ‖x‖ + c
+  have hd : 0 ≤ d := h.le
+  let r := b - A x
+  refine ⟨?_, ?_⟩
+  · obtain ⟨φ, hφn, hφx⟩ := exists_dual_vector'' ℝ x
+    -- Mathlib supplies the norming functional by Hahn–Banach.
+    have hφval : φ x = ‖x‖ := hφx
+    let D := φ.smulRight ((a / d) • r)
+    let g := -((c / d) • r)
+    refine ⟨div_nonneg (norm_nonneg _) h.le, D, g, ?_, ?_, ?_⟩
+    · have hcoeff : ‖x‖ * (a / d) + c / d = 1 := by
+        rw [← mul_div_assoc, ← add_div, mul_comm ‖x‖ a]
+        exact div_self (ne_of_gt h)
+      have hs : (‖x‖ * (a / d)) • r + (c / d) • r = r := by
+        rw [← add_smul, hcoeff, one_smul]
+      have hr : A x + r = b := by
+        dsimp only [r]
+        abel
+      simp only [add_apply, D, ContinuousLinearMap.smulRight_apply, hφval,
+        smul_smul, g]
+      rw [← hr, ← sub_eq_add_neg, eq_sub_iff_add_eq, add_assoc, hs]
+    · dsimp only [D]
+      rw [ContinuousLinearMap.norm_smulRight_apply, norm_smul,
+        Real.norm_of_nonneg (div_nonneg ha hd)]
+      calc
+        ‖φ‖ * ((a / d) * ‖r‖) ≤ 1 * ((a / d) * ‖r‖) :=
+          mul_le_mul_of_nonneg_right hφn (mul_nonneg (div_nonneg ha hd) (norm_nonneg _))
+        _ = ‖r‖ / d * a := by ring
+    · dsimp only [g]
+      rw [norm_neg, norm_smul, Real.norm_of_nonneg (div_nonneg hc hd)]
+      calc
+        c / d * ‖r‖ = ‖r‖ / d * c := by ring
+        _ ≤ _ := le_rfl
+  · rintro ε ⟨_, D, g, heq, hD, hg⟩
+    have hr : b - A x = D x - g := by
+      rw [sub_eq_sub_iff_add_eq_add]
+      simpa only [add_apply, add_comm] using heq.symm
+    apply (div_le_iff₀ h).mpr
+    calc
+      ‖b - A x‖ = ‖D x - g‖ := congrArg norm hr
+      _ ≤ ‖D x‖ + ‖g‖ := norm_sub_le _ _
+      _ ≤ ‖D‖ * ‖x‖ + ‖g‖ := add_le_add (D.le_opNorm x) le_rfl
+      _ ≤ (ε * a) * ‖x‖ + ε * c := add_le_add (by gcongr) hg
+      _ = _ := by ring
 
 
 /-- **Gap 2.4.** Sharp first-order amplification for simultaneous normwise perturbations. -/
@@ -185,13 +303,70 @@ theorem exists_norm_sub_eigenvalue_le_of_diagonalization {n : ℕ}
       (↑S⁻¹ : Matrix (Fin n) (Fin n) ℂ) + E)) :
     ∃ i, ‖μ - eigs i‖ ≤ ‖(S : Matrix (Fin n) (Fin n) ℂ)‖ *
       ‖(↑S⁻¹ : Matrix (Fin n) (Fin n) ℂ)‖ * ‖E‖ := by
-  sorry
+  by_contra! hgap
+  let M := Matrix (Fin n) (Fin n) ℂ
+  let T : M := ↑S⁻¹
+  let K := ‖(S : M)‖ * ‖T‖ * ‖E‖
+  let D : M := Matrix.diagonal fun i ↦ μ - eigs i
+  let V : M := Matrix.diagonal fun i ↦ (μ - eigs i)⁻¹
+  let F : M := T * E * (S : M)
+  have hK : 0 ≤ K := by positivity
+  have hne (i : Fin n) : μ - eigs i ≠ 0 := norm_pos_iff.mp (hK.trans_lt (hgap i))
+  have hd (i : Fin n) : (μ - eigs i) * (μ - eigs i)⁻¹ = 1 := mul_inv_cancel₀ (hne i)
+  have hDV : D * V = 1 := by
+    dsimp only [D, V, M]
+    rw [Matrix.diagonal_mul_diagonal]
+    simpa only [hd] using (Matrix.diagonal_one (n := Fin n) (α := ℂ))
+  have hnormF : ‖F‖ ≤ K := by
+    calc
+      ‖F‖ ≤ ‖T * E‖ * ‖(S : M)‖ := Matrix.l2_opNorm_mul ..
+      _ ≤ (‖T‖ * ‖E‖) * ‖(S : M)‖ :=
+        mul_le_mul_of_nonneg_right (Matrix.l2_opNorm_mul ..) (norm_nonneg _)
+      _ = K := by dsimp only [K]; ring
+  have hnormV : ‖V‖ * K < 1 := by
+    dsimp only [V, M]
+    rw [Matrix.l2_opNorm_diagonal, mul_comm, ← Real.norm_of_nonneg hK, ← Complex.norm_real,
+      ← norm_smul]
+    refine (pi_norm_lt_iff zero_lt_one).mpr fun i ↦ ?_
+    rw [Pi.smul_apply, smul_eq_mul, norm_mul, Complex.norm_real, Real.norm_of_nonneg hK,
+      norm_inv, ← div_eq_mul_inv, div_lt_one (norm_pos_iff.mpr (hne i))]
+    exact hgap i
+  have hunit : IsUnit (1 - V * F) := isUnit_one_sub_of_norm_lt_one <|
+    ((Matrix.l2_opNorm_mul ..).trans (mul_le_mul_of_nonneg_left hnormF (norm_nonneg V))).trans_lt
+      hnormV
+  have hST : (S : M) * T = 1 := Units.mul_inv S
+  have hd_eq : D = μ • (1 : M) - Matrix.diagonal eigs := by
+    dsimp only [D, M]
+    simpa only [Matrix.smul_one_eq_diagonal] using
+      (Matrix.diagonal_sub (fun _ : Fin n ↦ μ) eigs).symm
+  have hd_conj : (S : M) * D * T = μ • (1 : M) - (S : M) * Matrix.diagonal eigs * T := by
+    rw [hd_eq, Matrix.mul_sub, Matrix.sub_mul, mul_smul_comm, smul_mul_assoc, mul_one, hST]
+  have hf_conj : ((S : M) * D) * (V * F) * T = E := by
+    rw [← Matrix.mul_assoc (_ * D) V, Matrix.mul_assoc (S : M) D V, hDV, mul_one]
+    dsimp only [F]
+    rw [← Matrix.mul_assoc (S : M) (T * E), ← Matrix.mul_assoc (S : M) T, hST, one_mul,
+      Matrix.mul_assoc E (S : M) T, hST, mul_one]
+  apply spectrum.mem_iff.mp hμ
+  rw [Algebra.algebraMap_eq_smul_one, ← sub_sub, ← hd_conj, ← hf_conj,
+    ← Matrix.sub_mul]
+  have hfactor : (S : M) * D - (S : M) * D * (V * F) = ((S : M) * D) * (1 - V * F) := by
+    rw [Matrix.mul_sub, mul_one]
+  rw [hfactor]
+  exact ((S.isUnit.mul (isUnit_iff_exists_inv.mpr ⟨V, hDV⟩)).mul hunit).mul S⁻¹.isUnit
 
 /-- Euclidean least-squares optimality, including rank-deficient designs. -/
 def MinimizesLeastSquares {𝕜 : Type*} [RCLike 𝕜] {m n : ℕ}
     (A : Matrix (Fin m) (Fin n) 𝕜)
     (b : EuclideanSpace 𝕜 (Fin m)) (x : EuclideanSpace 𝕜 (Fin n)) : Prop :=
   ∀ y, ‖b - A.toEuclideanLin x‖ ≤ ‖b - A.toEuclideanLin y‖
+
+/-- Least-squares optimality is the pointwise comparison against all trial vectors. -/
+theorem minimizesLeastSquares_iff {𝕜 : Type*} [RCLike 𝕜] {m n : ℕ}
+    (A : Matrix (Fin m) (Fin n) 𝕜) (b : EuclideanSpace 𝕜 (Fin m))
+    (x : EuclideanSpace 𝕜 (Fin n)) :
+    MinimizesLeastSquares A b x ↔ ∀ y, ‖b - A.toEuclideanLin x‖ ≤ ‖b - A.toEuclideanLin y‖ := by
+  unfold MinimizesLeastSquares
+  rfl
 
 /-- **Gap 2.15.** Perturbation bounds for the solution and residual of a full-column-rank
 least-squares problem. -/

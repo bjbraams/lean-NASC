@@ -23,15 +23,24 @@ section Hilbert
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteSpace H]
 
+omit [CompleteSpace H] in
 /-- **Gap 20.1.** The two-grid operator norm is bounded by the smoothing
 budget times the relative inverse approximation constant. -/
 theorem norm_twoGrid_le (A : H ≃L[ℝ] H) (B S : H →L[ℝ] H)
-    (ν : ℕ) {C η : ℝ} (hC : 0 ≤ C) (hη : 0 ≤ η)
+    (ν : ℕ) {C η : ℝ} (hC : 0 ≤ C) (_hη : 0 ≤ η)
     (hA : 0 < ‖(A : H →L[ℝ] H)‖)
     (happrox : ‖(A.symm : H →L[ℝ] H) - B‖ ≤ C / ‖(A : H →L[ℝ] H)‖)
     (hsmooth : ‖(A : H →L[ℝ] H) * S ^ ν‖ ≤ η * ‖(A : H →L[ℝ] H)‖) :
     ‖(1 - B * (A : H →L[ℝ] H)) * S ^ ν‖ ≤ C * η := by
-  sorry
+  have hInv : (A.symm : H →L[ℝ] H) * (A : H →L[ℝ] H) = 1 := by
+    ext x
+    exact A.symm_apply_apply x
+  rw [← hInv, ← sub_mul, mul_assoc]
+  calc
+    _ ≤ ‖(A.symm : H →L[ℝ] H) - B‖ * ‖(A : H →L[ℝ] H) * S ^ ν‖ := norm_mul_le _ _
+    _ ≤ (C / ‖(A : H →L[ℝ] H)‖) * (η * ‖(A : H →L[ℝ] H)‖) :=
+      mul_le_mul happrox hsmooth (norm_nonneg _) (div_nonneg hC hA.le)
+    _ = C * η := by field_simp
 
 /-- **Gap 20.3.** Symmetric smoothing bounds the two-grid energy norm by the
 Richardson smoothing constant. The Hilbert norm here is the energy norm. -/
@@ -93,7 +102,26 @@ theorem exists_wCycle_uniform_bound {γ : ℕ} (hγ : 2 ≤ γ)
     ∃ δ ∈ Ioc (0 : ℝ) ε, ∃ η > (0 : ℝ), ∀ M : ℕ → ℝ,
       (∀ k, 0 ≤ M k) → M 0 = 0 → (∀ k, M (k + 1) ≤ η + C * M k ^ γ) →
       ∀ k, M k ≤ δ := by
-  sorry
+  let δ := min ε (1 / (2 * (C + 1)))
+  have hden : 0 < 2 * (C + 1) := by positivity
+  have hδ : 0 < δ := lt_min hε (one_div_pos.mpr hden)
+  have hδε : δ ≤ ε := min_le_left ..
+  have hδone : δ ≤ 1 := hδε.trans hε'.le
+  have hsmall : δ * (2 * (C + 1)) ≤ 1 :=
+    (le_div_iff₀ hden).mp (min_le_right ..)
+  have hCδ : C * δ ≤ 1 / 2 := by nlinarith only [hsmall, hδ.le]
+  refine ⟨δ, ⟨hδ, hδε⟩, δ / 2, by positivity, fun M hM hzero hstep k ↦ ?_⟩
+  induction k with
+  | zero => rw [hzero]; exact hδ.le
+  | succ k ih =>
+    calc
+      M (k + 1) ≤ δ / 2 + C * M k ^ γ := hstep k
+      _ ≤ δ / 2 + C * δ ^ 2 := add_le_add_right
+        (mul_le_mul_of_nonneg_left
+          ((pow_le_pow_left₀ (hM k) ih γ).trans (pow_le_pow_of_le_one hδ.le hδone hγ)) hC) _
+      _ ≤ δ := by
+        have h := mul_le_mul_of_nonneg_right hCδ hδ.le
+        nlinarith only [h]
 
 /-- **Gap 20.4.** Full multigrid preserves first-order energy accuracy on a
 dyadic hierarchy when each cycle contracts more strongly than the mesh ratio. -/
@@ -102,7 +130,25 @@ theorem fullMultigrid_dyadic_error_le (e : ℕ → ℝ) {γ C h : ℝ}
     (h₀ : e 0 ≤ C * h)
     (hstep : ∀ k, e (k + 1) ≤ γ * (e k + C * h / (2 : ℝ) ^ k)) :
     ∀ k, e k ≤ (C / (1 - 2 * γ)) * h / (2 : ℝ) ^ k := by
-  sorry
+  let K := (C / (1 - 2 * γ)) * h
+  have hden : 0 < 1 - 2 * γ := sub_pos.mpr hcontract
+  have hK : 0 ≤ K := mul_nonneg (div_nonneg hC hden.le) hh
+  have heq : (1 - 2 * γ) * K = C * h := by
+    dsimp only [K]
+    field_simp
+  have hK₀ : C * h ≤ K := by nlinarith only [heq, mul_nonneg hγ hK]
+  have hK₁ : 2 * γ * (K + C * h) ≤ K := by
+    nlinarith only [heq, mul_nonneg hden.le (mul_nonneg hC hh)]
+  intro k
+  induction k with
+  | zero => simpa only [pow_zero, div_one] using h₀.trans hK₀
+  | succ k ih =>
+    calc
+      e (k + 1) ≤ γ * (e k + C * h / (2 : ℝ) ^ k) := hstep k
+      _ ≤ γ * (K / (2 : ℝ) ^ k + C * h / (2 : ℝ) ^ k) :=
+        mul_le_mul_of_nonneg_left (add_le_add_left ih _) hγ
+      _ = (2 * γ * (K + C * h)) / (2 : ℝ) ^ (k + 1) := by rw [pow_succ]; ring
+      _ ≤ _ := div_le_div_of_nonneg_right hK₁ (by positivity)
 
 /-- **Gap 20.5.** Lions' minimum energy characterization of the additive
 subspace preconditioner, with heterogeneous local Hilbert spaces. -/
@@ -146,6 +192,27 @@ theorem bddc_averaging_spectralBounds {H W : Type*}
     (htrace : ∀ w, ‖E w‖ ≤ C * (1 + Real.log (Hdiam / h)) * ‖w‖) :
     ∀ u : H, ‖u‖ ^ 2 ≤ inner ℝ (E (E.adjoint u)) u ∧
       inner ℝ (E (E.adjoint u)) u ≤ C ^ 2 * (1 + Real.log (Hdiam / h)) ^ 2 * ‖u‖ ^ 2 := by
-  sorry
+  intro u
+  have hid : inner ℝ (E (E.adjoint u)) u = ‖E.adjoint u‖ ^ 2 := by
+    rw [← E.adjoint_inner_right, real_inner_self_eq_norm_sq]
+  rw [hid]
+  have hlower : ‖u‖ ≤ ‖E.adjoint u‖ := by
+    by_cases hu : u = 0
+    · rw [hu, norm_zero]
+      exact norm_nonneg _
+    have hpair : inner ℝ (J u) (E.adjoint u) = ‖u‖ ^ 2 := by
+      rw [E.adjoint_inner_right, hJ, real_inner_self_eq_norm_sq]
+    have hs := abs_real_inner_le_norm (J u) (E.adjoint u)
+    rw [hpair, abs_of_nonneg (sq_nonneg _), J.norm_map] at hs
+    exact (mul_le_mul_iff_right₀ (norm_pos_iff.mpr hu)).mp (by rw [← pow_two]; exact hs)
+  have hlog : 0 ≤ Real.log (Hdiam / h) := Real.log_nonneg ((le_div_iff₀ hh).mpr (by simpa using hH))
+  have hE : ‖E‖ ≤ C * (1 + Real.log (Hdiam / h)) :=
+    E.opNorm_le_bound (mul_nonneg hC (by positivity)) htrace
+  have hu : ‖E.adjoint u‖ ≤ C * (1 + Real.log (Hdiam / h)) * ‖u‖ := by
+    refine (E.adjoint.le_opNorm u).trans ?_
+    rw [ContinuousLinearMap.adjoint.norm_map]
+    exact mul_le_mul_of_nonneg_right hE (norm_nonneg _)
+  refine ⟨pow_le_pow_left₀ (norm_nonneg _) hlower 2, ?_⟩
+  simpa only [mul_pow] using pow_le_pow_left₀ (norm_nonneg _) hu 2
 
 end NASC
