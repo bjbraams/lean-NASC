@@ -1,15 +1,37 @@
 module
 
-public import NASC.BayesianInverseProblems
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 public import Mathlib.Data.Nat.Totient
 public import Mathlib.Data.Finset.Sort
 public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+public import Mathlib.Probability.Distributions.Gaussian.Real
+public import Mathlib.Probability.IdentDistrib
+public import Mathlib.Probability.Independence.Basic
 
 /-!
 # Monte Carlo and quasi-Monte Carlo
 
 Studentized estimation, importance sampling, detailed balance, discrepancy,
 component-by-component lattice selection and multilevel work estimates.
+
+## Main definitions
+
+* `NASC.sampleMean`, `NASC.sampleVariance`: the empirical mean and bias-corrected variance.
+* `NASC.metropolisHastings`: Metropolis--Hastings transition weights.
+* `NASC.starDiscrepancy`: the star discrepancy of a point set in the unit cube.
+* `NASC.faceDerivative`: mixed partial derivatives along the coordinates of a face.
+* `NASC.shiftedLatticeErrorSq`: the shift-averaged squared error of a rank-one lattice rule.
+
+## Main results
+
+* `NASC.sampleVariance_tendsto_and_coverage`: consistency and asymptotic coverage of the
+  studentized interval.
+* `NASC.importanceSampling_optimal_secondMoment`: optimality of the absolute-integrand
+  proposal.
+* `NASC.metropolisHastings_detailedBalance`: reversibility of Metropolis--Hastings.
+* `NASC.quadrature_error_le_starDiscrepancy`: the Koksma--Hlawka inequality.
+* `NASC.shiftedLatticeErrorSq_le_of_cbc`: the component-by-component construction.
+* `NASC.exists_multilevel_sample_budget`: the multilevel Monte Carlo complexity theorem.
 -/
 
 public section
@@ -19,22 +41,34 @@ noncomputable section
 namespace NASC
 
 open MeasureTheory ProbabilityTheory Set Filter
-open scoped ENNReal NNReal BigOperators Topology
+open scoped ENNReal NNReal Topology
 
-/-- Sample mean of the first $n$ observations. -/
+/-- Sample mean of the first $n$ observations. At `n = 0` it is `0` (division by zero). -/
 def sampleMean {Ω : Type*} (Z : ℕ → Ω → ℝ) (n : ℕ) (ω : Ω) : ℝ :=
   (∑ k ∈ Finset.range n, Z k ω) / n
 
-/-- Bias-corrected sample variance, used with at least two observations. -/
+/-- The defining formula of `NASC.sampleMean`. -/
+theorem sampleMean_def {Ω : Type*} (Z : ℕ → Ω → ℝ) (n : ℕ) (ω : Ω) :
+    sampleMean Z n ω = (∑ k ∈ Finset.range n, Z k ω) / n :=
+  (rfl)
+
+/-- Bias-corrected sample variance, used with at least two observations. At `n = 1` the
+denominator is `0` and the value is `0`. -/
 def sampleVariance {Ω : Type*} (Z : ℕ → Ω → ℝ) (n : ℕ) (ω : Ω) : ℝ :=
   (∑ k ∈ Finset.range n, (Z k ω - sampleMean Z n ω) ^ 2) / (n - 1)
 
+/-- The defining formula of `NASC.sampleVariance`. -/
+theorem sampleVariance_def {Ω : Type*} (Z : ℕ → Ω → ℝ) (n : ℕ) (ω : Ω) :
+    sampleVariance Z n ω = (∑ k ∈ Finset.range n, (Z k ω - sampleMean Z n ω) ^ 2) / (n - 1) :=
+  (rfl)
+
 /-- **Gap 23.1.** The sample variance is strongly consistent, and the studentized
-normal interval has asymptotically correct coverage for positive variance. -/
+normal interval has asymptotically correct coverage for positive variance. The proof route
+is Mathlib's strong law `ProbabilityTheory.strong_law_ae` and central limit theorem with
+Slutsky's lemma. -/
 theorem sampleVariance_tendsto_and_coverage {Ω : Type*} [MeasurableSpace Ω]
-    (P : Measure Ω) [IsProbabilityMeasure P] (Z : ℕ → Ω → ℝ)
-    (hZ : ∀ n, Measurable (Z n)) (hind : iIndepFun Z P)
-    (hlaw : ∀ n, P.map (Z n) = P.map (Z 0)) (h₂ : Integrable (fun x ↦ Z 0 x ^ 2) P) :
+    (P : Measure Ω) [IsProbabilityMeasure P] (Z : ℕ → Ω → ℝ) (hind : iIndepFun Z P)
+    (hlaw : ∀ n, IdentDistrib (Z n) (Z 0) P P) (h₂ : Integrable (fun x ↦ Z 0 x ^ 2) P) :
     let μ := ∫ x, Z 0 x ∂P
     let v := ∫ x, (Z 0 x - μ) ^ 2 ∂P
     (∀ᵐ x ∂P, Tendsto (fun n ↦ sampleVariance Z (n + 2) x) atTop (𝓝 v)) ∧
@@ -61,33 +95,60 @@ theorem importanceSampling_optimal_secondMoment {Ω : Type*} [MeasurableSpace Ω
       ENNReal.ofReal (a ^ 2) ≤ ∫⁻ x, ENNReal.ofReal ((Z x * L x) ^ 2) ∂Q := by
   sorry
 
-/-- Metropolis--Hastings transition weights from a proposal and unnormalized target. -/
+/-- Metropolis--Hastings transition weights from a proposal and unnormalized target. The
+target is used with positive weights; at `π x = 0` the junk division `/ 0` makes every
+off-diagonal weight from `x` equal to `min (q x y) 0`. -/
 def metropolisHastings {X : Type*} [DecidableEq X] (π : X → ℝ) (q : X → X → ℝ) (x y : X) :
     ℝ :=
   if x = y then 1 - ∑' z : X, if z = x then 0 else min (q x z) (π z * q z x / π x)
   else min (q x y) (π y * q y x / π x)
 
+/-- The defining formula of `NASC.metropolisHastings`. -/
+theorem metropolisHastings_def {X : Type*} [DecidableEq X] (π : X → ℝ) (q : X → X → ℝ)
+    (x y : X) :
+    metropolisHastings π q x y =
+      if x = y then 1 - ∑' z : X, if z = x then 0 else min (q x z) (π z * q z x / π x)
+      else min (q x y) (π y * q y x / π x) :=
+  (rfl)
+
 /-- **Gap 23.4.** Metropolis--Hastings gives a reversible stochastic transition
-matrix and leaves the target weights invariant. -/
+matrix and leaves the target weights invariant. The target need not be summable:
+invariance follows pointwise from detailed balance and the row sums. -/
 theorem metropolisHastings_detailedBalance {X : Type*} [Countable X] [DecidableEq X]
-    (π : X → ℝ) (q : X → X → ℝ) (hπ : ∀ x, 0 < π x) (hs : Summable π)
+    (π : X → ℝ) (q : X → X → ℝ) (hπ : ∀ x, 0 < π x)
     (hq : ∀ x y, 0 ≤ q x y) (hqs : ∀ x, Summable (q x) ∧ (∑' y, q x y) = 1) :
     let p := metropolisHastings π q
     (∀ x y, 0 ≤ p x y ∧ π x * p x y = π y * p y x) ∧
       (∀ x, (∑' y, p x y) = 1) ∧ ∀ y, (∑' x, π x * p x y) = π y := by
   sorry
 
-/-- Star discrepancy of a finite list in the cube, using lower closed boxes. -/
+open Classical in
+/-- Star discrepancy of a finite list in the cube, using lower closed boxes. For `n = 0` the
+empirical term is `0 / 0 = 0` and the discrepancy is `1`, attained at the corner `x = 1`. -/
 def starDiscrepancy {s n : ℕ} (P : Fin n → Fin s → ℝ) : ℝ :=
-  letI := Classical.propDecidable
   sSup {r : ℝ | ∃ x : Fin s → ℝ, x ∈ Icc (0 : Fin s → ℝ) 1 ∧
     r = |((Finset.univ.filter (fun i : Fin n ↦ ∀ j, P i j ≤ x j)).card : ℝ) / n -
       ∏ j, x j|}
+
+open Classical in
+/-- The defining formula of `NASC.starDiscrepancy`. -/
+theorem starDiscrepancy_def {s n : ℕ} (P : Fin n → Fin s → ℝ) :
+    starDiscrepancy P = sSup {r : ℝ | ∃ x : Fin s → ℝ, x ∈ Icc (0 : Fin s → ℝ) 1 ∧
+      r = |((Finset.univ.filter (fun i : Fin n ↦ ∀ j, P i j ≤ x j)).card : ℝ) / n -
+        ∏ j, x j|} :=
+  (rfl)
 
 /-- Mixed derivative along the coordinate directions indexed by a face. -/
 def faceDerivative {s : ℕ} (f : (Fin s → ℝ) → ℝ) (A : Finset (Fin s))
     (x : Fin s → ℝ) : ℝ :=
   iteratedFDeriv ℝ A.card f x (fun i ↦ Pi.single (A.orderEmbOfFin rfl i) 1)
+
+/-- The defining formula of `NASC.faceDerivative`. -/
+theorem faceDerivative_def {s : ℕ} (f : (Fin s → ℝ) → ℝ) (A : Finset (Fin s))
+    (x : Fin s → ℝ) :
+    faceDerivative f A x =
+      iteratedFDeriv ℝ A.card f x (fun i ↦ Pi.single (A.orderEmbOfFin rfl i) 1) :=
+  (rfl)
 
 /-- **Gap 23.5.** Smooth Koksma--Hlawka with the anchored mixed derivatives,
 integrated over the faces where the remaining coordinates equal one. -/
@@ -109,6 +170,16 @@ def shiftedLatticeErrorSq {s : ℕ} (n r : ℕ) (γ : Finset (Fin s) → ℝ)
       let x := Int.fract ((k : ℝ) * z j / n)
       x ^ 2 - x + 1 / 6) / n)
 
+/-- The defining formula of `NASC.shiftedLatticeErrorSq`. -/
+theorem shiftedLatticeErrorSq_def {s : ℕ} (n r : ℕ) (γ : Finset (Fin s) → ℝ)
+    (z : Fin s → ℕ) :
+    shiftedLatticeErrorSq n r γ z =
+      ∑ A ∈ ((Finset.univ : Finset (Fin s)).filter (fun i ↦ i.val < r)).powerset.erase ∅, γ A *
+        ((∑ k ∈ Finset.range n, ∏ j ∈ A,
+          let x := Int.fract ((k : ℝ) * z j / n)
+          x ^ 2 - x + 1 / 6) / n) :=
+  (rfl)
+
 /-- **Gap 23.7.** The component-by-component minimizers satisfy the fractional-moment
 bound on the shift-averaged lattice error. -/
 theorem shiftedLatticeErrorSq_le_of_cbc {s n : ℕ} (hn : 2 ≤ n)
@@ -128,7 +199,7 @@ theorem shiftedLatticeErrorSq_le_of_cbc {s n : ℕ} (hn : 2 ≤ n)
 /-- **Gap 23.8.** Multilevel sample allocation under bias, variance and work
 exponents, with the three standard work regimes. The variance terms are those
 of independent level estimates. -/
-theorem exists_multilevel_sampleBudget (bias V W : ℕ → ℝ) {a b c K : ℝ}
+theorem exists_multilevel_sample_budget (bias V W : ℕ → ℝ) {a b c K : ℝ}
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hK : 0 < K)
     (ha' : min b c / 2 ≤ a)
     (h : ∀ k, |bias k| ≤ K * (2 : ℝ) ^ (-a * k) ∧

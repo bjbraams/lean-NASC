@@ -1,14 +1,36 @@
 module
 
-public import NASC.FiniteDifferences
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 public import Mathlib.Topology.EMetricSpace.BoundedVariation
-public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
 /-!
 # Conservation laws and finite volume methods
 
 Weak and entropy formulations, scalar Riemann solvers, consistency and monotonicity of
 finite volume schemes, and small-variation solutions of hyperbolic systems.
+
+## Main definitions
+
+* `NASC.IsConservationTest`: a `C¹` compactly supported test function of `(t, x)`.
+* `NASC.IsWeakConservationLaw`: a locally integrable weak solution of `u_t + f(u)_x = 0`,
+  `u(0) = u₀`.
+* `NASC.IsScalarEntropySolution`: the Kružkov entropy solution of a scalar law.
+* `NASC.conservativeUpdate`, `NASC.finiteVolumeReconstruction`: three-point conservative
+  schemes and their piecewise constant reconstruction.
+* `NASC.IsHyperbolicOn`: strict hyperbolicity with genuinely nonlinear or linearly degenerate
+  characteristic fields.
+
+## Main results
+
+* `NASC.isWeakConservationLaw_singleJump_iff` (Rankine–Hugoniot),
+  `NASC.exists_scalarEntropySolution_and_contraction` (Kružkov),
+  `NASC.isScalarEntropySolution_rarefaction`, `NASC.isScalarEntropySolution_riemann_shock`.
+* `NASC.isWeakConservationLaw_of_finiteVolume_limit` (Lax–Wendroff),
+  `NASC.monotoneUpdate_entropy_inequality`, `NASC.exists_int_eq_of_positive_stencil_secondMoment`,
+  `NASC.upwind_L1_error_le_sqrt_mesh`, `NASC.tadmor_cell_entropy_le`.
+* `NASC.exists_selfSimilar_riemann_solution` (Lax),
+  `NASC.exists_smallVariation_conservation_semigroup`.
 -/
 
 public section
@@ -18,20 +40,43 @@ noncomputable section
 namespace NASC
 
 open MeasureTheory Set Filter
-open scoped BigOperators ENNReal Topology Interval
+open scoped ENNReal Topology Interval
 
 /-- A smooth compactly supported test for the weak conservation law. -/
 def IsConservationTest (φ : ℝ × ℝ → ℝ) : Prop :=
   ContDiff ℝ 1 φ ∧ HasCompactSupport φ
 
-/-- Weak conservation law with the initial term at time zero. Test functions act
-on time and space, in that order. -/
+/-- The defining property of `IsConservationTest`. -/
+theorem isConservationTest_iff (φ : ℝ × ℝ → ℝ) :
+    IsConservationTest φ ↔ ContDiff ℝ 1 φ ∧ HasCompactSupport φ :=
+  Iff.rfl
+
+/-- Weak conservation law with the initial term at time zero: `u` and `f ∘ u` are locally
+integrable on `[0, ∞) × ℝ`, `u₀` is locally integrable, and the weak identity holds for every
+test function. Test functions act on time and space, in that order. The integrability
+conditions make every integral in the identity a genuine (non-junk) Bochner integral. -/
 def IsWeakConservationLaw {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     (f : E → E) (u₀ : ℝ → E) (u : ℝ → ℝ → E) : Prop :=
+  LocallyIntegrableOn (Function.uncurry u) (Ici (0 : ℝ) ×ˢ univ) ∧
+  LocallyIntegrableOn (fun p : ℝ × ℝ ↦ f (u p.1 p.2)) (Ici (0 : ℝ) ×ˢ univ) ∧
+  LocallyIntegrable u₀ ∧
   ∀ φ : ℝ × ℝ → ℝ, IsConservationTest φ →
     (∫ t in Ioi (0 : ℝ), ∫ x : ℝ,
       fderiv ℝ φ (t, x) (1, 0) • u t x + fderiv ℝ φ (t, x) (0, 1) • f (u t x)) +
     (∫ x : ℝ, φ (0, x) • u₀ x) = 0
+
+/-- The defining property of `IsWeakConservationLaw`. -/
+theorem isWeakConservationLaw_iff {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    (f : E → E) (u₀ : ℝ → E) (u : ℝ → ℝ → E) :
+    IsWeakConservationLaw f u₀ u ↔
+      LocallyIntegrableOn (Function.uncurry u) (Ici (0 : ℝ) ×ˢ univ) ∧
+      LocallyIntegrableOn (fun p : ℝ × ℝ ↦ f (u p.1 p.2)) (Ici (0 : ℝ) ×ˢ univ) ∧
+      LocallyIntegrable u₀ ∧
+      ∀ φ : ℝ × ℝ → ℝ, IsConservationTest φ →
+        (∫ t in Ioi (0 : ℝ), ∫ x : ℝ,
+          fderiv ℝ φ (t, x) (1, 0) • u t x + fderiv ℝ φ (t, x) (0, 1) • f (u t x)) +
+        (∫ x : ℝ, φ (0, x) • u₀ x) = 0 :=
+  Iff.rfl
 
 /-- **Gap 17.1.** A single moving jump is weakly conservative exactly when
 its speed satisfies the Rankine--Hugoniot identity. -/
@@ -58,9 +103,26 @@ def IsScalarEntropySolution (f u₀ : ℝ → ℝ) (u : ℝ → ℝ → ℝ) : P
       ((if c ≤ u t x then 1 else -1) * (f (u t x) - f c)) * fderiv ℝ φ (t, x) (0, 1)) +
       ∫ x : ℝ, |u₀ x - c| * φ (0, x)
 
+/-- The defining property of `IsScalarEntropySolution`. -/
+theorem isScalarEntropySolution_iff (f u₀ : ℝ → ℝ) (u : ℝ → ℝ → ℝ) :
+    IsScalarEntropySolution f u₀ u ↔
+      Measurable (fun p : ℝ × ℝ ↦ u p.1 p.2) ∧
+      (∃ C, ∀ t ≥ 0, ∀ x, |u t x| ≤ C) ∧
+      (∀ᵐ x : ℝ ∂volume, u 0 x = u₀ x) ∧
+      (∀ s ≥ 0, ∀ R > (0 : ℝ),
+        ContinuousOn (fun t ↦ ∫ x in (-R)..R, |u t x - u s x|) (Ici 0)) ∧
+      IsWeakConservationLaw f u₀ u ∧
+      ∀ c (φ : ℝ × ℝ → ℝ), IsConservationTest φ → (∀ z, 0 ≤ φ z) →
+        0 ≤ (∫ t in Ioi (0 : ℝ), ∫ x : ℝ,
+          |u t x - c| * fderiv ℝ φ (t, x) (1, 0) +
+          ((if c ≤ u t x then 1 else -1) * (f (u t x) - f c)) * fderiv ℝ φ (t, x) (0, 1)) +
+          ∫ x : ℝ, |u₀ x - c| * φ (0, x) :=
+  Iff.rfl
+
 /-- **Gap 17.3.** Kružkov's existence and $L^1$ contraction for bounded scalar
-initial data, with extended-valued norms if the initial difference is nonintegrable. -/
-theorem exists_scalarEntropySolution_and_contraction (f u₀ : ℝ → ℝ) (hf : ContDiff ℝ 1 f)
+initial data and a locally Lipschitz flux, with extended-valued norms if the initial
+difference is nonintegrable. -/
+theorem exists_scalarEntropySolution_and_contraction (f u₀ : ℝ → ℝ) (hf : LocallyLipschitz f)
     (hu₀ : Measurable u₀) (hbound : ∃ C, ∀ x, |u₀ x| ≤ C) :
     ∃ u, IsScalarEntropySolution f u₀ u ∧
       ∀ v₀ v, Measurable v₀ → IsScalarEntropySolution f v₀ v → ∀ t ≥ 0,
@@ -81,8 +143,8 @@ theorem isScalarEntropySolution_rarefaction {f : ℝ → ℝ} (hf : ContDiff ℝ
 
 /-- **Gap 17.4.** Decreasing Riemann data for a convex flux give the
 entropy shock at the Rankine--Hugoniot speed. -/
-theorem isScalarEntropySolution_riemann_shock {f : ℝ → ℝ} (hf : ContDiff ℝ 2 f)
-    (hcv : ConvexOn ℝ univ f) {l r : ℝ} (hlr : r < l) :
+theorem isScalarEntropySolution_riemann_shock {f : ℝ → ℝ} (hcv : ConvexOn ℝ univ f)
+    {l r : ℝ} (hlr : r < l) :
     let s := (f l - f r) / (l - r)
     IsScalarEntropySolution f (fun x ↦ if x < 0 then l else r)
       (fun t x ↦ if x < s * t then l else r) := by
@@ -92,9 +154,24 @@ theorem isScalarEntropySolution_riemann_shock {f : ℝ → ℝ} (hf : ContDiff �
 def conservativeUpdate (g : ℝ → ℝ → ℝ) (ν : ℝ) (a b c : ℝ) : ℝ :=
   b - ν * (g b c - g a b)
 
+/-- The defining formula of `conservativeUpdate`. -/
+theorem conservativeUpdate_def (g : ℝ → ℝ → ℝ) (ν : ℝ) (a b c : ℝ) :
+    conservativeUpdate g ν a b c = b - ν * (g b c - g a b) := by
+  rfl
+
+/-- A conservative update leaves a constant state unchanged. -/
+@[simp]
+theorem conservativeUpdate_self (g : ℝ → ℝ → ℝ) (ν k : ℝ) : conservativeUpdate g ν k k k = k := by
+  simp [conservativeUpdate]
+
 /-- Piecewise constant reconstruction from a uniform space-time grid. -/
 def finiteVolumeReconstruction (dt dx : ℝ) (V : ℕ → ℤ → ℝ) (t x : ℝ) : ℝ :=
   V (Nat.floor (t / dt)) (Int.floor (x / dx))
+
+/-- The defining formula of `finiteVolumeReconstruction`. -/
+theorem finiteVolumeReconstruction_def (dt dx : ℝ) (V : ℕ → ℤ → ℝ) (t x : ℝ) :
+    finiteVolumeReconstruction dt dx V t x = V (Nat.floor (t / dt)) (Int.floor (x / dx)) := by
+  rfl
 
 /-- **Gap 17.5.** A bounded local $L^1$ limit of consistent conservative
 finite volume approximations satisfies the weak conservation law. -/
@@ -124,7 +201,25 @@ theorem monotoneUpdate_entropy_inequality (g : ℝ → ℝ → ℝ) (ν : ℝ)
     (a b c k : ℝ) :
     let G := fun x y ↦ g (max x k) (max y k) - g (min x k) (min y k)
     |conservativeUpdate g ν a b c - k| ≤ |b - k| - ν * (G b c - G a b) := by
-  sorry
+  intro G
+  have h1 := hmono a b c (max a k) (max b k) (max c k) (le_max_left _ _) (le_max_left _ _)
+    (le_max_left _ _)
+  have h2 := hmono k k k (max a k) (max b k) (max c k) (le_max_right _ _) (le_max_right _ _)
+    (le_max_right _ _)
+  have h3 := hmono (min a k) (min b k) (min c k) a b c (min_le_left _ _) (min_le_left _ _)
+    (min_le_left _ _)
+  have h4 := hmono (min a k) (min b k) (min c k) k k k (min_le_right _ _) (min_le_right _ _)
+    (min_le_right _ _)
+  rw [conservativeUpdate_self] at h2 h4
+  have hb : |b - k| = max b k - min b k := by
+    rcases le_total b k with hbk | hbk
+    · rw [max_eq_right hbk, min_eq_left hbk, abs_of_nonpos (by linarith)]
+      ring
+    · rw [max_eq_left hbk, min_eq_right hbk, abs_of_nonneg (by linarith)]
+  simp only [conservativeUpdate] at h1 h2 h3 h4 ⊢
+  rw [hb, abs_le]
+  simp only [G]
+  constructor <;> linarith
 
 /-- **Gap 17.8.** A positive linear stencil satisfying second-order moment
 matching can only realize an integral-grid shift. -/
@@ -133,12 +228,32 @@ theorem exists_int_eq_of_positive_stencil_secondMoment
     (hone : ∑ j ∈ I, c j = 1) (hfirst : ∑ j ∈ I, (j : ℝ) * c j = ν)
     (hsecond : ∑ j ∈ I, (j : ℝ) ^ 2 * c j = ν ^ 2) :
     ∃ j ∈ I, (j : ℝ) = ν ∧ c j = 1 ∧ ∀ k ∈ I, k ≠ j → c k = 0 := by
-  sorry
+  have hvar : ∑ j ∈ I, c j * ((j : ℝ) - ν) ^ 2 = 0 := by
+    have hexp (j : ℤ) : c j * ((j : ℝ) - ν) ^ 2 =
+        (j : ℝ) ^ 2 * c j - 2 * ν * ((j : ℝ) * c j) + ν ^ 2 * c j := by ring
+    simp only [hexp, Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum, hsecond,
+      hfirst, hone]
+    ring
+  have hzero := (Finset.sum_eq_zero_iff_of_nonneg
+    fun j hj ↦ mul_nonneg (hpos j hj) (sq_nonneg ((j : ℝ) - ν))).mp hvar
+  have hsupp (j : ℤ) (hj : j ∈ I) (hc : c j ≠ 0) : (j : ℝ) = ν :=
+    sub_eq_zero.mp (pow_eq_zero_iff two_ne_zero |>.mp
+      ((mul_eq_zero.mp (hzero j hj)).resolve_left hc))
+  obtain ⟨j, hj, hcj⟩ : ∃ j ∈ I, c j ≠ 0 := by
+    by_contra! h
+    rw [Finset.sum_eq_zero h] at hone
+    exact zero_ne_one hone
+  have hother (k : ℤ) (hk : k ∈ I) (hkj : k ≠ j) : c k = 0 := by
+    by_contra hck
+    exact hkj (by exact_mod_cast (hsupp k hk hck).trans (hsupp j hj hcj).symm)
+  refine ⟨j, hj, hsupp j hj hcj, ?_, hother⟩
+  rw [← hone, Finset.sum_eq_single j hother (fun h ↦ absurd hj h)]
 
-/-- **Gap 17.10.** For smooth positive transport speed, the monotone upwind
-scheme has a square-root $L^1$ error bound on bounded-variation initial data.
-The step ratio is fixed and the initial values are cell averages. -/
-theorem upwind_L1_error_le_sqrt_mesh (u₀ : ℝ → ℝ) (hu₀ : Integrable u₀)
+/-- **Gap 17.10.** For the linear advection equation with unit speed and CFL number
+`ν ∈ (0, 1]`, the monotone upwind scheme has a square-root $L^1$ error bound on
+bounded-variation initial data. The step ratio is fixed and the initial values are cell
+averages. -/
+theorem upwind_L1_error_le_sqrt_mesh (u₀ : ℝ → ℝ)
     (hvar : eVariationOn u₀ univ < ⊤) {ν : ℝ} (hν : ν ∈ Ioc (0 : ℝ) 1) :
     ∃ C ≥ (0 : ℝ), ∀ (dx : ℝ), 0 < dx → ∀ (V : ℕ → ℤ → ℝ),
       (∀ j : ℤ, V 0 j = (∫ x in (j : ℝ) * dx..((j : ℝ) + 1) * dx, u₀ x) / dx) →
@@ -155,7 +270,9 @@ theorem tadmor_cell_entropy_le (w ψ : ℝ → ℝ) (g : ℝ → ℝ → ℝ)
     (h : ∀ a b, (w b - w a) * g a b ≤ ψ b - ψ a) (a b c : ℝ) :
     let q := fun x y ↦ ((w x + w y) * g x y - ψ x - ψ y) / 2
     w b * (g a b - g b c) + (q b c - q a b) ≤ 0 := by
-  sorry
+  intro q
+  simp only [q]
+  linarith [h a b, h b c]
 
 /-- Characteristic data for a strictly hyperbolic flux on an open state domain.
 Each family is genuinely nonlinear everywhere or linearly degenerate everywhere. -/
@@ -167,6 +284,18 @@ def IsHyperbolicOn {n : ℕ} (f : (Fin n → ℝ) → Fin n → ℝ)
   ∀ i, ContDiffOn ℝ 1 (speed i) U ∧ ContinuousOn (field i) U ∧
     ((∀ z ∈ U, fderiv ℝ (speed i) z (field i z) ≠ 0) ∨
       (∀ z ∈ U, fderiv ℝ (speed i) z (field i z) = 0))
+
+/-- The defining property of `IsHyperbolicOn`. -/
+theorem isHyperbolicOn_iff {n : ℕ} (f : (Fin n → ℝ) → Fin n → ℝ)
+    (U : Set (Fin n → ℝ)) (speed : Fin n → (Fin n → ℝ) → ℝ)
+    (field : Fin n → (Fin n → ℝ) → (Fin n → ℝ)) :
+    IsHyperbolicOn f U speed field ↔
+      (∀ z ∈ U, StrictMono (fun i ↦ speed i z) ∧
+        (∀ i, field i z ≠ 0 ∧ fderiv ℝ f z (field i z) = speed i z • field i z)) ∧
+      ∀ i, ContDiffOn ℝ 1 (speed i) U ∧ ContinuousOn (field i) U ∧
+        ((∀ z ∈ U, fderiv ℝ (speed i) z (field i z) ≠ 0) ∨
+          (∀ z ∈ U, fderiv ℝ (speed i) z (field i z) = 0)) :=
+  Iff.rfl
 
 /-- **Gap 17.14.** Nearby Riemann data for a strictly hyperbolic system admit a
 self-similar weak solution with a bounded, small-variation profile. -/

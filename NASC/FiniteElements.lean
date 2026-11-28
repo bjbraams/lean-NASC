@@ -1,7 +1,8 @@
 module
 
-public import NASC.Galerkin
+public import NASC.Approximation
 public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
 public import TauCeti.Analysis.PDE.DirichletProblem
 public import TauCeti.Analysis.Sobolev.Wkp.Basic
 public import TauCeti.Analysis.Sobolev.LipschitzDomain.Trace.Frontier
@@ -11,7 +12,31 @@ public import TauCeti.Analysis.Sobolev.LipschitzDomain.Trace.Frontier
 
 Fractional boundary traces, convex-domain regularity, polynomial approximation, and
 interpolation and divergence properties of finite elements. The Sobolev spaces, weak
-Dirichlet problem and bounded boundary trace use TauCeti's corresponding APIs.
+Dirichlet problem and bounded boundary trace use TauCeti's corresponding APIs
+(`TauCeti.W1p`, `TauCeti.Wkp`, `TauCeti.PDE.IsWeakSolutionDirichlet` and
+`TauCeti.W1p.frontierTrace`).
+
+## Notation
+
+Domains with a Lipschitz boundary live in `WithLp 2 (ℝ × E)`, the Euclidean product of a
+vertical axis and a finite-dimensional inner-product space `E`, as in TauCeti's trace theory.
+
+## Main definitions
+
+* `NASC.frontierMeasure`: surface measure on the frontier of such a domain.
+* `NASC.fractionalBoundaryEnergy`: the squared Slobodeckij seminorm of order one-half.
+
+## Main results
+
+* `NASC.range_frontierTrace_eq_setOf_fractionalBoundaryEnergy_lt_top` and
+  `NASC.exists_frontierTrace_fractionalBound`: the trace space is `H^{1/2}` of the boundary.
+* `NASC.exists_Wkp_two_of_convex_weakDirichlet`: `H²` regularity on convex domains.
+* `NASC.exists_poly_sobolev_error_le_of_convex`: the Bramble--Hilbert lemma.
+* `NASC.exists_scaled_lagrange_derivative_bound`: scaled Lagrange interpolation estimates.
+* `NASC.exists_uniform_interval_quasiInterpolator`: a stable quasi-interpolant.
+* `NASC.exists_raviartThomas_div_eq`: the divergence of the Raviart--Thomas space.
+* `NASC.exists_divergence_test_of_meanZero`: the continuous Stokes inf-sup condition.
+* `NASC.exists_gradient_of_curlFree_edgePolynomial`: exactness of the edge element sequence.
 -/
 
 public section
@@ -21,7 +46,7 @@ noncomputable section
 namespace NASC
 
 open MeasureTheory Set TopologicalSpace TauCeti
-open scoped ENNReal NNReal BigOperators Matrix Interval Matrix.Norms.L2Operator
+open scoped ENNReal NNReal Matrix Interval Matrix.Norms.L2Operator
 
 /-- A fractional boundary seminorm to the power two, written as a nonnegative integral
 so that the membership condition excludes divergent integrals. -/
@@ -29,35 +54,56 @@ def fractionalBoundaryEnergy {E : Type*} [PseudoMetricSpace E] [MeasurableSpace 
     (σ : Measure E) (d : ℕ) (g : E → ℝ) : ℝ≥0∞ :=
   ∫⁻ x, (∫⁻ y, ENNReal.ofReal (|g x - g y| ^ 2 / dist x y ^ (d + 1)) ∂σ) ∂σ
 
+/-- The defining formula of `NASC.fractionalBoundaryEnergy`. -/
+theorem fractionalBoundaryEnergy_def {E : Type*} [PseudoMetricSpace E] [MeasurableSpace E]
+    (σ : Measure E) (d : ℕ) (g : E → ℝ) :
+    fractionalBoundaryEnergy σ d g =
+      ∫⁻ x, (∫⁻ y, ENNReal.ofReal (|g x - g y| ^ 2 / dist x y ^ (d + 1)) ∂σ) ∂σ :=
+  (rfl)
+
+section Frontier
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+  [MeasurableSpace E] [BorelSpace E]
+
+/-- Surface measure on the frontier of `Ω ⊆ ℝ × E`: the `dim E`-dimensional Euclidean
+Hausdorff measure restricted to `frontier Ω`. It is the measure of the trace space of
+`TauCeti.W1p.frontierTrace`. Its body is exposed because the codomain of that trace is
+stated with the unfolded measure. -/
+@[expose] def frontierMeasure (Ω : Set (WithLp 2 (ℝ × E))) : Measure (WithLp 2 (ℝ × E)) :=
+  (μHE[Module.finrank ℝ E] : Measure (WithLp 2 (ℝ × E))).restrict (frontier Ω)
+
+/-- The defining formula of `NASC.frontierMeasure`. -/
+theorem frontierMeasure_def (Ω : Set (WithLp 2 (ℝ × E))) :
+    frontierMeasure Ω =
+      (μHE[Module.finrank ℝ E] : Measure (WithLp 2 (ℝ × E))).restrict (frontier Ω) :=
+  (rfl)
+
 /-- **Gap 18.6.** The image of the first Sobolev trace is the boundary
 Slobodeckij space of order one-half. -/
-theorem range_frontierTrace_eq_fractionalBoundary {E : Type*}
-    [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
-    [MeasurableSpace E] [BorelSpace E]
+theorem range_frontierTrace_eq_setOf_fractionalBoundaryEnergy_lt_top
     {Ω : Opens (WithLp 2 (ℝ × E))} {L : ℝ≥0}
     (hΩ : (Ω : Set (WithLp 2 (ℝ × E))).IsLipschitzDomainWith L)
     (hb : Bornology.IsBounded (Ω : Set (WithLp 2 (ℝ × E)))) :
-    let σ := (μHE[Module.finrank ℝ E] : Measure (WithLp 2 (ℝ × E))).restrict
-      (frontier (Ω : Set (WithLp 2 (ℝ × E))))
     range (TauCeti.W1p.frontierTrace (p := 2) (by norm_num) hΩ hb) =
-      {g : Lp ℝ 2 σ | fractionalBoundaryEnergy σ (Module.finrank ℝ E) g < ⊤} := by
+      {g : Lp ℝ 2 (frontierMeasure (Ω : Set (WithLp 2 (ℝ × E)))) |
+        fractionalBoundaryEnergy (frontierMeasure (Ω : Set (WithLp 2 (ℝ × E))))
+          (Module.finrank ℝ E) g < ⊤} := by
   sorry
 
 /-- **Gap 18.6.** The bounded trace also controls the fractional boundary
 seminorm with a constant depending on the Lipschitz domain. -/
-theorem exists_frontierTrace_fractionalBound {E : Type*}
-    [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
-    [MeasurableSpace E] [BorelSpace E]
+theorem exists_frontierTrace_fractionalBound
     {Ω : Opens (WithLp 2 (ℝ × E))} {L : ℝ≥0}
     (hΩ : (Ω : Set (WithLp 2 (ℝ × E))).IsLipschitzDomainWith L)
     (hb : Bornology.IsBounded (Ω : Set (WithLp 2 (ℝ × E)))) :
-    let σ := (μHE[Module.finrank ℝ E] : Measure (WithLp 2 (ℝ × E))).restrict
-      (frontier (Ω : Set (WithLp 2 (ℝ × E))))
     ∃ C ≥ (0 : ℝ), ∀ u : W1p volume Ω 2,
-      fractionalBoundaryEnergy σ (Module.finrank ℝ E)
-        (TauCeti.W1p.frontierTrace (p := 2) (by norm_num) hΩ hb u) ≤
+      fractionalBoundaryEnergy (frontierMeasure (Ω : Set (WithLp 2 (ℝ × E))))
+        (Module.finrank ℝ E) (TauCeti.W1p.frontierTrace (p := 2) (by norm_num) hΩ hb u) ≤
           ENNReal.ofReal (C * ‖u‖ ^ 2) := by
   sorry
+
+end Frontier
 
 /-- **Gap 18.7.** A Lipschitz uniformly elliptic coefficient on a bounded convex
 domain gives global second weak derivatives for the homogeneous Dirichlet solution. -/
@@ -89,10 +135,11 @@ theorem exists_poly_sobolev_error_le_of_convex {d k : ℕ}
   sorry
 
 /-- **Gap 18.10.** Scaled interpolation of a one-dimensional affine element,
-for fixed reference nodes and derivative error measured in the supremum norm. -/
+for fixed reference nodes and derivative error measured in the supremum norm. At
+`r = m = 0` this is the Lebesgue-constant bound for continuous functions. -/
 theorem exists_scaled_lagrange_derivative_bound {k r m : ℕ}
     (s : Fin (k + 1) → ℝ) (hinj : Function.Injective s) (hs : ∀ i, s i ∈ Icc (0 : ℝ) 1)
-    (hr : 0 < r) (hr' : r ≤ k + 1) (hm : m ≤ r) :
+    (hr' : r ≤ k + 1) (hm : m ≤ r) :
     ∃ C ≥ (0 : ℝ), ∀ (a h : ℝ), 0 < h → ∀ f : ℝ → ℝ, ContDiff ℝ r f →
       let x := fun i ↦ a + h * s i
       let P := Lagrange.interpolate Finset.univ x (f ∘ x)
@@ -118,11 +165,13 @@ theorem exists_uniform_interval_quasiInterpolator :
   sorry
 
 /-- **Gap 18.20.** The divergence of the reference Raviart--Thomas polynomial
-space is the full pressure polynomial space of the corresponding degree. -/
-theorem exists_raviartThomas_div_eq {d k : ℕ} (hd : 0 < d)
-    (p : MvPolynomial (Fin d) ℝ) (hp : p.totalDegree ≤ k) :
-    ∃ (v : Fin d → MvPolynomial (Fin d) ℝ) (q : MvPolynomial (Fin d) ℝ),
-      (∀ i, (v i).totalDegree ≤ k) ∧ q.totalDegree ≤ k ∧
+space `RT_k = (P_k)^d + x · H_k` is the full pressure polynomial space `P_k`. Here `H_k` is
+the space of homogeneous polynomials of degree `k`, so the part of `p` of degree below `k`
+must come from the divergence of the `(P_k)^d` component. -/
+theorem exists_raviartThomas_div_eq {K : Type*} [Field K] [CharZero K] {d k : ℕ} (hd : 0 < d)
+    (p : MvPolynomial (Fin d) K) (hp : p.totalDegree ≤ k) :
+    ∃ (v : Fin d → MvPolynomial (Fin d) K) (q : MvPolynomial (Fin d) K),
+      (∀ i, (v i).totalDegree ≤ k) ∧ MvPolynomial.IsHomogeneous q k ∧
       (∑ i, MvPolynomial.pderiv i (v i + MvPolynomial.X i * q)) = p := by
   sorry
 
@@ -144,12 +193,12 @@ theorem exists_divergence_test_of_meanZero {d : ℕ}
 /-- **Gap 18.22.** Exactness at the first-kind polynomial edge space.
 The higher-order part has zero radial component and the curl-free condition
 is equality of crossed weak-coordinate derivatives on polynomials. -/
-theorem exists_gradient_of_curlFree_edgePolynomial {k : ℕ}
-    (u w : Fin 3 → MvPolynomial (Fin 3) ℝ)
+theorem exists_gradient_of_curlFree_edgePolynomial {K : Type*} [Field K] [CharZero K] {k : ℕ}
+    (u w : Fin 3 → MvPolynomial (Fin 3) K)
     (hu : ∀ i, (u i).totalDegree ≤ k) (hw : ∀ i, (w i).totalDegree ≤ k + 1)
     (hr : (∑ i, MvPolynomial.X i * w i) = 0)
     (hcurl : ∀ i j, MvPolynomial.pderiv i (u j + w j) = MvPolynomial.pderiv j (u i + w i)) :
-    ∃ p : MvPolynomial (Fin 3) ℝ, p.totalDegree ≤ k + 1 ∧
+    ∃ p : MvPolynomial (Fin 3) K, p.totalDegree ≤ k + 1 ∧
       ∀ i, MvPolynomial.pderiv i p = u i + w i := by
   sorry
 

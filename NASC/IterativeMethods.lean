@@ -1,16 +1,44 @@
 module
 
 public import NASC.EigenvalueMethods
-public import Mathlib.Analysis.Normed.Algebra.Spectrum
 
-import Mathlib.Analysis.Normed.Algebra.GelfandFormula
+import NASC.Support.LinearAlgebra
 
 /-!
 # Iterative methods for linear systems
 
-Matrix splittings, polynomial acceleration, conjugate gradients, and GMRES. Convergence of
-Krylov methods is formulated in exact arithmetic.
-The stationary iteration criterion uses Mathlib's Gelfand formula and geometric bound on powers.
+Stationary affine iterations and matrix splittings, M-matrices, weakly regular and regular
+splittings, the Stein–Rosenberg theorem, SOR (Ostrowski–Reich) and Jacobi in the energy norm,
+Chebyshev semi-iteration, conjugate gradients with and without preconditioning, and GMRES.
+Convergence of Krylov methods is formulated in exact arithmetic. Gap numbers refer to section 5
+of `GAPS.md`. The stationary iteration criterion uses Mathlib's Gelfand formula and geometric
+bound on powers.
+
+## Notation
+
+* Matrix norms are the Euclidean operator norms of the scoped instance
+  `Matrix.Norms.L2Operator`; positive definiteness of complex matrices uses `ComplexOrder`.
+* The spectral radius of a real matrix is taken after extension of scalars to `ℂ`
+  (`realMatrixSpectralRadius`).
+
+## Main definitions
+
+* `realMatrixSpectralRadius`, `energyNorm`, `IsConjugateGradient`, `IsGMRESIterate`.
+
+## Main results
+
+* `iterate_affine_sub_eq`, `tendsto_iterate_affine_iff_spectralRadius_lt_one`,
+  `splittingIteration_converges_iff`: convergence of stationary iterations.
+* `inverse_nonneg_iff_exists_smul_one_sub` (M-matrices),
+  `inverse_nonneg_iff_spectralRadius_lt_one`, `spectralRadius_regularSplitting_eq`.
+* `stein_rosenberg`, `spectralRadius_sor_lt_one_iff` (Ostrowski–Reich),
+  `spectralRadius_pointSOR_lt_one_iff`, `spectralRadius_blockSOR_lt_one_iff`,
+  `spectralRadius_jacobi_eq_energyNorm`.
+* `isLeast_chebyshevSemiIteration`.
+* `IsConjugateGradient.energyNorm_sub_le`, `IsConjugateGradient.eq_of_ambient_dimension`,
+  `IsConjugateGradient.energyNorm_error_le`.
+* `IsGMRESIterate.isLeast_residual_polynomial`, `exists_isGMRESIterate_norm_residual_eq`
+  (Greenbaum–Pták–Strakoš), `IsGMRESIterate.norm_residual_le_of_fieldOfValues` (Elman).
 -/
 
 public section
@@ -19,75 +47,36 @@ noncomputable section
 
 namespace NASC
 
-open scoped Matrix BigOperators Matrix.Norms.L2Operator ENNReal InnerProductSpace ComplexOrder
+open scoped Matrix Matrix.Norms.L2Operator ENNReal InnerProductSpace ComplexOrder
 open Filter Matrix Polynomial
 
-/-- In a complex Banach algebra, powers tend to zero precisely below spectral radius one. -/
-theorem tendsto_pow_atTop_nhds_zero_iff_spectralRadius_lt_one
-    {A : Type*} [NormedRing A] [NormedAlgebra ℂ A] [CompleteSpace A] (a : A) :
-    Tendsto (fun k : ℕ ↦ a ^ k) atTop (nhds 0) ↔ spectralRadius ℂ a < 1 := by
-  rw [spectrum.spectralRadius_eq_gelfandRadius, ENNReal.ofReal_lt_one,
-    tendsto_zero_iff_norm_tendsto_zero]
-  constructor
-  · intro h
-    obtain ⟨k, hk, hnorm⟩ := ((eventually_ne_atTop (0 : ℕ)).and
-      (h.eventually_lt_const zero_lt_one)).exists
-    exact (pow_lt_one_iff_of_nonneg (gelfandRadius_nonneg a) hk).mp
-      ((gelfandRadius_pow_le_norm_pow a hk).trans_lt hnorm)
-  · intro h
-    obtain ⟨q, haq, hq⟩ := exists_between h
-    obtain ⟨C, _, hC⟩ := norm_pow_le_mul_pow_of_gelfandRadius_lt a haq
-    have hlim : Tendsto (fun k : ℕ ↦ C * q ^ k) atTop (nhds 0) := by
-      simpa only [mul_zero] using
-        (tendsto_pow_atTop_nhds_zero_of_lt_one
-          ((gelfandRadius_nonneg a).trans haq.le) hq).const_mul C
-    exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hlim
-      (fun _ ↦ norm_nonneg _) hC
+/-- **Gap 5.1.** The affine iteration `y ↦ G y + (x - G x)` with fixed point `x` has the error
+`G ^ k (y - x)` after `k` steps. -/
+theorem iterate_affine_sub_eq {n : ℕ} (G : Matrix (Fin n) (Fin n) ℂ)
+    (x y : EuclideanSpace ℂ (Fin n)) (k : ℕ) :
+    (fun y ↦ G.toEuclideanLin y + (x - G.toEuclideanLin x))^[k] y - x =
+      (G ^ k).toEuclideanLin (y - x) := by
+  induction k with
+  | zero => simp only [Function.iterate_zero_apply, pow_zero, Matrix.toLpLin_one,
+      LinearMap.id_apply]
+  | succ k ih =>
+    rw [Function.iterate_succ_apply', pow_succ', Matrix.toLpLin_mul_same, LinearMap.comp_apply,
+      ← ih, map_sub]
+    abel
 
-/-- A sequence of square matrices whose action on each coordinate vector tends to zero
-converges to zero in the operator norm. -/
-theorem tendsto_matrix_zero_of_tendsto_toEuclideanLin_single {n : ℕ}
-    {A : ℕ → Matrix (Fin n) (Fin n) ℂ}
-    (h : ∀ j : Fin n, Tendsto (fun k ↦ (A k).toEuclideanLin (EuclideanSpace.single j 1))
-      atTop (nhds 0)) : Tendsto A atTop (nhds 0) := by
-  apply tendsto_pi_nhds.mpr
-  intro i
-  apply tendsto_pi_nhds.mpr
-  intro j
-  have hcoord := (PiLp.continuous_apply 2 (fun _ : Fin n ↦ ℂ) i).continuousAt.tendsto.comp (h j)
-  simpa only [Function.comp_def, EuclideanSpace.single, Matrix.toLpLin_apply, PiLp.ofLp_single,
-    WithLp.ofLp_toLp, Matrix.mulVec_single, MulOpposite.op_one, one_smul, Matrix.col_apply,
-    PiLp.zero_apply, Matrix.zero_apply] using hcoord
-
-/-- **Gap 5.1.** A splitting iteration has the power error formula and converges from
-every starting vector exactly when the iteration matrix has spectral radius below one. -/
-theorem splittingIteration_converges_iff {n : ℕ}
-    (M : (Matrix (Fin n) (Fin n) ℂ)ˣ) (N : Matrix (Fin n) (Fin n) ℂ)
-    (x : EuclideanSpace ℂ (Fin n)) :
-    let G := (↑M⁻¹ : Matrix (Fin n) (Fin n) ℂ) * N
-    let T := fun y ↦ G.toEuclideanLin y + (x - G.toEuclideanLin x)
-    (∀ y k, T^[k] y - x = (G ^ k).toEuclideanLin (y - x)) ∧
-      ((∀ y, Tendsto (fun k ↦ T^[k] y) atTop (nhds x)) ↔ spectralRadius ℂ G < 1) := by
-  dsimp only
-  let G := (↑M⁻¹ : Matrix (Fin n) (Fin n) ℂ) * N
+/-- **Gap 5.1.** The affine iteration `y ↦ G y + (x - G x)` converges to its fixed point `x`
+from every starting vector exactly when `G` has spectral radius below one. -/
+theorem tendsto_iterate_affine_iff_spectralRadius_lt_one {n : ℕ}
+    (G : Matrix (Fin n) (Fin n) ℂ) (x : EuclideanSpace ℂ (Fin n)) :
+    (∀ y, Tendsto (fun k ↦ (fun y ↦ G.toEuclideanLin y + (x - G.toEuclideanLin x))^[k] y)
+      atTop (nhds x)) ↔ spectralRadius ℂ G < 1 := by
   let T := fun y ↦ G.toEuclideanLin y + (x - G.toEuclideanLin x)
   let L := Matrix.toEuclideanCLM (n := Fin n) (𝕜 := ℂ)
   have hL (A : Matrix (Fin n) (Fin n) ℂ) (y : EuclideanSpace ℂ (Fin n)) :
       A.toEuclideanLin y = L A y := by
     rw [← Matrix.coe_toEuclideanCLM_eq_toEuclideanLin, ContinuousLinearMap.coe_coe]
-  have hstep (y : EuclideanSpace ℂ (Fin n)) : T y - x = L G (y - x) := by
-    dsimp only [T]
-    rw [map_sub, ← hL, ← hL]
-    abel
-  have herr (y : EuclideanSpace ℂ (Fin n)) (k : ℕ) :
-      T^[k] y - x = L (G ^ k) (y - x) := by
-    induction k with
-    | zero =>
-      simp only [Function.iterate_zero_apply, pow_zero, map_one, one_apply_eq_self]
-    | succ k ih =>
-      rw [Function.iterate_succ_apply', hstep, ih, pow_succ']
-      simp only [map_mul L G (G ^ k), mul_apply_eq_comp]
-  refine ⟨fun y k ↦ (herr y k).trans (hL _ _).symm, ?_⟩
+  have herr (y : EuclideanSpace ℂ (Fin n)) (k : ℕ) : T^[k] y - x = L (G ^ k) (y - x) :=
+    (iterate_affine_sub_eq G x y k).trans (hL _ _)
   rw [← tendsto_pow_atTop_nhds_zero_iff_spectralRadius_lt_one]
   constructor
   · intro h
@@ -109,9 +98,24 @@ theorem splittingIteration_converges_iff {n : ℕ}
     have ht := (hp.congr fun k ↦ (herr y k).symm).add_const x
     simpa only [sub_add_cancel, zero_add] using ht
 
+/-- **Gap 5.1.** A splitting iteration has the power error formula and converges from
+every starting vector exactly when the iteration matrix has spectral radius below one. -/
+theorem splittingIteration_converges_iff {n : ℕ}
+    (M : (Matrix (Fin n) (Fin n) ℂ)ˣ) (N : Matrix (Fin n) (Fin n) ℂ)
+    (x : EuclideanSpace ℂ (Fin n)) :
+    let G := (↑M⁻¹ : Matrix (Fin n) (Fin n) ℂ) * N
+    let T := fun y ↦ G.toEuclideanLin y + (x - G.toEuclideanLin x)
+    (∀ y k, T^[k] y - x = (G ^ k).toEuclideanLin (y - x)) ∧
+      ((∀ y, Tendsto (fun k ↦ T^[k] y) atTop (nhds x)) ↔ spectralRadius ℂ G < 1) :=
+  ⟨iterate_affine_sub_eq _ x, tendsto_iterate_affine_iff_spectralRadius_lt_one _ x⟩
+
 /-- Spectral radius of a real matrix computed after extending scalars to the complex field. -/
 def realMatrixSpectralRadius {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) : ℝ≥0∞ :=
   spectralRadius ℂ (A.map Complex.ofReal)
+
+/-- The spectral radius of a real matrix is that of its complexification. -/
+theorem realMatrixSpectralRadius_def {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) :
+    realMatrixSpectralRadius A = spectralRadius ℂ (A.map Complex.ofReal) := (rfl)
 
 /-- **Gap 5.4.** A real matrix with nonpositive off-diagonal entries is a nonsingular
 M-matrix exactly when it has a positive scalar shift representation. -/
@@ -142,7 +146,7 @@ theorem spectralRadius_regularSplitting_eq {n : ℕ}
   sorry
 
 /-- **Gap 5.7.** Stein--Rosenberg comparison of the Jacobi and Gauss--Seidel radii. -/
-theorem steinRosenberg {n : ℕ} {L U : Matrix (Fin n) (Fin n) ℝ}
+theorem stein_rosenberg {n : ℕ} {L U : Matrix (Fin n) (Fin n) ℝ}
     (hL : ∀ i j, i ≤ j → L i j = 0) (hU : ∀ i j, j ≤ i → U i j = 0)
     (hB : ∀ i j, 0 ≤ (L + U) i j) :
     let ρJ := realMatrixSpectralRadius (L + U)
@@ -153,7 +157,7 @@ theorem steinRosenberg {n : ℕ} {L U : Matrix (Fin n) (Fin n) ℝ}
 
 /-- **Gap 5.9.** Ostrowski--Reich criterion at a relaxation parameter for which the
 splitting is defined. -/
-theorem spectralRadius_sor_lt_one_iff {n : ℕ} [NeZero n]
+theorem spectralRadius_sor_lt_one_iff {n : ℕ}
     (D E : Matrix (Fin n) (Fin n) ℂ) {ω : ℝ} (hD : D.PosDef) (hω : 0 < ω) (hω' : ω < 2)
     (hM : (D - (ω : ℂ) • E).det ≠ 0) :
     spectralRadius ℂ ((D - (ω : ℂ) • E)⁻¹ * ((ω : ℂ) • Eᴴ + ((1 - ω : ℝ) : ℂ) • D)) <
@@ -181,21 +185,28 @@ theorem spectralRadius_blockSOR_lt_one_iff {n m : ℕ} [NeZero n]
   sorry
 
 /-- **Gap 5.11.** The rescaled Chebyshev polynomial attains the semi-iteration minimax
-budget on a spectral interval. -/
-theorem isLeast_chebyshevSemiIteration {a b : ℝ} (hab : a < b) (hb : b < 1) (m : ℕ) :
+budget on a spectral interval `[a, b]` that does not contain `1`, on either side of it. -/
+theorem isLeast_chebyshevSemiIteration {a b : ℝ} (hab : a < b) (h₁ : 1 ∉ Set.Icc a b)
+    (m : ℕ) :
     IsLeast {t : ℝ | ∃ p : ℝ[X], p.natDegree ≤ m ∧ p.eval 1 = 1 ∧
       t = sSup ((fun x ↦ |p.eval x|) '' Set.Icc a b)}
-      (1 / (Polynomial.Chebyshev.T ℝ m).eval ((2 - a - b) / (b - a))) := by
+      (1 / |(Polynomial.Chebyshev.T ℝ m).eval ((2 - a - b) / (b - a))|) := by
   sorry
 
-/-- Energy length induced by a positive definite self-adjoint endomorphism. -/
+/-- Energy length `√(re ⟪x, A x⟫)` induced by a positive definite self-adjoint endomorphism.
+For an indefinite `A` it is the junk value `0` wherever `re ⟪x, A x⟫ < 0`. -/
 def energyNorm {𝕜 H : Type*} [RCLike 𝕜] [NormedAddCommGroup H] [InnerProductSpace 𝕜 H]
     (A : H →ₗ[𝕜] H) (x : H) : ℝ :=
   Real.sqrt (RCLike.re ⟪x, A x⟫_𝕜)
 
+/-- The energy norm is the square root of the real part of `⟪x, A x⟫`. -/
+theorem energyNorm_def {𝕜 H : Type*} [RCLike 𝕜] [NormedAddCommGroup H]
+    [InnerProductSpace 𝕜 H] (A : H →ₗ[𝕜] H) (x : H) :
+    energyNorm A x = Real.sqrt (RCLike.re ⟪x, A x⟫_𝕜) := (rfl)
+
 /-- **Gap 5.9.** When both the matrix and the reflected diagonal splitting are positive
 definite, the Jacobi spectral radius equals the induced energy norm and is below one. -/
-theorem spectralRadius_jacobi_eq_energyNorm {n : ℕ} [NeZero n]
+theorem spectralRadius_jacobi_eq_energyNorm {n : ℕ}
     (A : Matrix (Fin n) (Fin n) ℂ) (hA : A.PosDef)
     (hD : ((2 : ℂ) • Matrix.diagonal A.diag - A).PosDef) :
     let B := 1 - (Matrix.diagonal A.diag)⁻¹ * A
@@ -216,20 +227,43 @@ def IsConjugateGradient {𝕜 H : Type*} [RCLike 𝕜] [NormedAddCommGroup H]
       x (k + 1) = x k + a • p k ∧ r (k + 1) = r k - a • A (p k) ∧
         p (k + 1) = C (r (k + 1)) + β • p k)
 
-/-- **Gap 5.12.** Exact CG gives the unique energy minimizer in the affine Krylov space,
-and terminates by the ambient dimension. -/
-theorem IsConjugateGradient.optimality_and_termination {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
+/-- The preconditioned CG recurrence: initial residual and direction, a frozen state after a
+zero residual, and otherwise the step, residual and direction updates. -/
+theorem isConjugateGradient_iff {𝕜 H : Type*} [RCLike 𝕜] [NormedAddCommGroup H]
+    [InnerProductSpace 𝕜 H] {A C : H →ₗ[𝕜] H} {b x₀ : H} {x r p : ℕ → H} :
+    IsConjugateGradient A C b x₀ x r p ↔
+      x 0 = x₀ ∧ r 0 = b - A x₀ ∧ p 0 = C (r 0) ∧ ∀ k,
+        (r k = 0 → x (k + 1) = x k ∧ r (k + 1) = 0 ∧ p (k + 1) = 0) ∧
+        (r k ≠ 0 →
+          x (k + 1) = x k + (⟪r k, C (r k)⟫_𝕜 / ⟪p k, A (p k)⟫_𝕜) • p k ∧
+          r (k + 1) = r k - (⟪r k, C (r k)⟫_𝕜 / ⟪p k, A (p k)⟫_𝕜) • A (p k) ∧
+          p (k + 1) = C (r (k + 1)) +
+            (⟪r (k + 1), C (r (k + 1))⟫_𝕜 / ⟪r k, C (r k)⟫_𝕜) • p k) := Iff.rfl
+
+/-- **Gap 5.12.** The CG iterates have the true residual, lie in the affine Krylov space and
+minimize the energy norm of the error there. -/
+theorem IsConjugateGradient.energyNorm_sub_le {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
+    (A : Matrix (Fin n) (Fin n) 𝕜)
+    (hA : A.IsHermitian) (hpos : ∀ x : EuclideanSpace 𝕜 (Fin n), x ≠ 0 →
+      0 < RCLike.re ⟪x, A.toEuclideanLin x⟫_𝕜)
+    {b x₀ sol : EuclideanSpace 𝕜 (Fin n)} {x r p : ℕ → EuclideanSpace 𝕜 (Fin n)}
+    (hsol : A.toEuclideanLin sol = b)
+    (h : IsConjugateGradient A.toEuclideanLin LinearMap.id b x₀ x r p) (k : ℕ) :
+    r k = b - A.toEuclideanLin (x k) ∧
+      x k - x₀ ∈ krylovSubmodule A.toEuclideanLin (r 0) k ∧
+      ∀ y, y - x₀ ∈ krylovSubmodule A.toEuclideanLin (r 0) k →
+        energyNorm A.toEuclideanLin (x k - sol) ≤ energyNorm A.toEuclideanLin (y - sol) := by
+  sorry
+
+/-- **Gap 5.12.** Exact CG terminates with the solution by the ambient dimension. -/
+theorem IsConjugateGradient.eq_of_ambient_dimension {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
     (A : Matrix (Fin n) (Fin n) 𝕜)
     (hA : A.IsHermitian) (hpos : ∀ x : EuclideanSpace 𝕜 (Fin n), x ≠ 0 →
       0 < RCLike.re ⟪x, A.toEuclideanLin x⟫_𝕜)
     {b x₀ sol : EuclideanSpace 𝕜 (Fin n)} {x r p : ℕ → EuclideanSpace 𝕜 (Fin n)}
     (hsol : A.toEuclideanLin sol = b)
     (h : IsConjugateGradient A.toEuclideanLin LinearMap.id b x₀ x r p) :
-    (∀ k, r k = b - A.toEuclideanLin (x k) ∧
-      x k - x₀ ∈ krylovSubmodule A.toEuclideanLin (r 0) k ∧
-      ∀ y, y - x₀ ∈ krylovSubmodule A.toEuclideanLin (r 0) k →
-        energyNorm A.toEuclideanLin (x k - sol) ≤ energyNorm A.toEuclideanLin (y - sol)) ∧
-      x n = sol := by
+    x n = sol := by
   sorry
 
 /-- **Gaps 5.13 and 5.17.** Condition-number bound for preconditioned CG in the
@@ -255,6 +289,12 @@ def IsGMRESIterate {𝕜 H : Type*} [RCLike 𝕜] [NormedAddCommGroup H]
   let K := krylovSubmodule A (b - A x₀) k
   x - x₀ ∈ K ∧ ∀ y, y - x₀ ∈ K → ‖b - A x‖ ≤ ‖b - A y‖
 
+/-- A GMRES iterate lies in the affine Krylov space and minimizes the residual norm there. -/
+theorem isGMRESIterate_iff {𝕜 H : Type*} [RCLike 𝕜] [NormedAddCommGroup H]
+    [InnerProductSpace 𝕜 H] {A : H →ₗ[𝕜] H} {b x₀ : H} {k : ℕ} {x : H} :
+    IsGMRESIterate A b x₀ k x ↔ x - x₀ ∈ krylovSubmodule A (b - A x₀) k ∧
+      ∀ y, y - x₀ ∈ krylovSubmodule A (b - A x₀) k → ‖b - A x‖ ≤ ‖b - A y‖ := Iff.rfl
+
 /-- **Gap 5.14.** GMRES residual minimization is equivalently a normalized polynomial
 minimization. -/
 theorem IsGMRESIterate.isLeast_residual_polynomial {𝕜 H : Type*} [RCLike 𝕜]
@@ -266,8 +306,8 @@ theorem IsGMRESIterate.isLeast_residual_polynomial {𝕜 H : Type*} [RCLike 𝕜
 
 /-- **Gap 5.15.** Every positive nonincreasing residual curve can occur with any
 prescribed nonzero characteristic roots. -/
-theorem exists_gmres_residualCurve {n : ℕ} (f : Fin (n + 1) → ℝ) (eigs : Fin (n + 1) → ℂ)
-    (hf : Antitone f) (hpos : ∀ k, 0 < f k) (he : ∀ j, eigs j ≠ 0) :
+theorem exists_isGMRESIterate_norm_residual_eq {n : ℕ} (f : Fin (n + 1) → ℝ)
+    (eigs : Fin (n + 1) → ℂ) (hf : Antitone f) (hpos : ∀ k, 0 < f k) (he : ∀ j, eigs j ≠ 0) :
     ∃ (A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (b : EuclideanSpace ℂ (Fin (n + 1)))
       (x : ℕ → EuclideanSpace ℂ (Fin (n + 1))),
       A.charpoly.roots = Multiset.ofList (List.ofFn eigs) ∧

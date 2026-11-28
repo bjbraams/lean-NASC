@@ -1,14 +1,28 @@
 module
 
-public import NASC.FiniteElements
 public import Mathlib.Analysis.Normed.Operator.Compact.Basic
+public import TauCeti.Analysis.PDE.DirichletProblem
+
+import NASC.Support.LinearAlgebra
 
 /-!
 # Variational eigenproblems and a posteriori estimates
 
 Min--max eigenvalues, compact spectral approximation, residual estimators, equilibrated
 fluxes, adaptive contraction, and the obstacle comparison estimate. The Prager--Synge
-proof uses TauCeti's identity between the Poisson energy form and the gradient inner product.
+proof uses TauCeti's identity between the Poisson energy form and the gradient inner product
+(`TauCeti.PDE.energyFormH1_one_zero_zero_eq_inner`).
+
+## Main results
+
+* `NASC.exists_variationalEigenvalue_minmax`: the min--max characterization of eigenvalues.
+* `NASC.exists_eigenvector_of_isCompactOperator_of_tendsto`: nonzero limits of eigenvalues of
+  norm-convergent approximations are eigenvalues of a compact limit.
+* `NASC.rayleigh_error_eq_quadratic`: the Rayleigh quotient error is quadratic.
+* `NASC.norm_error_le_of_weighted_residuals`: reliability of residual estimators.
+* `NASC.norm_sub_sq_add_norm_add_sq_eq_of_equilibrated`: the Prager--Synge identity.
+* `NASC.exists_adaptive_error_contraction`: contraction of adaptive finite element methods.
+* `NASC.falk_obstacle_error_le`: Falk's estimate for obstacle problems.
 -/
 
 public section
@@ -18,14 +32,14 @@ noncomputable section
 namespace NASC
 
 open MeasureTheory Set Filter TopologicalSpace TauCeti
-open scoped BigOperators ENNReal Topology
+open scoped ENNReal Topology
 
 /-- **Gap 19.13.** The energy eigenproblem has the min--max values of the
 Rayleigh quotient when the solution operator in the pivot space is compact. -/
 theorem exists_variationalEigenvalue_minmax {V H : Type*}
     [NormedAddCommGroup V] [InnerProductSpace ℝ V] [CompleteSpace V]
     [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteSpace H]
-    (J : V →L[ℝ] H) (hJ : Function.Injective J) (hJd : DenseRange J)
+    (J : V →L[ℝ] H) (hJ : Function.Injective J)
     (A : V →L[ℝ] StrongDual ℝ V) (hA : ∀ u v, A u v = A v u)
     {α : ℝ} (hα : 0 < α) (hpos : ∀ u, α * ‖u‖ ^ 2 ≤ A u u)
     (S : H →L[ℝ] V) (hsol : ∀ f v, A (S f) v = inner ℝ f (J v))
@@ -37,13 +51,14 @@ theorem exists_variationalEigenvalue_minmax {V H : Type*}
         m = sSup {r : ℝ | ∃ u : X, u ≠ 0 ∧ r = A u.val u.val / ‖J u.val‖ ^ 2}} eig := by
   sorry
 
-/-- **Gap 19.14.** Nonzero limits of eigenvalues of norm-convergent compact
-approximations belong to the point spectrum of the limit operator. -/
-theorem exists_eigenvector_of_compact_normLimit {H : Type*}
-    [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteSpace H]
-    (T : H →L[ℝ] H) (hT : IsCompactOperator T)
-    (Tₕ : ℕ → H →L[ℝ] H) (hconv : Tendsto Tₕ atTop (nhds T))
-    (e : ℕ → ℝ) {r : ℝ} (hr : r ≠ 0) (he : Tendsto e atTop (nhds r))
+/-- **Gap 19.14.** Nonzero limits of eigenvalues of norm-convergent approximations of a
+compact operator belong to its point spectrum. The approximations need not be compact, and
+the space need not be complete or carry an inner product. -/
+theorem exists_eigenvector_of_isCompactOperator_of_tendsto {𝕜 H : Type*}
+    [NontriviallyNormedField 𝕜] [NormedAddCommGroup H] [NormedSpace 𝕜 H]
+    (T : H →L[𝕜] H) (hT : IsCompactOperator T)
+    (Tₕ : ℕ → H →L[𝕜] H) (hconv : Tendsto Tₕ atTop (𝓝 T))
+    (e : ℕ → 𝕜) {r : 𝕜} (hr : r ≠ 0) (he : Tendsto e atTop (𝓝 r))
     (x : ℕ → H) (hx : ∀ n, ‖x n‖ = 1 ∧ Tₕ n (x n) = e n • x n) :
     ∃ v : H, ‖v‖ = 1 ∧ T v = r • v := by
   have hmem (n : ℕ) : T (x n) ∈ closure (T '' Metric.closedBall 0 1) :=
@@ -92,47 +107,25 @@ theorem rayleigh_error_eq_quadratic {V H : Type*}
 
 /-- **Gap 19.17.** Residual reliability from cell and face interpolation
 bounds, expressed by a single weighted collection of residual terms. -/
-theorem norm_error_le_of_weighted_residuals {V H : Type*}
+theorem norm_error_le_of_weighted_residuals {ι V H : Type*}
     [NormedAddCommGroup V] [NormedSpace ℝ V]
     [NormedAddCommGroup H] [InnerProductSpace ℝ H]
     (A : V →L[ℝ] StrongDual ℝ V) {α C : ℝ} (hα : 0 < α) (hC : 0 ≤ C)
     (hcoerce : ∀ e, α * ‖e‖ ^ 2 ≤ A e e)
-    (n : ℕ) (w : Fin n → ℝ) (hw : ∀ i, 0 < w i) (r : Fin n → H)
-    (z : V → Fin n → H) (e : V)
-    (hrep : ∀ v, A e v = ∑ i, inner ℝ (r i) (z v i))
-    (hinterp : ∀ v, (∑ i, ‖z v i‖ ^ 2 / w i) ≤ C ^ 2 * ‖v‖ ^ 2) :
-    ‖e‖ ≤ (C / α) * Real.sqrt (∑ i, w i * ‖r i‖ ^ 2) := by
-  let R := ∑ i, w i * ‖r i‖ ^ 2
-  let Z := ∑ i, ‖z e i‖ ^ 2 / w i
-  let a := fun i ↦ Real.sqrt (w i) * ‖r i‖
-  let b := fun i ↦ ‖z e i‖ / Real.sqrt (w i)
-  have hR : 0 ≤ R := Finset.sum_nonneg fun i _ ↦ mul_nonneg (hw i).le (sq_nonneg _)
-  have ha : ∑ i, (a i) ^ 2 = R := by
-    refine Finset.sum_congr rfl fun i _ ↦ ?_
-    simp only [a, mul_pow, Real.sq_sqrt (hw i).le]
-  have hb : ∑ i, (b i) ^ 2 = Z := by
-    refine Finset.sum_congr rfl fun i _ ↦ ?_
-    simp only [b, div_pow, Real.sq_sqrt (hw i).le]
-  have hCS : (∑ i, a i * b i) ^ 2 ≤ R * Z := by
-    rw [← ha, ← hb]
-    exact Finset.sum_mul_sq_le_sq_mul_sq Finset.univ a b
-  have hinner : A e e ≤ ∑ i, a i * b i := by
-    rw [hrep e]
-    refine Finset.sum_le_sum fun i _ ↦ ?_
-    have hp : Real.sqrt (w i) ≠ 0 := (Real.sqrt_pos.mpr (hw i)).ne'
-    have heq : a i * b i = ‖r i‖ * ‖z e i‖ := by
-      dsimp only [a, b]
-      field_simp
-    rw [heq]
-    exact (le_abs_self _).trans (abs_real_inner_le_norm _ _)
-  have hE := (hcoerce e).trans hinner
+    (s : Finset ι) (w : ι → ℝ) (hw : ∀ i ∈ s, 0 < w i) (r : ι → H)
+    (z : V → ι → H) (e : V)
+    (hrep : ∀ v, A e v = ∑ i ∈ s, inner ℝ (r i) (z v i))
+    (hinterp : ∀ v, (∑ i ∈ s, ‖z v i‖ ^ 2 / w i) ≤ C ^ 2 * ‖v‖ ^ 2) :
+    ‖e‖ ≤ (C / α) * Real.sqrt (∑ i ∈ s, w i * ‖r i‖ ^ 2) := by
+  set R := ∑ i ∈ s, w i * ‖r i‖ ^ 2
+  have hR : 0 ≤ R := Finset.sum_nonneg fun i hi ↦ mul_nonneg (hw i hi).le (sq_nonneg _)
   have hEpos : 0 ≤ α * ‖e‖ ^ 2 := by positivity
-  have hSpos : 0 ≤ ∑ i, a i * b i := hEpos.trans hE
+  have hE : α * ‖e‖ ^ 2 ≤ ∑ i ∈ s, inner ℝ (r i) (z e i) := (hcoerce e).trans (hrep e).le
   have hprod : α * ‖e‖ ^ 2 ≤ C * Real.sqrt R * ‖e‖ := by
     apply (sq_le_sq₀ hEpos (by positivity)).mp
     calc
-      _ ≤ (∑ i, a i * b i) ^ 2 := (sq_le_sq₀ hEpos hSpos).mpr hE
-      _ ≤ R * Z := hCS
+      _ ≤ (∑ i ∈ s, inner ℝ (r i) (z e i)) ^ 2 := (sq_le_sq₀ hEpos (hEpos.trans hE)).mpr hE
+      _ ≤ R * ∑ i ∈ s, ‖z e i‖ ^ 2 / w i := sq_sum_inner_le_sum_mul_sum_div s hw r (z e)
       _ ≤ R * (C ^ 2 * ‖e‖ ^ 2) := mul_le_mul_of_nonneg_left (hinterp e) hR
       _ = _ := by rw [mul_pow, mul_pow, Real.sq_sqrt hR]; ring
   by_cases he : ‖e‖ = 0
@@ -147,7 +140,8 @@ theorem norm_error_le_of_weighted_residuals {V H : Type*}
 
 /-- **Gap 19.18.** The Prager--Synge identity for a weak Poisson solution and
 an equilibrated flux. The divergence equation is written in integrated weak form. -/
-theorem pragerSynge_identity {d : ℕ} {μ : Measure (EuclideanSpace ℝ (Fin d))}
+theorem norm_sub_sq_add_norm_add_sq_eq_of_equilibrated {d : ℕ}
+    {μ : Measure (EuclideanSpace ℝ (Fin d))}
     [μ.IsAddHaarMeasure] {Ω : Opens (EuclideanSpace ℝ (Fin d))}
     (f : Lp ℝ 2 (μ.restrict Ω)) (u uh : W1p0 μ Ω 2)
     (σ : Lp (EuclideanSpace ℝ (Fin d)) 2 (μ.restrict Ω))
@@ -164,26 +158,18 @@ theorem pragerSynge_identity {d : ℕ} {μ : Measure (EuclideanSpace ℝ (Fin d)
       W1p.gradient (uh : W1p μ Ω 2) - W1p.gradient (u : W1p μ Ω 2) :=
     W1p.gradient_sub _ _
   rw [hg] at hu' hdiv'
-  have horth : inner ℝ (W1p.gradient (u : W1p μ Ω 2) + σ)
-      (W1p.gradient (uh : W1p μ Ω 2) - W1p.gradient (u : W1p μ Ω 2)) = 0 := by
+  set gu := W1p.gradient (u : W1p μ Ω 2)
+  set guh := W1p.gradient (uh : W1p μ Ω 2)
+  have horth : inner ℝ (gu + σ) (guh - gu) = 0 := by
     rw [inner_add_left, hu', hdiv', W1p0.valueL_apply, add_neg_cancel]
-  have hsum : W1p.gradient (uh : W1p μ Ω 2) + σ =
-      (W1p.gradient (u : W1p μ Ω 2) + σ) +
-        (W1p.gradient (uh : W1p μ Ω 2) - W1p.gradient (u : W1p μ Ω 2)) := by
-    abel
-  calc
-    _ = ‖W1p.gradient (u : W1p μ Ω 2) + σ‖ ^ 2 +
-        ‖W1p.gradient (uh : W1p μ Ω 2) - W1p.gradient (u : W1p μ Ω 2)‖ ^ 2 := by
-      rw [norm_sub_rev (W1p.gradient (u : W1p μ Ω 2)) (W1p.gradient (uh : W1p μ Ω 2)), add_comm]
-    _ = _ := by
-      rw [hsum]
-      simpa only [pow_two] using (norm_add_sq_eq_norm_sq_add_norm_sq_real horth).symm
+  have hsum : guh + σ = (gu + σ) + (guh - gu) := by abel
+  rw [hsum, sq, sq, sq, norm_add_sq_eq_norm_sq_add_norm_sq_real horth, norm_sub_rev, add_comm]
 
 /-- **Gap 19.19.** Estimator reduction, reliability, and energy quasi-orthogonality
 yield a uniform geometric contraction of a combined error. -/
 theorem exists_adaptive_error_contraction
     (energy estimator jump : ℕ → ℝ) {q C R : ℝ}
-    (hpos : ∀ j, 0 ≤ energy j ∧ 0 ≤ estimator j ∧ 0 ≤ jump j)
+    (hpos : ∀ j, 0 ≤ estimator j ∧ 0 ≤ jump j)
     (hq : 0 ≤ q) (hq' : q < 1) (hC : 0 ≤ C) (hR : 0 ≤ R)
     (hrel : ∀ j, energy j ≤ R * estimator j)
     (horth : ∀ j, energy (j + 1) + jump j ≤ energy j)
@@ -208,7 +194,7 @@ theorem exists_adaptive_error_contraction
   refine ⟨γ, hγ, 1 - δ, ⟨sub_pos.mpr hδone, sub_lt_self _ hδ⟩, fun j ↦ ?_⟩
   have hstep : energy (j + 1) + γ * estimator (j + 1) ≤ energy j + γ * q * estimator j := by
     have hred' := mul_le_mul_of_nonneg_left (hred j) hγ.le
-    have hjump := mul_nonpos_of_nonpos_of_nonneg (sub_nonpos.mpr hγC) (hpos j).2.2
+    have hjump := mul_nonpos_of_nonpos_of_nonneg (sub_nonpos.mpr hγC) (hpos j).2
     linarith only [horth j, hred', hjump]
   have hbudget : δ * (energy j + γ * estimator j) ≤ γ * (1 - q) * estimator j :=
     calc
@@ -216,11 +202,13 @@ theorem exists_adaptive_error_contraction
         mul_le_mul_of_nonneg_left (by linarith only [hrel j]) hδ.le
       _ = (γ * (1 - q) / 2) * estimator j := by rw [← mul_assoc, hδeq]
       _ ≤ _ := mul_le_mul_of_nonneg_right
-        (by linarith only [mul_nonneg hγ.le (sub_nonneg.mpr hq'.le)]) (hpos j).2.1
+        (by linarith only [mul_nonneg hγ.le (sub_nonneg.mpr hq'.le)]) (hpos j).1
   linarith only [hstep, hbudget]
 
 /-- **Gap 19.20.** Falk's comparison estimate for obstacle discretizations with
-possibly nonconforming convex constraint sets. -/
+possibly nonconforming constraint sets (`Kh ⊄ K` is allowed). The sets `K` and `Kh` are
+arbitrary: convexity is what makes the variational inequalities `hsol` and `hdisc` solvable,
+but the estimate itself does not use it. -/
 theorem falk_obstacle_error_le {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
     (A : V →L[ℝ] StrongDual ℝ V) (f : StrongDual ℝ V) {α : ℝ} (hα : 0 < α)
     (hcoerce : ∀ v, α * ‖v‖ ^ 2 ≤ A v v)

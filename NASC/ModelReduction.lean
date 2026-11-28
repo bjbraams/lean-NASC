@@ -1,15 +1,35 @@
 module
 
-public import NASC.Galerkin
-public import NASC.Conditioning
-public import Mathlib.Analysis.Normed.Operator.Compact.Basic
+public import NASC.Support.BestApproximation
+public import Mathlib.Analysis.CStarAlgebra.Matrix
+public import Mathlib.Analysis.InnerProductSpace.SingularValues
 public import Mathlib.Topology.ContinuousMap.Compact
 
 /-!
 # Approximation complexity and reduced models
 
 Sparse-grid dimension, tractability and greedy widths, holomorphic parametric solves,
-POD, residual certification, empirical interpolation, and linear system reduction.
+POD, residual certification, empirical interpolation, and linear system reduction. Matrix
+norms are the `L²` operator norms of the scope `Matrix.Norms.L2Operator`, and singular values
+are Mathlib's `LinearMap.singularValues` of `Matrix.toEuclideanLin`.
+
+## Main definitions
+
+* `NASC.SparseGridIndex`: the index set of the hierarchical sparse-grid nodes.
+* `NASC.kolmogorovWidth`: the Kolmogorov `n`-width of a set.
+* `NASC.stateSpaceTransfer`: the transfer function of a linear state-space system.
+
+## Main results
+
+* `NASC.card_sparseGridIndex`: the number of sparse-grid nodes.
+* `NASC.polynomial_tractability_iff_summable_tail`: polynomial tractability of linear problems.
+* `NASC.weak_greedy_error_two_mul_le`: convergence of the weak greedy algorithm.
+* `NASC.exists_analyticOnNhd_parametric_inverse`: holomorphy of parametric solution maps.
+* `NASC.isLeast_pod_snapshot_error_sq`: optimality of proper orthogonal decomposition.
+* `NASC.residual_dualNorm_error_bounds`: residual-based error certification.
+* `NASC.exists_empiricalInterpolator`: empirical interpolation and its Lebesgue constant.
+* `NASC.balancedTruncation_stable_transfer_error`: the balanced truncation error bound.
+* `NASC.projection_transfer_right_interpolation`: tangential interpolation by projection.
 -/
 
 public section
@@ -19,9 +39,10 @@ noncomputable section
 namespace NASC
 
 open Set Filter Matrix
-open scoped BigOperators Matrix Matrix.Norms.L2Operator
+open scoped Matrix Matrix.Norms.L2Operator
 
-/-- Sparse-grid hierarchical indices. An offset level $l_j$ has $2^{l_j}$ odd nodes. -/
+/-- Sparse-grid hierarchical indices: level vectors `l` of total level below `n`, and for each
+coordinate one of the $2^{l_j}$ odd nodes of the offset level $l_j$. -/
 def SparseGridIndex (d n : ℕ) : Type :=
   Σ l : {l : Fin d → Fin n // ∑ j, (l j).val < n}, ∀ j : Fin d, Fin (2 ^ (l.val j).val)
 
@@ -29,6 +50,12 @@ def SparseGridIndex (d n : ℕ) : Type :=
 instance instFintypeSparseGridIndex (d n : ℕ) : Fintype (SparseGridIndex d n) :=
   inferInstanceAs (Fintype (Σ l : {l : Fin d → Fin n // ∑ j, (l j).val < n},
     ∀ j : Fin d, Fin (2 ^ (l.val j).val)))
+
+/-- The defining formula of `NASC.SparseGridIndex`. -/
+theorem sparseGridIndex_def (d n : ℕ) :
+    SparseGridIndex d n =
+      Σ l : {l : Fin d → Fin n // ∑ j, (l j).val < n}, ∀ j : Fin d, Fin (2 ^ (l.val j).val) :=
+  (rfl)
 
 /-- **Gap 24.2.** The sparse-grid node count is the weighted sum of the
 numbers of level vectors at each total level. -/
@@ -38,10 +65,10 @@ theorem card_sparseGridIndex (d n : ℕ) (hd : 0 < d) :
   sorry
 
 /-- **Gap 24.4.** Polynomial tractability is equivalent to a dimension-scaled
-summability condition on the tail of the squared singular values. -/
-theorem polynomialTractability_iff_summable_tail (σ : ℕ → ℕ → ℝ)
-    (hpos : ∀ d j, 0 ≤ σ d j) (hmono : ∀ d, Antitone (σ d))
-    (hdecay : ∀ d, Tendsto (σ d) atTop (nhds 0)) :
+summability condition on the tail of the squared singular values. Each side forces
+`σ d j → 0`, so decay is not assumed. -/
+theorem polynomial_tractability_iff_summable_tail (σ : ℕ → ℕ → ℝ)
+    (hpos : ∀ d j, 0 ≤ σ d j) (hmono : ∀ d, Antitone (σ d)) :
     (∃ C p q : ℝ, 0 < C ∧ 0 ≤ p ∧ 0 ≤ q ∧
       ∀ (d : ℕ), 0 < d → ∀ ε ∈ Ioo (0 : ℝ) 1,
         ∃ n : ℕ, σ d n ≤ ε ^ 2 ∧ (n : ℝ) ≤ C * (d : ℝ) ^ q * ε ^ (-p)) ↔
@@ -53,17 +80,27 @@ theorem polynomialTractability_iff_summable_tail (σ : ℕ → ℕ → ℝ)
   sorry
 
 /-- Kolmogorov width over finite-dimensional linear subspaces. Nonempty compact
-input sets give bounded errors for every candidate subspace. -/
+input sets give bounded errors for every candidate subspace. For a set with unbounded
+errors the inner real `sSup` is the junk value `0`, so the definition is meant for bounded
+sets. -/
 def kolmogorovWidth {H : Type*} [NormedAddCommGroup H] [NormedSpace ℝ H]
     (K : Set H) (n : ℕ) : ℝ :=
   sInf {d : ℝ | ∃ V : Submodule ℝ H, FiniteDimensional ℝ V ∧ Module.finrank ℝ V ≤ n ∧
     d = sSup ((bestApproximationError (V : Set H)) '' K)}
 
+/-- The defining formula of `NASC.kolmogorovWidth`. -/
+theorem kolmogorovWidth_def {H : Type*} [NormedAddCommGroup H] [NormedSpace ℝ H]
+    (K : Set H) (n : ℕ) :
+    kolmogorovWidth K n =
+      sInf {d : ℝ | ∃ V : Submodule ℝ H, FiniteDimensional ℝ V ∧ Module.finrank ℝ V ≤ n ∧
+        d = sSup ((bestApproximationError (V : Set H)) '' K)} :=
+  (rfl)
+
 /-- **Gap 24.6.** The Hilbert-space weak greedy error is bounded by the geometric
 mean of the initial and optimal $n$-width errors after $2n$ selections. -/
-theorem weakGreedyError_two_mul_le {H : Type*}
+theorem weak_greedy_error_two_mul_le {H : Type*}
     [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteSpace H]
-    (K : Set H) (hK : IsCompact K) (hK₀ : K.Nonempty)
+    (K : Set H) (hK : IsCompact K)
     (g : ℕ → H) (hg : ∀ n, g n ∈ K) {γ : ℝ} (hγ : γ ∈ Ioc (0 : ℝ) 1) :
     let V := fun n ↦ Submodule.span ℝ (range (fun j : Fin n ↦ g j.val))
     let err := fun n ↦ sSup ((bestApproximationError (V n : Set H)) '' K)
@@ -84,8 +121,10 @@ theorem exists_analyticOnNhd_parametric_inverse {X E : Type*}
       u x = ∑' j : ℕ, ((-(A.symm : E →L[ℂ] E).comp (B x)) ^ j) (A.symm f) := by
   sorry
 
-/-- **Gap 24.8.** POD in transformed energy coordinates minimizes the sum of squared
-snapshot projection defects, and the minimum is the singular-value tail. -/
+/-- **Gap 24.8.** POD minimizes the sum of squared Euclidean snapshot projection defects
+(the squared Frobenius norm of `S - V Vᵀ S`) over orthonormal bases `V` of rank `k`, and the
+minimum is the tail of the squared singular values. An energy inner product is handled by
+transforming the snapshots first. -/
 theorem isLeast_pod_snapshot_error_sq {m n k : ℕ} (S : Matrix (Fin m) (Fin n) ℝ)
     (hk : k ≤ m) :
     IsLeast {e : ℝ | ∃ V : Matrix (Fin m) (Fin k) ℝ, Vᵀ * V = 1 ∧
@@ -120,11 +159,19 @@ theorem exists_empiricalInterpolator {X : Type*} [TopologicalSpace X] [CompactSp
       ∀ f, (∀ j, I f (x j) = f (x j)) ∧ I f ∈ Submodule.span ℝ (range ρ) := by
   sorry
 
-/-- Transfer function of real state-space matrices evaluated at a complex argument. -/
+/-- Transfer function `C (z - A)⁻¹ B` of real state-space matrices evaluated at a complex
+argument. At an eigenvalue `z` of `A` the junk inverse is `0`, and so is the value. -/
 def stateSpaceTransfer {n m p : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
     (B : Matrix (Fin n) (Fin m) ℝ) (C : Matrix (Fin p) (Fin n) ℝ) (z : ℂ) :
     Matrix (Fin p) (Fin m) ℂ :=
   C.map Complex.ofReal * (z • 1 - A.map Complex.ofReal)⁻¹ * B.map Complex.ofReal
+
+/-- The defining formula of `NASC.stateSpaceTransfer`. -/
+theorem stateSpaceTransfer_def {n m p : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
+    (B : Matrix (Fin n) (Fin m) ℝ) (C : Matrix (Fin p) (Fin n) ℝ) (z : ℂ) :
+    stateSpaceTransfer A B C z =
+      C.map Complex.ofReal * (z • 1 - A.map Complex.ofReal)⁻¹ * B.map Complex.ofReal :=
+  (rfl)
 
 /-- **Gap 24.11.** The leading block of a stable balanced realization is stable
 and has transfer error bounded by twice the discarded Hankel singular values. -/
@@ -147,13 +194,24 @@ theorem balancedTruncation_stable_transfer_error {r k m p : ℕ} (hk : 0 < k) (h
   sorry
 
 /-- **Gap 24.12.** A right tangential interpolation condition follows when the
-full resolvent response lies in the trial range and the projected pencil is invertible. -/
-theorem projection_transfer_right_interpolation {n r m p : ℕ}
-    (M : Matrix (Fin n) (Fin n) ℂ) (B : Matrix (Fin n) (Fin m) ℂ)
-    (C : Matrix (Fin p) (Fin n) ℂ) (V W : Matrix (Fin n) (Fin r) ℂ)
-    (t : Fin m → ℂ) (hM : M.det ≠ 0) (hMr : (Wᵀ * M * V).det ≠ 0)
-    (hV : ∃ x : Fin r → ℂ, V *ᵥ x = M⁻¹ *ᵥ (B *ᵥ t)) :
+full resolvent response lies in the trial range and the projected pencil is invertible.
+This is linear algebra over any field. -/
+theorem projection_transfer_right_interpolation {K : Type*} [Field K] {n r m p : ℕ}
+    (M : Matrix (Fin n) (Fin n) K) (B : Matrix (Fin n) (Fin m) K)
+    (C : Matrix (Fin p) (Fin n) K) (V W : Matrix (Fin n) (Fin r) K)
+    (t : Fin m → K) (hM : M.det ≠ 0) (hMr : (Wᵀ * M * V).det ≠ 0)
+    (hV : ∃ x : Fin r → K, V *ᵥ x = M⁻¹ *ᵥ (B *ᵥ t)) :
     (C * M⁻¹ * B) *ᵥ t = (C * V * (Wᵀ * M * V)⁻¹ * Wᵀ * B) *ᵥ t := by
-  sorry
+  obtain ⟨x, hx⟩ := hV
+  have hB : B *ᵥ t = M *ᵥ (V *ᵥ x) := by
+    rw [hx, mulVec_mulVec, mul_nonsing_inv M (isUnit_iff_ne_zero.mpr hM), one_mulVec]
+  have hW : (Wᵀ * M * V)⁻¹ *ᵥ (Wᵀ *ᵥ (B *ᵥ t)) = x := by
+    rw [hB, mulVec_mulVec, mulVec_mulVec, mulVec_mulVec, Matrix.mul_assoc _ Wᵀ M,
+      Matrix.mul_assoc _ (Wᵀ * M) V,
+      nonsing_inv_mul _ (isUnit_iff_ne_zero.mpr hMr), one_mulVec]
+  calc
+    (C * M⁻¹ * B) *ᵥ t = C *ᵥ (V *ᵥ x) := by rw [hx, mulVec_mulVec, mulVec_mulVec]
+    _ = C *ᵥ (V *ᵥ ((Wᵀ * M * V)⁻¹ *ᵥ (Wᵀ *ᵥ (B *ᵥ t)))) := by rw [hW]
+    _ = _ := by simp only [mulVec_mulVec, Matrix.mul_assoc]
 
 end NASC

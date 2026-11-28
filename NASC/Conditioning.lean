@@ -6,15 +6,54 @@ public import Mathlib.Analysis.InnerProductSpace.SingularValues
 public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 public import Mathlib.LinearAlgebra.Matrix.Rank
 public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import TauCeti.Analysis.InnerProductSpace.UnitarilyInvariantSeminorm.Basic
+
 import Mathlib.Analysis.Normed.Module.HahnBanach
+import NASC.Support.Algebra
 
 /-!
 # Conditioning and matrix perturbations
 
-Local amplification, backward error, perturbations of eigenvalues and singular values,
-pseudospectra and the leading singular subspaces. Singular values use Mathlib's zero-based
-indexing. The conditioning proofs use Mathlib’s converse local Lipschitz estimate for
-Fréchet derivatives and Hahn–Banach norming functionals.
+The absolute condition number of a map, normwise and componentwise forward and backward
+errors of linear systems, the distance to singularity, perturbation of singular values
+(Mirsky, interlacing), of eigenvalues of normal matrices (Hoffman–Wielandt), Gershgorin discs,
+Bauer–Fike, least-squares perturbation, pseudospectra and Wedin's bound for leading singular
+subspaces. Gap numbers refer to section 2 of `GAPS.md`. The conditioning proofs use Mathlib's
+converse local Lipschitz estimate for Fréchet derivatives and Hahn–Banach norming
+functionals. Mirsky's inequality is stated with TauCeti's unitarily invariant seminorms.
+
+## Notation
+
+* Matrix norms are the Euclidean operator norms of the scoped instance
+  `Matrix.Norms.L2Operator`.
+* Singular values are Mathlib's `LinearMap.singularValues` of `Matrix.toEuclideanLin`,
+  indexed from zero in decreasing order and extended by zero.
+
+## Main definitions
+
+* `absoluteConditionNumber`, `normwiseBackwardError`, `componentwiseBackwardError`.
+* `singularValueDiagonal`, `gershgorinDisc`, `MinimizesLeastSquares`, `pseudospectrum`,
+  `IsLeadingSingularFrame`.
+
+## Main results
+
+* `HasFDerivAt.absoluteConditionNumber_eq`: the condition number of a differentiable map is
+  the operator norm of its derivative.
+* `norm_sub_le_of_perturbed_eq`, `tendsto_sSup_norm_sub_div_of_perturbation`: normwise forward
+  error of a perturbed linear solve and its sharp first-order amplification.
+* `isLeast_normwiseBackwardError` (Rigal–Gaches), `exists_componentwisePerturbation_iff` and
+  `componentwiseBackwardError_eq` (Oettli–Prager).
+* `exists_rank_one_isLeast_norm_det_add_eq_zero`: the distance to singularity is the least
+  singular value.
+* `seminorm_singularValueDiagonal_sub_le` (Mirsky), `singularValues_submatrix_interlace`,
+  `exists_perm_sum_norm_sq_le_of_isStarNormal` (Hoffman–Wielandt).
+* `card_roots_filter_mem_gershgorinDiscs` (Gershgorin),
+  `exists_norm_sub_eigenvalue_le_of_diagonalization` (Bauer–Fike).
+* `MinimizesLeastSquares.injective_and_norm_sub_div_le`: least-squares perturbation bounds.
+* `mem_pseudospectrum_iff_exists_mem_spectrum_add`, `mem_pseudospectrum_iff_singularValues_lt`,
+  `mem_pseudospectrum_iff_resolvent`,
+  `connectedComponentIn_pseudospectrum_inter_spectrum_nonempty`.
+* `max_norm_sub_projection_mul_le_of_singular_gap` (Wedin).
 -/
 
 public section
@@ -23,7 +62,7 @@ noncomputable section
 
 namespace NASC
 
-open scoped BigOperators ENNReal Matrix Matrix.Norms.L2Operator
+open scoped ENNReal Matrix Matrix.Norms.L2Operator
 open Set Filter
 
 section NormedSpaces
@@ -40,15 +79,12 @@ def absoluteConditionNumber (f : E → F) (s : Set E) (x : E) : ℝ≥0∞ :=
 theorem absoluteConditionNumber_def (f : E → F) (s : Set E) (x : E) :
     absoluteConditionNumber f s x =
       ⨅ d : {r : ℝ // 0 < r}, ⨆ y : E, ⨆ (_ : y ∈ s ∧ y ≠ x ∧ ‖y - x‖ ≤ d.val),
-        ENNReal.ofReal (‖f y - f x‖ / ‖y - x‖) := by
-  unfold absoluteConditionNumber
-  rfl
+        ENNReal.ofReal (‖f y - f x‖ / ‖y - x‖) := (rfl)
 
-/-- **Gap 2.1.** The exact absolute amplification of a differentiable map over
-the real field is the operator norm of the derivative. -/
-theorem HasFDerivAt.absoluteConditionNumber_eq {E F : Type*}
-    [NormedAddCommGroup E] [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F]
-    {f : E → F} {D : E →L[ℝ] F} {s : Set E} {x : E} (hf : HasFDerivAt f D x)
+/-- **Gap 2.1.** The exact absolute amplification of a differentiable map is the operator norm
+of the derivative. -/
+theorem HasFDerivAt.absoluteConditionNumber_eq
+    {f : E → F} {D : E →L[𝕜] F} {s : Set E} {x : E} (hf : HasFDerivAt f D x)
     (hs : s ∈ nhds x) :
     absoluteConditionNumber f s x = ENNReal.ofReal ‖D‖ := by
   rw [absoluteConditionNumber_def]
@@ -95,17 +131,16 @@ end NormedSpaces
 
 section LinearSystems
 
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
+variable {𝕜 E : Type*} [RCLike 𝕜] [NormedAddCommGroup E] [NormedSpace 𝕜 E]
 
-omit [FiniteDimensional ℝ E] in
 /-- **Gap 2.4.** Normwise forward error when simultaneous perturbations affect the
 operator and right-hand side of a linear solve. -/
-theorem norm_sub_le_of_perturbed_eq (A : E ≃L[ℝ] E) {x y db : E} {dA : E →L[ℝ] E}
+theorem norm_sub_le_of_perturbed_eq (A : E ≃L[𝕜] E) {x y db : E} {dA : E →L[𝕜] E}
     {ε a b : ℝ} (hε : 0 ≤ ε) (hdA : ‖dA‖ ≤ ε * a) (hdb : ‖db‖ ≤ ε * b)
     (hx : x ≠ 0) (hy : A y + dA y = A x + db)
-    (hsmall : ε * ‖(A.symm : E →L[ℝ] E)‖ * a < 1) :
-    ‖x - y‖ / ‖x‖ ≤ ε / (1 - ε * ‖(A.symm : E →L[ℝ] E)‖ * a) *
-      (‖(A.symm : E →L[ℝ] E)‖ * b / ‖x‖ + ‖(A.symm : E →L[ℝ] E)‖ * a) := by
+    (hsmall : ε * ‖(A.symm : E →L[𝕜] E)‖ * a < 1) :
+    ‖x - y‖ / ‖x‖ ≤ ε / (1 - ε * ‖(A.symm : E →L[𝕜] E)‖ * a) *
+      (‖(A.symm : E →L[𝕜] E)‖ * b / ‖x‖ + ‖(A.symm : E →L[𝕜] E)‖ * a) := by
   rcases hε.eq_or_lt with hzero | hpos
   · have hmap : dA = 0 := norm_eq_zero.mp (le_antisymm
       (by simpa only [← hzero, zero_mul] using hdA) (norm_nonneg _))
@@ -114,7 +149,7 @@ theorem norm_sub_le_of_perturbed_eq (A : E ≃L[ℝ] E) {x y db : E} {dA : E →
     have hxy : y = x := A.injective (by simpa only [hmap, hb, zero_apply,
       add_zero] using hy)
     simp only [hxy, sub_self, norm_zero, zero_div, ← hzero, zero_mul, le_refl]
-  let c := ‖(A.symm : E →L[ℝ] E)‖
+  let c := ‖(A.symm : E →L[𝕜] E)‖
   have hc : 0 ≤ c := norm_nonneg _
   have hxpos : 0 < ‖x‖ := norm_pos_iff.mpr hx
   have ha : 0 ≤ a := nonneg_of_mul_nonneg_right ((norm_nonneg dA).trans hdA) hpos
@@ -125,7 +160,7 @@ theorem norm_sub_le_of_perturbed_eq (A : E ≃L[ℝ] E) {x y db : E} {dA : E →
   have hcalc : ‖y - x‖ ≤ c * (ε * b + ε * a * (‖y - x‖ + ‖x‖)) := by
     calc
       ‖y - x‖ = ‖A.symm (db - dA y)‖ := by rw [← heq, A.symm_apply_apply]
-      _ ≤ c * ‖db - dA y‖ := (A.symm : E →L[ℝ] E).le_opNorm _
+      _ ≤ c * ‖db - dA y‖ := (A.symm : E →L[𝕜] E).le_opNorm _
       _ ≤ c * (‖db‖ + ‖dA y‖) := mul_le_mul_of_nonneg_left (norm_sub_le ..) hc
       _ ≤ c * (ε * b + ε * a * (‖y - x‖ + ‖x‖)) := by
         apply mul_le_mul_of_nonneg_left _ hc
@@ -141,46 +176,54 @@ theorem norm_sub_le_of_perturbed_eq (A : E ≃L[ℝ] E) {x y db : E} {dA : E →
   dsimp only [c] at hcalc ⊢
   nlinarith only [hcalc]
 
-omit [FiniteDimensional ℝ E] in
+/-- The normwise backward error of an approximate solution `x` of `A x = b` with tolerances
+`a` for the operator and `c` for the right-hand side: the infimum of the `ε ≥ 0` for which a
+perturbation with `‖dA‖ ≤ ε a` and `‖db‖ ≤ ε c` makes `x` exact. When `a ‖x‖ + c = 0` and
+`b ≠ A x` no perturbation is admissible and the value is the junk value `0`. -/
+def normwiseBackwardError (A : E →L[𝕜] E) (x b : E) (a c : ℝ) : ℝ :=
+  sInf {ε : ℝ | 0 ≤ ε ∧ ∃ dA : E →L[𝕜] E, ∃ db : E,
+    (A + dA) x = b + db ∧ ‖dA‖ ≤ ε * a ∧ ‖db‖ ≤ ε * c}
+
+/-- The normwise backward error is the infimum of the admissible relative perturbation sizes. -/
+theorem normwiseBackwardError_def (A : E →L[𝕜] E) (x b : E) (a c : ℝ) :
+    normwiseBackwardError A x b a c = sInf {ε : ℝ | 0 ≤ ε ∧ ∃ dA : E →L[𝕜] E, ∃ db : E,
+      (A + dA) x = b + db ∧ ‖dA‖ ≤ ε * a ∧ ‖db‖ ≤ ε * c} := (rfl)
+
 /-- **Gap 2.5.** Rigal--Gaches sharp attained weighted normwise backward error. -/
-theorem isLeast_normwiseBackwardError (A : E →L[ℝ] E) (x b : E) {a c : ℝ}
+theorem isLeast_normwiseBackwardError (A : E →L[𝕜] E) (x b : E) {a c : ℝ}
     (ha : 0 ≤ a) (hc : 0 ≤ c) (h : 0 < a * ‖x‖ + c) :
-    IsLeast {ε : ℝ | 0 ≤ ε ∧ ∃ dA : E →L[ℝ] E, ∃ db : E,
+    IsLeast {ε : ℝ | 0 ≤ ε ∧ ∃ dA : E →L[𝕜] E, ∃ db : E,
       (A + dA) x = b + db ∧ ‖dA‖ ≤ ε * a ∧ ‖db‖ ≤ ε * c}
       (‖b - A x‖ / (a * ‖x‖ + c)) := by
   let d := a * ‖x‖ + c
   have hd : 0 ≤ d := h.le
   let r := b - A x
   refine ⟨?_, ?_⟩
-  · obtain ⟨φ, hφn, hφx⟩ := exists_dual_vector'' ℝ x
-    -- Mathlib supplies the norming functional by Hahn–Banach.
-    have hφval : φ x = ‖x‖ := hφx
-    let D := φ.smulRight ((a / d) • r)
-    let g := -((c / d) • r)
+  · -- Mathlib supplies the norming functional by Hahn–Banach.
+    obtain ⟨φ, hφn, hφx⟩ := exists_dual_vector'' 𝕜 x
+    let D := φ.smulRight (((a / d : ℝ) : 𝕜) • r)
+    let g := -(((c / d : ℝ) : 𝕜) • r)
     refine ⟨div_nonneg (norm_nonneg _) h.le, D, g, ?_, ?_, ?_⟩
-    · have hcoeff : ‖x‖ * (a / d) + c / d = 1 := by
-        rw [← mul_div_assoc, ← add_div, mul_comm ‖x‖ a]
-        exact div_self (ne_of_gt h)
-      have hs : (‖x‖ * (a / d)) • r + (c / d) • r = r := by
+    · have hcoeff : (‖x‖ : 𝕜) * ((a / d : ℝ) : 𝕜) + ((c / d : ℝ) : 𝕜) = 1 := by
+        rw [← RCLike.ofReal_mul, ← RCLike.ofReal_add, ← mul_div_assoc, ← add_div,
+          mul_comm ‖x‖ a, div_self (ne_of_gt h), RCLike.ofReal_one]
+      have hs : ((‖x‖ : 𝕜) * ((a / d : ℝ) : 𝕜)) • r + ((c / d : ℝ) : 𝕜) • r = r := by
         rw [← add_smul, hcoeff, one_smul]
       have hr : A x + r = b := by
         dsimp only [r]
         abel
-      simp only [add_apply, D, ContinuousLinearMap.smulRight_apply, hφval,
-        smul_smul, g]
+      simp only [add_apply, D, ContinuousLinearMap.smulRight_apply, hφx, smul_smul, g]
       rw [← hr, ← sub_eq_add_neg, eq_sub_iff_add_eq, add_assoc, hs]
     · dsimp only [D]
-      rw [ContinuousLinearMap.norm_smulRight_apply, norm_smul,
-        Real.norm_of_nonneg (div_nonneg ha hd)]
+      rw [ContinuousLinearMap.norm_smulRight_apply, norm_smul, RCLike.norm_ofReal,
+        abs_of_nonneg (div_nonneg ha hd)]
       calc
         ‖φ‖ * ((a / d) * ‖r‖) ≤ 1 * ((a / d) * ‖r‖) :=
           mul_le_mul_of_nonneg_right hφn (mul_nonneg (div_nonneg ha hd) (norm_nonneg _))
         _ = ‖r‖ / d * a := by ring
     · dsimp only [g]
-      rw [norm_neg, norm_smul, Real.norm_of_nonneg (div_nonneg hc hd)]
-      calc
-        c / d * ‖r‖ = ‖r‖ / d * c := by ring
-        _ ≤ _ := le_rfl
+      rw [norm_neg, norm_smul, RCLike.norm_ofReal, abs_of_nonneg (div_nonneg hc hd)]
+      exact (mul_comm _ _).trans_le (le_of_eq (by dsimp only [d, r]; ring))
   · rintro ε ⟨_, D, g, heq, hD, hg⟩
     have hr : b - A x = D x - g := by
       rw [sub_eq_sub_iff_add_eq_add]
@@ -193,45 +236,67 @@ theorem isLeast_normwiseBackwardError (A : E →L[ℝ] E) (x b : E) {a c : ℝ}
       _ ≤ (ε * a) * ‖x‖ + ε * c := add_le_add (by gcongr) hg
       _ = _ := by ring
 
+/-- **Gap 2.5.** The normwise backward error is the Rigal--Gaches quotient. -/
+theorem normwiseBackwardError_eq (A : E →L[𝕜] E) (x b : E) {a c : ℝ}
+    (ha : 0 ≤ a) (hc : 0 ≤ c) (h : 0 < a * ‖x‖ + c) :
+    normwiseBackwardError A x b a c = ‖b - A x‖ / (a * ‖x‖ + c) :=
+  (isLeast_normwiseBackwardError A x b ha hc h).csInf_eq
 
-/-- **Gap 2.4.** Sharp first-order amplification for simultaneous normwise perturbations. -/
-theorem tendsto_normwisePerturbation_amplification (A : E ≃L[ℝ] E) {x : E} (hx : x ≠ 0)
-    {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) :
+/-- **Gap 2.4.** Sharp first-order amplification for simultaneous normwise perturbations.
+Only the germ at `0⁺` matters: for large `ε` the set can be unbounded, and its `sSup` is then
+the junk value `0`. -/
+theorem tendsto_sSup_norm_sub_div_of_perturbation [FiniteDimensional 𝕜 E] (A : E ≃L[𝕜] E)
+    {x : E} (hx : x ≠ 0) {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) :
     Tendsto (fun ε : ℝ ↦ sSup {r : ℝ |
-      ∃ (D : E →L[ℝ] E) (g y : E),
+      ∃ (D : E →L[𝕜] E) (g y : E),
         ‖D‖ ≤ ε * a ∧ ‖g‖ ≤ ε * b ∧ A y + D y = A x + g ∧
           r = ‖y - x‖ / (ε * ‖x‖)}) (nhdsWithin (0 : ℝ) (Ioi 0))
-      (nhds (‖(A.symm : E →L[ℝ] E)‖ * b / ‖x‖ + ‖(A.symm : E →L[ℝ] E)‖ * a)) := by
+      (nhds (‖(A.symm : E →L[𝕜] E)‖ * b / ‖x‖ + ‖(A.symm : E →L[𝕜] E)‖ * a)) := by
   sorry
 
 end LinearSystems
 
 /-- **Gap 2.6.** Componentwise backward-error feasibility is equivalent to the residual
-being enclosed by the prescribed componentwise budget. This also covers zero budgets. -/
-theorem exists_componentwisePerturbation_iff {m n : ℕ}
-    (A W : Matrix (Fin m) (Fin n) ℝ) (b f : Fin m → ℝ) (y : Fin n → ℝ)
+being enclosed by the prescribed componentwise budget (Oettli–Prager). This also covers zero
+budgets. -/
+theorem exists_componentwisePerturbation_iff {m n : Type*} [Fintype n]
+    (A W : Matrix m n ℝ) (b f : m → ℝ) (y : n → ℝ)
     {ε : ℝ} (hε : 0 ≤ ε) (hW : ∀ i j, 0 ≤ W i j) (hf : ∀ i, 0 ≤ f i) :
-    (∃ D : Matrix (Fin m) (Fin n) ℝ, ∃ g : Fin m → ℝ,
+    (∃ D : Matrix m n ℝ, ∃ g : m → ℝ,
       (A + D) *ᵥ y = b + g ∧ (∀ i j, |D i j| ≤ ε * W i j) ∧
         (∀ i, |g i| ≤ ε * f i)) ↔
     ∀ i, |b i - (A *ᵥ y) i| ≤ ε * ((W *ᵥ (fun j ↦ |y j|)) i + f i) := by
   sorry
 
-/-- **Gap 2.6.** The exact componentwise backward error, with the empty feasible set
-assigned infinite error and zero-over-zero components assigned zero. -/
-theorem sInf_componentwiseBackwardError {m n : ℕ}
-    (A W : Matrix (Fin m) (Fin n) ℝ) (b f : Fin m → ℝ) (y : Fin n → ℝ)
-    (hW : ∀ i j, 0 ≤ W i j) (hf : ∀ i, 0 ≤ f i) :
-    sInf {ε : ℝ≥0∞ | ∃ D : Matrix (Fin m) (Fin n) ℝ, ∃ g : Fin m → ℝ,
+/-- The componentwise backward error of `y` for `A y = b` relative to nonnegative tolerances
+`W` and `f`, in `ℝ≥0∞`: the infimum of the `ε` for which perturbations with `|D i j| ≤ ε W i j`
+and `|g i| ≤ ε f i` make `y` exact. An empty feasible set gives `⊤`. -/
+def componentwiseBackwardError {m n : Type*} [Fintype n] (A W : Matrix m n ℝ) (b f : m → ℝ)
+    (y : n → ℝ) : ℝ≥0∞ :=
+  sInf {ε : ℝ≥0∞ | ∃ D : Matrix m n ℝ, ∃ g : m → ℝ,
+    (A + D) *ᵥ y = b + g ∧ (∀ i j, ENNReal.ofReal |D i j| ≤ ε * ENNReal.ofReal (W i j)) ∧
+      (∀ i, ENNReal.ofReal |g i| ≤ ε * ENNReal.ofReal (f i))}
+
+/-- The componentwise backward error is the infimum of the feasible perturbation sizes. -/
+theorem componentwiseBackwardError_def {m n : Type*} [Fintype n] (A W : Matrix m n ℝ)
+    (b f : m → ℝ) (y : n → ℝ) :
+    componentwiseBackwardError A W b f y = sInf {ε : ℝ≥0∞ | ∃ D : Matrix m n ℝ, ∃ g : m → ℝ,
       (A + D) *ᵥ y = b + g ∧ (∀ i j, ENNReal.ofReal |D i j| ≤ ε * ENNReal.ofReal (W i j)) ∧
-        (∀ i, ENNReal.ofReal |g i| ≤ ε * ENNReal.ofReal (f i))} =
-    ⨆ i, ENNReal.ofReal |b i - (A *ᵥ y) i| /
-      ENNReal.ofReal ((W *ᵥ (fun j ↦ |y j|)) i + f i) := by
+        (∀ i, ENNReal.ofReal |g i| ≤ ε * ENNReal.ofReal (f i))} := (rfl)
+
+/-- **Gap 2.6.** The exact componentwise backward error (Oettli–Prager), with the empty feasible
+set assigned infinite error and zero-over-zero components assigned zero. -/
+theorem componentwiseBackwardError_eq {m n : Type*} [Fintype n]
+    (A W : Matrix m n ℝ) (b f : m → ℝ) (y : n → ℝ)
+    (hW : ∀ i j, 0 ≤ W i j) (hf : ∀ i, 0 ≤ f i) :
+    componentwiseBackwardError A W b f y =
+      ⨆ i, ENNReal.ofReal |b i - (A *ᵥ y) i| /
+        ENNReal.ofReal ((W *ᵥ (fun j ↦ |y j|)) i + f i) := by
   sorry
 
 /-- **Gap 2.3.** The Euclidean distance to a singular matrix is the last singular value,
 attained by a rank-one perturbation. -/
-theorem exists_rank_one_isLeast_singularPerturbation {𝕜 : Type*} [RCLike 𝕜]
+theorem exists_rank_one_isLeast_norm_det_add_eq_zero {𝕜 : Type*} [RCLike 𝕜]
     {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) 𝕜) (hA : A.det ≠ 0) :
     ∃ D : Matrix (Fin (n + 1)) (Fin (n + 1)) 𝕜, D.rank = 1 ∧
       (A + D).det = 0 ∧ ‖D‖ = A.toEuclideanLin.singularValues n ∧
@@ -249,25 +314,22 @@ def singularValueDiagonal {𝕜 : Type*} [RCLike 𝕜] {m n : ℕ}
 theorem singularValueDiagonal_apply {𝕜 : Type*} [RCLike 𝕜] {m n : ℕ}
     (A : Matrix (Fin m) (Fin n) 𝕜) (i : Fin m) (j : Fin n) :
     singularValueDiagonal A i j =
-      (if i.val = j.val then (A.toEuclideanLin.singularValues i.val : 𝕜) else 0) := by
-  unfold singularValueDiagonal
-  rfl
+      (if i.val = j.val then (A.toEuclideanLin.singularValues i.val : 𝕜) else 0) := (rfl)
 
 /-- **Gap 2.10.** Mirsky's inequality for a unitarily invariant seminorm on rectangular
-matrices. -/
-theorem seminorm_singularValueDiagonal_sub_le {m n : ℕ}
-    (p : Seminorm ℂ (Matrix (Fin m) (Fin n) ℂ))
-    (hp : ∀ (U : Matrix (Fin m) (Fin m) ℂ) (V : Matrix (Fin n) (Fin n) ℂ),
-      U ∈ unitary (Matrix (Fin m) (Fin m) ℂ) → V ∈ unitary (Matrix (Fin n) (Fin n) ℂ) →
-      ∀ X, p (U * X * V) = p X)
-    (A B : Matrix (Fin m) (Fin n) ℂ) :
-    p (singularValueDiagonal A - singularValueDiagonal B) ≤ p (A - B) := by
+matrices, acting on the Euclidean operators of the matrices. -/
+theorem seminorm_singularValueDiagonal_sub_le {𝕜 : Type*} [RCLike 𝕜] {m n : ℕ}
+    (N : TauCeti.UnitarilyInvariantSeminorm 𝕜 (EuclideanSpace 𝕜 (Fin n))
+      (EuclideanSpace 𝕜 (Fin m)))
+    (A B : Matrix (Fin m) (Fin n) 𝕜) :
+    N (singularValueDiagonal A - singularValueDiagonal B).toEuclideanLin ≤
+      N (A - B).toEuclideanLin := by
   sorry
 
 /-- **Gap 2.10.** Singular-value interlacing after deletion of one column, in the
 zero-extended indexing of Mathlib. -/
-theorem singularValues_submatrix_interlace {m n : ℕ}
-    (A : Matrix (Fin m) (Fin (n + 1)) ℂ) (e : Fin n ↪ Fin (n + 1)) (i : ℕ) :
+theorem singularValues_submatrix_interlace {𝕜 : Type*} [RCLike 𝕜] {m n : ℕ}
+    (A : Matrix (Fin m) (Fin (n + 1)) 𝕜) (e : Fin n ↪ Fin (n + 1)) (i : ℕ) :
     A.toEuclideanLin.singularValues (i + 1) ≤ (A.submatrix id e).toEuclideanLin.singularValues i ∧
       (A.submatrix id e).toEuclideanLin.singularValues i ≤ A.toEuclideanLin.singularValues i := by
   sorry
@@ -283,28 +345,36 @@ theorem exists_perm_sum_norm_sq_le_of_isStarNormal {n : ℕ}
   sorry
 
 /-- The closed Gershgorin disc centered at a diagonal entry. -/
-def gershgorinDisc {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (i : Fin n) : Set ℂ :=
+def gershgorinDisc {n : Type*} [Fintype n] [DecidableEq n] (A : Matrix n n ℂ) (i : n) :
+    Set ℂ :=
   Metric.closedBall (A i i) (∑ j ∈ Finset.univ.erase i, ‖A i j‖)
+
+/-- A point lies in the `i`-th Gershgorin disc when its distance to `A i i` is at most the
+off-diagonal absolute row sum. -/
+theorem mem_gershgorinDisc_iff {n : Type*} [Fintype n] [DecidableEq n] {A : Matrix n n ℂ}
+    {i : n} {z : ℂ} :
+    z ∈ gershgorinDisc A i ↔ ‖z - A i i‖ ≤ ∑ j ∈ Finset.univ.erase i, ‖A i j‖ := by
+  rw [gershgorinDisc, Metric.mem_closedBall, dist_eq_norm]
 
 /-- **Gap 2.12.** A union of Gershgorin discs disjoint from all the others contains
 exactly as many characteristic roots, counted with multiplicity, as indices. -/
-theorem card_roots_filter_mem_gershgorinDiscs {n : ℕ}
-    (A : Matrix (Fin n) (Fin n) ℂ) (I : Finset (Fin n))
+theorem card_roots_filter_mem_gershgorinDiscs {n : Type*} [Fintype n] [DecidableEq n]
+    (A : Matrix n n ℂ) (I : Finset n)
     (h : Disjoint (⋃ i ∈ I, gershgorinDisc A i) (⋃ i ∉ I, gershgorinDisc A i)) :
     letI := Classical.propDecidable
     (A.charpoly.roots.filter (fun z ↦ z ∈ ⋃ i ∈ I, gershgorinDisc A i)).card = I.card := by
   sorry
 
 /-- **Gap 2.13.** Bauer--Fike in the Euclidean operator norm. -/
-theorem exists_norm_sub_eigenvalue_le_of_diagonalization {n : ℕ}
-    (S : (Matrix (Fin n) (Fin n) ℂ)ˣ) (eigs : Fin n → ℂ)
-    (E : Matrix (Fin n) (Fin n) ℂ) {μ : ℂ}
-    (hμ : μ ∈ spectrum ℂ ((S : Matrix (Fin n) (Fin n) ℂ) * Matrix.diagonal eigs *
-      (↑S⁻¹ : Matrix (Fin n) (Fin n) ℂ) + E)) :
-    ∃ i, ‖μ - eigs i‖ ≤ ‖(S : Matrix (Fin n) (Fin n) ℂ)‖ *
-      ‖(↑S⁻¹ : Matrix (Fin n) (Fin n) ℂ)‖ * ‖E‖ := by
+theorem exists_norm_sub_eigenvalue_le_of_diagonalization {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
+    (S : (Matrix (Fin n) (Fin n) 𝕜)ˣ) (eigs : Fin n → 𝕜)
+    (E : Matrix (Fin n) (Fin n) 𝕜) {μ : 𝕜}
+    (hμ : μ ∈ spectrum 𝕜 ((S : Matrix (Fin n) (Fin n) 𝕜) * Matrix.diagonal eigs *
+      (↑S⁻¹ : Matrix (Fin n) (Fin n) 𝕜) + E)) :
+    ∃ i, ‖μ - eigs i‖ ≤ ‖(S : Matrix (Fin n) (Fin n) 𝕜)‖ *
+      ‖(↑S⁻¹ : Matrix (Fin n) (Fin n) 𝕜)‖ * ‖E‖ := by
   by_contra! hgap
-  let M := Matrix (Fin n) (Fin n) ℂ
+  let M := Matrix (Fin n) (Fin n) 𝕜
   let T : M := ↑S⁻¹
   let K := ‖(S : M)‖ * ‖T‖ * ‖E‖
   let D : M := Matrix.diagonal fun i ↦ μ - eigs i
@@ -312,47 +382,35 @@ theorem exists_norm_sub_eigenvalue_le_of_diagonalization {n : ℕ}
   let F : M := T * E * (S : M)
   have hK : 0 ≤ K := by positivity
   have hne (i : Fin n) : μ - eigs i ≠ 0 := norm_pos_iff.mp (hK.trans_lt (hgap i))
-  have hd (i : Fin n) : (μ - eigs i) * (μ - eigs i)⁻¹ = 1 := mul_inv_cancel₀ (hne i)
   have hDV : D * V = 1 := by
     dsimp only [D, V, M]
     rw [Matrix.diagonal_mul_diagonal]
-    simpa only [hd] using (Matrix.diagonal_one (n := Fin n) (α := ℂ))
-  have hnormF : ‖F‖ ≤ K := by
-    calc
-      ‖F‖ ≤ ‖T * E‖ * ‖(S : M)‖ := Matrix.l2_opNorm_mul ..
-      _ ≤ (‖T‖ * ‖E‖) * ‖(S : M)‖ :=
-        mul_le_mul_of_nonneg_right (Matrix.l2_opNorm_mul ..) (norm_nonneg _)
-      _ = K := by dsimp only [K]; ring
+    simpa only [mul_inv_cancel₀ (hne _)] using (Matrix.diagonal_one (n := Fin n) (α := 𝕜))
+  have hnormF : ‖F‖ ≤ K :=
+    (Matrix.l2_opNorm_mul ..).trans <| (mul_le_mul_of_nonneg_right (Matrix.l2_opNorm_mul ..)
+      (norm_nonneg _)).trans_eq (by dsimp only [K]; ring)
   have hnormV : ‖V‖ * K < 1 := by
+    have hK' : ‖(K : 𝕜)‖ = K := by rw [RCLike.norm_ofReal, abs_of_nonneg hK]
     dsimp only [V, M]
-    rw [Matrix.l2_opNorm_diagonal, mul_comm, ← Real.norm_of_nonneg hK, ← Complex.norm_real,
-      ← norm_smul]
+    rw [Matrix.l2_opNorm_diagonal, mul_comm, ← hK', ← norm_smul]
     refine (pi_norm_lt_iff zero_lt_one).mpr fun i ↦ ?_
-    rw [Pi.smul_apply, smul_eq_mul, norm_mul, Complex.norm_real, Real.norm_of_nonneg hK,
-      norm_inv, ← div_eq_mul_inv, div_lt_one (norm_pos_iff.mpr (hne i))]
+    rw [Pi.smul_apply, smul_eq_mul, norm_mul, hK', norm_inv, ← div_eq_mul_inv,
+      div_lt_one (norm_pos_iff.mpr (hne i))]
     exact hgap i
   have hunit : IsUnit (1 - V * F) := isUnit_one_sub_of_norm_lt_one <|
     ((Matrix.l2_opNorm_mul ..).trans (mul_le_mul_of_nonneg_left hnormF (norm_nonneg V))).trans_lt
       hnormV
-  have hST : (S : M) * T = 1 := Units.mul_inv S
-  have hd_eq : D = μ • (1 : M) - Matrix.diagonal eigs := by
+  have hfactor : D - F = D * (1 - V * F) := by
+    rw [Matrix.mul_sub, mul_one, ← Matrix.mul_assoc, hDV, one_mul]
+  have hD : D = μ • (1 : M) - Matrix.diagonal eigs := by
     dsimp only [D, M]
-    simpa only [Matrix.smul_one_eq_diagonal] using
-      (Matrix.diagonal_sub (fun _ : Fin n ↦ μ) eigs).symm
-  have hd_conj : (S : M) * D * T = μ • (1 : M) - (S : M) * Matrix.diagonal eigs * T := by
-    rw [hd_eq, Matrix.mul_sub, Matrix.sub_mul, mul_smul_comm, smul_mul_assoc, mul_one, hST]
-  have hf_conj : ((S : M) * D) * (V * F) * T = E := by
-    rw [← Matrix.mul_assoc (_ * D) V, Matrix.mul_assoc (S : M) D V, hDV, mul_one]
-    dsimp only [F]
-    rw [← Matrix.mul_assoc (S : M) (T * E), ← Matrix.mul_assoc (S : M) T, hST, one_mul,
-      Matrix.mul_assoc E (S : M) T, hST, mul_one]
+    rw [← Matrix.diagonal_sub, Matrix.smul_one_eq_diagonal]
+  have hDF : IsUnit (D - F) := hfactor ▸ (isUnit_iff_exists_inv.mpr ⟨V, hDV⟩).mul hunit
+  rw [hD] at hDF
   apply spectrum.mem_iff.mp hμ
-  rw [Algebra.algebraMap_eq_smul_one, ← sub_sub, ← hd_conj, ← hf_conj,
-    ← Matrix.sub_mul]
-  have hfactor : (S : M) * D - (S : M) * D * (V * F) = ((S : M) * D) * (1 - V * F) := by
-    rw [Matrix.mul_sub, mul_one]
-  rw [hfactor]
-  exact ((S.isUnit.mul (isUnit_iff_exists_inv.mpr ⟨V, hDV⟩)).mul hunit).mul S⁻¹.isUnit
+  rw [Algebra.algebraMap_eq_smul_one,
+    sub_units_conj_add_eq S (fun y ↦ by rw [smul_one_mul, mul_smul_one])]
+  exact (S.isUnit.mul hDF).mul S⁻¹.isUnit
 
 /-- Euclidean least-squares optimality, including rank-deficient designs. -/
 def MinimizesLeastSquares {𝕜 : Type*} [RCLike 𝕜] {m n : ℕ}
@@ -364,13 +422,12 @@ def MinimizesLeastSquares {𝕜 : Type*} [RCLike 𝕜] {m n : ℕ}
 theorem minimizesLeastSquares_iff {𝕜 : Type*} [RCLike 𝕜] {m n : ℕ}
     (A : Matrix (Fin m) (Fin n) 𝕜) (b : EuclideanSpace 𝕜 (Fin m))
     (x : EuclideanSpace 𝕜 (Fin n)) :
-    MinimizesLeastSquares A b x ↔ ∀ y, ‖b - A.toEuclideanLin x‖ ≤ ‖b - A.toEuclideanLin y‖ := by
-  unfold MinimizesLeastSquares
-  rfl
+    MinimizesLeastSquares A b x ↔ ∀ y, ‖b - A.toEuclideanLin x‖ ≤ ‖b - A.toEuclideanLin y‖ :=
+  Iff.rfl
 
 /-- **Gap 2.15.** Perturbation bounds for the solution and residual of a full-column-rank
 least-squares problem. -/
-theorem leastSquares_perturbation {m n : ℕ}
+theorem MinimizesLeastSquares.injective_and_norm_sub_div_le {m n : ℕ}
     {A D : Matrix (Fin m) (Fin (n + 1)) ℝ} {b d : EuclideanSpace ℝ (Fin m)}
     {x y : EuclideanSpace ℝ (Fin (n + 1))} {ε : ℝ}
     (hA : Function.Injective A.toEuclideanLin) (hx₀ : x ≠ 0) (hb₀ : b ≠ 0)
@@ -389,20 +446,36 @@ theorem leastSquares_perturbation {m n : ℕ}
 def pseudospectrum {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (ε : ℝ) : Set ℂ :=
   {z | ∃ v : EuclideanSpace ℂ (Fin n), ‖v‖ = 1 ∧ ‖z • v - A.toEuclideanLin v‖ < ε}
 
-/-- **Gap 2.16.** Equivalence of the perturbation, residual and least-singular-value
-descriptions of the open pseudospectrum. -/
-theorem mem_pseudospectrum_iff {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
-    {ε : ℝ} (hε : 0 < ε) (z : ℂ) :
-    (z ∈ pseudospectrum A ε ↔ ∃ E : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ,
-      ‖E‖ < ε ∧ z ∈ spectrum ℂ (A + E)) ∧
-    (z ∈ pseudospectrum A ε ↔
+/-- A point of the pseudospectrum has a unit vector with residual below `ε`. -/
+theorem mem_pseudospectrum_iff {n : ℕ} {A : Matrix (Fin n) (Fin n) ℂ} {ε : ℝ} {z : ℂ} :
+    z ∈ pseudospectrum A ε ↔
+      ∃ v : EuclideanSpace ℂ (Fin n), ‖v‖ = 1 ∧ ‖z • v - A.toEuclideanLin v‖ < ε := Iff.rfl
+
+/-- The pseudospectrum is empty for `ε ≤ 0`. -/
+theorem pseudospectrum_eq_empty_of_nonpos {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) {ε : ℝ}
+    (hε : ε ≤ 0) : pseudospectrum A ε = ∅ :=
+  Set.eq_empty_of_forall_notMem fun _ ⟨_, _, hv⟩ ↦ (hε.trans (norm_nonneg _)).not_gt hv
+
+/-- **Gap 2.16.** The residual description of the open pseudospectrum agrees with the
+perturbation description. -/
+theorem mem_pseudospectrum_iff_exists_mem_spectrum_add {n : ℕ}
+    (A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) {ε : ℝ} (z : ℂ) :
+    z ∈ pseudospectrum A ε ↔ ∃ E : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ,
+      ‖E‖ < ε ∧ z ∈ spectrum ℂ (A + E) := by
+  sorry
+
+/-- **Gap 2.16.** The residual description of the open pseudospectrum agrees with the
+least-singular-value description. -/
+theorem mem_pseudospectrum_iff_singularValues_lt {n : ℕ}
+    (A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) {ε : ℝ} (z : ℂ) :
+    z ∈ pseudospectrum A ε ↔
       ((z • (1 : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)) - A).toEuclideanLin.singularValues n <
-        ε) := by
+        ε := by
   sorry
 
 /-- **Gap 2.16.** Every connected component of the pseudospectrum contains an eigenvalue. -/
 theorem connectedComponentIn_pseudospectrum_inter_spectrum_nonempty {n : ℕ}
-    (A : Matrix (Fin n) (Fin n) ℂ) {ε : ℝ} (hε : 0 < ε) {z : ℂ}
+    (A : Matrix (Fin n) (Fin n) ℂ) {ε : ℝ} {z : ℂ}
     (hz : z ∈ pseudospectrum A ε) :
     (connectedComponentIn (pseudospectrum A ε) z ∩ spectrum ℂ A).Nonempty := by
   sorry
@@ -421,14 +494,24 @@ def IsLeadingSingularFrame {m n r : ℕ} (A : Matrix (Fin m) (Fin n) ℂ)
   let S := Matrix.diagonal fun j : Fin r ↦ (A.toEuclideanLin.singularValues j.val : ℂ)
   Uᴴ * U = 1 ∧ Vᴴ * V = 1 ∧ A * V = U * S ∧ Aᴴ * U = V * S
 
+/-- A leading singular frame has orthonormal columns that map to each other under `A` and `Aᴴ`
+with the leading singular values as weights. -/
+theorem isLeadingSingularFrame_iff {m n r : ℕ} {A : Matrix (Fin m) (Fin n) ℂ}
+    {U : Matrix (Fin m) (Fin r) ℂ} {V : Matrix (Fin n) (Fin r) ℂ} :
+    IsLeadingSingularFrame A U V ↔
+      Uᴴ * U = 1 ∧ Vᴴ * V = 1 ∧
+        A * V = U * Matrix.diagonal (fun j : Fin r ↦ (A.toEuclideanLin.singularValues j : ℂ)) ∧
+        Aᴴ * U = V * Matrix.diagonal (fun j : Fin r ↦ (A.toEuclideanLin.singularValues j : ℂ)) :=
+  Iff.rfl
+
 /-- **Gap 2.18.** Wedin's bound on the maximum principal sine, expressed by the
-directed residuals of the two orthogonal projectors. -/
+directed residuals of the two orthogonal projectors. The case `a = 0` is the exact rank-`r`
+case; for `r = 0` both sides are trivial. -/
 theorem max_norm_sub_projection_mul_le_of_singular_gap {m n r : ℕ}
     {A B : Matrix (Fin m) (Fin n) ℂ}
     {UA UB : Matrix (Fin m) (Fin r) ℂ} {VA VB : Matrix (Fin n) (Fin r) ℂ}
     (hA : IsLeadingSingularFrame A UA VA) (hB : IsLeadingSingularFrame B UB VB)
-    (hr : 0 < r) (hr' : r < min m n)
-    {a δ : ℝ} (ha : 0 < a) (hδ : 0 < δ)
+    (hr : r < min m n) {a δ : ℝ} (hδ : 0 < δ)
     (hgap₁ : A.toEuclideanLin.singularValues r ≤ a)
     (hgap₂ : a + δ ≤ B.toEuclideanLin.singularValues (r - 1)) :
     max ‖(1 - UA * UAᴴ) * UB‖ ‖(1 - VA * VAᴴ) * VB‖ ≤ ‖B - A‖ / δ := by

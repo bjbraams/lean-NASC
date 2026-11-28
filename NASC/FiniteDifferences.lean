@@ -1,14 +1,33 @@
 module
 
-public import NASC.DiscreteFourier
-public import NASC.VerifiedComputation
-public import Mathlib.Topology.Semicontinuity.Basic
+public import Mathlib.Analysis.CStarAlgebra.Matrix
+public import Mathlib.Analysis.Fourier.ZMod
+public import Mathlib.LinearAlgebra.Matrix.Circulant
+public import NASC.Support.LinearAlgebra
 
 /-!
 # Finite difference methods
 
 Discrete Laplacians and maximum principles, power stability, CFL and theta-method bounds,
-positivity-preserving stepping, and comparison for monotone schemes.
+and positivity-preserving stepping. Viscosity solutions and the Barles–Souganidis theorem for
+monotone schemes are in `NASC.ViscositySolutions`.
+
+## Main definitions
+
+* `NASC.tridiagonalToeplitz`: the symmetric tridiagonal Toeplitz matrix `tridiag(b, a, b)`.
+* `NASC.fivePointLaplacian`, `NASC.GridBoundaryNonpos`: the five-point Laplacian on a square
+  grid and nonpositive boundary data.
+* `NASC.kreissConstant`: the Kreiss resolvent constant, valued in `ℝ≥0∞`.
+
+## Main results
+
+* `NASC.tridiagonalToeplitz_mulVec_sine`: discrete sine eigenvectors.
+* `NASC.fivePoint_nonpos_of_boundary_nonpos`: the discrete maximum principle.
+* `NASC.fivePointLaplacian_sub_barrier`, `NASC.fivePoint_error_le_of_defect`: the barrier
+  identity and the `h² M / 96` error bound.
+* `NASC.stable_iff_convergent_of_consistent` (Lax equivalence), `NASC.vonNeumann_power_bounded_iff`,
+  `NASC.cfl_of_threePoint_convergence`, `NASC.norm_heatThetaMatrix_pow_le_one`,
+  `NASC.kreissConstant_le_iSup_pow_and_le` (Kreiss matrix theorem), `NASC.shuOsher_nonneg`.
 -/
 
 public section
@@ -18,11 +37,25 @@ noncomputable section
 namespace NASC
 
 open Set Filter Matrix
-open scoped BigOperators Matrix Matrix.Norms.L2Operator NNReal ENNReal Topology
+open scoped Matrix Matrix.Norms.L2Operator NNReal ENNReal Topology ContDiff
 
 /-- The symmetric tridiagonal Toeplitz matrix with constant diagonal and off-diagonal. -/
 def tridiagonalToeplitz (n : ℕ) (a b : ℝ) : Matrix (Fin n) (Fin n) ℝ :=
-  fun i j ↦ if i = j then a else if i.val + 1 = j.val ∨ j.val + 1 = i.val then b else 0
+  symmTridiagonal (fun _ ↦ a) (fun _ ↦ b) n
+
+/-- The tridiagonal Toeplitz matrix is the symmetric tridiagonal matrix with constant
+diagonal and off-diagonal. -/
+theorem tridiagonalToeplitz_eq_symmTridiagonal (n : ℕ) (a b : ℝ) :
+    tridiagonalToeplitz n a b = symmTridiagonal (fun _ ↦ a) (fun _ ↦ b) n := by
+  unfold tridiagonalToeplitz
+  rfl
+
+/-- The entries of `tridiagonalToeplitz n a b`. -/
+theorem tridiagonalToeplitz_apply (n : ℕ) (a b : ℝ) (i j : Fin n) :
+    tridiagonalToeplitz n a b i j =
+      if i = j then a else if i.val + 1 = j.val ∨ j.val + 1 = i.val then b else 0 := by
+  rw [tridiagonalToeplitz_eq_symmTridiagonal, symmTridiagonal_apply]
+  by_cases h₁ : i.val + 1 = j.val <;> by_cases h₂ : j.val + 1 = i.val <;> simp [h₁, h₂]
 
 /-- **Gap 16.2.** The discrete sine functions are the eigenvectors of
 the tridiagonal Dirichlet matrix. -/
@@ -36,12 +69,24 @@ theorem tridiagonalToeplitz_mulVec_sine {n : ℕ} (a b : ℝ) (j : Fin n) :
 def fivePointLaplacian (h : ℝ) (v : ℕ → ℕ → ℝ) (i j : ℕ) : ℝ :=
   (v (i + 1) j + v (i - 1) j + v i (j + 1) + v i (j - 1) - 4 * v i j) / h ^ 2
 
+/-- The defining formula of `fivePointLaplacian` (with natural subtraction in `i - 1`,
+`j - 1`). -/
+theorem fivePointLaplacian_def (h : ℝ) (v : ℕ → ℕ → ℝ) (i j : ℕ) :
+    fivePointLaplacian h v i j =
+      (v (i + 1) j + v (i - 1) j + v i (j + 1) + v i (j - 1) - 4 * v i j) / h ^ 2 := by
+  rfl
+
 /-- Homogeneous boundary inequalities on a square finite difference grid. -/
 def GridBoundaryNonpos (n : ℕ) (v : ℕ → ℕ → ℝ) : Prop :=
   ∀ i ≤ n, v i 0 ≤ 0 ∧ v i n ≤ 0 ∧ v 0 i ≤ 0 ∧ v n i ≤ 0
 
+/-- The defining property of `GridBoundaryNonpos`. -/
+theorem gridBoundaryNonpos_iff (n : ℕ) (v : ℕ → ℕ → ℝ) :
+    GridBoundaryNonpos n v ↔ ∀ i ≤ n, v i 0 ≤ 0 ∧ v i n ≤ 0 ∧ v 0 i ≤ 0 ∧ v n i ≤ 0 :=
+  Iff.rfl
+
 /-- **Gap 16.3.** The discrete Dirichlet maximum principle on the square. -/
-theorem fivePoint_nonpos_of_boundary_nonpos {n : ℕ} {h : ℝ} (hh : 0 < h)
+theorem fivePoint_nonpos_of_boundary_nonpos {n : ℕ} {h : ℝ} (hh : h ≠ 0)
     (v : ℕ → ℕ → ℝ) (hb : GridBoundaryNonpos n v)
     (hsub : ∀ i j, 0 < i → i < n → 0 < j → j < n → 0 ≤ fivePointLaplacian h v i j) :
     ∀ i j, i ≤ n → j ≤ n → v i j ≤ 0 := by
@@ -62,7 +107,8 @@ theorem fivePoint_nonpos_of_boundary_nonpos {n : ℕ} {h : ℝ} (hh : 0 < h)
           have hR := hupper (k + 1) b (by omega) hbmax
           have hD := hupper k (b - 1) hk (by omega)
           have hU := hupper k (b + 1) hk (by omega)
-          have hs := (le_div_iff₀ (pow_pos hh 2)).mp (hsub k b hki.1 hki.2 hbi.1 hbi.2)
+          have hs := (le_div_iff₀ (by positivity : 0 < h ^ 2)).mp
+            (hsub k b hki.1 hki.2 hbi.1 hbi.2)
           simp only [zero_mul] at hs
           have heq : v (k - 1) b = v a b := le_antisymm hL (by
             linarith only [hR, hD, hU, hs, hkv])
@@ -78,6 +124,18 @@ theorem fivePoint_nonpos_of_boundary_nonpos {n : ℕ} {h : ℝ} (hh : 0 < h)
         · rw [← hkv, h]
           exact (hb b hbmax).2.2.2
   exact fun i j hi hj ↦ (hupper i j hi hj).trans (hleft a ha rfl)
+
+/-- Subtracting the quadratic barrier `K / 2 · (i h) (1 - i h)` in the first grid variable
+raises the five-point Laplacian by exactly `K` at interior points. -/
+theorem fivePointLaplacian_sub_barrier {h : ℝ} (hh : h ≠ 0) (K : ℝ) (w : ℕ → ℕ → ℝ)
+    {i : ℕ} (hi : 0 < i) (j : ℕ) :
+    fivePointLaplacian h (fun a b ↦ w a b - K / 2 * ((a : ℝ) * h) * (1 - (a : ℝ) * h)) i j =
+      fivePointLaplacian h w i j + K := by
+  have hpred : ((i - 1 : ℕ) : ℝ) = (i : ℝ) - 1 := by
+    simpa only [Nat.cast_one] using (Nat.cast_sub hi : ((i - 1 : ℕ) : ℝ) = (i : ℝ) - ↑(1 : ℕ))
+  simp only [fivePointLaplacian, Nat.cast_add, Nat.cast_one, hpred]
+  field_simp
+  ring
 
 /-- **Gap 16.4.** A uniform truncation defect and exact boundary data give
 the five-point error bound with the square barrier constant $1/8$. -/
@@ -106,12 +164,8 @@ theorem fivePoint_error_le_of_defect {n : ℕ} (hn : 0 < n)
     dsimp only [B]
     linarith only [hs]
   have hshift (w : ℕ → ℕ → ℝ) (i j : ℕ) (hi : 0 < i) :
-      fivePointLaplacian h (fun a b ↦ w a b - B a) i j = fivePointLaplacian h w i j + K := by
-    have hpred : ((i - 1 : ℕ) : ℝ) = (i : ℝ) - 1 := by
-      simpa only [Nat.cast_one] using (Nat.cast_sub hi : ((i - 1 : ℕ) : ℝ) = (i : ℝ) - ↑(1 : ℕ))
-    simp only [fivePointLaplacian, B, Nat.cast_add, Nat.cast_one, hpred]
-    field_simp [hh.ne']
-    ring
+      fivePointLaplacian h (fun a b ↦ w a b - B a) i j = fivePointLaplacian h w i j + K :=
+    fivePointLaplacian_sub_barrier hh.ne' K w hi j
   have hcmp (w : ℕ → ℕ → ℝ) (hw : GridBoundaryNonpos n w)
       (hL : ∀ i j, 0 < i → i < n → 0 < j → j < n → -K ≤ fivePointLaplacian h w i j)
       (i j : ℕ) (hi : i ≤ n) (hj : j ≤ n) : w i j ≤ B i := by
@@ -120,8 +174,8 @@ theorem fivePoint_error_le_of_defect {n : ℕ} (hn : 0 < n)
       obtain ⟨h₁, h₂, h₃, h₄⟩ := hw a ha
       exact ⟨sub_nonpos.mpr (h₁.trans (hB a ha)), sub_nonpos.mpr (h₂.trans (hB a ha)),
         sub_nonpos.mpr (h₃.trans (hB 0 (Nat.zero_le n))), sub_nonpos.mpr (h₄.trans (hB n le_rfl))⟩
-    refine sub_nonpos.mp (fivePoint_nonpos_of_boundary_nonpos hh _ hwB (fun a b ha han hb hbn ↦ ?_)
-      i j hi hj)
+    refine sub_nonpos.mp (fivePoint_nonpos_of_boundary_nonpos hh.ne' _ hwB
+      (fun a b ha han hb hbn ↦ ?_) i j hi hj)
     rw [hshift w a b ha]
     linarith only [hL a b ha han hb hbn]
   intro i j hi hj
@@ -160,9 +214,7 @@ theorem stable_iff_convergent_of_consistent {E : Type*}
 with invertible implicit symbol. -/
 theorem vonNeumann_power_bounded_iff {n : ℕ} [NeZero n] (b c : ZMod n → ℂ)
     (hb : ∀ j, ZMod.dft b j ≠ 0) :
-    let B := Matrix.of fun i j : ZMod n ↦ b (i - j)
-    let C := Matrix.of fun i j : ZMod n ↦ c (i - j)
-    (∃ R : ℝ, ∀ k : ℕ, ‖(B⁻¹ * C) ^ k‖ ≤ R) ↔
+    (∃ R : ℝ, ∀ k : ℕ, ‖((Matrix.circulant b)⁻¹ * Matrix.circulant c) ^ k‖ ≤ R) ↔
       ∀ j, ‖ZMod.dft c j / ZMod.dft b j‖ ≤ 1 := by
   sorry
 
@@ -172,9 +224,9 @@ theorem cfl_of_threePoint_convergence (S : ℕ → (ℤ → ℝ) → (ℤ → �
     {a T μ : ℝ} (hT : 0 < T) (hμ : 0 < μ)
     (hloc : ∀ n (u v : ℤ → ℝ) (i : ℤ),
       (∀ j ∈ Icc (i - 1) (i + 1), u j = v j) → S n u i = S n v i)
-    (hconv : ∀ f : ℝ → ℝ, ContDiff ℝ ⊤ f →
+    (hconv : ∀ f : ℝ → ℝ, ContDiff ℝ ∞ f →
       Tendsto (fun n : ℕ ↦ (S n)^[n + 1] (fun j : ℤ ↦ f ((j : ℝ) * T / ((n + 1) * μ))) 0)
-        atTop (nhds (f (-a * T)))) :
+        atTop (𝓝 (f (-a * T)))) :
     |a * μ| ≤ 1 := by
   sorry
 
@@ -195,6 +247,13 @@ def kreissConstant {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ≥0∞ :=
     if z.val ∈ spectrum ℂ A then ⊤ else
       ENNReal.ofReal ((‖z.val‖ - 1) * ‖(z.val • (1 : Matrix (Fin n) (Fin n) ℂ) - A)⁻¹‖)
 
+/-- The defining formula of `kreissConstant`. -/
+theorem kreissConstant_def {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
+    kreissConstant A = letI := Classical.propDecidable
+      ⨆ z : {z : ℂ // 1 < ‖z‖}, if z.val ∈ spectrum ℂ A then ⊤ else
+        ENNReal.ofReal ((‖z.val‖ - 1) * ‖(z.val • (1 : Matrix (Fin n) (Fin n) ℂ) - A)⁻¹‖) := by
+  rfl
+
 /-- **Gap 16.10.** The Kreiss matrix bound relates resolvent growth to power
 growth in both directions, including infinite values. -/
 theorem kreissConstant_le_iSup_pow_and_le {n : ℕ} (hn : 0 < n)
@@ -204,15 +263,15 @@ theorem kreissConstant_le_iSup_pow_and_le {n : ℕ} (hn : 0 < n)
   sorry
 
 /-- **Gap 16.14.** The explicit Shu--Osher stages inherit forward-Euler
-positivity under the coefficient step restrictions. -/
+positivity under the coefficient step restrictions. Positivity does not need the
+consistency condition `∑ⱼ p i j = 1`. -/
 theorem shuOsher_nonneg {n s : ℕ} (F : ℝ → (Fin n → ℝ) → (Fin n → ℝ))
     (v : Fin (s + 1) → Fin n → ℝ) (t : Fin (s + 1) → ℝ)
     (p q : Fin (s + 1) → Fin (s + 1) → ℝ) {h H : ℝ}
-    (hh : 0 ≤ h) (hH : 0 < H) (hv : 0 ≤ v 0)
+    (hh : 0 ≤ h) (hH : 0 ≤ H) (hv : 0 ≤ v 0)
     (hF : ∀ t (x : Fin n → ℝ) a, 0 ≤ x → a ∈ Icc 0 H → 0 ≤ x + a • F t x)
     (hpos : ∀ i j, j < i → 0 ≤ p i j ∧ 0 ≤ q i j ∧ h * q i j ≤ H * p i j)
     (hstage : ∀ i : Fin (s + 1), i ≠ 0 →
-      (∑ j ∈ Finset.univ.filter (· < i), p i j) = 1 ∧
       v i = ∑ j ∈ Finset.univ.filter (· < i), (p i j • v j + (h * q i j) • F (t j) (v j))) :
     ∀ i, 0 ≤ v i := by
   intro i
@@ -220,7 +279,7 @@ theorem shuOsher_nonneg {n s : ℕ} (F : ℝ → (Fin n → ℝ) → (Fin n → 
   | ind i ih =>
     by_cases hi : i = 0
     · simpa only [hi] using hv
-    rw [(hstage i hi).2]
+    rw [hstage i hi]
     intro k
     simp only [Pi.zero_apply, Finset.sum_apply]
     apply Finset.sum_nonneg
@@ -231,7 +290,7 @@ theorem shuOsher_nonneg {n s : ℕ} (F : ℝ → (Fin n → ℝ) → (Fin n → 
       by_cases hp₀ : p i j = 0
       · have hz : h * q i j = 0 := le_antisymm
           (by simpa only [hp₀, mul_zero] using hqle) (mul_nonneg hh hq)
-        exact ⟨0, ⟨le_rfl, hH.le⟩, by simpa only [mul_zero] using hz⟩
+        exact ⟨0, ⟨le_rfl, hH⟩, by simpa only [mul_zero] using hz⟩
       · have hp' := lt_of_le_of_ne hp (Ne.symm hp₀)
         refine ⟨h * q i j / p i j, ⟨div_nonneg (mul_nonneg hh hq) hp,
           (div_le_iff₀ hp').mpr hqle⟩, ?_⟩
@@ -240,41 +299,5 @@ theorem shuOsher_nonneg {n s : ℕ} (F : ℝ → (Fin n → ℝ) → (Fin n → 
     simp only [Pi.zero_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul] at hval ⊢
     rw [heq, mul_assoc, ← mul_add]
     exact mul_nonneg hp hval
-
-/-- Viscosity subsolution expressed by all smooth upper tests on the domain. -/
-def IsViscositySubsolution {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-    (K : Set E) (F : (E → ℝ) → E → ℝ) (u : E → ℝ) : Prop :=
-  UpperSemicontinuousOn u K ∧
-    ∀ x ∈ K, ∀ φ : E → ℝ, ContDiff ℝ ⊤ φ → u x = φ x →
-      IsLocalMaxOn (fun y ↦ u y - φ y) K x → F φ x ≤ 0
-
-/-- Viscosity supersolution expressed by all smooth lower tests on the domain. -/
-def IsViscositySupersolution {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-    (K : Set E) (F : (E → ℝ) → E → ℝ) (u : E → ℝ) : Prop :=
-  LowerSemicontinuousOn u K ∧
-    ∀ x ∈ K, ∀ φ : E → ℝ, ContDiff ℝ ⊤ φ → u x = φ x →
-      IsLocalMinOn (fun y ↦ u y - φ y) K x → 0 ≤ F φ x
-
-/-- **Gap 16.15.** On a compact domain with comparison, a monotone scheme with
-bounded continuous approximations and moving-point consistency converges uniformly.
-The operator is presented by its action on smooth viscosity test functions. -/
-theorem exists_uniformLimit_of_monotoneScheme {E : Type*}
-    [NormedAddCommGroup E] [InnerProductSpace ℝ E] (K : Set E) (hK : IsCompact K)
-    (F : (E → ℝ) → E → ℝ) (S : ℝ → E → ℝ → (E → ℝ) → ℝ) (u : ℝ → E → ℝ)
-    (hpert : ∀ x ∈ K, ∀ φ : E → ℝ, ContDiff ℝ ⊤ φ →
-      Tendsto (fun ε : ℝ ↦ F (fun y ↦ φ y + ε * ‖y - x‖ ^ 2) x) (𝓝 0) (𝓝 (F φ x)))
-    (hcomp : ∀ v w : E → ℝ, (∃ C, ∀ x ∈ K, |v x| ≤ C ∧ |w x| ≤ C) →
-      IsViscositySubsolution K F v → IsViscositySupersolution K F w → ∀ x ∈ K, v x ≤ w x)
-    (hmono : ∀ h > (0 : ℝ), ∀ x ∈ K, ∀ r v w, (∀ y ∈ K, v y ≤ w y) →
-      S h x r w ≤ S h x r v)
-    (hsolve : ∃ C, ∀ᶠ h in 𝓝[>] (0 : ℝ), ContinuousOn (u h) K ∧
-      ∀ x ∈ K, |u h x| ≤ C ∧ S h x (u h x) (u h) = 0)
-    (hcons : ∀ x ∈ K, ∀ φ : E → ℝ, ContDiff ℝ ⊤ φ →
-      Tendsto (fun p : ℝ × E × ℝ ↦
-        S p.1 p.2.1 (φ p.2.1 + p.2.2) (fun y ↦ φ y + p.2.2) / p.1)
-        ((𝓝[>] (0 : ℝ)) ×ˢ ((𝓝[K] x) ×ˢ (𝓝 0))) (𝓝 (F φ x))) :
-    ∃ v : E → ℝ, ContinuousOn v K ∧ IsViscositySubsolution K F v ∧
-      IsViscositySupersolution K F v ∧ TendstoUniformlyOn u v (𝓝[>] (0 : ℝ)) K := by
-  sorry
 
 end NASC

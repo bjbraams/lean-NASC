@@ -1,5 +1,11 @@
 module
-public import NASC.FloatingPoint
+public import NASC.Support.Algebra
+public import NASC.Support.Analysis
+public import NASC.Support.LinearAlgebra
+public import NASC.Support.BestApproximation
+public import NASC.Support.GaussianMatrix
+public import NASC.FloatingPoint.Basic
+public import NASC.FloatingPoint.RoundingError
 public import NASC.Conditioning
 public import NASC.DirectMethods
 public import NASC.EigenvalueMethods
@@ -18,6 +24,7 @@ public import NASC.SparseRecovery
 public import NASC.InitialValueProblems
 public import NASC.StiffAndGeometric
 public import NASC.FiniteDifferences
+public import NASC.ViscositySolutions
 public import NASC.ConservationLaws
 public import NASC.Galerkin
 public import NASC.FiniteElements

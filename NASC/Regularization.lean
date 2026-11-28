@@ -1,6 +1,5 @@
 module
 
-public import NASC.IntegralEquations
 public import Mathlib.Analysis.InnerProductSpace.Adjoint
 
 import Mathlib.Analysis.InnerProductSpace.LaxMilgram
@@ -10,7 +9,26 @@ import Mathlib.Analysis.InnerProductSpace.LaxMilgram
 
 Picard's range criterion, the generalized inverse, convergence under parameter selection,
 Tikhonov and discrepancy methods, and Landweber iteration. Tikhonov existence uses
-Mathlib's Lax--Milgram equivalence in the pivot Hilbert space.
+Mathlib's Lax--Milgram equivalence in the pivot Hilbert space. `K†` below denotes the
+Hilbert adjoint `K.adjoint`.
+
+## Main definitions
+
+* `NASC.generalizedInverseDomain`: the domain `range K ⊕ (range K)ᗮ` of the generalized
+  inverse.
+* `NASC.tikhonovNormalOp`: the Tikhonov normal operator `α • 1 + K† K`.
+* `NASC.landweberFilter`: the Landweber iteration as a filter of the normal operator.
+
+## Main results
+
+* `NASC.exists_eq_image_iff_picard`: Picard's criterion.
+* `NASC.exists_generalizedInverse_closedGraph`: the Moore--Penrose generalized inverse.
+* `NASC.regularization_tendsto_of_noise_control`: convergence of a priori parameter choices.
+* `NASC.exists_tikhonov_normal_solve`: Tikhonov regularization and its noise amplification.
+* `NASC.tikhonov_error_le_of_adjoint_source`: the Tikhonov error under a source condition.
+* `NASC.exists_morozov_parameter`: Morozov's discrepancy principle.
+* `NASC.landweberFilter_norm_le_and_tendsto`, `NASC.exists_landweber_discrepancy_tendsto`:
+  Landweber iteration with a priori and discrepancy stopping.
 -/
 
 public section
@@ -20,7 +38,28 @@ noncomputable section
 namespace NASC
 
 open Set Filter
-open scoped BigOperators Topology
+open scoped Topology
+
+/-- **Gap 22.5.** Noise amplification and exact-data consistency give regularization
+convergence for an a priori parameter choice. The noise level `δ` tends to its limit along
+any filter `l` (typically `𝓝[>] 0`), the parameter choice `α` maps `l` to the filter `l'` along
+which the regularization `R` is consistent on the exact data `y₀`, and `δ ‖R (α δ)‖ → 0`. -/
+theorem regularization_tendsto_of_noise_control {X Y β : Type*}
+    [NormedAddCommGroup X] [NormedSpace ℝ X] [NormedAddCommGroup Y] [NormedSpace ℝ Y]
+    {l : Filter ℝ} {l' : Filter β} (R : β → Y →L[ℝ] X) (α : ℝ → β) (data : ℝ → Y)
+    (y₀ : Y) (x : X) (hα : Tendsto α l l') (hR : Tendsto (fun a ↦ R a y₀) l' (𝓝 x))
+    (hnoise : ∀ᶠ δ in l, ‖data δ - y₀‖ ≤ δ)
+    (hsmall : Tendsto (fun δ ↦ δ * ‖R (α δ)‖) l (𝓝 0)) :
+    Tendsto (fun δ ↦ R (α δ) (data δ)) l (𝓝 x) := by
+  have hbase := hR.comp hα
+  have herror : Tendsto (fun δ ↦ R (α δ) (data δ - y₀)) l (𝓝 0) := by
+    refine squeeze_zero_norm' ?_ hsmall
+    filter_upwards [hnoise] with δ hd
+    calc
+      _ ≤ ‖R (α δ)‖ * ‖data δ - y₀‖ := (R (α δ)).le_opNorm _
+      _ ≤ ‖R (α δ)‖ * δ := mul_le_mul_of_nonneg_left hd (R (α δ)).opNorm_nonneg
+      _ = _ := mul_comm _ _
+  simpa only [map_sub, Function.comp_apply, sub_add_cancel, zero_add] using herror.add hbase
 
 section Hilbert
 
@@ -28,8 +67,8 @@ variable {X Y : Type*} [NormedAddCommGroup X] [InnerProductSpace ℝ X] [Complet
   [NormedAddCommGroup Y] [InnerProductSpace ℝ Y] [CompleteSpace Y]
 
 /-- **Gap 22.3.** Picard's criterion and its reconstruction from a complete
-positive singular system, with finite and countable index sets allowed. -/
-theorem exists_eq_image_iff_picard {ι : Type*} [Countable ι]
+positive singular system, with arbitrary index sets allowed. -/
+theorem exists_eq_image_iff_picard {ι : Type*}
     (K : X →L[ℝ] Y) (e : ι → X) (g : ι → Y) (σ : ι → ℝ)
     (he : Orthonormal ℝ e) (hg : Orthonormal ℝ g) (hσ : ∀ i, 0 < σ i)
     (hK : ∀ i, K (e i) = σ i • g i ∧ K.adjoint (g i) = σ i • e i)
@@ -44,6 +83,12 @@ theorem exists_eq_image_iff_picard {ι : Type*} [Countable ι]
 def generalizedInverseDomain (K : X →L[ℝ] Y) : Submodule ℝ Y :=
   K.toLinearMap.range ⊔ K.toLinearMap.rangeᗮ
 
+omit [CompleteSpace X] [CompleteSpace Y] in
+/-- The defining formula of `NASC.generalizedInverseDomain`. -/
+theorem generalizedInverseDomain_def (K : X →L[ℝ] Y) :
+    generalizedInverseDomain K = K.toLinearMap.range ⊔ K.toLinearMap.rangeᗮ :=
+  (rfl)
+
 /-- **Gap 22.4.** The generalized inverse is a closed, densely defined map
 returning the minimum-norm least-squares solution. Boundedness is equivalent
 to closed range. -/
@@ -57,25 +102,15 @@ theorem exists_generalizedInverse_closedGraph (K : X →L[ℝ] Y) :
         (Continuous P ↔ IsClosed (range K)) := by
   sorry
 
-omit [CompleteSpace X] [CompleteSpace Y] in
-/-- **Gap 22.5.** Noise amplification and exact-data consistency give regularization
-convergence for an a priori parameter choice. -/
-theorem regularization_tendsto_of_noise_control (K : X →L[ℝ] Y)
-    (R : ℝ → Y →L[ℝ] X) (α : ℝ → ℝ) (data : ℝ → Y) (x : X)
-    (hα : Tendsto α (𝓝[>] (0 : ℝ)) (𝓝[>] (0 : ℝ)))
-    (hR : Tendsto (fun a ↦ R a (K x)) (𝓝[>] (0 : ℝ)) (𝓝 x))
-    (hnoise : ∀ᶠ δ in 𝓝[>] (0 : ℝ), ‖data δ - K x‖ ≤ δ)
-    (hsmall : Tendsto (fun δ ↦ δ * ‖R (α δ)‖) (𝓝[>] (0 : ℝ)) (𝓝 0)) :
-    Tendsto (fun δ ↦ R (α δ) (data δ)) (𝓝[>] (0 : ℝ)) (𝓝 x) := by
-  have hbase := hR.comp hα
-  have herror : Tendsto (fun δ ↦ R (α δ) (data δ - K x)) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
-    refine squeeze_zero_norm' ?_ hsmall
-    filter_upwards [hnoise] with δ hd
-    calc
-      _ ≤ ‖R (α δ)‖ * ‖data δ - K x‖ := (R (α δ)).le_opNorm _
-      _ ≤ ‖R (α δ)‖ * δ := mul_le_mul_of_nonneg_left hd (R (α δ)).opNorm_nonneg
-      _ = _ := mul_comm _ _
-  simpa only [map_sub, Function.comp_apply, sub_add_cancel, zero_add] using herror.add hbase
+/-- The Tikhonov normal operator `α • 1 + K† K`. -/
+def tikhonovNormalOp (K : X →L[ℝ] Y) (α : ℝ) : X →L[ℝ] X :=
+  α • (1 : X →L[ℝ] X) + K.adjoint.comp K
+
+/-- The defining formula of `NASC.tikhonovNormalOp`. -/
+theorem tikhonovNormalOp_apply (K : X →L[ℝ] Y) (α : ℝ) (v : X) :
+    tikhonovNormalOp K α v = α • v + K.adjoint (K v) := by
+  simp only [tikhonovNormalOp, add_apply, smul_apply, one_apply_eq_self,
+    ContinuousLinearMap.comp_apply]
 
 /-- Testing the normal operator against a vector gives its coercive bilinear form. -/
 theorem tikhonov_normal_inner (K : X →L[ℝ] Y) (α : ℝ) (v w : X) :
@@ -117,15 +152,13 @@ theorem tikhonov_objective_eq_add_error (K : X →L[ℝ] Y) (α : ℝ) (y : Y) (
 
 /-- **Gap 22.6.** Tikhonov regularization is the unique quadratic minimizer.
 The regularized inverse has the bound $1/(2\sqrt{\alpha})$. -/
-theorem exists_tikhonov_normalSolve (K : X →L[ℝ] Y) {α : ℝ} (hα : 0 < α) :
+theorem exists_tikhonov_normal_solve (K : X →L[ℝ] Y) {α : ℝ} (hα : 0 < α) :
     ∃ R : Y →L[ℝ] X, ‖R‖ ≤ (2 * Real.sqrt α)⁻¹ ∧ ∀ y : Y,
       α • R y + K.adjoint (K (R y)) = K.adjoint y ∧
       ∀ x : X, x ≠ R y →
         ‖K (R y) - y‖ ^ 2 + α * ‖R y‖ ^ 2 < ‖K x - y‖ ^ 2 + α * ‖x‖ ^ 2 := by
-  let N : X →L[ℝ] X := α • (1 : X →L[ℝ] X) + K.adjoint.comp K
-  have hN (v : X) : N v = α • v + K.adjoint (K v) := by
-    simp only [N, add_apply, smul_apply, one_apply_eq_self,
-      ContinuousLinearMap.comp_apply]
+  let N := tikhonovNormalOp K α
+  have hN (v : X) : N v = α • v + K.adjoint (K v) := tikhonovNormalOp_apply K α v
   let B : X →L[ℝ] StrongDual ℝ X := (innerSL ℝ).comp N
   have hB (v w : X) : B v w = inner ℝ (N v) w := by
     simp only [B, ContinuousLinearMap.comp_apply, innerSL_apply_apply]
@@ -175,9 +208,8 @@ theorem tikhonov_error_le_of_adjoint_source (K : X →L[ℝ] Y) (w : X) (y : Y)
     ‖R y - K.adjoint (K w)‖ ≤ δ / (2 * Real.sqrt α) + α * ‖w‖ := by
   let x := K.adjoint (K w)
   let z := R (K w)
-  let N : X →L[ℝ] X := α • (1 : X →L[ℝ] X) + K.adjoint.comp K
-  have hN (v : X) : N v = α • v + K.adjoint (K v) := by
-    simp only [N, add_apply, smul_apply, one_apply_eq_self, ContinuousLinearMap.comp_apply]
+  let N := tikhonovNormalOp K α
+  have hN (v : X) : N v = α • v + K.adjoint (K v) := tikhonovNormalOp_apply K α v
   have hR' (d : Y) : N (R d) = K.adjoint d := (hN _).trans (hR d)
   have hinj : Function.Injective N := by
     intro a b hab
@@ -212,6 +244,12 @@ theorem exists_morozov_parameter (K : X →L[ℝ] Y) (hK : DenseRange K)
 /-- Landweber filter with an initial gradient step, so index $m$ includes $m+1$ terms. -/
 def landweberFilter (K : X →L[ℝ] Y) (a : ℝ) (m : ℕ) : Y →L[ℝ] X :=
   a • ∑ j ∈ Finset.range (m + 1), ((1 - a • K.adjoint.comp K) ^ j).comp K.adjoint
+
+/-- The defining formula of `NASC.landweberFilter`. -/
+theorem landweberFilter_def (K : X →L[ℝ] Y) (a : ℝ) (m : ℕ) :
+    landweberFilter K a m =
+      a • ∑ j ∈ Finset.range (m + 1), ((1 - a • K.adjoint.comp K) ^ j).comp K.adjoint :=
+  (rfl)
 
 /-- **Gap 22.9.** The Landweber filter converges on exact data and has the
 square-root amplification bound for perturbed data. -/

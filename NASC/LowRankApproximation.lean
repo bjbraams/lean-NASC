@@ -1,15 +1,31 @@
 module
 
-public import NASC.Conditioning
-public import Mathlib.Probability.Distributions.Gaussian.Real
-public import Mathlib.MeasureTheory.Constructions.Pi
-public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.Analysis.InnerProductSpace.SingularValues
+public import Mathlib.Analysis.CStarAlgebra.Matrix
+public import Mathlib.LinearAlgebra.Matrix.Rank
+public import NASC.Support.GaussianMatrix
 
 /-!
 # Low-rank, randomized and tensor approximation
 
 Frobenius approximation, Gaussian sketches, tensor rank and unfoldings, and Taylor
 approximation of separated kernels. See gaps 6.8–6.16.
+
+## Main definitions
+
+* `NASC.CoordinateTensor 𝕜 dims`, `NASC.HasTensorRankLE`, `NASC.modeUnfold`, `NASC.cutUnfold`
+  and `NASC.HasTensorTrain`.
+
+## Main results
+
+* `NASC.isLeast_rankApproximation_frobenius_sq`: Eckart--Young in the Frobenius norm.
+* `NASC.rangeFinder_error_le`: the deterministic range-finder bound.
+* `NASC.gaussianMatrixLaw_exists_distorted_pair_le`: the Gaussian Johnson--Lindenstrauss bound.
+* `NASC.isClosed_setOf_hasTensorRankLE_one`, `NASC.exists_borderRankTwo_not_rankTwo`:
+  closedness of rank one and failure of closedness of rank two.
+* `NASC.hosvd_projection_error_sq_le`: the HOSVD error bound.
+* `NASC.hasTensorTrain_iff_cutRank_le`: tensor-train ranks and cut ranks.
+* `NASC.exists_separatedApproximation_of_fderiv_bound`: separable Taylor approximation.
 -/
 
 public section
@@ -18,7 +34,7 @@ noncomputable section
 
 namespace NASC
 
-open scoped BigOperators Matrix Matrix.Norms.L2Operator ENNReal NNReal InnerProductSpace
+open scoped Matrix Matrix.Norms.L2Operator ENNReal NNReal InnerProductSpace
 open MeasureTheory ProbabilityTheory Set
 
 /-- **Gap 6.8.** Truncated singular expansion attains the Frobenius optimum. The statement
@@ -47,14 +63,10 @@ theorem rangeFinder_error_le {k r l : ℕ}
       B.toEuclideanLin.singularValues k + ‖S * tail * J‖ := by
   sorry
 
-/-- A law on real matrices whose entries are independent centered normals with common
-variance. The nested product law has the same entry order as the matrix type. -/
-def gaussianMatrixLaw (m n : ℕ) (v : ℝ≥0) : Measure (Fin m → Fin n → ℝ) :=
-  Measure.pi fun _ : Fin m ↦ Measure.pi fun _ : Fin n ↦ gaussianReal 0 v
-
 /-- **Gap 6.10.** Gaussian Johnson--Lindenstrauss embedding for a finite Euclidean
 configuration, with a dimension bound stated as two explicit tails. -/
-theorem gaussianMatrixLaw_bad_pair_le {m n N : ℕ} (a : Fin N → EuclideanSpace ℝ (Fin n))
+theorem gaussianMatrixLaw_exists_distorted_pair_le {m n N : ℕ}
+    (a : Fin N → EuclideanSpace ℝ (Fin n))
     (hm : 0 < m) (hN : 2 ≤ N) (ha : Function.Injective a) {ε t : ℝ}
     (ht : 0 < t) (hε : ε < 1)
     (hsize : (1 + Real.sqrt (2 * Real.log ((N : ℝ) * (N - 1 : ℕ) / 2))) /
@@ -70,11 +82,21 @@ theorem gaussianMatrixLaw_bad_pair_le {m n N : ℕ} (a : Fin N → EuclideanSpac
 abbrev CoordinateTensor (𝕜 : Type*) {d : ℕ} (dims : Fin d → ℕ) :=
   (∀ j, Fin (dims j)) → 𝕜
 
-/-- A tensor is a sum of at most $r$ decomposable tensors. Zero factors pad a shorter sum. -/
+/-- A tensor is a linear combination of at most $r$ decomposable tensors. Zero coefficients
+pad a shorter sum, so the predicate is monotone in `r`. For `d = 0` a tensor is a scalar, of
+rank at most one, and of rank at most zero exactly when it vanishes. -/
 def HasTensorRankLE {𝕜 : Type*} [CommSemiring 𝕜] {d : ℕ} (dims : Fin d → ℕ)
     (T : CoordinateTensor 𝕜 dims) (r : ℕ) : Prop :=
-  ∃ u : Fin r → ∀ j, Fin (dims j) → 𝕜,
-    ∀ i, T i = ∑ k, ∏ j, u k j (i j)
+  ∃ (c : Fin r → 𝕜) (u : Fin r → ∀ j, Fin (dims j) → 𝕜),
+    ∀ i, T i = ∑ k, c k * ∏ j, u k j (i j)
+
+/-- The defining property of `HasTensorRankLE`. -/
+theorem hasTensorRankLE_iff {𝕜 : Type*} [CommSemiring 𝕜] {d : ℕ} {dims : Fin d → ℕ}
+    {T : CoordinateTensor 𝕜 dims} {r : ℕ} :
+    HasTensorRankLE dims T r ↔ ∃ (c : Fin r → 𝕜) (u : Fin r → ∀ j, Fin (dims j) → 𝕜),
+      ∀ i, T i = ∑ k, c k * ∏ j, u k j (i j) := by
+  unfold HasTensorRankLE
+  exact Iff.rfl
 
 /-- **Gap 6.12.** The tensors of rank at most one form a closed set. -/
 theorem isClosed_setOf_hasTensorRankLE_one {𝕜 : Type*} [RCLike 𝕜]
@@ -96,6 +118,13 @@ other modes. -/
 def modeUnfold {𝕜 : Type*} {d : ℕ} {dims : Fin d → ℕ} (T : CoordinateTensor 𝕜 dims)
     (j : Fin d) : Matrix (Fin (dims j)) (∀ k : {k : Fin d // k ≠ j}, Fin (dims k.val)) 𝕜 :=
   fun a b ↦ T fun k ↦ if h : k = j then h.symm ▸ a else b ⟨k, h⟩
+
+/-- The entries of the mode-$j$ matricization. -/
+theorem modeUnfold_apply {𝕜 : Type*} {d : ℕ} {dims : Fin d → ℕ} (T : CoordinateTensor 𝕜 dims)
+    (j : Fin d) (a : Fin (dims j)) (b : ∀ k : {k : Fin d // k ≠ j}, Fin (dims k.val)) :
+    modeUnfold T j a b = T fun k ↦ if h : k = j then h.symm ▸ a else b ⟨k, h⟩ := by
+  unfold modeUnfold
+  rfl
 
 /-- **Gap 6.13.** Projecting onto leading mode subspaces gives the HOSVD tail bound.
 Each frame is orthonormal and matches the corresponding leading Gram spectrum. -/
@@ -120,29 +149,50 @@ def cutUnfold {𝕜 : Type*} {d : ℕ} {dims : Fin d → ℕ}
       (∀ j : {j : Fin d // k ≤ j.val}, Fin (dims j.val)) 𝕜 :=
   fun a b ↦ T fun j ↦ if hj : j.val < k then a ⟨j, hj⟩ else b ⟨j, Nat.le_of_not_gt hj⟩
 
-/-- A tensor train contracts cores along finite bond indices with trivial endpoint ranks. -/
+/-- The entries of the cut unfolding. -/
+theorem cutUnfold_apply {𝕜 : Type*} {d : ℕ} {dims : Fin d → ℕ}
+    (T : CoordinateTensor 𝕜 dims) (k : ℕ) (a : ∀ j : {j : Fin d // j.val < k}, Fin (dims j.val))
+    (b : ∀ j : {j : Fin d // k ≤ j.val}, Fin (dims j.val)) :
+    cutUnfold T k a b =
+      T fun j ↦ if hj : j.val < k then a ⟨j, hj⟩ else b ⟨j, Nat.le_of_not_gt hj⟩ := by
+  unfold cutUnfold
+  rfl
+
+/-- A tensor train contracts cores along finite bond indices with trivial endpoint ranks,
+up to a scalar factor. For `d ≥ 1` the factor can be absorbed into a core; for `d = 0` it
+makes every scalar a tensor train. -/
 def HasTensorTrain {𝕜 : Type*} [CommSemiring 𝕜] {d : ℕ} {dims : Fin d → ℕ}
     (T : CoordinateTensor 𝕜 dims) (r : Fin (d + 1) → ℕ) : Prop :=
   r 0 = 1 ∧ r (Fin.last d) = 1 ∧
-    ∃ G : ∀ j : Fin d, Fin (r j.castSucc) → Fin (r j.succ) → Fin (dims j) → 𝕜,
-      ∀ i, T i = ∑ b : (∀ j, Fin (r j)), ∏ j, G j (b j.castSucc) (b j.succ) (i j)
+    ∃ (c : 𝕜) (G : ∀ j : Fin d, Fin (r j.castSucc) → Fin (r j.succ) → Fin (dims j) → 𝕜),
+      ∀ i, T i = c * ∑ b : (∀ j, Fin (r j)), ∏ j, G j (b j.castSucc) (b j.succ) (i j)
+
+/-- The defining property of `HasTensorTrain`. -/
+theorem hasTensorTrain_iff {𝕜 : Type*} [CommSemiring 𝕜] {d : ℕ} {dims : Fin d → ℕ}
+    {T : CoordinateTensor 𝕜 dims} {r : Fin (d + 1) → ℕ} :
+    HasTensorTrain T r ↔ r 0 = 1 ∧ r (Fin.last d) = 1 ∧
+      ∃ (c : 𝕜) (G : ∀ j : Fin d, Fin (r j.castSucc) → Fin (r j.succ) → Fin (dims j) → 𝕜),
+        ∀ i, T i = c * ∑ b : (∀ j, Fin (r j)), ∏ j, G j (b j.castSucc) (b j.succ) (i j) := by
+  unfold HasTensorTrain
+  exact Iff.rfl
 
 /-- **Gap 6.14.** Feasible tensor train ranks are exactly the upper bounds on the
 ranks of all interior cut unfoldings. -/
 theorem hasTensorTrain_iff_cutRank_le {𝕜 : Type*} [Field 𝕜] {d : ℕ}
     {dims : Fin d → ℕ} (T : CoordinateTensor 𝕜 dims) (r : Fin (d + 1) → ℕ)
-    (h : 0 < d) (h₀ : r 0 = 1) (hd : r (Fin.last d) = 1) :
+    (h₀ : r 0 = 1) (hd : r (Fin.last d) = 1) :
     HasTensorTrain T r ↔ ∀ k : Fin (d + 1), 0 < k.val → k.val < d →
       (cutUnfold T k.val).rank ≤ r k := by
   sorry
 
 /-- **Gap 6.16.** Directional derivative bounds on a separated convex block give a
-uniform separable Taylor approximation. Derivative norms are in Euclidean coordinates. -/
+uniform separable Taylor approximation. Derivative norms are in Euclidean coordinates. For
+`q = 0` the bound is `|κ x y| ≤ M`, attained by the zero approximation. -/
 theorem exists_separatedApproximation_of_fderiv_bound {m q : ℕ}
     {X Y : Set (EuclideanSpace ℝ (Fin m))} {x₀ : EuclideanSpace ℝ (Fin m)}
-    (hX : Convex ℝ X) (hx₀ : x₀ ∈ X) (hq : 0 < q)
+    (hX : Convex ℝ X) (hx₀ : x₀ ∈ X)
     (κ : EuclideanSpace ℝ (Fin m) → EuclideanSpace ℝ (Fin m) → ℝ)
-    (hκ : ∀ y ∈ Y, ContDiff ℝ q (fun x ↦ κ x y)) {D M : ℝ} (hD : 0 ≤ D)
+    (hκ : ∀ y ∈ Y, ContDiff ℝ q (fun x ↦ κ x y)) {D M : ℝ}
     (hdiam : ∀ x ∈ X, ‖x - x₀‖ ≤ D)
     (hderiv : ∀ x ∈ X, ∀ y ∈ Y, ‖iteratedFDeriv ℝ q (fun z ↦ κ z y) x‖ ≤ M) :
     ∃ (f g : Fin ((q - 1 + m).choose m) → EuclideanSpace ℝ (Fin m) → ℝ),

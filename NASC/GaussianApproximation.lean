@@ -1,16 +1,24 @@
 module
 
-public import NASC.Galerkin
 public import Mathlib.Analysis.InnerProductSpace.l2Space
 public import Mathlib.Probability.Distributions.Gaussian.Basic
 public import Mathlib.Probability.Moments.CovarianceBilin
-public import Mathlib.MeasureTheory.Function.L2Space
 
 /-!
 # Gaussian measures and stochastic Galerkin approximation
 
 Covariance trace, Gaussian shifts, Karhunen--Loève truncation and stochastic Galerkin
 solvability. The covariance statements use Mathlib's uncentered operator on the centered law.
+
+## Main results
+
+* `NASC.IsGaussian.covariance_trace_eq`: the covariance of a Gaussian measure is trace class,
+  with trace the centered second moment.
+* `NASC.IsGaussian.shift_equivalent_iff_squareRoot_range`: the Cameron–Martin dichotomy.
+* `NASC.existsUnique_gaussian_of_summable_spectrum`: Gaussian measures with prescribed mean and
+  trace-class covariance.
+* `NASC.karhunenLoeve_projection_error_sq`: the Karhunen–Loève truncation error.
+* `NASC.existsUnique_stochasticGalerkin`: well-posedness of stochastic Galerkin.
 -/
 
 public section
@@ -20,7 +28,7 @@ noncomputable section
 namespace NASC
 
 open MeasureTheory ProbabilityTheory Set Filter
-open scoped ENNReal BigOperators
+open scoped ENNReal
 
 section Covariance
 
@@ -29,7 +37,7 @@ variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteS
 
 /-- **Gap 24.13.** Covariance of a Gaussian measure has finite trace, equal to
 the centered second moment in any countable orthonormal basis. -/
-theorem gaussian_covariance_trace_eq {ι : Type*} [Countable ι]
+theorem IsGaussian.covariance_trace_eq {ι : Type*} [Countable ι]
     (μ : Measure H) [IsGaussian μ] (b : HilbertBasis ι ℝ H) :
     let m := ∫ x : H, x ∂μ
     let C := covarianceOperator (μ.map fun x : H ↦ x - m)
@@ -40,10 +48,10 @@ theorem gaussian_covariance_trace_eq {ι : Type*} [Countable ι]
 
 /-- **Gap 24.13.** The Cameron--Martin dichotomy in a covariance eigenbasis.
 The square-root range is expressed by the existence of square-summable preimage
-coordinates via a vector of the Hilbert space. -/
-theorem gaussian_shift_equivalent_iff_squareRoot_range {ι : Type*} [Countable ι]
+coordinates via a vector of the Hilbert space. The eigenvalues `σ i` are nonnegative
+because the covariance is positive. -/
+theorem IsGaussian.shift_equivalent_iff_squareRoot_range {ι : Type*} [Countable ι]
     (μ : Measure H) [IsGaussian μ] (b : HilbertBasis ι ℝ H) (σ : ι → ℝ)
-    (hσ : ∀ i, 0 ≤ σ i)
     (hC : ∀ i, covarianceOperator (μ.map fun x : H ↦ x - ∫ y : H, y ∂μ) (b i) = σ i • b i)
     (h : H) :
     let μh := μ.map fun x : H ↦ x + h
@@ -65,7 +73,7 @@ theorem existsUnique_gaussian_of_summable_spectrum {ι : Type*} [Countable ι]
 error equal to the omitted eigenvalue sum, for finite or countable index sets. -/
 theorem karhunenLoeve_projection_error_sq {Ω ι : Type*} [MeasurableSpace Ω]
     [Countable ι] [DecidableEq ι] (P : Measure Ω) [IsProbabilityMeasure P]
-    (u : Ω → H) (hu : Measurable u) (hL : MemLp u 2 P)
+    (u : Ω → H) (hL : MemLp u 2 P)
     (b : HilbertBasis ι ℝ H) (ν : ι → ℝ)
     (hC : ∀ i, covarianceOperator (P.map fun x ↦ u x - ∫ y, u y ∂P) (b i) = ν i • b i)
     (S : Finset ι) :

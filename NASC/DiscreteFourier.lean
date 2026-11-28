@@ -1,18 +1,43 @@
 module
 
-public import NASC.Quadrature
+public import Mathlib.Analysis.Fourier.AddCircle
+public import Mathlib.Analysis.Fourier.FourierTransform
 public import Mathlib.Analysis.Fourier.ZMod
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Sinc
+public import Mathlib.LinearAlgebra.Matrix.Circulant
 
 import Mathlib.LinearAlgebra.Vandermonde
+import NASC.Support.Algebra
+import NASC.Support.Analysis
 
 /-!
 # Discrete Fourier analysis and sampling
 
 Fourier matrices, circulants, radix-two recursion, aliasing, trigonometric interpolation,
 Shannon sampling and Prony reconstruction. The cyclic formulas use Mathlib's
-unnormalized ZMod Fourier transform and its standard additive character. Prony reconstruction
-uses Mathlib's Vandermonde nonsingularity criterion.
+unnormalized ZMod Fourier transform `ZMod.dft` and its standard additive character, circulants
+are Mathlib's `Matrix.circulant`, periodic Fourier coefficients are Mathlib's `fourierCoeffOn`
+on `[0, 2π]`, and the bandlimit condition uses Mathlib's Fourier transform `𝓕` (with the
+`2π` in the exponent). Prony reconstruction uses Mathlib's Vandermonde nonsingularity criterion.
+
+## Main definitions
+
+* `NASC.fourierMatrix`: the cyclic Fourier matrix `(ζ^{-ij})` on `ZMod n`.
+* `NASC.cyclicConvolution`: cyclic convolution on `ZMod n`.
+* `NASC.fourierRoot`: the root of unity `exp(-2πi/n)`.
+* `NASC.radixTwoTransform`: the radix-two even/odd recursion.
+
+## Main results
+
+* `NASC.fourierMatrix_gram_mulVec`: `Fᴴ F = n I` and `F x = dft x`.
+* `NASC.dft_cyclicConvolution_and_mul`: the convolution theorem in both directions.
+* `NASC.fourierMatrix_mul_circulant`: the Fourier matrix diagonalizes circulants.
+* `NASC.fourierRoot_pow`: the bridge from `fourierRoot` to `ZMod.stdAddChar`.
+* `NASC.radixTwoTransform_eq_sum`: the radix-two recursion computes the DFT.
+* `NASC.fourierCoeffOn_aliasing`: aliasing of sampled Fourier coefficients.
+* `NASC.existsUnique_trigonometric_interpolant`: trigonometric interpolation.
+* `NASC.tsum_sinc_smul_samples_eq`: Shannon's sampling theorem.
+* `NASC.existsUnique_prony_annihilator`, `NASC.exists_perm_of_expSum_samples_eq`: Prony's method.
 -/
 
 public section
@@ -22,7 +47,8 @@ noncomputable section
 namespace NASC
 
 open Set MeasureTheory Filter
-open scoped Matrix BigOperators Interval
+open scoped FourierTransform
+open scoped Matrix Interval
 
 /-- The unnormalized cyclic Fourier matrix in the negative-exponent convention. -/
 def fourierMatrix (n : ℕ) [NeZero n] : Matrix (ZMod n) (ZMod n) ℂ :=
@@ -31,7 +57,6 @@ def fourierMatrix (n : ℕ) [NeZero n] : Matrix (ZMod n) (ZMod n) ℂ :=
 /-- The entry in row `i` and column `j` of the Fourier matrix. -/
 theorem fourierMatrix_apply (n : ℕ) [NeZero n] (i j : ZMod n) :
     fourierMatrix n i j = ZMod.stdAddChar (-(i * j)) := by
-  unfold fourierMatrix
   rfl
 
 /-- **Gap 13.1.** The cyclic Fourier matrix has Gram matrix $nI$ and acts by the
@@ -61,7 +86,6 @@ def cyclicConvolution {n : ℕ} [NeZero n] (a b : ZMod n → ℂ) : ZMod n → �
 /-- Cyclic convolution evaluated at a group element. -/
 theorem cyclicConvolution_apply {n : ℕ} [NeZero n] (a b : ZMod n → ℂ) (j : ZMod n) :
     cyclicConvolution a b j = ∑ k, a k * b (j - k) := by
-  unfold cyclicConvolution
   rfl
 
 /-- The Fourier transform takes cyclic convolution to pointwise multiplication. -/
@@ -93,11 +117,11 @@ theorem dft_cyclicConvolution_and_mul {n : ℕ} [NeZero n] (a b : ZMod n → ℂ
 /-- **Gap 13.3.** The explicit Fourier similarity of a circulant, expressed
 without needing a matrix inverse at a potentially empty index type. -/
 theorem fourierMatrix_mul_circulant {n : ℕ} [NeZero n] (a : ZMod n → ℂ) :
-    fourierMatrix n * (Matrix.of fun i j ↦ a (i - j)) =
-      Matrix.diagonal (ZMod.dft a) * fourierMatrix n := by
+    fourierMatrix n * Matrix.circulant a = Matrix.diagonal (ZMod.dft a) * fourierMatrix n := by
   classical
   ext i j
-  simp only [Matrix.mul_apply, Matrix.of_apply, fourierMatrix_apply, Matrix.diagonal_apply]
+  simp only [Matrix.mul_apply, Matrix.circulant_apply, fourierMatrix_apply,
+    Matrix.diagonal_apply]
   simp only [ite_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, ite_true, ZMod.dft_apply,
     smul_eq_mul, Finset.sum_mul]
   refine Fintype.sum_equiv (Equiv.subRight j) _ _ fun k ↦ ?_
@@ -109,6 +133,21 @@ theorem fourierMatrix_mul_circulant {n : ℕ} [NeZero n] (a : ZMod n → ℂ) :
 /-- The negative-exponent root of unity for a transform of length $n$. -/
 def fourierRoot (n : ℕ) : ℂ := Complex.exp (-(2 * Real.pi / n : ℝ) * Complex.I)
 
+/-- The defining formula of `fourierRoot`. -/
+theorem fourierRoot_def (n : ℕ) :
+    fourierRoot n = Complex.exp (-(2 * Real.pi / n : ℝ) * Complex.I) := by
+  rfl
+
+/-- Powers of `fourierRoot n` are the values of Mathlib's standard additive character of
+`ZMod n` at negated residues; this links the `ℕ`-indexed radix-two convention to `ZMod.dft`. -/
+theorem fourierRoot_pow (n : ℕ) [NeZero n] (m : ℕ) :
+    fourierRoot n ^ m = ZMod.stdAddChar (-(m : ZMod n)) := by
+  have hcast : (-(m : ZMod n)) = ((-(m : ℤ) : ℤ) : ZMod n) := by push_cast; rfl
+  rw [hcast, ZMod.stdAddChar_coe, fourierRoot_def, ← Complex.exp_nat_mul]
+  congr 1
+  push_cast
+  ring
+
 /-- The radix-two even/odd recursion on an input of length $2^k$.
 The value argument is only used at indices less than the transform length. -/
 def radixTwoTransform : ℕ → (ℕ → ℂ) → ℕ → ℂ
@@ -118,34 +157,46 @@ def radixTwoTransform : ℕ → (ℕ → ℂ) → ℕ → ℂ
     radixTwoTransform k (fun i ↦ a (2 * i)) l +
       fourierRoot (2 ^ (k + 1)) ^ j * radixTwoTransform k (fun i ↦ a (2 * i + 1)) l
 
+/-- The radix-two recursion at length one returns the single input value. -/
+theorem radixTwoTransform_zero (a : ℕ → ℂ) (j : ℕ) : radixTwoTransform 0 a j = a 0 := by
+  rfl
+
+/-- The radix-two butterfly: the transform of length `2 ^ (k + 1)` combines the even and
+odd half-length transforms at the reduced frequency `j % 2 ^ k`. -/
+theorem radixTwoTransform_succ (k : ℕ) (a : ℕ → ℂ) (j : ℕ) :
+    radixTwoTransform (k + 1) a j =
+      radixTwoTransform k (fun i ↦ a (2 * i)) (j % 2 ^ k) +
+        fourierRoot (2 ^ (k + 1)) ^ j * radixTwoTransform k (fun i ↦ a (2 * i + 1))
+          (j % 2 ^ k) := by
+  rfl
+
 /-- **Gap 13.4.** The radix-two butterfly recursion computes the discrete
-Fourier sum at every frequency in its transform block. -/
-theorem radixTwoTransform_eq_sum (k : ℕ) (a : ℕ → ℂ) (j : Fin (2 ^ k)) :
-    radixTwoTransform k a j.val =
-      ∑ i : Fin (2 ^ k), a i.val * fourierRoot (2 ^ k) ^ (i.val * j.val) := by
+Fourier sum at every frequency `j : ℕ` (the sum is `2 ^ k`-periodic in `j`). -/
+theorem radixTwoTransform_eq_sum (k : ℕ) (a : ℕ → ℂ) (j : ℕ) :
+    radixTwoTransform k a j =
+      ∑ i : Fin (2 ^ k), a i.val * fourierRoot (2 ^ k) ^ (i.val * j) := by
   sorry
 
-/-- The continuous periodic Fourier coefficient with period $2\pi$. -/
-def periodicFourierCoeff (f : ℝ → ℂ) (k : ℤ) : ℂ :=
-  (2 * (Real.pi : ℂ))⁻¹ * ∫ x in (0 : ℝ)..(2 * Real.pi),
-    Complex.exp (-(k : ℂ) * x * Complex.I) * f x
-
 /-- **Gap 13.5.** Fourier sampling aliases exactly the congruent frequencies
-when the continuous Fourier coefficients are absolutely summable. -/
-theorem periodicFourierCoeff_aliasing (f : ℝ → ℂ) (hf : Continuous f)
+when the continuous Fourier coefficients on `[0, 2π]` (Mathlib's `fourierCoeffOn`) are
+absolutely summable. -/
+theorem fourierCoeffOn_aliasing (f : ℝ → ℂ) (hf : Continuous f)
     (hper : Function.Periodic f (2 * Real.pi))
-    (hs : Summable fun k : ℤ ↦ ‖periodicFourierCoeff f k‖) {n : ℕ} (hn : 0 < n) (k : ℤ) :
+    (hs : Summable fun k : ℤ ↦ ‖fourierCoeffOn Real.two_pi_pos f k‖) {n : ℕ} (hn : 0 < n)
+    (k : ℤ) :
     ((n : ℂ)⁻¹ * ∑ j : Fin n, f (2 * Real.pi * j.val / n) *
       fourierRoot n ^ ((j.val : ℤ) * k)) =
-      ∑' l : ℤ, periodicFourierCoeff f (k + l * n) := by
+      ∑' l : ℤ, fourierCoeffOn Real.two_pi_pos f (k + l * n) := by
   sorry
 
 /-- **Gap 13.6.** The $2n$ equispaced samples determine the $2n$ coefficients
-in the half-open trigonometric frequency band. -/
-theorem existsUnique_trigonometricInterpolate {n : ℕ} (hn : 0 < n) (y : Fin (2 * n) → ℂ) :
+in the half-open trigonometric frequency band. For `n = 0` both index types are empty. -/
+theorem existsUnique_trigonometric_interpolant {n : ℕ} (y : Fin (2 * n) → ℂ) :
     ∃! c : Fin (2 * n) → ℂ, ∀ j : Fin (2 * n),
       (∑ k : Fin (2 * n), c k * Complex.exp
         (((k.val : ℝ) - n) * (Real.pi * j.val / n) * Complex.I)) = y j := by
+  rcases Nat.eq_zero_or_pos n with rfl | hn
+  · exact ⟨fun i ↦ i.elim0, fun j ↦ j.elim0, fun _ _ ↦ funext fun i ↦ i.elim0⟩
   let θ (j : Fin (2 * n)) : ℝ := Real.pi * j.val / n
   let z (j : Fin (2 * n)) : ℂ := Circle.exp (θ j)
   let b (j : Fin (2 * n)) : ℂ := Complex.exp (-(n : ℂ) * θ j * Complex.I)
@@ -187,31 +238,31 @@ theorem existsUnique_trigonometricInterpolate {n : ℕ} (hn : 0 < n) (y : Fin (2
   funext j
   exact (hsample d j).trans ((hd j).trans (congrFun hc j).symm)
 
-/-- **Gap 13.8.** A continuous integrable bandlimited function admits absolutely
-convergent cardinal reconstruction from its equally spaced samples. -/
-theorem shannon_sum_eq {f : ℝ → ℂ} (hf : Continuous f) (hL1 : Integrable f)
+/-- **Gap 13.8.** A continuous integrable function whose Fourier transform vanishes at all
+angular frequencies above `L` admits absolutely convergent cardinal reconstruction from its
+samples with spacing `π / M`, `M ≥ L`. Mathlib's `𝓕` has `exp (-2πi x ξ)` in the integrand, so
+angular frequency `2πξ` corresponds to `𝓕 f ξ`. -/
+theorem tsum_sinc_smul_samples_eq {f : ℝ → ℂ} (hf : Continuous f) (hL1 : Integrable f)
     {L M : ℝ} (hL : 0 < L) (hM : L ≤ M)
-    (hband : ∀ ξ : ℝ, L < |ξ| →
-      (∫ y : ℝ, Complex.exp (-(ξ : ℂ) * y * Complex.I) * f y) = 0) (x : ℝ) :
+    (hband : ∀ ξ : ℝ, L < 2 * Real.pi * |ξ| → 𝓕 f ξ = 0) (x : ℝ) :
     Summable (fun k : ℤ ↦ ‖Real.sinc (M * x - k * Real.pi) • f (k * Real.pi / M)‖) ∧
       (∑' k : ℤ, Real.sinc (M * x - k * Real.pi) • f (k * Real.pi / M)) = f x := by
   sorry
 
-/-- The monic modal product decomposes into its leading term and lower coefficients. -/
+/-- The monic modal product decomposes into its leading term and lower coefficients
+(`Polynomial.Monic.as_sum` at degree `n`). -/
 private theorem prony_product_eq_X_pow_add_sum {n : ℕ} (z : Fin n → ℂ) :
     let P := ∏ j, (Polynomial.X - Polynomial.C (z j))
     Polynomial.X ^ n + ∑ k : Fin n, Polynomial.monomial k.val (P.coeff k.val) = P := by
   intro P
   have hmonic : P.Monic := Polynomial.monic_prod_X_sub_C z Finset.univ
   have hdegree : P.natDegree = n := by
-    dsimp only [P]
     rw [Polynomial.natDegree_prod_of_monic Finset.univ _
       (fun j _ ↦ Polynomial.monic_X_sub_C (z j))]
     simp
-  have hlead : P.coeff n = 1 := hdegree ▸ hmonic.coeff_natDegree
-  have hsum := P.as_sum_range' (n + 1) (hdegree ▸ Nat.lt_succ_self n)
-  simpa only [Finset.sum_range_succ, hlead, ← Fin.sum_univ_eq_sum_range,
-    ← Polynomial.C_mul_X_pow_eq_monomial, map_one, one_mul, add_comm] using hsum.symm
+  conv_rhs => rw [hmonic.as_sum, hdegree]
+  simp only [Fin.sum_univ_eq_sum_range (fun k ↦ Polynomial.monomial k (P.coeff k)),
+    Polynomial.C_mul_X_pow_eq_monomial]
 
 /-- The coefficients of the modal product satisfy the Hankel recurrence. -/
 private theorem prony_product_solves {n : ℕ} (z c : Fin n → ℂ) (l : Fin n) :
@@ -243,9 +294,11 @@ private theorem prony_product_solves {n : ℕ} (z c : Fin n → ℂ) (l : Fin n)
       refine Finset.sum_congr rfl fun j _ ↦ ?_
       ring
 
-/-- **Gap 13.10.** The Prony annihilating polynomial is uniquely determined
-by the Hankel equations and is the product of the distinct modal factors. -/
-theorem prony_annihilator_unique {n : ℕ} (z c : Fin n → ℂ)
+/-- **Gap 13.10.** For distinct modes `z` and nonzero amplitudes `c`, the Hankel matrix of
+the moments factors through the Vandermonde matrix and is nonsingular, the Prony annihilating
+polynomial is uniquely determined by the Hankel equations and is the product of the modal
+factors, and the amplitudes are the unique solution of the Vandermonde system. -/
+theorem existsUnique_prony_annihilator {n : ℕ} (z c : Fin n → ℂ)
     (hz : Function.Injective z) (hc : ∀ j, c j ≠ 0) :
     let h := fun k : ℕ ↦ ∑ j, c j * z j ^ k
     let V : Matrix (Fin n) (Fin n) ℂ := fun k j ↦ z j ^ k.val
@@ -289,40 +342,9 @@ theorem prony_annihilator_unique {n : ℕ} (z c : Fin n → ℂ)
     rw [← hcV]
     exact (Matrix.mulVec_injective_of_det_ne_zero hVdet).eq_iff
 
-/-- The complex exponential is injective on the half-open strip used for modal exponents. -/
-private theorem prony_exp_injOn :
-    Set.InjOn Complex.exp {x | x.im ∈ Set.Ico (-Real.pi) Real.pi} := by
-  intro x hx y hy he
-  simp only [Set.mem_ofPred_eq, Set.mem_Ico] at hx hy
-  have hneg : Complex.exp (-x) = Complex.exp (-y) := by
-    rw [Complex.exp_neg, Complex.exp_neg, he]
-  apply neg_injective
-  apply Complex.exp_inj_of_neg_pi_lt_of_le_pi _ _ _ _ hneg
-  · simpa only [Complex.neg_im, neg_lt_neg_iff] using hx.2
-  · simpa only [Complex.neg_im, neg_neg] using neg_le_neg hx.1
-  · simpa only [Complex.neg_im, neg_lt_neg_iff] using hy.2
-  · simpa only [Complex.neg_im, neg_neg] using neg_le_neg hy.1
-
-/-- The roots of equal modal products match under a permutation. -/
-private theorem prony_reindex {n : ℕ} {z w : Fin n → ℂ} (hz : Function.Injective z)
-    (hp : (∏ i, (Polynomial.X - Polynomial.C (z i))) =
-      ∏ i, (Polynomial.X - Polynomial.C (w i))) :
-    ∃ e : Equiv.Perm (Fin n), ∀ i, z i = w (e i) := by
-  classical
-  have hmatch (i : Fin n) : ∃ j, z i = w j := by
-    have hroot : (∏ j : Fin n, (z i - z j)) = 0 :=
-      Finset.prod_eq_zero (Finset.mem_univ i) (sub_self (z i))
-    have heval := congrArg (Polynomial.eval (z i)) hp
-    simp only [Polynomial.eval_prod, Polynomial.eval_sub, Polynomial.eval_X,
-      Polynomial.eval_C, hroot] at heval
-    simpa only [Finset.prod_eq_zero_iff, Finset.mem_univ, true_and, sub_eq_zero] using heval.symm
-  choose e he using hmatch
-  have hinj : Function.Injective e := fun i j h ↦ hz ((he i).trans (by rw [h, ← he j]))
-  exact ⟨Equiv.ofBijective e (Finite.injective_iff_bijective.mp hinj), he⟩
-
 /-- **Gap 13.10.** Two exponential sums with nonzero coefficients and distinct exponents
 in the same principal strip agree up to relabelling if their first `2 * n` samples agree. -/
-theorem prony_exp_eq_up_to_reindexing {n : ℕ}
+theorem exists_perm_of_expSum_samples_eq {n : ℕ}
     (φ ψ c d : Fin n → ℂ) (hφ : Function.Injective φ) (hψ : Function.Injective ψ)
     (hc : ∀ j, c j ≠ 0) (hd : ∀ j, d j ≠ 0)
     (hφim : ∀ j, (φ j).im ∈ Set.Ico (-Real.pi) Real.pi)
@@ -333,20 +355,22 @@ theorem prony_exp_eq_up_to_reindexing {n : ℕ}
   classical
   let z : Fin n → ℂ := Complex.exp ∘ φ
   let w : Fin n → ℂ := Complex.exp ∘ ψ
-  have hz : Function.Injective z := fun i j h ↦ hφ (prony_exp_injOn (hφim i) (hφim j) h)
-  have hw : Function.Injective w := fun i j h ↦ hψ (prony_exp_injOn (hψim i) (hψim j) h)
+  have hz : Function.Injective z := fun i j h ↦
+    hφ (exp_injOn_im_mem_Ico (hφim i) (hφim j) h)
+  have hw : Function.Injective w := fun i j h ↦
+    hψ (exp_injOn_im_mem_Ico (hψim i) (hψim j) h)
   have hs (k : ℕ) (hk : k < 2 * n) : (∑ j, c j * z j ^ k) = ∑ j, d j * w j ^ k := by
     simpa only [z, w, Function.comp_apply, ← Complex.exp_nat_mul, mul_comm (k : ℂ)] using
       hsamples ⟨k, hk⟩
-  obtain ⟨_, _, ⟨p, hp, _⟩, hpz, hcz⟩ := prony_annihilator_unique z c hz hc
-  obtain ⟨_, _, _, hpw, _⟩ := prony_annihilator_unique w d hw hd
+  obtain ⟨_, _, ⟨p, hp, _⟩, hpz, hcz⟩ := existsUnique_prony_annihilator z c hz hc
+  obtain ⟨_, _, _, hpw, _⟩ := existsUnique_prony_annihilator w d hw hd
   have hp' (l : Fin n) :
       (∑ k : Fin n, p k * (∑ j, d j * w j ^ (k.val + l.val))) =
         -(∑ j, d j * w j ^ (n + l.val)) := by
     have hkl (k : Fin n) : k.val + l.val < 2 * n := by omega
     have hnl : n + l.val < 2 * n := by omega
     simpa only [← hs _ hnl, fun k : Fin n ↦ (hs _ (hkl k)).symm] using hp l
-  obtain ⟨e, he⟩ := prony_reindex hz ((hpz p hp).symm.trans (hpw p hp'))
+  obtain ⟨e, he⟩ := exists_perm_of_prod_X_sub_C_eq hz ((hpz p hp).symm.trans (hpw p hp'))
   have hcd : (fun i ↦ d (e i)) = c := by
     apply (hcz _).mp
     funext k
@@ -357,6 +381,6 @@ theorem prony_exp_eq_up_to_reindexing {n : ℕ}
         rw [he i, mul_comm]
       _ = _ := (hs k.val (by omega)).symm
   exact ⟨e, fun j ↦
-    ⟨prony_exp_injOn (hφim j) (hψim (e j)) (he j), (congrFun hcd j).symm⟩⟩
+    ⟨exp_injOn_im_mem_Ico (hφim j) (hψim (e j)) (he j), (congrFun hcd j).symm⟩⟩
 
 end NASC

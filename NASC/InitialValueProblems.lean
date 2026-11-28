@@ -1,14 +1,39 @@
 module
 
-public import NASC.Approximation
-public import Mathlib.Analysis.CStarAlgebra.Matrix
-public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.LinearAlgebra.Lagrange
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+
+import Mathlib.Topology.MetricSpace.Contracting
 
 /-!
 # One-step and multistep methods for initial value problems
 
 Euler polygons, variable-step convergence, Runge--Kutta stages and rooted trees, collocation,
 linear multistep order and stability. See section 14 of the gap catalogue.
+
+## Main definitions
+
+* `NASC.RungeKuttaTableau`: the coefficients `(A, b, c)` of an `s`-stage method, with
+  `RungeKuttaTableau.IsStageSolution` (the stage equations) and `RungeKuttaTableau.update`.
+* `NASC.RungeKuttaTree`: rooted trees with ordered children, with `order`, `density`,
+  `orderedWeight`, the elementary weights `stageWeight`, `weight` and the elementary
+  differential `differential`.
+* `NASC.RungeKuttaTableau.HasAutonomousOrder`: classical order on smooth autonomous problems.
+* `NASC.multistepPolynomial`, `NASC.IsZeroStable`, `NASC.MultistepHasOrder`,
+  `NASC.bdfPolynomial`: linear multistep methods.
+
+## Main results
+
+* `NASC.exists_eulerPolygon_uniform_limit`, `NASC.oneStep_final_error_le`.
+* `NASC.RungeKuttaTableau.existsUnique_stages`,
+  `NASC.RungeKuttaTableau.hasAutonomousOrder_iff_treeWeight` (Butcher),
+  `NASC.RungeKuttaTableau.hasAutonomousOrder_of_simplifying`,
+  `NASC.RungeKuttaTableau.hasAutonomousOrder_of_collocation`,
+  `NASC.RungeKuttaTableau.exists_update_bSeries`.
+* `NASC.multistepHasOrder_iff_defect_isBigO`, `NASC.isZeroStable_iff_bounded_recurrence`,
+  `NASC.multistep_order_le_dahlquist` (first Dahlquist barrier),
+  `NASC.isZeroStable_bdfPolynomial_iff`.
 -/
 
 public section
@@ -18,7 +43,7 @@ noncomputable section
 namespace NASC
 
 open Set Filter Polynomial Asymptotics
-open scoped BigOperators Matrix Topology Interval
+open scoped Matrix Topology Interval
 
 /-- **Gap 14.1.** Euler polygons converge uniformly on the certified Picard rectangle.
 An interpolant is described by its value at every point of each mesh interval. -/
@@ -44,10 +69,11 @@ theorem exists_eulerPolygon_uniform_limit {E : Type*}
   sorry
 
 /-- **Gap 14.4.** An order-$p$ local defect and a Lipschitz increment function give the
-variable-step one-step convergence bound. -/
+variable-step one-step convergence bound. (For `n > 0` the step hypotheses force `0 < h` and
+`0 ≤ C`; for `n = 0` both sides vanish.) -/
 theorem oneStep_final_error_le {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {n : ℕ} (t : Fin (n + 1) → ℝ) (ht : StrictMono t) (u : ℝ → E) (y : Fin (n + 1) → E)
-    (Φ : ℝ → E → ℝ → E) (p : ℕ) {h C L : ℝ} (hC : 0 ≤ C) (hL : 0 < L) (hh : 0 ≤ h)
+    (Φ : ℝ → E → ℝ → E) (p : ℕ) {h C L : ℝ} (hL : 0 < L)
     (h₀ : y 0 = u (t 0))
     (hstep : ∀ i : Fin n,
       let d := t i.succ - t i.castSucc
@@ -73,14 +99,26 @@ namespace RungeKuttaTableau
 variable {s : ℕ} (T : RungeKuttaTableau s)
 
 /-- The implicit Runge--Kutta stage equations at time $t$. -/
-def IsStages {E : Type*} [AddCommGroup E] [Module ℝ E]
+def IsStageSolution {E : Type*} [AddCommGroup E] [Module ℝ E]
     (f : ℝ → E → E) (t h : ℝ) (y : E) (Y : Fin s → E) : Prop :=
   ∀ i, Y i = y + h • ∑ j, T.A i j • f (t + T.c j * h) (Y j)
+
+/-- The defining property of `IsStageSolution`. -/
+theorem isStageSolution_iff {E : Type*} [AddCommGroup E] [Module ℝ E]
+    (f : ℝ → E → E) (t h : ℝ) (y : E) (Y : Fin s → E) :
+    T.IsStageSolution f t h y Y ↔ ∀ i, Y i = y + h • ∑ j, T.A i j • f (t + T.c j * h) (Y j) :=
+  Iff.rfl
 
 /-- The Runge--Kutta update from a specified solution of the stage equations. -/
 def update {E : Type*} [AddCommGroup E] [Module ℝ E]
     (f : ℝ → E → E) (t h : ℝ) (y : E) (Y : Fin s → E) : E :=
   y + h • ∑ j, T.b j • f (t + T.c j * h) (Y j)
+
+/-- The defining formula of `update`. -/
+theorem update_def {E : Type*} [AddCommGroup E] [Module ℝ E]
+    (f : ℝ → E → E) (t h : ℝ) (y : E) (Y : Fin s → E) :
+    T.update f t h y Y = y + h • ∑ j, T.b j • f (t + T.c j * h) (Y j) := by
+  rfl
 
 /-- **Gap 14.5.** The stage equations have a unique solution under the
 maximum absolute row sum contraction criterion. -/
@@ -88,14 +126,36 @@ theorem existsUnique_stages {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ 
     (f : ℝ → E → E) (t h : ℝ) (y : E) {L q : ℝ} (hL : 0 ≤ L) (hq : 0 ≤ q) (hq' : q < 1)
     (hf : ∀ t x z, ‖f t x - f t z‖ ≤ L * ‖x - z‖)
     (hcontract : ∀ i, |h| * L * (∑ j, |T.A i j|) ≤ q) :
-    ∃! Y : Fin s → E, T.IsStages f t h y Y := by
-  sorry
+    ∃! Y : Fin s → E, T.IsStageSolution f t h y Y := by
+  let Φ : (Fin s → E) → Fin s → E := fun Y i ↦ y + h • ∑ j, T.A i j • f (t + T.c j * h) (Y j)
+  have hlip (Y Z : Fin s → E) : dist (Φ Y) (Φ Z) ≤ q * dist Y Z := by
+    refine (dist_pi_le_iff (mul_nonneg hq dist_nonneg)).2 fun i ↦ ?_
+    have heq : Φ Y i - Φ Z i =
+        h • ∑ j, T.A i j • (f (t + T.c j * h) (Y j) - f (t + T.c j * h) (Z j)) := by
+      simp only [Φ, add_sub_add_left_eq_sub, ← smul_sub, ← Finset.sum_sub_distrib]
+    have hterm (j : Fin s) : ‖T.A i j • (f (t + T.c j * h) (Y j) - f (t + T.c j * h) (Z j))‖ ≤
+        |T.A i j| * (L * dist Y Z) := by
+      rw [norm_smul, Real.norm_eq_abs]
+      refine mul_le_mul_of_nonneg_left ((hf _ _ _).trans ?_) (abs_nonneg _)
+      exact mul_le_mul_of_nonneg_left (by simpa only [dist_eq_norm] using dist_le_pi_dist Y Z j) hL
+    rw [dist_eq_norm, heq, norm_smul, Real.norm_eq_abs]
+    calc |h| * ‖∑ j, T.A i j • (f (t + T.c j * h) (Y j) - f (t + T.c j * h) (Z j))‖
+        ≤ |h| * ∑ j, |T.A i j| * (L * dist Y Z) :=
+          mul_le_mul_of_nonneg_left ((norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ ↦ hterm j))
+            (abs_nonneg h)
+      _ = |h| * L * (∑ j, |T.A i j|) * dist Y Z := by rw [← Finset.sum_mul]; ring
+      _ ≤ q * dist Y Z := mul_le_mul_of_nonneg_right (hcontract i) dist_nonneg
+  have hK : ContractingWith (⟨q, hq⟩ : NNReal) Φ :=
+    ⟨NNReal.coe_lt_coe.mp hq', LipschitzWith.of_dist_le_mul fun Y Z ↦ hlip Y Z⟩
+  refine ⟨ContractingWith.fixedPoint Φ hK, fun i ↦ ?_, fun Y hY ↦ ?_⟩
+  · exact (congrFun (ContractingWith.fixedPoint_isFixedPt (f := Φ) hK) i).symm
+  · exact hK.fixedPoint_unique (funext fun i ↦ (hY i).symm)
 
 end RungeKuttaTableau
 
-/-- A finite rooted tree with ordered children. The coefficient identities
-are invariant under permutations of the children. -/
+/-- A finite rooted tree with ordered children. -/
 inductive RungeKuttaTree
+  /-- The tree with a root whose `m` ordered children are the given subtrees. -/
   | node (m : ℕ) (child : Fin m → RungeKuttaTree)
 
 namespace RungeKuttaTree
@@ -104,27 +164,60 @@ namespace RungeKuttaTree
 def order : RungeKuttaTree → ℕ
   | .node _ f => 1 + ∑ i, order (f i)
 
+/-- The order of a tree is one plus the orders of its children. -/
+theorem order_node (m : ℕ) (f : Fin m → RungeKuttaTree) :
+    (node m f).order = 1 + ∑ i, (f i).order := by
+  rw [order]
+
 /-- Tree density, the product of the subtree orders at every vertex. -/
 def density : RungeKuttaTree → ℕ
   | t@(.node _ f) => t.order * ∏ i, density (f i)
+
+/-- The density of a tree is its order times the densities of its children. -/
+theorem density_node (m : ℕ) (f : Fin m → RungeKuttaTree) :
+    (node m f).density = (node m f).order * ∏ i, (f i).density := by
+  rw [density]
 
 /-- Product of the factorials of the numbers of children. This denominator
 works when summing over ordered rooted trees. -/
 def orderedWeight : RungeKuttaTree → ℕ
   | .node m f => m.factorial * ∏ i, orderedWeight (f i)
 
+/-- The ordered weight of a tree is `m!` times the ordered weights of its `m` children. -/
+theorem orderedWeight_node (m : ℕ) (f : Fin m → RungeKuttaTree) :
+    (node m f).orderedWeight = m.factorial * ∏ i, (f i).orderedWeight := by
+  rw [orderedWeight]
+
 /-- The elementary Runge--Kutta stage weight of a tree. -/
 def stageWeight {s : ℕ} (T : RungeKuttaTableau s) : RungeKuttaTree → Fin s → ℝ
   | .node _ f, i => ∏ k, ∑ j, T.A i j * stageWeight T (f k) j
+
+/-- The stage weight recursion `Φᵢ(t) = ∏ₖ ∑ⱼ aᵢⱼ Φⱼ(tₖ)` over the children `tₖ`. -/
+theorem stageWeight_node {s : ℕ} (T : RungeKuttaTableau s) (m : ℕ)
+    (f : Fin m → RungeKuttaTree) (i : Fin s) :
+    (node m f).stageWeight T i = ∏ k, ∑ j, T.A i j * (f k).stageWeight T j := by
+  rw [stageWeight]
 
 /-- The elementary Runge--Kutta weight of a tree. -/
 def weight {s : ℕ} (T : RungeKuttaTableau s) (t : RungeKuttaTree) : ℝ :=
   ∑ i, T.b i * t.stageWeight T i
 
+/-- The defining formula of `weight`. -/
+theorem weight_def {s : ℕ} (T : RungeKuttaTableau s) (t : RungeKuttaTree) :
+    t.weight T = ∑ i, T.b i * t.stageWeight T i := by
+  rfl
+
 /-- The elementary differential of a rooted tree for an autonomous vector field. -/
 def differential {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     (f : E → E) (y : E) : RungeKuttaTree → E
   | .node m c => iteratedFDeriv ℝ m f y (fun i ↦ differential f y (c i))
+
+/-- The elementary differential of a tree is the `m`-th derivative of `f` applied to the
+elementary differentials of its `m` children. -/
+theorem differential_node {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    (f : E → E) (y : E) (m : ℕ) (c : Fin m → RungeKuttaTree) :
+    (node m c).differential f y = iteratedFDeriv ℝ m f y (fun i ↦ (c i).differential f y) := by
+  rw [differential]
 
 end RungeKuttaTree
 
@@ -137,8 +230,19 @@ def RungeKuttaTableau.HasAutonomousOrder {s : ℕ} (T : RungeKuttaTableau s) (p 
     ContDiff ℝ (p + 1 : ℕ) f →
     (∀ᶠ t in 𝓝 0, HasDerivAt u (f (u t)) t) →
     (∀ i, Tendsto (fun h ↦ Y h i) (𝓝 0) (𝓝 (u 0))) →
-    (∀ᶠ h in 𝓝 0, T.IsStages (fun _ ↦ f) 0 h (u 0) (Y h)) →
+    (∀ᶠ h in 𝓝 0, T.IsStageSolution (fun _ ↦ f) 0 h (u 0) (Y h)) →
     (fun h ↦ T.update (fun _ ↦ f) 0 h (u 0) (Y h) - u h) =O[𝓝 0] (fun h ↦ h ^ (p + 1))
+
+/-- The defining property of `RungeKuttaTableau.HasAutonomousOrder`. -/
+theorem RungeKuttaTableau.hasAutonomousOrder_iff {s : ℕ} (T : RungeKuttaTableau s) (p : ℕ) :
+    T.HasAutonomousOrder p ↔ ∀ (n : ℕ) (f : EuclideanSpace ℝ (Fin n) → EuclideanSpace ℝ (Fin n))
+      (u : ℝ → EuclideanSpace ℝ (Fin n)) (Y : ℝ → Fin s → EuclideanSpace ℝ (Fin n)),
+      ContDiff ℝ (p + 1 : ℕ) f →
+      (∀ᶠ t in 𝓝 0, HasDerivAt u (f (u t)) t) →
+      (∀ i, Tendsto (fun h ↦ Y h i) (𝓝 0) (𝓝 (u 0))) →
+      (∀ᶠ h in 𝓝 0, T.IsStageSolution (fun _ ↦ f) 0 h (u 0) (Y h)) →
+      (fun h ↦ T.update (fun _ ↦ f) 0 h (u 0) (Y h) - u h) =O[𝓝 0] (fun h ↦ h ^ (p + 1)) :=
+  Iff.rfl
 
 /-- **Gap 14.6.** The rooted-tree coefficient equations characterize the order
 of a Runge--Kutta tableau. -/
@@ -162,7 +266,7 @@ theorem RungeKuttaTableau.hasAutonomousOrder_of_simplifying {s : ℕ}
 
 /-- **Gap 14.9.** Orthogonality of the node polynomial gives the gain in
 collocation order above the number of stages. -/
-theorem RungeKuttaTableau.collocation_hasAutonomousOrder {s : ℕ} (hs : 0 < s)
+theorem RungeKuttaTableau.hasAutonomousOrder_of_collocation {s : ℕ}
     (T : RungeKuttaTableau s) (hc : Function.Injective T.c) (r : ℕ)
     (hA : ∀ i j, T.A i j = ∫ t in (0 : ℝ)..T.c i, (Lagrange.basis Finset.univ T.c j).eval t)
     (hb : ∀ j, T.b j = ∫ t in (0 : ℝ)..1, (Lagrange.basis Finset.univ T.c j).eval t)
@@ -177,7 +281,7 @@ theorem RungeKuttaTableau.exists_update_bSeries {s : ℕ} (T : RungeKuttaTableau
     (f : E → E) (y : E) (Y : ℝ → Fin s → E)
     (hf : ContDiff ℝ (p + 1 : ℕ) f)
     (hY : ∀ i, Tendsto (fun h ↦ Y h i) (𝓝 0) (𝓝 y))
-    (hstep : ∀ᶠ h in 𝓝 0, T.IsStages (fun _ ↦ f) 0 h y (Y h)) :
+    (hstep : ∀ᶠ h in 𝓝 0, T.IsStageSolution (fun _ ↦ f) 0 h y (Y h)) :
     ∃ S : Finset RungeKuttaTree, (∀ t, t ∈ S ↔ t.order ≤ p) ∧
       (fun h ↦ T.update (fun _ ↦ f) 0 h y (Y h) -
         (y + ∑ t ∈ S, (h ^ t.order * t.weight T / t.orderedWeight) • t.differential f y))
@@ -188,14 +292,31 @@ theorem RungeKuttaTableau.exists_update_bSeries {s : ℕ} (T : RungeKuttaTableau
 def multistepPolynomial {k : ℕ} (a : Fin (k + 1) → ℝ) : ℂ[X] :=
   ∑ j, monomial j.val (a j : ℂ)
 
+/-- The defining formula of `multistepPolynomial`. -/
+theorem multistepPolynomial_def {k : ℕ} (a : Fin (k + 1) → ℝ) :
+    multistepPolynomial a = ∑ j, monomial j.val (a j : ℂ) := by
+  rfl
+
 /-- Classical algebraic root condition for zero stability. -/
 def IsZeroStable (ρ : ℂ[X]) : Prop :=
   ρ ≠ 0 ∧ ∀ z : ℂ, ρ.eval z = 0 → ‖z‖ ≤ 1 ∧ (‖z‖ = 1 → ρ.derivative.eval z ≠ 0)
+
+/-- The defining property of `IsZeroStable`. -/
+theorem isZeroStable_iff (ρ : ℂ[X]) :
+    IsZeroStable ρ ↔
+      ρ ≠ 0 ∧ ∀ z : ℂ, ρ.eval z = 0 → ‖z‖ ≤ 1 ∧ (‖z‖ = 1 → ρ.derivative.eval z ≠ 0) :=
+  Iff.rfl
 
 /-- Moment conditions for a linear multistep method of order at least $p$. -/
 def MultistepHasOrder {k : ℕ} (a b : Fin (k + 1) → ℝ) (p : ℕ) : Prop :=
   (∑ j, a j) = 0 ∧ ∀ q < p, (∑ j, a j * (j.val : ℝ) ^ (q + 1)) =
     (q + 1) * ∑ j, b j * (j.val : ℝ) ^ q
+
+/-- The defining property of `MultistepHasOrder`. -/
+theorem multistepHasOrder_iff {k : ℕ} (a b : Fin (k + 1) → ℝ) (p : ℕ) :
+    MultistepHasOrder a b p ↔ (∑ j, a j) = 0 ∧ ∀ q < p, (∑ j, a j * (j.val : ℝ) ^ (q + 1)) =
+      (q + 1) * ∑ j, b j * (j.val : ℝ) ^ q :=
+  Iff.rfl
 
 /-- **Gap 14.10.** The multistep order conditions characterize vanishing
 Taylor defect through the specified order for every smooth scalar trajectory. -/
@@ -207,7 +328,7 @@ theorem multistepHasOrder_iff_defect_isBigO {k : ℕ} (a b : Fin (k + 1) → ℝ
 
 /-- **Gap 14.11.** The root condition is equivalent to bounded propagation
 for every initial history in the unforced multistep recurrence. -/
-theorem isZeroStable_iff_bounded_recurrence {k : ℕ} (hk : 0 < k)
+theorem isZeroStable_iff_bounded_recurrence {k : ℕ}
     (a : Fin (k + 1) → ℝ) (ha : a (Fin.last k) ≠ 0) :
     IsZeroStable (multistepPolynomial a) ↔
       ∃ C ≥ (0 : ℝ), ∀ u : ℕ → ℂ,
@@ -227,6 +348,11 @@ theorem multistep_order_le_dahlquist {k p : ℕ} (hk : 0 < k)
 /-- Characteristic polynomial of the backward differentiation formula of degree $k$. -/
 def bdfPolynomial (k : ℕ) : ℂ[X] :=
   ∑ j ∈ Finset.Icc 1 k, C ((j : ℂ)⁻¹) * X ^ (k - j) * (X - 1) ^ j
+
+/-- The defining formula of `bdfPolynomial`. -/
+theorem bdfPolynomial_def (k : ℕ) :
+    bdfPolynomial k = ∑ j ∈ Finset.Icc 1 k, C ((j : ℂ)⁻¹) * X ^ (k - j) * (X - 1) ^ j := by
+  rfl
 
 /-- **Gap 14.13.** Backward differentiation satisfies the root condition exactly
 up to order six. -/

@@ -1,15 +1,38 @@
 module
 
-public import NASC.Approximation
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
 public import Mathlib.Analysis.Normed.Operator.Compact.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 public import Mathlib.Topology.ContinuousMap.Compact
+public import Mathlib.Algebra.Polynomial.Eval.Defs
 
 /-!
 # Integral equations
 
-Fredholm compatibility and approximation, Nyström nodal equations, and collocation
-for Volterra equations on uniform and graded meshes. The compact-operator obstruction uses
-Mathlib's finite-dimensionality criterion from a totally bounded neighborhood.
+Compactness of integral operators with continuous or weakly singular kernels, Fredholm
+compatibility and approximation, the projection method for second-kind equations, Nyström
+nodal equations, and collocation for Volterra equations on uniform and graded meshes. The
+compact-operator obstruction uses Mathlib's finite-dimensionality criterion from a totally
+bounded neighborhood. Scalars are `RCLike 𝕜` throughout; an integral operator on `C(X, 𝕜)` is
+given as a continuous linear map `A` together with the formula `A f x = ∫ K x y * f y ∂μ`.
+
+## Main definitions
+
+* `NASC.IsVolterraCollocation`: the piecewise polynomial collocation equations.
+
+## Main results
+
+* `NASC.isCompactOperator_of_continuousKernel`, `NASC.isCompactOperator_of_small_diagonal_tails`:
+  compactness of integral operators.
+* `NASC.exists_fredholm_solution_iff_pairing`: the Fredholm alternative for dual pairs.
+* `NASC.exists_projection_secondKind_bounds`: convergence of the projection method.
+* `NASC.eventually_secondKind_boundedInverse`: collectively compact approximation.
+* `NASC.exists_nystrom_convergence`: convergence of the Nyström method.
+* `NASC.exists_volterra_resolvent`: resolvent kernels of Volterra equations.
+* `NASC.exists_volterraCollocation_error_le`, `NASC.exists_graded_volterraCollocation_error_le`:
+  collocation on uniform and graded meshes.
+* `NASC.not_exists_norm_le_mul_norm_of_isCompactOperator`: compact operators on
+  infinite-dimensional spaces have no bounded inverse on their range.
 -/
 
 public section
@@ -19,22 +42,22 @@ noncomputable section
 namespace NASC
 
 open Set Filter MeasureTheory Polynomial
-open scoped BigOperators Topology Interval Matrix NNReal
+open scoped Topology Interval Matrix NNReal
 
 /-- **Gap 21.1.** A continuous-kernel operator on continuous functions over a compact
 space is compact for any finite integration measure. -/
-theorem isCompactOperator_of_continuousKernel {X : Type*} [MetricSpace X] [CompactSpace X]
-    [MeasurableSpace X] [BorelSpace X] (μ : Measure X) [IsFiniteMeasure μ]
-    (K : C(X × X, ℂ)) (A : C(X, ℂ) →L[ℂ] C(X, ℂ))
+theorem isCompactOperator_of_continuousKernel {𝕜 X : Type*} [RCLike 𝕜] [MetricSpace X]
+    [CompactSpace X] [MeasurableSpace X] [BorelSpace X] (μ : Measure X) [IsFiniteMeasure μ]
+    (K : C(X × X, 𝕜)) (A : C(X, 𝕜) →L[𝕜] C(X, 𝕜))
     (hA : ∀ f x, A f x = ∫ y, K (x, y) * f y ∂μ) :
     IsCompactOperator A := by
   sorry
 
 /-- **Gap 21.1.** Compactness also follows for a kernel continuous off the
 diagonal when its integrable diagonal tails vanish uniformly. -/
-theorem isCompactOperator_of_small_diagonal_tails {X : Type*} [MetricSpace X] [CompactSpace X]
-    [MeasurableSpace X] [BorelSpace X] (μ : Measure X) [IsFiniteMeasure μ]
-    (K : X → X → ℂ) (A : C(X, ℂ) →L[ℂ] C(X, ℂ))
+theorem isCompactOperator_of_small_diagonal_tails {𝕜 X : Type*} [RCLike 𝕜] [MetricSpace X]
+    [CompactSpace X] [MeasurableSpace X] [BorelSpace X] (μ : Measure X) [IsFiniteMeasure μ]
+    (K : X → X → 𝕜) (A : C(X, 𝕜) →L[𝕜] C(X, 𝕜))
     (hK : ContinuousOn (Function.uncurry K) {p : X × X | p.1 ≠ p.2})
     (hI : ∀ x, Integrable (K x) μ)
     (hsmall : ∀ ε > (0 : ℝ), ∃ δ > (0 : ℝ),
@@ -45,10 +68,10 @@ theorem isCompactOperator_of_small_diagonal_tails {X : Type*} [MetricSpace X] [C
 
 /-- **Gap 21.2.** The normed dual-pair Fredholm compatibility condition for
 two compact operators adjoint with respect to a nondegenerate pairing. -/
-theorem exists_fredholm_solution_iff_pairing {X Y : Type*}
-    [NormedAddCommGroup X] [NormedSpace ℂ X] [CompleteSpace X]
-    [NormedAddCommGroup Y] [NormedSpace ℂ Y] [CompleteSpace Y]
-    (P : X →ₗ[ℂ] Y →ₗ[ℂ] ℂ) (A : X →L[ℂ] X) (B : Y →L[ℂ] Y)
+theorem exists_fredholm_solution_iff_pairing {𝕜 X Y : Type*} [RCLike 𝕜]
+    [NormedAddCommGroup X] [NormedSpace 𝕜 X] [CompleteSpace X]
+    [NormedAddCommGroup Y] [NormedSpace 𝕜 Y] [CompleteSpace Y]
+    (P : X →ₗ[𝕜] Y →ₗ[𝕜] 𝕜) (A : X →L[𝕜] X) (B : Y →L[𝕜] Y)
     (hPX : ∀ x, (∀ y, P x y = 0) → x = 0) (hPY : ∀ y, (∀ x, P x y = 0) → y = 0)
     (hA : IsCompactOperator A) (hB : IsCompactOperator B)
     (hAB : ∀ x y, P (A x) y = P x (B y)) (f : X) :
@@ -57,12 +80,12 @@ theorem exists_fredholm_solution_iff_pairing {X Y : Type*}
 
 /-- **Gap 21.5.** The projection method for a second-kind equation, with the
 discrete error bounded above and below by the original projection defect. -/
-theorem exists_projection_secondKind_bounds {X : Type*}
-    [NormedAddCommGroup X] [NormedSpace ℂ X] [CompleteSpace X]
-    (K : X →L[ℂ] X) (P : ℕ → X →L[ℂ] X)
+theorem exists_projection_secondKind_bounds {𝕜 X : Type*} [RCLike 𝕜]
+    [NormedAddCommGroup X] [NormedSpace 𝕜 X] [CompleteSpace X]
+    (K : X →L[𝕜] X) (P : ℕ → X →L[𝕜] X)
     (hproj : ∀ n x, P n (P n x) = P n x)
     (hconv : Tendsto (fun n ↦ (P n).comp K) atTop (𝓝 K))
-    {z : ℂ} (hz : z ≠ 0) (hres : Function.Bijective fun x ↦ z • x - K x) :
+    {z : 𝕜} (hz : z ≠ 0) (hres : Function.Bijective fun x ↦ z • x - K x) :
     ∃ a b : ℝ, 0 < a ∧ 0 < b ∧ ∀ᶠ n in atTop, ∀ x : X,
       ∃! y : X, P n y = y ∧ z • y - P n (K y) = P n (z • x - K x) ∧
         a * ‖x - P n x‖ ≤ ‖x - y‖ ∧ ‖x - y‖ ≤ b * ‖x - P n x‖ := by
@@ -83,18 +106,18 @@ theorem eventually_secondKind_boundedInverse {𝕜 X : Type*}
 
 /-- **Gap 21.8.** The Nyström nodal solves reconstruct continuous solutions and
 converge uniformly when the quadratures converge on continuous test functions. -/
-theorem exists_nystrom_convergence {X : Type*} [MetricSpace X] [CompactSpace X]
+theorem exists_nystrom_convergence {𝕜 X : Type*} [RCLike 𝕜] [MetricSpace X] [CompactSpace X]
     [MeasurableSpace X] [BorelSpace X] (μ : Measure X) [IsFiniteMeasure μ]
-    (K : C(X × X, ℂ)) (f φ : C(X, ℂ))
+    (K : C(X × X, 𝕜)) (f φ : C(X, 𝕜))
     (hφ : ∀ x, φ x = f x + ∫ y, K (x, y) * φ y ∂μ)
-    (huniq : ∀ ψ : C(X, ℂ), (∀ x, ψ x = ∫ y, K (x, y) * ψ y ∂μ) → ψ = 0)
+    (huniq : ∀ ψ : C(X, 𝕜), (∀ x, ψ x = ∫ y, K (x, y) * ψ y ∂μ) → ψ = 0)
     (x : ∀ n, Fin n → X) (w : ∀ n, Fin n → ℝ)
-    (hq : ∀ g : C(X, ℂ), Tendsto (fun n ↦ ∑ i : Fin n, (w n i : ℂ) * g (x n i))
+    (hq : ∀ g : C(X, 𝕜), Tendsto (fun n ↦ ∑ i : Fin n, (w n i : 𝕜) * g (x n i))
       atTop (𝓝 (∫ y, g y ∂μ))) :
-    ∃ φₕ : ℕ → C(X, ℂ), Tendsto φₕ atTop (𝓝 φ) ∧ ∀ᶠ n in atTop,
-      ∃! c : Fin n → ℂ, (∀ i, c i = f (x n i) +
-        ∑ j, (w n j : ℂ) * K (x n i, x n j) * c j) ∧
-        ∀ y, φₕ n y = f y + ∑ j, (w n j : ℂ) * K (y, x n j) * c j := by
+    ∃ φₕ : ℕ → C(X, 𝕜), Tendsto φₕ atTop (𝓝 φ) ∧ ∀ᶠ n in atTop,
+      ∃! c : Fin n → 𝕜, (∀ i, c i = f (x n i) +
+        ∑ j, (w n j : 𝕜) * K (x n i, x n j) * c j) ∧
+        ∀ y, φₕ n y = f y + ∑ j, (w n j : 𝕜) * K (y, x n j) * c j := by
   sorry
 
 /-- **Gap 21.9.** Continuous Volterra kernels have resolvents and give unique
@@ -124,6 +147,16 @@ def IsVolterraCollocation {n m : ℕ} (t : Fin (n + 1) → ℝ) (c : Fin m → �
     (p i).eval τ = g τ + (∑ k ∈ Finset.univ.filter (· < i),
       ∫ s in t k.castSucc..t k.succ, K τ s * (p k).eval s) +
       ∫ s in t i.castSucc..τ, K τ s * (p i).eval s
+
+/-- The defining equations of `NASC.IsVolterraCollocation`. -/
+theorem isVolterraCollocation_iff {n m : ℕ} {t : Fin (n + 1) → ℝ} {c : Fin m → ℝ}
+    {K : ℝ → ℝ → ℝ} {g : ℝ → ℝ} {p : Fin n → ℝ[X]} :
+    IsVolterraCollocation t c K g p ↔ (∀ i, (p i).natDegree < m) ∧ ∀ (i : Fin n) (j : Fin m),
+      let τ := t i.castSucc + c j * (t i.succ - t i.castSucc)
+      (p i).eval τ = g τ + (∑ k ∈ Finset.univ.filter (· < i),
+        ∫ s in t k.castSucc..t k.succ, K τ s * (p k).eval s) +
+        ∫ s in t i.castSucc..τ, K τ s * (p i).eval s :=
+  Iff.rfl
 
 /-- **Gap 21.10.** Smooth Volterra collocation on sufficiently fine meshes
 has a uniform error of order the number of collocation nodes. -/
@@ -157,11 +190,12 @@ theorem exists_graded_volterraCollocation_error_le {m : ℕ} (hm : 0 < m) {T α 
           |y s - (p i).eval s| ≤ C * (T / n) ^ min (m : ℝ) (r * (1 - α)) := by
   sorry
 
-/-- **Gap 21.16.** A compact operator with infinite-dimensional domain cannot
-have a bounded inverse on its range. -/
-theorem not_exists_lowerBound_of_isCompactOperator {X Y : Type*}
-    [NormedAddCommGroup X] [NormedSpace ℝ X] [NormedAddCommGroup Y] [NormedSpace ℝ Y]
-    (A : X →L[ℝ] Y) (hA : IsCompactOperator A) (hX : ¬FiniteDimensional ℝ X) :
+/-- **Synopsis 21.16.** A compact operator with infinite-dimensional domain cannot
+have a bounded inverse on its range: no bound `‖x‖ ≤ C ‖A x‖` holds. -/
+theorem not_exists_norm_le_mul_norm_of_isCompactOperator {𝕜 X Y : Type*}
+    [NontriviallyNormedField 𝕜] [CompleteSpace 𝕜]
+    [NormedAddCommGroup X] [NormedSpace 𝕜 X] [NormedAddCommGroup Y] [NormedSpace 𝕜 Y]
+    (A : X →L[𝕜] Y) (hA : IsCompactOperator A) (hX : ¬FiniteDimensional 𝕜 X) :
     ¬∃ C : ℝ, ∀ x, ‖x‖ ≤ C * ‖A x‖ := by
   rintro ⟨C, hC⟩
   let K : ℝ≥0 := ⟨max C 0, le_max_right C 0⟩
@@ -170,7 +204,7 @@ theorem not_exists_lowerBound_of_isCompactOperator {X Y : Type*}
     exact (hC (x - y)).trans (mul_le_mul_of_nonneg_right (le_max_left C 0) (norm_nonneg _))
   have hU := hanti.isUniformInducing A.uniformContinuous
   have hball := (hA.isCompact_closure_image_closedBall 1).totallyBounded
-  exact hX (FiniteDimensional.of_totallyBounded_nhds_zero ℝ
+  exact hX (FiniteDimensional.of_totallyBounded_nhds_zero 𝕜
     (Metric.closedBall_mem_nhds 0 zero_lt_one)
     ((totallyBounded_image_iff hU).mp (hball.subset subset_closure)))
 

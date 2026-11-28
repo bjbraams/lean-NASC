@@ -9,7 +9,7 @@ partial, integral and stochastic differential equations. It ends with inverse
 problems, sampling methods, and high-dimensional approximation, uncertainty
 quantification and model reduction. The [bibliography](NASC-bib.md) and
 reference guide give the mathematical sources. Proofs are outside its scope.
-The synopsis has 396 numbered entries in 24 sections. Statement $x.y$ is the $y$-th
+The synopsis has 397 numbered entries in 24 sections. Statement $x.y$ is the $y$-th
 statement of section $x$, and the reference guide follows the same sections.
 
 ## Contents
@@ -34,7 +34,7 @@ statement of section $x$, and the reference guide follows the same sections.
 - [18. Galerkin and finite element methods for elliptic problems](#18-galerkin-and-finite-element-methods-for-elliptic-problems), items 18.1–18.22.
 - [19. Time-dependent, spectral and adaptive Galerkin methods, and eigenvalue approximation](#19-time-dependent-spectral-and-adaptive-galerkin-methods-and-eigenvalue-approximation), items 19.1–19.20.
 - [20. Multilevel and domain decomposition methods](#20-multilevel-and-domain-decomposition-methods), items 20.1–20.11.
-- [21. Integral equations and boundary element methods](#21-integral-equations-and-boundary-element-methods), items 21.1–21.16.
+- [21. Integral equations and boundary element methods](#21-integral-equations-and-boundary-element-methods), items 21.1–21.17.
 - [22. Inverse problems and regularization](#22-inverse-problems-and-regularization), items 22.1–22.16.
 - [23. Monte Carlo, quasi-Monte Carlo, and stochastic differential equations](#23-monte-carlo-quasi-monte-carlo-and-stochastic-differential-equations), items 23.1–23.16.
 - [24. High-dimensional approximation, uncertainty quantification, and model reduction](#24-high-dimensional-approximation-uncertainty-quantification-and-model-reduction), items 24.1–24.17.
@@ -142,7 +142,9 @@ Whenever $\gamma_k$ appears, $ku<1$ is assumed.
   $$|\delta|\le\frac{u}{1+u}$$
   holds, and it is attained at $x=1+u$. If $|x|<\beta^{e_{\min}}$, then
   $|x-\mathrm{RN}(x)|\le\tfrac12\alpha$ and $|x-\circ(x)|<\alpha$ for directed
-  roundings, while the relative error can be arbitrarily close to $1$.
+  roundings, while the relative error can be as large as $1$ (it equals $1$
+  whenever $\circ(x)=0$, for instance for $0<x<\alpha/2$ under rounding to
+  nearest).
 
 * **1.5. Standard model.** Let $a,b\in\mathbb F$, let
   $\mathrm{op}\in\{+,-,\times,\div\}$ (with $b\ne0$ for division), and let
@@ -248,10 +250,11 @@ Whenever $\gamma_k$ appears, $ku<1$ is assumed.
   $S_n=\sum_ix_i$.
   - **Kahan's compensated summation** ($s=e=0$; for $i=1,\dots,n$:
     $t=s$, $y=x_i+e$, $s=t+y$, $e=(t-s)+y$, each operation rounded) satisfies,
-    under the standard model,
+    when the arithmetic is correctly rounded to nearest and no operation
+    overflows,
     $$\widehat S_n=\sum_{i=1}^n(1+\mu_i)x_i,\qquad
     |\mu_i|\le2u+O(nu^2),$$
-    with an implied constant independent of $n$, $u$ and the data. So
+    with an implied constant independent of $n$, $u$, the format and the data. So
     $|S_n-\widehat S_n|\le(2u+O(nu^2))\sum_i|x_i|$.
   - **Cascaded summation.** With correct rounding to nearest, let
     $s=x_1$, $e=0$, and for $i=2,\dots,n$ let $(s,e_i)$ be the output of 2Sum
@@ -457,11 +460,13 @@ section 16 and the Eckart–Young theorem in section 6.
   \frac{\|r\|_2}{\|A\|_2\|x\|_2}\Bigr),\qquad
   \frac{\|r-s\|_2}{\|b\|_2}\le(1+2\kappa_2(A))\varepsilon.$$
   The factor $\kappa_2(A)^2$ multiplying $\|r\|_2$ is genuine: for
-  $0<\eta<1$, $A=\begin{pmatrix}1&0\\0&\eta\\0&0\end{pmatrix}$,
-  $b=(1,0,1)^\top$, $\Delta b=0$ and $\Delta A=\eta\,e_3e_2^\top$, one has
-  $\kappa_2(A)=1/\eta$, $\|\Delta A\|_2=\eta\|A\|_2$, $x=(1,0)^\top$,
-  $y=(1,1/(2\eta))^\top$, so $\|x-y\|_2/\|x\|_2=1/(2\eta)
-  =\tfrac12\kappa_2(A)^2\|\Delta A\|_2/\|A\|_2$.
+  $0<\delta<\eta<1$, $A=\begin{pmatrix}1&0\\0&\eta\\0&0\end{pmatrix}$,
+  $b=(1,0,1)^\top$, $\Delta b=0$ and $\Delta A=\delta\,e_3e_2^\top$, one has
+  $\kappa_2(A)=1/\eta$, $\|A\|_2=1$, $\varepsilon=\delta$,
+  $\kappa_2(A)\varepsilon=\delta/\eta<1$, $x=(1,0)^\top$, $\|r\|_2=1$ and
+  $y=(1,\delta/(\eta^2+\delta^2))^\top$, so
+  $$\frac{\|x-y\|_2}{\|x\|_2}=\frac{\delta}{\eta^2+\delta^2}
+  \ge\tfrac12\kappa_2(A)^2\frac{\|\Delta A\|_2}{\|A\|_2}.$$
 
 * **2.16. Pseudospectra.** Let $A\in\mathbb C^{N\times N}$, $\varepsilon>0$,
   and let $\|(z-A)^{-1}\|=\infty$ for $z\in\Lambda(A)$. The following
@@ -550,10 +555,10 @@ section 2.
   |\Delta A|\le\gamma_n|\widehat L||\widehat U| .$$
   If $m=n$ and the systems $\widehat Ly=b$ and $\widehat Ux=y$ are then solved
   by substitution, the computed solution $\widehat x$ of $Ax=b$ satisfies
-  $$(A+\Delta A)\widehat x=b,\qquad |\Delta A|\le2\gamma_n|\widehat L||\widehat U| .$$
+  $$(A+\Delta A)\widehat x=b,\qquad |\Delta A|\le(3\gamma_n+\gamma_n^2)|\widehat L||\widehat U| .$$
   If in addition $\widehat L\ge0$ and $\widehat U\ge0$ entrywise and
   $nu<\tfrac12$, then $|\widehat L||\widehat U|\le(1-\gamma_n)^{-1}|A|$, so that
-  $|\Delta A|\le2\gamma_n(1-\gamma_n)^{-1}|A|$. With pivoting, these bounds
+  $|\Delta A|\le(3\gamma_n+\gamma_n^2)(1-\gamma_n)^{-1}|A|$. With pivoting, these bounds
   hold with $A$ replaced by the permuted matrix $PA$ (or $PAQ$) that is
   eliminated without interchanges.
 
@@ -566,7 +571,7 @@ section 2.
   $|\hat u_{ij}|\le\rho\max_{i,j}|a_{ij}|$ for some $\rho\ge1$. Then the
   computed solution $\widehat x$ of $Ax=b$ satisfies
   $$(A+\Delta A)\widehat x=b,\qquad
-  \|\Delta A\|_\infty\le2n^2\gamma_n\,\rho\,\|A\|_\infty .$$
+  \|\Delta A\|_\infty\le n^2(3\gamma_n+\gamma_n^2)\,\rho\,\|A\|_\infty .$$
   In this sense the normwise backward stability of GEPP is governed by the
   growth factor of the computed reduced matrices.
 
@@ -601,22 +606,23 @@ section 2.
   $\det A_0:=1$.
 
 * **3.8. Backward stability of Cholesky factorization.** Let
-  $A\in\mathbb R^{n\times n}$ be symmetric positive definite and
-  $(n+1)u<1$.
-  - If the Cholesky factorization runs to completion (every square root has
-    a positive argument), the computed factor satisfies
+  $A\in\mathbb R^{n\times n}$ be symmetric and $(n+1)u<1$.
+  - Let $A$ be positive definite. If the Cholesky factorization runs to
+    completion (every square root has a positive argument), the computed
+    factor satisfies
     $$\widehat R^\top\widehat R=A+\Delta A,\qquad
     |\Delta A|\le\gamma_{n+1}|\widehat R^\top||\widehat R| ,$$
     and the computed solution of $Ax=b$ by the two triangular solves
-    satisfies $(A+\Delta A)\widehat x=b$ with $|\Delta A|\le2\gamma_{n+1}
-    |\widehat R^\top||\widehat R|$. If also $n\gamma_{n+1}<1$, this
+    satisfies $(A+\Delta A)\widehat x=b$ with $|\Delta A|\le(3\gamma_{n+1}
+    +\gamma_{n+1}^2)|\widehat R^\top||\widehat R|$. If also $n\gamma_{n+1}<1$, this
     $\Delta A$ satisfies
-    $$\|\Delta A\|_2\le2n\gamma_{n+1}(1-n\gamma_{n+1})^{-1}\|A\|_2 .$$
-  - Write $A=DHD$ with $D=\mathop{\mathrm{diag}}(A)^{1/2}$, so that $H$ has
-    unit diagonal. If $\lambda_{\min}(H)>n\gamma_{n+1}/(1-\gamma_{n+1})$,
-    the Cholesky factorization runs to completion and gives a nonsingular
-    $\widehat R$. If $\lambda_{\min}(H)\le-n\gamma_{n+1}/(1-\gamma_{n+1})$,
-    it fails.
+    $$\|\Delta A\|_2\le n(3\gamma_{n+1}+\gamma_{n+1}^2)(1-n\gamma_{n+1})^{-1}\|A\|_2 .$$
+  - Let $A$ have positive diagonal entries, let $(n+1)u<\tfrac12$ (that is,
+    $\gamma_{n+1}<1$), and write $A=DHD$ with $D=\mathop{\mathrm{diag}}(A)^{1/2}$, so that $H$ is
+    symmetric with unit diagonal. If $\lambda_{\min}(H)>n\gamma_{n+1}/(1-\gamma_{n+1})$, then $A$ is
+    positive definite and the Cholesky factorization runs to completion and gives a nonsingular
+    $\widehat R$. If $\lambda_{\min}(H)\le-n\gamma_{n+1}/(1-\gamma_{n+1})$, it fails: some square
+    root has a nonpositive argument.
 
 * **3.9. QR factorization.** Let $A\in\mathbb K^{m\times n}$ with $m\ge n$.
   There is a unitary $Q\in\mathbb K^{m\times m}$ and an upper trapezoidal
@@ -822,7 +828,8 @@ with $c_n$ depending only on the dimension.
   - **Inverse iteration** with shift $\mu$, not an eigenvalue of $A$, is the
     power method applied to $(A-\mu I)^{-1}$, with
     $\nu^{(k)}=q^{(k)*}Aq^{(k)}$. Let $A$ be real symmetric with orthonormal
-    eigenvectors $q_j$, and suppose there are indices $J\ne K$ with
+    eigenvectors $q_j$, let $\mu\in\mathbb R$ and $q^{(0)}\in\mathbb R^n$, and
+    suppose there are indices $J\ne K$ with
     $|\mu-\lambda_J|<|\mu-\lambda_K|\le|\mu-\lambda_j|$ for all $j\ne J$. If
     $q_J^\top q^{(0)}\ne0$, then as $k\to\infty$, for a suitable choice of
     sign at each step,
@@ -883,7 +890,7 @@ with $c_n$ depending only on the dimension.
   $O(c^i)$, $c=\max_k|\lambda_{k+1}|/|\lambda_k|$.
 
 * **4.8. Hessenberg form and the shifted QR step.** For every
-  $A\in\mathbb C^{n\times n}$ there is a unitary $Q$, a product of $n-2$
+  $A\in\mathbb C^{n\times n}$ there is a unitary $Q$, a product of $\max\{n-2,0\}$
   Householder reflectors, such that $Q^*AQ$ is upper Hessenberg; if $A$ is
   Hermitian, $Q^*AQ$ is Hermitian tridiagonal. Let $H$ be unreduced upper
   Hessenberg, $k\in\mathbb C$, $H-kI=QR$ a QR factorization, and
@@ -898,7 +905,7 @@ with $c_n$ depending only on the dimension.
   with $P_i$ and $U_i$ as in 4.6. **Wilkinson's theorem:** if $A$ is real
   symmetric, tridiagonal and unreduced, and each $k_i$ is an eigenvalue of
   the trailing $2\times2$ submatrix of $A_i$ nearest to $a^{(i)}_{nn}$, then
-  $a^{(i)}_{n,n-1}\to0$, at least quadratically, so that $a^{(i)}_{nn}$
+  $a^{(i)}_{n,n-1}\to0$, ultimately at least quadratically, so that $a^{(i)}_{nn}$
   converges to an eigenvalue of $A$.
 
 * **4.9. Implicit Q theorem.** Let $A\in\mathbb C^{n\times n}$, let
@@ -927,8 +934,9 @@ with $c_n$ depending only on the dimension.
 * **4.11. Cyclic Jacobi method.** Let $A\in\mathbb R^{n\times n}$ be
   symmetric, $n\ge2$, and $\Psi(M)=\bigl(\sum_{i\ne j}m_{ij}^2\bigr)^{1/2}$.
   A **Jacobi rotation** in the plane $(p,q)$, $p<q$, replaces $A$ by
-  $A'=G^\top AG$, where $G$ is the rotation by an angle $\theta$ in the
-  coordinates $p,q$ with $a'_{pq}=0$; if $a_{pq}\ne0$, $t=\tan\theta$ is the
+  $A'=G^\top AG$, where $G$ agrees with $I$ except that
+  $g_{pp}=g_{qq}=\cos\theta$ and $g_{pq}=-g_{qp}=\sin\theta$, with $\theta$
+  chosen so that $a'_{pq}=0$; if $a_{pq}\ne0$, $t=\tan\theta$ is the
   root of smaller modulus of $t^2+2\eta t-1=0$,
   $\eta=(a_{qq}-a_{pp})/(2a_{pq})$, and if $a_{pq}=0$ then $G=I$. Then
   $$\Psi(A')^2=\Psi(A)^2-2a_{pq}^2 .$$
@@ -969,8 +977,8 @@ with $c_n$ depending only on the dimension.
     of degree $m$ that minimizes $\|p(A)b\|_2$.
   - If $A$ is Hermitian, $H_m=J_m$ is real symmetric tridiagonal, and the
     columns satisfy the three-term **Lanczos recurrence**
-    $Aq_j=\beta_{j-1}q_{j-1}+\alpha_jq_j+\beta_jq_{j+1}$ with $\alpha_j$,
-    $\beta_j$ real.
+    $Aq_j=\beta_{j-1}q_{j-1}+\alpha_jq_j+\beta_jq_{j+1}$ for $1\le j\le m-1$,
+    with $\beta_0q_0=0$ and $\alpha_j$, $\beta_j$ real.
 
 * **4.14. Kaniel–Paige–Saad bound.** Let $A\in\mathbb R^{n\times n}$ be
   symmetric, $n\ge3$, with eigenvalues $\lambda_1\ge\cdots\ge\lambda_n$ and
@@ -1050,7 +1058,8 @@ with $c_n$ depending only on the dimension.
 * **4.19. Companion linearization.** Let
   $P(z)=\sum_{j=0}^{\ell}z^jD_j$ with $D_j\in\mathbb C^{n\times n}$ and
   $\ell\ge1$, and let $L(z)\in\mathbb C^{\ell n\times\ell n}$ be the pencil
-  with first block row $(D_0,D_1,\dots,D_{\ell-2},D_{\ell-1}+zD_\ell)$ and,
+  with first block row $(D_0,\dots,D_{\ell-2},D_{\ell-1}+zD_\ell)$ (the single
+  block $D_0+zD_1$ when $\ell=1$) and,
   for $2\le j\le\ell$, block row $j$ equal to $-zI_n$ in block column $j-1$,
   $I_n$ in block column $j$, and $0$ elsewhere. With
   $b(z)=(1,z,\dots,z^{\ell-1})^\top$,
@@ -1060,8 +1069,8 @@ with $c_n$ depending only on the dimension.
   $\ker L(\lambda)=\{b(\lambda)\otimes v:v\in\ker P(\lambda)\}$ for every
   $\lambda$; $L$ is regular if and only if $P$ is; and $L$ and $P$ have the
   same eigenvalues with the same algebraic and geometric multiplicities. If
-  $w$ is a left eigenvector of $L$ for $\lambda$ and its first block
-  $(e_1\otimes I_n)^*w$ is nonzero, that block is a left eigenvector of $P$.
+  $w$ is a left eigenvector of $L$ for $\lambda$, its first block
+  $(e_1\otimes I_n)^*w$ is nonzero and is a left eigenvector of $P$.
 
 ## 5. Iterative methods for linear systems
 
@@ -1176,8 +1185,8 @@ statements about Krylov methods assume exact arithmetic.
   $\mathcal L_\omega=(D-\omega E)^{-1}\bigl(\omega E^*+(1-\omega)D\bigr)$
   satisfies $\rho(\mathcal L_\omega)<1$ if and only if $A$ is positive
   definite. For Hermitian positive definite $A$ with $D$
-  its diagonal and $-E$ its strictly lower part, point SOR converges for every
-  starting vector if and only if $0<\omega<2$, and the same holds for block SOR
+  its diagonal and $-E$ its strictly lower part, point SOR with real $\omega$
+  converges for every starting vector if and only if $0<\omega<2$, and the same holds for block SOR
   with $D$ the block diagonal. For the Jacobi iteration with $A$ Hermitian and
   $D$ its diagonal: if $A$ and $2D-A$ are both positive definite, then
   $\rho(B_J)=\|B_J\|_A<1$, where $\|x\|_A=(x^*Ax)^{1/2}$.
@@ -1223,7 +1232,7 @@ statements about Krylov methods assume exact arithmetic.
   $$\alpha_k=\frac{r_k^*r_k}{p_k^*Ap_k},\quad x_{k+1}=x_k+\alpha_kp_k,\quad
   r_{k+1}=r_k-\alpha_kAp_k,\quad
   p_{k+1}=r_{k+1}+\frac{r_{k+1}^*r_{k+1}}{r_k^*r_k}\,p_k.$$
-  As long as $r_{k-1}\ne0$, no division by zero occurs, $r_k=b-Ax_k$,
+  For $k\ge1$ with $r_0,\dots,r_{k-1}\ne0$, no division by zero occurs, $r_k=b-Ax_k$,
   $$\mathcal K_k(A,r_0)=\mathrm{span}\{r_0,\dots,r_{k-1}\}
   =\mathrm{span}\{p_0,\dots,p_{k-1}\},$$
   the residuals are mutually orthogonal, the directions are $A$-conjugate
@@ -1238,7 +1247,8 @@ statements about Krylov methods assume exact arithmetic.
 
 * **5.13. Conjugate gradients: condition-number bound.** With $A$ Hermitian
   positive definite and $\kappa=\kappa_2(A)=\lambda_{\max}(A)/\lambda_{\min}(A)$,
-  the CG iterates satisfy, for every $k\ge0$,
+  the CG iterates satisfy, for every $k\ge0$ (iterates after exact termination
+  being taken to be $x^*$),
   $$\frac{\|x_k-x^*\|_A}{\|x_0-x^*\|_A}\le
   \frac{2c^k}{1+c^{2k}}\le2\Bigl(\frac{\sqrt\kappa-1}{\sqrt\kappa+1}\Bigr)^k,
   \qquad c=\frac{\sqrt\kappa-1}{\sqrt\kappa+1}.$$
@@ -1374,19 +1384,21 @@ $Y^\dagger$ is the Moore–Penrose pseudoinverse.
   L_f(A,E)$ with $f(A+E)-f(A)-L_f(A,E)=o(\|E\|)$.
   - If $f$ is holomorphic on an open set containing $\Lambda(A)$, or $A$ has
     real spectrum and $f$ is $2n-1$ times continuously differentiable on an
-    open interval containing $\Lambda(A)$, then $L_f(A)$ exists and
+    open interval $D\supset\Lambda(A)$ (the limit in the definition then
+    being over $E$ with $\Lambda(A+E)\subset D$), then $L_f(A)$ exists and
     $$f\begin{pmatrix}A&E\\0&A\end{pmatrix}=
     \begin{pmatrix}f(A)&L_f(A,E)\\0&f(A)\end{pmatrix}.$$
-  - With $\|L_f(A)\|=\max_{\|Z\|=1}\|L_f(A,Z)\|$ for a given matrix norm,
-    and $f(A)\ne0$, the relative **condition number**
+  - If $L_f(A)$ exists, then with $\|L_f(A)\|=\max_{\|Z\|=1}\|L_f(A,Z)\|$ for
+    a given matrix norm, and $f(A)\ne0$, the relative **condition number**
     $$\mathrm{cond}(f,A)=\lim_{\varepsilon\to0}\ \sup_{\|E\|\le\varepsilon\|A\|}
     \frac{\|f(A+E)-f(A)\|}{\varepsilon\|f(A)\|}$$
     equals $\|L_f(A)\|\,\|A\|/\|f(A)\|$.
   - If $f(x)=\sum_{k\ge0}a_kx^k$ has radius of convergence $r$ and
     $\|A\|<r$ for a submultiplicative norm, then
     $$L_f(A,E)=\sum_{k\ge1}a_k\sum_{j=1}^kA^{j-1}EA^{k-j},$$
-    and $\|f(A)\|\le\tilde f(\|A\|)$ and $\|L_f(A)\|\le\tilde f'(\|A\|)$,
-    where $\tilde f(x)=\sum_{k\ge0}|a_k|x^k$.
+    and $\|L_f(A)\|\le\tilde f'(\|A\|)$, where $\tilde f(x)=\sum_{k\ge0}|a_k|x^k$;
+    if moreover $\|I\|=1$ (for example for every induced norm), then
+    $\|f(A)\|\le\tilde f(\|A\|)$.
 
 * **6.5. Padé approximation of the exponential and scaling and squaring.**
   For $k,m\in\mathbb N_0$ the $[k/m]$ Padé approximant of $e^x$ is
@@ -1395,8 +1407,8 @@ $Y^\dagger$ is the Moore–Penrose pseudoinverse.
   q_{km}(x)=\sum_{j=0}^m\frac{(k+m-j)!\,m!}{(k+m)!\,(m-j)!\,j!}(-x)^j;$$
   it satisfies $e^x-r_{km}(x)=O(x^{k+m+1})$, and it is the unique rational
   function with numerator degree at most $k$, denominator degree at most
-  $m$ and $q(0)=1$ with this property. Write $r_m=r_{mm}$, let $\nu_m$ be
-  the smallest modulus of a zero of $q_{mm}$, and let
+  $m$ and $q(0)=1$ with this property. For $m\ge1$ write $r_m=r_{mm}$, let
+  $\nu_m$ be the smallest modulus of a zero of $q_{mm}$, and let
   $$\Omega_m=\{X\in\mathbb C^{n\times n}:\rho(e^{-X}r_m(X)-I)<1,\
   \rho(X)<\nu_m\}.$$
   Let $h_{2m+1}(x)=\log(e^{-x}r_m(x))=\sum_{k\ge2m+1}c_kx^k$ near $0$. If
@@ -1565,7 +1577,7 @@ $M_j=M_{\{j\}}$.
   T_\rho$ consists of the $v\in\mathbb K^{n_1\times\cdots\times n_d}$ with
   $$v[i_1,\dots,i_d]=G_1[i_1]\,G_2[i_2]\cdots G_d[i_d],\qquad
   G_j[i_j]\in\mathbb K^{\rho_{j-1}\times\rho_j}.$$
-  - $v\in\mathcal T_\rho$ implies $\rho_j\ge\rho_j^*:=\mathrm{rank}\,
+  - Let $v\ne0$. Then $v\in\mathcal T_\rho$ implies $\rho_j\ge\rho_j^*:=\mathrm{rank}\,
     M_{\{1,\dots,j\}}(v)$ for $1\le j\le d-1$, and $v\in\mathcal T_{\rho^*}$.
   - Let $\rho_j\le\rho_j^*$ for all $j$, and let $\sigma^{(j)}_i$ be the
     singular values of $M_{\{1,\dots,j\}}(v)$. Let $u\in\mathcal T_\rho$
@@ -1593,7 +1605,7 @@ with $\tau\in T(I)$, $\sigma\in T(J)$, covering $I\times J$.
   \mathrm{dist}(X_\tau,Y_\sigma).$$
   Let $P=P^+\cup P^-$ with $P^+$ consisting of admissible blocks and every
   block in $P^-$ satisfying $\min\{\#\tau,\#\sigma\}\le n_{\min}$. For
-  $r\in\mathbb N_0$ the set $\mathcal H(r,P)$ of **hierarchical matrices**
+  $r\in\mathbb N$ the set $\mathcal H(r,P)$ of **hierarchical matrices**
   consists of the $M\in\mathbb R^{I\times J}$ with $\mathrm{rank}\,M|_b\le r$
   for $b\in P^+$, stored as $M|_b=A_bB_b^*$ with $r$ columns in $A_b$ and
   $B_b$, the blocks in $P^-$ being stored in full. The storage is
@@ -1605,8 +1617,8 @@ with $\tau\in T(I)$, $\sigma\in T(J)$, covering $I\times J$.
   $$S\le C_{\mathrm{sp}}(P)\max\{n_{\min},r\}\bigl((\mathrm{depth}\,T(I)+1)
   \#I+(\mathrm{depth}\,T(J)+1)\#J\bigr),$$
   and the number $N_{MV}$ of arithmetic operations of a matrix-vector
-  product satisfies $S\le N_{MV}\le2S$. If no cluster has exactly one son,
-  then $\#P\le(2\min\{\#I,\#J\}-1)\,C_{\mathrm{sp}}(P)$. For balanced trees
+  product satisfies $S\le N_{MV}\le2S$. Moreover
+  $\#P\le(2\min\{\#I,\#J\}-1)\,C_{\mathrm{sp}}(P)$. For balanced trees
   of depth $O(\log n)$ and bounded $C_{\mathrm{sp}}$ this gives storage and
   matrix-vector cost $O(\max\{r,n_{\min}\}\,n\log n)$, $n=\#I+\#J$.
 
@@ -1749,7 +1761,8 @@ are not used, so the role of each symbol is stated.
   intervals with endpoints in $\mathbb F$, let
   $\Diamond[a,b]=[\mathrm{RD}(a),\mathrm{RU}(b)]$, and for $X,Y\in\mathbb{IF}$
   define the **rounded interval operation** $X\circledcirc Y=\Diamond(X\circ Y)$.
-  - $X\circledcirc Y$ is the smallest element of $\mathbb{IF}$ containing
+  - If the endpoints of $X\circ Y$ lie in the range of $\mathbb F$, then
+    $X\circledcirc Y$ is the smallest element of $\mathbb{IF}$ containing
     $X\circ Y$.
   - Consequently, if every interval operation in the natural extension of
     7.3 is replaced by its rounded version and every standard function
@@ -1802,9 +1815,9 @@ are not used, so the role of each symbol is stated.
 ### Nonlinear systems
 
 * **7.8. Univariate interval Newton operator.** Let $X=[a,b]\in\mathbb{IR}$,
-  let $f:X\to\mathbb R$ be continuously differentiable, let
-  $\tilde x\in X$, and let $D\in\mathbb{IR}$ satisfy $f'(x)\in D$ for all
-  $x\in X$ and $0\notin D$. Put
+  let $f:X\to\mathbb R$ be continuous on $X$ and differentiable at every
+  point of $(a,b)$, let $\tilde x\in X$, and let $D\in\mathbb{IR}$ satisfy
+  $f'(x)\in D$ for all $x\in(a,b)$ and $0\notin D$. Put
   $N(\tilde x,X)=\tilde x-f(\tilde x)/D$, computed by interval operations.
   - Every zero of $f$ in $X$ lies in $N(\tilde x,X)$.
   - If $N(\tilde x,X)\subseteq X$, then $f$ has exactly one zero in $X$.
@@ -1896,8 +1909,9 @@ are not used, so the role of each symbol is stated.
   continuous, and Fréchet differentiable at $\omega$, provided the third
   bound is replaced by
   $\|\mathcal F(\omega+v)-\mathcal F(\omega)-Lv\|_{\mathcal Y}\le
-  G(\|v\|_{\mathcal X})$ for all $v$, with a nondecreasing $G$ satisfying
-  $G(t)=o(t)$ as $t\to0$.
+  G(\|v\|_{\mathcal X})$ for all $v$, with a nondecreasing
+  $G:[0,\infty)\to[0,\infty)$ satisfying $G(t)=o(t)$ as $t\to0$, and
+  $\delta\le\alpha/K-G(\alpha)$ holds for this $G$.
 
 * **7.14. Constructive a priori error constants.** Let $\mathcal X$,
   $\mathcal Y$ be Hilbert spaces and $\mathcal D$ a Banach space with
@@ -2029,7 +2043,8 @@ in section 9.
     for all $s\in[0,1]$, $x\in D$ and $v$ with $x+v\in D$. Let $x^*\in D$ be
     a zero, and let $x^0\in D$ satisfy $\rho:=\|x^0-x^*\|<2/\omega$ and
     $B(x^*,\rho)\subset D$. Then the Newton iterates satisfy
-    $\|x^k-x^*\|<\rho$ for $k\ge1$, converge to $x^*$, and
+    $\|x^k-x^*\|\le\rho$ for all $k$, with strict inequality for $k\ge1$ if
+    $x^0\ne x^*$, converge to $x^*$, and
     $$\|x^{k+1}-x^*\|\le\frac\omega2\|x^k-x^*\|^2,\qquad k\ge0.$$
     Moreover $x^*$ is the only zero of $F$ in $D\cap B(x^*,2/\omega)$.
 
@@ -2129,8 +2144,9 @@ in section 9.
   \|F'(x)^+F(x^*)\|\le\kappa_*\|x-x^*\|$$
   for all $s\in[0,1]$, $x\in D$ and $v$ with $x+v\in D$. Let $x^0\in D$
   with $\rho:=\|x^0-x^*\|<\sigma:=2(1-\kappa_*)/\omega$ and
-  $B(x^*,\rho)\subset D$. Then the iterates satisfy $\|x^k-x^*\|<\rho$ for
-  $k\ge1$, converge to $x^*$, and
+  $B(x^*,\rho)\subset D$. Then the iterates satisfy $\|x^k-x^*\|\le\rho$ for
+  all $k$, with strict inequality for $k\ge1$ if $x^0\ne x^*$, converge to
+  $x^*$, and
   $$\|x^{k+1}-x^*\|\le\frac\omega2\|x^k-x^*\|^2+\kappa_*\|x^k-x^*\|.$$
   In particular the convergence is quadratic if $F(x^*)=0$ (a compatible
   problem), where one may take $\kappa_*=0$. The point $x^*$ is the only
@@ -2212,7 +2228,7 @@ in section 9.
   intermediate values:
   - $\mathrm{TIME}\{F(x),F'(x)\dot x\}\le\omega_{\mathrm{tang}}
     \mathrm{TIME}\{F(x)\}$ with $\omega_{\mathrm{tang}}\in[2,5/2]$;
-  - for $\dot X\in\mathbb R^{n\times p}$ propagated simultaneously,
+  - for $p\ge1$ and $\dot X\in\mathbb R^{n\times p}$ propagated simultaneously,
     $\mathrm{TIME}\{F(x),F'(x)\dot X\}\le\omega_{\mathrm{tang}_p}
     \mathrm{TIME}\{F(x)\}$ with $\omega_{\mathrm{tang}_p}\in[1+p,1+1.5p]$;
   - (cheap gradient principle)
@@ -2221,11 +2237,12 @@ in section 9.
     particular, evaluating a scalar function together with its gradient
     costs at most $4$ times the evaluation of the function alone,
     independently of $n$;
-  - for $q$ adjoint vectors propagated simultaneously the ratio lies in
+  - for $q\ge1$ adjoint vectors propagated simultaneously the ratio lies in
     $[1+2q,1.5+2.5q]$.
 
-  The constants are explicit functions of $(\mu,\pi,\nu)$, and the stated
-  intervals are their ranges under the constraints on $w$.
+  The constants are explicit functions of $(\mu,\pi,\nu)$. The stated
+  intervals contain their values under the constraints on $w$, and the upper
+  ends are attained at $\mu=\pi=1$, $\nu=2$.
 
 * **8.16. Jacobian compression.** Let $A=F'(x)\in\mathbb R^{m\times n}$ have
   a known sparsity pattern. Two columns are **structurally orthogonal** if
@@ -2343,7 +2360,7 @@ Gauss–Newton method are in section 8.
 * **9.5. Dennis–Moré condition and the BFGS method.** Let $f$ be twice
   continuously differentiable.
   - Let $x_{k+1}=x_k+\alpha_kp_k$ with descent directions $p_k$ and steps
-    satisfying the Wolfe conditions with $c_1\le\frac12$. Suppose $x_k\to x^*$,
+    satisfying the Wolfe conditions with $0<c_1<\frac12$. Suppose $x_k\to x^*$,
     $\nabla f(x^*)=0$, $\nabla^2f(x^*)$ is positive definite, and
     $\|\nabla f_k+\nabla^2f_kp_k\|/\|p_k\|\to0$. Then $\alpha_k=1$ satisfies
     the Wolfe conditions for all $k$ beyond some $k_0$, and if $\alpha_k=1$ for
@@ -2598,10 +2615,14 @@ Gauss–Newton method are in section 8.
     $$\min_{P\in U(a,b)}\langle C,P\rangle
     =\max\{\langle f,a\rangle+\langle g,b\rangle:\ f_i+g_j\le C_{ij}
     \text{ for all }i,j\}.$$
-  - Let $\varepsilon>0$ and $H(P)=-\sum_{ij}P_{ij}(\log P_{ij}-1)$. The problem
+  - Let $\varepsilon>0$ and $H(P)=-\sum_{ij}P_{ij}(\log P_{ij}-1)$, with
+    $0\log0=0$. The problem
     $\min_{P\in U(a,b)}\langle C,P\rangle-\varepsilon H(P)$ has a unique
     solution, of the form $P_{ij}=u_iK_{ij}v_j$ with
-    $K_{ij}=e^{-C_{ij}/\varepsilon}$ and positive scaling vectors $u,v$.
+    $K_{ij}=e^{-C_{ij}/\varepsilon}$ and scaling vectors $u,v$ with
+    nonnegative entries, $u_i=0$ exactly when $a_i=0$ and $v_j=0$ exactly when
+    $b_j=0$. If $a$ and $b$ have positive entries, $u$ and $v$ are positive and
+    are unique up to $(u,v)\mapsto(ru,v/r)$, $r>0$.
   - (Birkhoff.) The **Hilbert projective metric** on vectors with positive
     entries is $d_H(u,u')=\log\max_{i,j}\frac{u_iu'_j}{u_ju'_i}$. For a matrix
     $K$ with positive entries,
@@ -2616,7 +2637,11 @@ Gauss–Newton method are in section 8.
     $d_H(v^{(\ell)},v^\star)=O(\lambda(K)^{2\ell})$. Moreover, with
     $P^{(\ell)}=\mathop{\mathrm{diag}}(u^{(\ell)})K\mathop{\mathrm{diag}}(v^{(\ell)})$,
     $d_H(u^{(\ell)},u^\star)\le d_H(P^{(\ell)}\mathbf 1_m,a)/(1-\lambda(K)^2)$
-    and likewise for $v$.
+    for $\ell\ge1$. The plan $P^{(\ell)}$ has column sums exactly $b$; the
+    corresponding bound for $v$ uses the plan
+    $Q^{(\ell)}=\mathop{\mathrm{diag}}(u^{(\ell+1)})K\mathop{\mathrm{diag}}(v^{(\ell)})$,
+    whose row sums are $a$:
+    $d_H(v^{(\ell)},v^\star)\le d_H(Q^{(\ell)\top}\mathbf 1_n,b)/(1-\lambda(K)^2)$.
 
 * **9.17. Linear-quadratic optimal control.** Let $H,U$ be Hilbert spaces,
   $Y,Z$ Banach spaces, $A\in\mathcal L(Y,Z)$ with bounded inverse,
@@ -2670,7 +2695,8 @@ $T_0=1$, $T_1(x)=x$ and $T_{k+1}(x)=2xT_k(x)-T_{k-1}(x)$ for $k\ge1$. The
   $\|u-v^*\|=\inf_{v\in V}\|u-v\|$. In particular $E_n(f)$ is attained, and
   $E_n(f)\to0$ as $n\to\infty$ for every $f\in C[a,b]$.
 
-* **10.2. Haar spaces.** Let $K$ be a set containing at least $N$ points and
+* **10.2. Haar spaces.** Let $K$ be a Hausdorff topological space (for
+  instance a subset of $\mathbb R^d$) containing at least $N$ points and
   let $V$ be an $N$-dimensional space of real continuous functions on $K$.
   The space $V$ is a **Haar space** (or Chebyshev space) if for all distinct
   $x_1,\dots,x_N\in K$ and all $f_1,\dots,f_N\in\mathbb R$ there is exactly
@@ -2686,7 +2712,7 @@ $T_0=1$, $T_1(x)=x$ and $T_{k+1}(x)=2xT_k(x)-T_{k-1}(x)$ for $k\ge1$. The
     $n+1$ on $[a,b]$ and $f\in C[a,b]$. An element $v\in V$ satisfies
     $\|f-v\|=\inf_{w\in V}\|f-w\|$ if and only if $f-v$ equioscillates between
     at least $n+2$ extreme points. The best approximation from $V$ is unique.
-  - (Haar's theorem) Let $K$ be a compact metric space with at least $N$
+  - (Haar's theorem) Let $K$ be a compact Hausdorff space with at least $N$
     points and $V\subseteq C(K)$ a subspace of finite dimension $N\ge1$.
     Every $f\in C(K)$ has a unique best
     approximation from $V$ in the supremum norm if and only if $V$ is a Haar
@@ -2973,8 +2999,8 @@ $\eta_{j,k}(x)=2^{j/2}\eta(2^jx-k)$ for $j,k\in\mathbb Z$.
     and $N_i^m(x)>0$ for $y_i<x<y_{i+m}$.
   - **Smoothness.** $N_i^m$ is a piecewise polynomial of degree at most
     $m-1$ with breakpoints among the $y_j$. At a knot of multiplicity
-    $\mu\le m$ in $y_i,\dots,y_{i+m}$ it has continuous derivatives up to
-    order $m-1-\mu$.
+    $\mu<m$ in $y_i,\dots,y_{i+m}$ it has continuous derivatives up to
+    order $m-1-\mu$; at a knot of multiplicity $m$ it may jump.
   - **Partition of unity.** If $y_\ell<y_{\ell+1}$, then
     $\sum_{i=\ell+1-m}^{\ell}N_i^m(x)=1$ for $y_\ell\le x<y_{\ell+1}$.
 
@@ -3002,8 +3028,9 @@ $\eta_{j,k}(x)=2^{j/2}\eta(2^jx-k)$ for $j,k\in\mathbb Z$.
   sequences $\tau_1<\cdots<\tau_p$ in $I$. With knots as in 11.4 and any
   nonzero $c=(c_1,\dots,c_n)$,
   $$S^-_{\mathbb R}\Bigl(\sum_{i=1}^nc_iN_i^m\Bigr)\le S^-(c).$$
-  In particular, nonnegative coefficients give a nonnegative spline, and
-  nondecreasing coefficients give a nondecreasing spline.
+  In particular, nonnegative coefficients give a spline that is nonnegative
+  on $\mathbb R$, and nondecreasing coefficients give a spline that is
+  nondecreasing on $[y_m,y_{n+1})$, where the B-splines sum to $1$.
 
 * **11.6. Minimum curvature of interpolating cubic splines.** Let
   $\Delta=\{a=x_0<\cdots<x_n=b\}$ with $n\ge1$. A **cubic spline** on $\Delta$
@@ -3029,15 +3056,15 @@ $\eta_{j,k}(x)=2^{j/2}\eta(2^jx-k)$ for $j,k\in\mathbb Z$.
   $f\in C^4[a,b]$ with $|f^{(4)}|\le L$ on $[a,b]$, let $\Delta$ be as in 11.6
   with mesh size $\|\Delta\|=\max_j(x_{j+1}-x_j)$, and let $K\ge1$ satisfy
   $\|\Delta\|\le K(x_{j+1}-x_j)$ for all $j$. Let $S$ be the complete cubic
-  spline interpolant of 11.6. Then there are absolute constants $c_k\le2$
-  such that, for all $x\in[a,b]$,
-  $$|f^{(k)}(x)-S^{(k)}(x)|\le c_kL\|\Delta\|^{4-k}\quad(k=0,1,2),\qquad
-  |f'''(x)-S'''(x)|\le c_3LK\|\Delta\|,$$
-  with one-sided values of $S'''$ at the knots. Hence $S$, $S'$ and $S''$
+  spline interpolant of 11.6. Then, for all $x\in[a,b]$, with one-sided
+  values of $S'''$ at the knots,
+  $$|f^{(k)}(x)-S^{(k)}(x)|\le c_kL\|\Delta\|^{4-k}\quad(k=0,1,2,3),$$
+  $$c_0=\frac5{384},\qquad c_1=\frac1{24},\qquad c_2=\frac38,\qquad
+  c_3=\frac{K+K^{-1}}2,$$
+  and $c_0$ and $c_1$ are best possible. Cruder bounds with
+  $c_0,c_1,c_2\le2$ and $c_3=2K$ hold as well. Hence $S$, $S'$ and $S''$
   converge uniformly to $f$, $f'$ and $f''$ as $\|\Delta\|\to0$, and $S'''$
-  converges uniformly to $f'''$ along mesh sequences with bounded $K$. The
-  bounds hold with $c_0=5/384$, $c_1=1/24$, $c_2=3/8$ and
-  $c_3=(K+K^{-1})/2$, and $c_0$ and $c_1$ are then best possible.
+  converges uniformly to $f'''$ along mesh sequences with bounded $K$.
 
 * **11.8. Approximation order of splines by quasi-interpolants.** Let
   $\Delta=\{a=x_0<\cdots<x_{k+1}=b\}$, let
@@ -3168,10 +3195,10 @@ $\eta_{j,k}(x)=2^{j/2}\eta(2^jx-k)$ for $j,k\in\mathbb Z$.
     \Phi(x_i,x_j)$ over $\mathbb R^N$, and
     $$|f(x)-s_{f,X}(x)|\le P_{\Phi,X}(x)\,\|f\|_{\mathcal N_\Phi(\Omega)},
     \qquad f\in\mathcal N_\Phi(\Omega).$$
-  - Let $\Omega$ be bounded and satisfy an **interior cone condition** (there
-    are $\theta\in(0,\pi/2)$ and $r>0$ such that every $x\in\Omega$ is the
-    vertex of a cone of radius $r$ and angle $\theta$ contained in
-    $\Omega$). The **fill distance** is
+  - Let $\Omega$ be open and bounded and satisfy an **interior cone
+    condition** (there are $\theta\in(0,\pi/2)$ and $r>0$ such that every
+    $x\in\Omega$ is the vertex of a cone of radius $r$ and angle $\theta$
+    contained in $\Omega$). The **fill distance** is
     $h_{X,\Omega}=\sup_{x\in\Omega}\min_j\|x-x_j\|_2$. For $\Phi_{d,k}$ of
     11.10 there are constants $C,h_0>0$, independent of $f$, $x$ and $X$,
     such that for all $f\in\mathcal N_{\Phi_{d,k}}(\Omega)$, all
@@ -3489,7 +3516,9 @@ $Q_n(f)=\sum_{k=1}^n w_kf(x_k)$ with distinct real **nodes** $x_k$ and real
     $q\in(0,1)$, set $A_1=A$ and
     $$A_{k+1}(h)=A_k(h)+\frac{A_k(h)-A_k(q^{-1}h)}{q^{-p_k}-1},
     \qquad k\in\mathbb N.$$
-    Then for each $n\in\mathbb N$, $A_n$ has an asymptotic expansion
+    Then for each $n\in\mathbb N$, as $h\to0$ through values for which
+    $A(h),A(q^{-1}h),\dots,A(q^{-n+1}h)$ are all defined, $A_n$ has an
+    asymptotic expansion
     $A_n(h)\sim a_0+a^{(n)}_nh^{p_n}+a^{(n)}_{n+1}h^{p_{n+1}}+\cdots$ with
     the same $a_0$, so $A_n(h)-a_0=O(h^{p_n})$.
   - (Romberg) Let $h_i=(b-a)/2^i$ and $T_{i0}=T(h_i)$, and let $T_{ik}$, for
@@ -3536,10 +3565,8 @@ $Q_n(f)=\sum_{k=1}^n w_kf(x_k)$ with distinct real **nodes** $x_k$ and real
     $f^{(\nu)}$ have total variation $V<\infty$. Then
     $$|I-I_n|\le\frac{32}{15}\,\frac{V}{\pi\nu(n-\nu)^\nu}
     \quad\text{(Clenshaw–Curtis, }n>\nu),\qquad
-    |I-I_n|\le\frac{32}{15}\,\frac{V}{\pi\nu(n-2\nu-1)^{2\nu+1}}
-    \quad\text{(Gauss, }n>2\nu+1).$$
-  - The Gauss bound in the previous part also holds for Clenshaw–Curtis
-    for all $n\ge n_0(\nu)$, where $n_0$ depends on $\nu$ but not on $f$.
+    |I-I_n|\le\frac{32}{15}\,\frac{V}{\pi\nu(2n+1-\nu)^\nu}
+    \quad\text{(Gauss, }2n\ge\nu).$$
 
 * **12.16. Ill-conditioning of the moment map.** Let $G_n$ be the map from
   the moments $(\mu_0,\dots,\mu_{2n-1})$ to the Gauss rule
@@ -3832,9 +3859,12 @@ boundary value problems are in Section 16.
     continuous on $D$ with $\|f\|\le A$ on $D$, and let $f$ satisfy the
     Lipschitz condition with constant $L$ on $D$. Then the initial value
     problem has a unique solution on $[t_0,t_0+\alpha]$, with
-    $\alpha=\min(a,b/A)$, and its graph lies in $D$. The Euler polygons
-    converge uniformly to it on this interval as the maximal step size tends
-    to $0$.
+    $\alpha=\min(a,b/A)$, and its graph lies in $D$. For a partition
+    $t_0<t_1<\dots<t_n=t_0+\alpha$ the **Euler polygon** is the piecewise
+    linear function through the points $(t_j,y_j)$, where
+    $y_{j+1}=y_j+(t_{j+1}-t_j)f(t_j,y_j)$; the Euler polygons converge
+    uniformly to the solution on $[t_0,t_0+\alpha]$ as the maximal step size
+    $\max_j(t_{j+1}-t_j)$ tends to $0$.
 
 * **14.2. Gronwall inequalities.**
   - (Continuous.) Let $p\ge0$ be integrable on $[t_0,T]$, let $g$ and
@@ -3880,9 +3910,10 @@ boundary value problems are in Section 16.
   \bigr).$$
   The method has **order** $p$ if its local error is $O(h^{p+1})$ for every
   sufficiently smooth $f$; then, under the Lipschitz condition on $\Phi$, the
-  global error is $O(h^p)$. For Euler's method $\Phi=f$, with $\|f\|\le A$,
-  $\|\partial f/\partial t\|\le M$ and Lipschitz constant $L$ on a suitable
-  set, the bound reads
+  global error is $O(h^p)$. For Euler's method $\Phi=f$, if $f$ is
+  differentiable with $\|f\|\le A$, $\|\partial f/\partial y\|\le L$ and
+  $\|\partial f/\partial t\|\le M$ in a neighbourhood of the solution, then
+  for $h$ sufficiently small the Euler polygon $y_h$ satisfies
   $\|y(t)-y_h(t)\|\le\frac{M+AL}{L}\bigl(e^{L(t-t_0)}-1\bigr)h$.
 
 * **14.5. Runge–Kutta methods.** An $s$-stage **Runge–Kutta method** with
@@ -3926,10 +3957,11 @@ boundary value problems are in Section 16.
   $p\le2\eta+2$, then the method has order $p$. The largest $\eta$ with
   $C(\eta)$ is the **stage order**.
 
-* **14.9. Collocation methods.** Let $c_1,\dots,c_s\in\mathbb R$ be distinct.
-  The **collocation polynomial** is the polynomial $u$ of degree at most $s$
-  with $u(t_0)=y_0$ and $u'(t_0+c_ih)=f(t_0+c_ih,u(t_0+c_ih))$ for
-  $i=1,\dots,s$, and the **collocation method** sets $y_1=u(t_0+h)$.
+* **14.9. Collocation methods.** Let $c_1,\dots,c_s\in\mathbb R$ be distinct,
+  and let $f$ be continuous and Lipschitz in $y$. For $|h|$ sufficiently small
+  there is a unique polynomial $u$ of degree at most $s$, the **collocation
+  polynomial**, with $u(t_0)=y_0$ and $u'(t_0+c_ih)=f(t_0+c_ih,u(t_0+c_ih))$
+  for $i=1,\dots,s$, and the **collocation method** sets $y_1=u(t_0+h)$.
   - The collocation method is the Runge–Kutta method with
     $a_{ij}=\int_0^{c_i}\ell_j(\tau)\,d\tau$ and
     $b_j=\int_0^1\ell_j(\tau)\,d\tau$, where $\ell_j$ are the Lagrange basis
@@ -3938,7 +3970,7 @@ boundary value problems are in Section 16.
     collocation method if and only if $C(s)$ holds.
   - If $M(\tau)=\prod_{i=1}^s(\tau-c_i)$ satisfies
     $\int_0^1M(\tau)\tau^{q-1}\,d\tau=0$ for $q=1,\dots,r$, then the
-    collocation method has order $s+r$.
+    collocation method has order at least $s+r$.
   - Consequently the **Gauss methods** ($c_i$ the zeros of the shifted
     Legendre polynomial of degree $s$ on $[0,1]$) have order $2s$, the
     **Radau IIA methods** ($c_i$ the zeros of
@@ -4057,8 +4089,9 @@ $\mathbb C^N$ with norm $\|\cdot\|$. A Runge–Kutta method is
 ### Linear stability
 
 * **15.1. Stability function.** Applied to the **Dahlquist test equation**
-  $y'=\lambda y$, a Runge–Kutta method gives $y_{n+1}=R(h\lambda)y_n$, where
-  the **stability function** is
+  $y'=\lambda y$, a Runge–Kutta method gives, whenever $I-h\lambda A$ is
+  invertible, a unique stage vector and $y_{n+1}=R(h\lambda)y_n$, where the
+  **stability function** is
   $$R(z)=1+zb^\top(I-zA)^{-1}\mathbb 1=
   \frac{\det(I-zA+z\mathbb 1b^\top)}{\det(I-zA)},$$
   a rational function with numerator and denominator of degree at most $s$.
@@ -4124,7 +4157,8 @@ $\mathbb C^N$ with norm $\|\cdot\|$. A Runge–Kutta method is
   $$M=\bigl(b_ia_{ij}+b_ja_{ji}-b_ib_j\bigr)_{i,j=1}^s$$
   is positive semidefinite. Then:
   - algebraically stable $\Rightarrow$ B-stable $\Rightarrow$ AN-stable
-    $\Rightarrow$ A-stable;
+    $\Rightarrow$ A-stable, where A-stability is that of the rational
+    function $R$ of 15.1;
   - for non-confluent methods the three properties algebraic stability,
     B-stability and AN-stability are equivalent;
   - the Gauss, Radau IA, Radau IIA and Lobatto IIIC methods are
@@ -4156,7 +4190,8 @@ $\mathbb C^N$ with norm $\|\cdot\|$. A Runge–Kutta method is
   $u=Q(y,z)$ the system $Bu'+Au=d(t)$ decouples into $y'+Cy=\eta(t)$ and
   $Nz'+z=\delta(t)$, where $Pd=(\eta,\delta)$; the last component of each
   block of $z$ is determined algebraically and the others by up to $m_i-1$
-  differentiations of $\delta$. The **index of nilpotency** is $\max_im_i$;
+  differentiations of $\delta$. The **index of nilpotency** is $\max_im_i$,
+  and $0$ when there is no nilpotent block, that is, when $B$ is invertible;
   it does not depend on the choice of $P,Q$.
   The **differentiation index** of $F(u',u)=0$ is the least $m$ such that
   $F=0$ and its first $m$ derivatives with respect to $t$ allow one to
@@ -4175,8 +4210,9 @@ $\mathbb C^N$ with norm $\|\cdot\|$. A Runge–Kutta method is
     where $r=p$ if $a_{si}=b_i$ for all $i$ (**stiffly accurate**),
     $r=\min(p,q+1)$ if $-1\le R(\infty)<1$, and $r=\min(p-1,q)$ if
     $R(\infty)=1$; if $|R(\infty)|>1$ the numerical solution diverges.
-  - (Multistep.) Let a linear multistep method of order $p$ have $0$ and
-    $\infty$ in its stability domain, and apply it as
+  - (Multistep.) Let a linear multistep method of order $p$ have $0$ in its
+    stability domain and be stable at $\infty$, that is, $\beta_k\ne0$ and
+    the roots of $\sigma$ satisfy the root condition, and apply it as
     $\sum_j\alpha_jy_{n+j}=h\sum_j\beta_jf(y_{n+j},z_{n+j})$,
     $0=\sum_j\beta_jg(y_{n+j},z_{n+j})$. If the starting errors are
     $O(h^p)$, then $y_n-y(t_n)=O(h^p)$ and $z_n-z(t_n)=O(h^p)$ for
@@ -4196,9 +4232,10 @@ $\mathbb C^N$ with norm $\|\cdot\|$. A Runge–Kutta method is
   \varphi_1(z)=\frac{e^z-1}z.$$
   If $F(t)=g(t,u(t))$ is differentiable and $A^{\beta-1}F'\in
   L^\infty(0,T;V)$ for some $\beta\in(0,1]$, then
-  $$\|u_n-u(t_n)\|_V\le Ch\sup_{0\le t\le t_n}\|A^{\beta-1}F'(t)\|_V,
-  \qquad0\le nh\le T,$$
-  with $C$ depending on $T$ but not on $n$ or $h$.
+  $$\|u_n-u(t_n)\|_V\le Ch\sup_{0\le t\le t_n}\|A^{\beta-1}F'(t)\|_V$$
+  for $0\le nh\le T$ and $0<h\le h_0$, with $C$ and $h_0$ depending on $T$
+  (and $h_0$ on the strip of local Lipschitz continuity) but not on $n$ or
+  $h$; the step restriction keeps the numerical solution in the strip.
 
 ### Geometric integration
 
@@ -4220,8 +4257,9 @@ $\mathbb C^N$ with norm $\|\cdot\|$. A Runge–Kutta method is
     symplectic. The Gauss methods satisfy this condition.
   - Conversely, an irreducible symplectic Runge–Kutta method satisfies
     $M=0$.
-  - For $n\ge3$ no Runge–Kutta method conserves every polynomial invariant
-    of degree $n$. The obstruction is $\det Y$, a polynomial invariant of
+  - For $n\ge3$ no consistent Runge–Kutta method ($\sum_ib_i=1$) conserves
+    every polynomial invariant of degree $n$ (the method with $b=0$ is the
+    identity map and conserves everything). The obstruction is $\det Y$, a polynomial invariant of
     degree $n$ of $Y'=AY$, $Y\in\mathbb R^{n\times n}$, whenever
     $\mathrm{tr}\,A=0$.
 
@@ -4242,8 +4280,8 @@ $\mathbb C^N$ with norm $\|\cdot\|$. A Runge–Kutta method is
   for a method of order $p$, $f_2=\dots=f_p=0$. Let $f$ be analytic and
   bounded by $M$ on the complex ball $B_{2R}(y_0)$, and let the Taylor
   coefficients of $\Phi_h(y)=y+hf(y)+h^2d_2(y)+\cdots$ satisfy
-  $\|d_j(y)\|\le\mu M(2\kappa M/R)^{j-1}$ on $B_R(y_0)$ (for a Runge–Kutta
-  method this holds with $\mu=\sum_i|b_i|$ and
+  $\|d_j(y)\|\le\mu M(2\kappa M/R)^{j-1}$ on $B_R(y_0)$ for some $\mu\ge1$
+  (for a consistent Runge–Kutta method this holds with $\mu=\sum_i|b_i|\ge1$ and
   $\kappa=\max_i\sum_j|a_{ij}|$). Put $\eta=2\max(\kappa,\mu/(2\log2-1))$,
   $h_0=R/(e\eta M)$ and $\gamma=e(2+1.65\eta+\mu)$. If $h\le h_0/4$ and
   $N$ is the largest integer with $hN\le h_0$, then the time-$h$ flow
@@ -4586,7 +4624,8 @@ von Neumann analysis, is in section 16.
   - **$L^1$ contraction**: if $u_0-v_0\in L^1$, then
     $\|u(t)-v(t)\|_{L^1}\le\|u_0-v_0\|_{L^1}$ for all $t>0$;
   - for $d=1$ and $u_0\in L^1\cap BV$, **TV non-increase**
-    $\mathrm{TV}(u(t))\le\mathrm{TV}(u_0)$ and the time continuity
+    $\mathrm{TV}(u(t))\le\mathrm{TV}(u_0)$; if moreover $f$ is piecewise
+    $C^2$, the time continuity
     $\|u(t)-u(s)\|_{L^1}\le\|f\|_{\mathrm{Lip}}\,\mathrm{TV}(u_0)\,|t-s|$.
 
   For $d=1$, if $u$ and $v$ are the entropy solutions with Lipschitz,
@@ -4653,11 +4692,15 @@ von Neumann analysis, is in section 16.
   results state that the accuracy of monotone schemes is limited.
   - (Harten–Hyman–Lax) If a conservative consistent scheme is monotone and
     its numerical flux $g$ is $C^3$, then it is at most first order
-    accurate: on smooth solutions the local truncation error is
-    $\frac12\Delta t^2\,\partial_x\bigl(\beta(u)\,\partial_xu\bigr)
-    +O(\Delta t^3)$ with
-    $\beta\ge0$, and $\beta>0$ unless the scheme is an exact translation,
-    which requires $f$ linear.
+    accurate: on smooth solutions, with $\lambda=\Delta t/\Delta x$ fixed, the
+    one-step defect is
+    $$u(x,t+\Delta t)-H\bigl(u(x-p\Delta x,t),\dots,u(x+p\Delta x,t)\bigr)
+    =-\tfrac12\Delta x^2\,\partial_x\bigl(\beta(u)\,\partial_xu\bigr)
+    +O(\Delta x^3),$$
+    where $\beta(u)=\sum_kk^2\,\partial_kH(u,\dots,u)-\lambda^2f'(u)^2$, the
+    sum over the arguments $k=-p,\dots,p$ of $H$. Here $\beta\ge0$, and
+    $\beta>0$ unless only one $\partial_kH(u,\dots,u)$ is nonzero, in which
+    case the scheme is an exact translation and $f$ is linear.
   - (Godunov) For $u_t+au_x=0$ with $a\ne0$, consider a linear
     semi-discretization
     $$w_j'(t)=\frac ah\sum_{k=-r}^{s}\gamma_k\,w_{j+k}(t)$$
@@ -4695,7 +4738,7 @@ von Neumann analysis, is in section 16.
   in time and integrated in $(x',s')$; it is nonnegative when $u$ is an
   entropy solution. If $u\in\mathcal K$, $v$ is the entropy solution, and
   $0<\varepsilon_0<T$ and $\varepsilon>0$, then
-  $$\|u(T)-v(T)\|_{L^1}\le\|u_0-v_0\|_{L^1}
+  $$\|u(T^-)-v(T)\|_{L^1}\le\|u_0-v_0\|_{L^1}
   +\mathrm{TV}(v_0)\bigl(2\varepsilon+\varepsilon_0\|f\|_{\mathrm{Lip}}\bigr)
   +\nu(u,\varepsilon_0)-\Lambda_{\varepsilon,\varepsilon_0}(u,v).$$
   Consequences:
@@ -4785,8 +4828,10 @@ von Neumann analysis, is in section 16.
   it satisfies the Lax conditions. The solutions so obtained are unique and
   form an $L^1$-Lipschitz semigroup:
   $\|u(t)-v(t)\|_{L^1}\le C\,\|u_0-v_0\|_{L^1}$, with $C$ independent of
-  $t$, $u_0$ and $v_0$. Front tracking approximations with parameter $\delta$
-  are first order accurate in $L^1$: the error at time $t$ is $O(\delta)$.
+  $t$, $u_0$ and $v_0$. The front tracking approximation $u_\delta$ with
+  parameter $\delta$ and step-function data $u_{0,\delta}$ satisfies
+  $\|u_\delta(t)-u(t)\|_{L^1}\le C(\|u_{0,\delta}-u_0\|_{L^1}+\delta t)$, so it
+  is first order accurate when $\|u_{0,\delta}-u_0\|_{L^1}=O(\delta)$.
 
 ## 18. Galerkin and finite element methods for elliptic problems
 
@@ -4837,15 +4882,15 @@ section 21.
   there is a **Fortin operator** $\Pi_h\colon W\to W_h$ with
   $a(v_h,\Pi_hw-w)=0$ for all $v_h\in V_h$ and $w\in W$ and with
   $\gamma_h\|\Pi_hw\|_W\le\|w\|_W$ for all $w$, then
-  $\alpha_h\ge\gamma_h\alpha$. Conversely, if $\alpha_h>0$, such an operator
-  exists.
+  $\alpha_h\ge\gamma_h\alpha$. Conversely, if $\alpha_h>0$, there is a linear
+  idempotent Fortin operator with $\gamma_h=\alpha_h/\|a\|$.
 
 * **18.3. Quasi-optimality: Céa, Babuška, Xu–Zikatanov.** In the setting of
   18.2, with $u$ the exact solution and $\alpha_h>0$, **Galerkin
   orthogonality** $a(u-u_h,w_h)=0$ holds for all $w_h\in W_h$, and
   $$\|u-u_h\|_V\le\Bigl(1+\frac{\|a\|}{\alpha_h}\Bigr)
   \inf_{v_h\in V_h}\|u-v_h\|_V \qquad\text{(Babuška).}$$
-  If $V$ is a Hilbert space and $\{0\}\ne V_h\ne V$, the factor improves to
+  If $V$ and $W$ are Hilbert spaces and $\{0\}\ne V_h\ne V$, the factor improves to
   $\|a\|/\alpha_h$ (Xu–Zikatanov). If $V=W$ is a Hilbert space, $V_h=W_h$
   and $a$ is coercive with constant $\alpha$, the factor is $\|a\|/\alpha$
   (Céa), and it is $(\|a\|/\alpha)^{1/2}$ if moreover $a$ is symmetric. For
@@ -4902,7 +4947,9 @@ section 21.
   $s>1/p$ if $p>1$, or $s\ge1$ if $p=1$. There is a bounded linear **trace
   map** $\gamma\colon W^{s,p}(\Omega)\to L^p(\partial\Omega)$ with
   $\gamma v=v|_{\partial\Omega}$ for $v\in C(\overline\Omega)\cap
-  W^{s,p}(\Omega)$, whose kernel is $W^{s,p}_0(\Omega)$. In particular,
+  W^{s,p}(\Omega)$. For $s<1+1/p$ its kernel is $W^{s,p}_0(\Omega)$; for
+  larger $s$ the kernel is bigger, since $x(1-x)$ has zero trace on $(0,1)$
+  but is not in $H^2_0(0,1)$. In particular,
   $H^1_0(\Omega)$ is the kernel of $\gamma$ on $H^1(\Omega)$, and $\gamma$
   maps $H^1(\Omega)$ onto $H^{1/2}(\partial\Omega)$. For $p\in[1,\infty]$ and
   $v\in W^{1,p}(\Omega)$ there is the multiplicative bound
@@ -5004,7 +5051,8 @@ section 21.
   for each face $F$ of $K$. On a quasi-uniform family the global form is
   $(\sum_K\|v\|^p_{W^{l,p}(K)})^{1/p}\le Ch^{m-l+\min(0,d/p-d/q)}
   (\sum_K\|v\|^q_{W^{m,q}(K)})^{1/q}$ for piecewise polynomial $v$. For
-  $v(x)=x$ on $K=[0,h]$, $|v|_{1,K}=\sqrt3\,h^{-1}\|v\|_{0,K}$.
+  $v(x)=x$ on $K=[0,h]$, $|v|_{1,K}=\sqrt3\,h^{-1}\|v\|_{0,K}$; for
+  $v(x)=x-h/2$ the ratio is $2\sqrt3\,h^{-1}$, the largest over $\mathbb P_1$.
 
 * **18.13. Energy norm error estimate.** Let $a(v,w)=\int_\Omega
   (A\nabla v)\cdot\nabla w\,dx$ with $A$ bounded and uniformly positive
@@ -5163,8 +5211,10 @@ section 21.
     $h$;
   - the **Taylor–Hood element**, continuous $\mathbb P_2$ velocities and
     continuous $\mathbb P_1$ pressures, satisfies it uniformly in $h$ when
-    $d\in\{2,3\}$ and every cell has at most one face on $\partial\Omega$
-    (in $d=2$: no triangle with two edges on $\partial\Omega$). For $d=2$
+    $d\in\{2,3\}$ and the edges of each cell that are not contained in
+    $\partial\Omega$ span $\mathbb R^d$ (in $d=2$: no triangle with two edges
+    on $\partial\Omega$; in $d=3$, "at most one face on $\partial\Omega$" does
+    not suffice, since the internal edges may be those of one face). For $d=2$
     and smooth solutions, $\|u-u_h\|_{1,\Omega}+\|p-p_h\|_{0,\Omega}\le Ch^s
     (\|u\|_{s+1,\Omega}+\|p\|_{s,\Omega})$ for $0\le s\le2$.
 
@@ -5347,11 +5397,13 @@ polynomial interpolation in $\mathbb P_N$ at the nodes indicated.
 
 * **19.7. Inverse inequalities for algebraic polynomials.**
   - For all $\varphi\in\mathbb P_N$, $\|\varphi'\|\le\tfrac12(N+1)(N+2)\|\varphi\|$
-    in $L^2(I)$, and the order $N^2$ is sharp: $\|L_N'\|\ge cN^2\|L_N\|$ with
-    $c>0$ independent of $N$, $L_N$ the Legendre polynomial. More generally,
-    for $1\le p\le\infty$ and $r\ge1$, $\|\varphi^{(r)}\|_{L^p}\le CN^{2r}
-    \|\varphi\|_{L^p}$, and in the Chebyshev-weighted $L^p_\omega$ norms the
-    same bound holds for $2\le p\le\infty$.
+    in $L^2(I)$, and the order $N^2$ is sharp: for $N\ge2$ the polynomial
+    $\varphi=L_N'\in\mathbb P_N$, $L_N$ the Legendre polynomial, satisfies
+    $\|\varphi'\|=(2\sqrt3)^{-1}\bigl((N-1)(N+2)(N^2+N+3)\bigr)^{1/2}\|\varphi\|
+    \ge cN^2\|\varphi\|$ with $c>0$ independent of $N$. More generally, for
+    $2\le p\le\infty$ and $r\ge1$, $\|\varphi^{(r)}\|_{L^p}\le CN^{2r}
+    \|\varphi\|_{L^p}$, and the same bound holds in the Chebyshev-weighted
+    $L^p_\omega$ norms.
   - With a shift of weight the order drops to $N$: for $\alpha,\beta>-1$ and
     $\varphi\in\mathbb P_N$,
     $$\|\varphi'\|_{\omega^{\alpha+1,\beta+1}}\le\sqrt{N(N+\alpha+\beta+1)}\,
@@ -5385,10 +5437,11 @@ polynomial interpolation in $\mathbb P_N$ at the nodes indicated.
     the $H^1$ error is optimal, $\|u-I_Nu\|_{H^1}\le CN^{1-m}\|u^{(m)}\|$, and
     $\|I_Nu\|_{H^1}\le C\|u\|_{H^1}$ with $C$ independent of $N$; at the Gauss
     nodes the $H^1$ error can be larger by a factor of order $N^{1/2}$. In
-    weighted form, for LGL interpolation and $1\le m\le N+1$,
+    weighted form, for LGL interpolation, each fixed $m\ge1$, all $N\ge m-1$
+    and $u\in B^m_{-1,-1}(I)$,
     $$\|\partial_x(I_Nu-u)\|+N\|I_Nu-u\|_{\omega^{-1,-1}}\le
     c\sqrt{\tfrac{(N-m+1)!}{N!}}\,(N+m)^{(1-m)/2}\|\partial_x^mu\|_{\omega^{m-1,m-1}}$$
-    with $c$ independent of $m$, $N$ and $u$.
+    with $c$ depending on $m$ but not on $N$ and $u$.
   - (Chebyshev.) If $I_N$ is interpolation at any of the Chebyshev–Gauss,
     Gauss–Radau or Gauss–Lobatto node families and $\omega=(1-x^2)^{-1/2}$,
     then $\|u-I_Nu\|_\omega\le CN^{-m}\|u^{(m)}\|_\omega$ for
@@ -5402,12 +5455,12 @@ polynomial interpolation in $\mathbb P_N$ at the nodes indicated.
   $u_N\in\mathbb P^0_N$ with
   $\int_Iu_N'v'\,dx+\alpha\int_Iu_Nv\,dx=\int_I(I_Nf)v\,dx$ for all
   $v\in\mathbb P^0_N$, where $I_N$ is LGL interpolation. If
-  $\partial_xu\in B^{m-1}_{0,0}(I)$ and $f\in B^k_{-1,-1}(I)$ with
-  $1\le m,k\le N+1$, then
+  $\partial_xu\in B^{m-1}_{0,0}(I)$ and $f\in B^k_{-1,-1}(I)$ for fixed
+  $m,k\ge1$ and $N\ge\max(m,k)-1$, then
   $$\|u-u_N\|_1\le c\sqrt{\tfrac{(N-m+1)!}{N!}}(N+m)^{\frac{1-m}2}
   \|\partial_x^mu\|_{\omega^{m-1,m-1}}+c\sqrt{\tfrac{(N-k+1)!}{N!}}
   (N+k)^{-\frac{k+1}2}\|\partial_x^kf\|_{\omega^{k-1,k-1}},$$
-  with $c$ independent of $m$, $k$, $N$, $f$ and $u$. For fixed $m$ and $k$
+  with $c$ depending on $m$ and $k$ but not on $N$, $f$ and $u$. For fixed $m$ and $k$
   the right-hand side is $O(N^{1-m}+N^{-k})$: the convergence rate is limited
   only by the regularity of $u$ and $f$.
 
@@ -5424,15 +5477,15 @@ polynomial interpolation in $\mathbb P_N$ at the nodes indicated.
     $x_1,\dots,x_{N-1}$.
   - If $u\in H^2(I)$, $\partial_x^2u$ and $\partial_x(au')$ belong to
     $B^{m-2}_{0,0}(I)$, $\partial_x(bu)\in B^{m-1}_{0,0}(I)$ and
-    $g\in B^k_{-1,-1}(I)$, with $2\le m\le N+1$ and $1\le k\le N+1$, then
+    $g\in B^k_{-1,-1}(I)$, for fixed $m\ge2$, $k\ge1$ and $N\ge\max(m,k)-1$, then
     $$\begin{aligned}\|u-u_N\|_1\le{}&c\sqrt{\tfrac{(N-m+1)!}{N!}}(N+m)^{\frac{1-m}2}
     \bigl(\|u\|_2+\|\partial_x^mu\|_{\omega^{m-2,m-2}}
     +\|\partial_x^{m-1}(au')\|_{\omega^{m-2,m-2}}
     +\|\partial_x^m(bu)\|_{\omega^{m-1,m-1}}\bigr)\\
     &+c\sqrt{\tfrac{(N-k+1)!}{N!}}(N+k)^{-\frac{k+1}2}
     \|\partial_x^kg\|_{\omega^{k-1,k-1}},\end{aligned}$$
-    with $c$ depending only on the $L^\infty$ norms of $a$, $b$, $a'$, $b'$
-    (and on $c_1$).
+    with $c$ depending on $m$, $k$, the $L^\infty$ norms of $a$, $b$, $a'$, $b'$
+    and on $c_1$, but not on $N$, $g$ and $u$.
 
   The same structure holds in several dimensions on $(-1,1)^d$ with tensor LGL
   quadrature: the G-NI error is bounded by the best-approximation error plus
@@ -5699,8 +5752,8 @@ of subdomains, unless stated otherwise.
   Let levels $\ell=0,1,2,\dots$ carry invertible matrices
   $A_\ell\in\mathbb K^{n_\ell\times n_\ell}$, prolongations
   $p:\mathbb K^{n_{\ell-1}}\to\mathbb K^{n_\ell}$, restrictions
-  $r:\mathbb K^{n_\ell}\to\mathbb K^{n_{\ell-1}}$, and smoothing iterations for
-  $A_\ell$ with iteration matrices $S_\ell$. The **two-grid iteration** with
+  $r:\mathbb K^{n_\ell}\to\mathbb K^{n_{\ell-1}}$, and consistent smoothing
+  iterations for $A_\ell$ with iteration matrices $S_\ell$. The **two-grid iteration** with
   $\nu$ presmoothing steps applies $\nu$ smoothing steps and then the
   coarse-grid correction $x\mapsto x-pA_{\ell-1}^{-1}r(A_\ell x-b)$; its
   iteration matrix is
@@ -5760,21 +5813,25 @@ of subdomains, unless stated otherwise.
   $0<\alpha_0\le\alpha\le\alpha_1$ and $0\le\beta\le\beta_1$, and let $V_k\subset
   H^1_0(\Omega)$ be the continuous piecewise linear functions on triangulations
   $\mathcal T_k$, where $\mathcal T_{k+1}$ is obtained from $\mathcal T_k$ by
-  joining edge midpoints. Let the $k$-th level iteration use $m$ Richardson
-  smoothing steps $z\mapsto z+\Lambda_k^{-1}(g-A_kz)$, where $\Lambda_k\ge
-  \rho(A_k)$ and $\Lambda_k\le Ch_k^{-2}$, with transfers given by inclusion and
-  its adjoint, and write $\|v\|_E=a(v,v)^{1/2}$. Then:
+  joining edge midpoints. Let $(v,w)_k=h_k^2\sum_pv(p)w(p)$, summed over the
+  interior vertices $p$ of $\mathcal T_k$, and define $A_k:V_k\to V_k$ by
+  $(A_kv,w)_k=a(v,w)$ for all $w\in V_k$. Let the $k$-th level iteration solve
+  exactly on level $1$ and, on level $k\ge2$, use $m$ Richardson smoothing
+  steps $z\mapsto z+\Lambda_k^{-1}(g-A_kz)$, where $\Lambda_k\ge\rho(A_k)$ and
+  $\Lambda_k\le Ch_k^{-2}$, with prolongation the inclusion $V_{k-1}\subset V_k$
+  and restriction its adjoint with respect to $(\cdot,\cdot)_{k-1}$ and
+  $(\cdot,\cdot)_k$, and write $\|v\|_E=a(v,v)^{1/2}$. Then:
   - (two-grid) $\|e_{\mathrm{TG}}\|_E\le Cm^{-1/2}\|e_0\|_E$ for the one-sided
     two-grid method with $m$ presmoothing steps;
-  - (W-cycle) for every $\gamma\in(0,1)$ there is $m_0$ such that, for
+  - (W-cycle) for every $\zeta\in(0,1)$ there is $m_0$ such that, for
     $m\ge m_0$, the one-sided W-cycle reduces the energy error by the factor
-    $\gamma$ on every level $k$;
+    $\zeta$ on every level $k$;
   - (V-cycle) with $m$ pre- and $m$ postsmoothing steps, the V-cycle satisfies
     $\|z-MG(k,z_0,g)\|_E\le\frac{C_*}{m+C_*}\|z-z_0\|_E$ for every $m\ge1$
     and every $k$, with $C_*$ independent of $k$ and $m$;
   - (full multigrid) if the $k$-th level iteration is a contraction in
-    $\|\cdot\|_E$ with a contraction number $\gamma$ independent of $k$, and
-    $r$ iterations are performed on each level with $2\gamma^r<1$, starting
+    $\|\cdot\|_E$ with a contraction number $\zeta$ independent of $k$, and
+    $r$ iterations are performed on each level with $2\zeta^r<1$, starting
     from the interpolated result of the previous level, then the full
     multigrid approximation $\hat u_k$ satisfies
     $\|u_k-\hat u_k\|_E\le Ch_k|u|_{H^2(\Omega)}$, where $u_k$ is the Galerkin
@@ -5813,7 +5870,7 @@ of subdomains, unless stated otherwise.
 * **20.7. Two-level convergence identity and optimal coarse spaces.** Let $A$
   be symmetric positive definite on $V=\mathbb R^n$, and let $R$ be a smoother
   whose symmetrization $\bar R=R^\top+R-R^\top AR$ is symmetric positive
-  definite (equivalently, $\|I-RA\|_A<1$). For a coarse space $V_c\subset V$,
+  definite (equivalently, $\|I-RA\|_A<1$). For a coarse space $V_c\subsetneq V$,
   let $\Pi_c$ be the $(\cdot,\cdot)_A$-orthogonal projection onto $V_c$; the
   two-level method with exact coarse solve and postsmoothing has error
   operator $E=(I-RA)(I-\Pi_c)$. Then
@@ -5838,7 +5895,7 @@ of subdomains, unless stated otherwise.
   $P_{\mathrm{ad}}=\sum_{i=0}^NP_i$, and the **multiplicative Schwarz** error
   propagation operator is $E_{\mathrm{mu}}=(I-P_N)\cdots(I-P_1)(I-P_0)$.
   Each $P_i$ is self-adjoint with respect to $a(\cdot,\cdot)$. Consider:
-  - (stable decomposition) there is $C_0$ such that every $u\in V$ has a
+  - (stable decomposition) there is $C_0>0$ such that every $u\in V$ has a
     decomposition $u=\sum_{i=0}^NR_i^\top u_i$ with
     $\sum_{i=0}^N\tilde a_i(u_i,u_i)\le C_0^2\,a(u,u)$;
   - (strengthened Cauchy–Schwarz inequalities) there are
@@ -5876,8 +5933,9 @@ of subdomains, unless stated otherwise.
   solvers, the additive Schwarz operator satisfies
   $$\kappa(P_{\mathrm{ad}})\le C\Bigl(1+\frac H\delta\Bigr),$$
   where $C$ depends on $N_c$ (and the shape-regularity constants) but not on
-  $h$, $H$ or $\delta$. The multiplicative and hybrid variants then converge
-  at rates bounded through 20.8.
+  $h$, $H$ or $\delta$, and the linear dependence on $H/\delta$ is sharp. The
+  multiplicative and hybrid variants then converge at rates bounded through
+  20.8.
 
 * **20.10. Multilevel additive preconditioners.** Let $\Omega\subset\mathbb
   R^2$ be a polygon, $\mathcal T_1$ a triangulation and $\mathcal T_j$,
@@ -5887,10 +5945,14 @@ of subdomains, unless stated otherwise.
   of $\int_\Omega\nabla u\cdot\nabla v\,dx$ on $V_J$. Let $B_{\mathrm{BPX}}$ be
   the additive preconditioner of 20.5 with the spaces $V_j$, the inclusions
   $I_j$, and $(B_jv,w)=\sum_pv(p)w(p)$, summed over the interior vertices of
-  $\mathcal T_j$. If $\Omega$ is convex, then $\kappa(B_{\mathrm{BPX}}A_J)\le
-  C$ with $C$ independent of $J$ and $h_J$. The hierarchical basis
-  preconditioner $B_{\mathrm{HB}}$ satisfies only
-  $\kappa(B_{\mathrm{HB}}A_J)\le C(1+|\log h_J|^2)$.
+  $\mathcal T_j$. Then $\kappa(B_{\mathrm{BPX}}A_J)\le C$ with $C$ independent
+  of $J$ and $h_J$. Let $W_1=V_1$ and, for $j\ge2$, let $W_j$ be the functions
+  in $V_j$ that vanish at the vertices of $\mathcal T_{j-1}$, with
+  $(B_jv,w)=\sum_pv(p)w(p)$ summed over the vertices of $\mathcal T_j$ that
+  are not vertices of $\mathcal T_{j-1}$ ($j\ge2$) and over the interior
+  vertices of $\mathcal T_1$ ($j=1$). The hierarchical basis preconditioner
+  $B_{\mathrm{HB}}=\sum_jI_jB_j^{-1}I_j^T$, with $I_j$ the inclusion of $W_j$,
+  satisfies $\kappa(B_{\mathrm{HB}}A_J)\le C(1+|\log h_J|^2)$.
 
 * **20.11. Polylogarithmic bounds for nonoverlapping methods.** Let $\Omega$
   be partitioned into nonoverlapping, shape-regular subdomains of diameter
@@ -5901,17 +5963,17 @@ of subdomains, unless stated otherwise.
   - the Bramble–Pasciak–Schatz, Neumann–Neumann (with coarse space) and BDDC
     preconditioners $B$ satisfy $\kappa(BS_h)\le C(1+\log(H/h))^2$, with $C$
     independent of $h$, $H$ and the number of subdomains;
-  - the bounds for the BPS and Neumann–Neumann preconditioners are sharp in
-    their dependence on $H/h$.
+  - these three bounds are sharp in their dependence on $H/h$.
 
   For $-\nabla\cdot(\rho\nabla u)$ in three dimensions, with $\rho$ a positive
-  constant $\rho_i$ on each subdomain and no subdomain whose boundary meets
-  the Dirichlet boundary in only one or a few points, the balancing
-  Neumann–Neumann method and the FETI-DP method whose primal constraints are
-  the subdomain vertex values and the averages over all edges and faces
-  satisfy the condition number bound $C(1+\log(H/h))^2$, with $C$ independent
-  of $h$, $H$ and the values $\rho_i$. In two dimensions, FETI-DP with primal
-  vertex values satisfies a bound of the same form. Apart from the eigenvalue
+  constant $\rho_i$ on each subdomain, the balancing Neumann–Neumann method,
+  provided no subdomain boundary meets the Dirichlet boundary in only one or
+  a few points, and the FETI-DP method with the Dirichlet preconditioner whose
+  primal constraints are the subdomain vertex values and the averages over
+  all edges and faces satisfy the condition number bound $C(1+\log(H/h))^2$,
+  with $C$ independent of $h$, $H$ and the values $\rho_i$. In two
+  dimensions, FETI-DP with the Dirichlet preconditioner and primal vertex
+  values satisfies a bound of the same form. Apart from the eigenvalue
   $1$, the preconditioned BDDC and FETI-DP operators with corresponding
   primal constraints have the same spectrum.
 
@@ -6017,8 +6079,9 @@ $$\Phi(x,y)=\frac1{2\pi}\log\frac1{|x-y|}\ (m=2),\qquad
   $P_n\hat x_n=x_n$, $(\lambda-KP_n)\hat x_n=y$, and for $n\ge N$
   $$\|x-\hat x_n\|\le c\,\|(I-P_n)K^*\|\,\|(I-P_n)x\|,\qquad
   \|(I-P_n)K^*\|\to0,$$
-  with $c$ independent of $n$; hence $\|x-\hat x_n\|/\|x-x_n\|\to0$
-  (superconvergence).
+  with $c$ independent of $n$; hence $\|x-\hat x_n\|/\|x-x_n\|\to0$ along the
+  $n$ with $x\notin X_n$ (superconvergence), where $X_n$ is the range of
+  $P_n$.
 
 * **21.7. Collectively compact approximation.** A set of linear operators
   $\mathcal A$ from $X$ to $Y$ is **collectively compact** if
@@ -6027,19 +6090,21 @@ $$\Phi(x,y)=\frac1{2\pi}\log\frac1{|x-y|}\ (m=2),\qquad
   $I-A$ injective, and $(A_n)$ collectively compact with $A_n\varphi\to
   A\varphi$ for all $\varphi$. Then $\|(A_n-A)A_n\|\to0$, and for all $n$ with
   $\|(I-A)^{-1}(A_n-A)A_n\|<1$ the inverse $(I-A_n)^{-1}$ exists, with
-  $$\|(I-A_n)^{-1}\|\le\frac{1+\|(I-A)^{-1}\|\,\|A_n\|}
+  $$\|(I-A_n)^{-1}\|\le\frac{1+\|(I-A)^{-1}A_n\|}
   {1-\|(I-A)^{-1}(A_n-A)A_n\|},$$
   and the solutions of $\varphi-A\varphi=f$ and $\varphi_n-A_n\varphi_n=f_n$
   satisfy
-  $$\|\varphi_n-\varphi\|\le\frac{1+\|(I-A)^{-1}\|\,\|A_n\|}
+  $$\|\varphi_n-\varphi\|\le\frac{1+\|(I-A)^{-1}A_n\|}
   {1-\|(I-A)^{-1}(A_n-A)A_n\|}\bigl(\|(A_n-A)\varphi\|+\|f_n-f\|\bigr).$$
+  Since $\|(I-A)^{-1}A_n\|\le\|(I-A)^{-1}\|\,\|A_n\|$, the bounds also hold
+  with that product in the numerators.
 
 * **21.8. Nyström method.** Let $K$ be continuous on $G\times G$ and let
   $Q_n(g)=\sum_{k=1}^n\alpha_k^{(n)}g(x_k^{(n)})$ be quadrature rules with
   $Q_n(g)\to\int_Gg\,dy$ for every $g\in C(G)$. The **Nyström operators**
   $(A_n\varphi)(x)=\sum_k\alpha_k^{(n)}K(x,x_k^{(n)})\varphi(x_k^{(n)})$ are
   collectively compact and converge pointwise to $A$ on $C(G)$, though not in
-  norm. Solving $\varphi_n-A_n\varphi_n=f$ is equivalent to solving the linear
+  norm unless $K=0$. Solving $\varphi_n-A_n\varphi_n=f$ is equivalent to solving the linear
   system for the nodal values $\varphi_n(x_j)$ and then using the
   Nyström interpolation formula
   $\varphi_n(x)=f(x)+\sum_k\alpha_kK(x,x_k)\varphi_n(x_k)$. If
@@ -6116,7 +6181,9 @@ $$\Phi(x,y)=\frac1{2\pi}\log\frac1{|x-y|}\ (m=2),\qquad
   \partial\nu(y)\,ds(y)$ and $(K'\varphi)(x)=\int_{\partial D}\varphi(y)\,
   \partial\Phi(x,y)/\partial\nu(x)\,ds(y)$ are improper integrals with
   weakly singular kernels. The normal derivative of $v$ has no jump:
-  $\nu\cdot(\nabla v(x+h\nu(x))-\nabla v(x-h\nu(x)))\to0$ uniformly.
+  $\nu\cdot(\nabla v(x+h\nu(x))-\nabla v(x-h\nu(x)))\to0$ uniformly. (Some
+  texts define $K$ and $K'$ with a factor $2$, so that $2v_\pm=K\varphi\pm
+  \varphi$ and $2\,\partial u_\pm/\partial\nu=K'\varphi\mp\varphi$.)
 
 * **21.13. Mapping properties on Lipschitz boundaries.** Let
   $\Omega\subset\mathbb R^3$ be a bounded Lipschitz domain with boundary
@@ -6139,12 +6206,13 @@ $$\Phi(x,y)=\frac1{2\pi}\log\frac1{|x-y|}\ (m=2),\qquad
   hold for all $\varphi\in H^{-1/2}(\Gamma)$ and $\psi\in H^{1/2}(\Gamma)$.
 
 * **21.14. Ellipticity of the single-layer operator.** For the Laplace
-  operator in $\mathbb R^3$ and a bounded Lipschitz domain, there are
-  constants $c_V,c_W>0$ such that
+  operator in $\mathbb R^3$ and a bounded Lipschitz domain, there is a
+  constant $c_V>0$ such that
   $$\langle V\varphi,\varphi\rangle\ge c_V\|\varphi\|^2_{H^{-1/2}(\Gamma)}
-  \quad(\varphi\in H^{-1/2}(\Gamma)),\qquad
-  \langle W\psi,\psi\rangle\ge c_W\|\psi\|^2_{H^{1/2}(\Gamma)/\mathbb K}
-  \quad(\psi\in H^{1/2}(\Gamma)).$$
+  \qquad(\varphi\in H^{-1/2}(\Gamma)),$$
+  and if moreover $\Gamma$ is connected, there is a constant $c_W>0$ such that
+  $$\langle W\psi,\psi\rangle\ge c_W\|\psi\|^2_{H^{1/2}(\Gamma)/\mathbb K}
+  \qquad(\psi\in H^{1/2}(\Gamma)).$$
   Hence the first-kind equation $V\varphi=g$ has a unique solution
   $\varphi\in H^{-1/2}(\Gamma)$ for every $g\in H^{1/2}(\Gamma)$, and its
   Galerkin approximations in any closed subspace are quasi-optimal (Céa's
@@ -6171,6 +6239,33 @@ $$\Phi(x,y)=\frac1{2\pi}\log\frac1{|x-y|}\ (m=2),\qquad
   The first-kind boundary integral equation of 21.14 is not of this type,
   because $V$ is an isomorphism from $H^{-1/2}(\Gamma)$ onto
   $H^{1/2}(\Gamma)$.
+
+* **21.17. Boundary value problems by layer potentials.** Let $D\subset
+  \mathbb R^m$, $m=2,3$, be a bounded domain of class $C^2$ with connected
+  boundary, and let $K$, $K'$ be the operators of 21.12 on $C(\partial D)$,
+  which are adjoint for the pairing $\langle\varphi,\psi\rangle=\int_{\partial
+  D}\varphi\psi\,ds$.
+  - The operators $\tfrac12I-K$ and $\tfrac12I-K'$ are injective, hence
+    bijective on $C(\partial D)$ by 21.1. The nullspace of $\tfrac12I+K$ is
+    spanned by the constant $1$, and that of $\tfrac12I+K'$ by a function
+    $\psi_0$ with $\int_{\partial D}\psi_0\,ds=1$ (the **natural charge**),
+    whose single-layer potential is constant in $D$.
+  - (Interior Dirichlet problem.) For $f\in C(\partial D)$ let $\varphi$ solve
+    $\tfrac12\varphi-K\varphi=-f$. The double-layer potential $v$ with density
+    $\varphi$, restricted to $D$, extends continuously to $\bar D$ with
+    boundary values $f$; it is the unique function harmonic in $D$,
+    continuous on $\bar D$ and equal to $f$ on $\partial D$.
+  - (Interior Neumann problem.) For $g\in C(\partial D)$ the equation
+    $\tfrac12\psi+K'\psi=g$ is solvable if and only if $\int_{\partial D}
+    g\,ds=0$, and then the single-layer potential $u$ with density $\psi$
+    satisfies $\partial u_-/\partial\nu=g$ uniformly on $\partial D$. Hence
+    the interior Neumann problem is solvable exactly when $\int_{\partial
+    D}g\,ds=0$.
+
+  For the unit circle, $\partial\Phi(x,y)/\partial\nu(y)=\partial\Phi(x,y)/
+  \partial\nu(x)=-1/(4\pi)$ for $x\ne y$ on the circle, so $K\varphi=K'\varphi=
+  -\frac1{4\pi}\int\varphi\,ds$, $\psi_0=1/(2\pi)$, and $\tfrac12I-K$ is
+  injective while $\tfrac12I+K$ annihilates the constants.
 
 ## 22. Inverse problems and regularization
 
@@ -6266,6 +6361,10 @@ indexed by $n\in\mathbb N$; for finite rank the sums below are finite.
   - (Spectral cut-off.) For $K$ as above, $R_my=\sum_{\sigma_n\ge\sigma_m}
     \sigma_n^{-1}(y,g_n)e_n$ is a regularization scheme as $m\to\infty$, with
     $\|R_m\|=1/\sigma_m$.
+  - (**Bakushinskii's theorem**.) If some regularization scheme admits a
+    regular parameter choice $\alpha=\alpha(y^\delta)$ that does not depend on
+    $\delta$, then $K^{-1}:R(K)\to X$ is bounded. Hence for an ill-posed
+    equation every regular parameter choice uses the noise level.
 
 * **22.6. Tikhonov regularization.** Let $K:X\to Y$ be bounded and linear,
   and $\alpha>0$.
@@ -6369,11 +6468,13 @@ indexed by $n\in\mathbb N$; for finite rank the sums below are finite.
   $G:X\to\mathbb R^q$ continuous, and $y=G(u)+\eta$, where $u\sim\mu_0$ and
   the noise $\eta$ is independent of $u$ with a Lebesgue density $\rho$ that
   is positive on all of $\mathbb R^q$. Let $\Phi(u;y)$ differ from
-  $-\log\rho(y-G(u))$ by a function of $y$ alone. Then the conditional law
-  $\mu^y$ of $u$ given $y$ (the **posterior**) is absolutely continuous with
-  respect to $\mu_0$, and
-  $$\frac{d\mu^y}{d\mu_0}(u)=\frac1{Z(y)}\exp\bigl(-\Phi(u;y)\bigr),\qquad
-  Z(y)=\int_X\exp\bigl(-\Phi(u;y)\bigr)\,d\mu_0(u)>0.$$
+  $-\log\rho(y-G(u))$ by a function of $y$ alone, and put
+  $Z(y)=\int_X\exp\bigl(-\Phi(u;y)\bigr)\,d\mu_0(u)$. Then $Z(y)>0$ for every
+  $y$, and $Z(y)<\infty$ for Lebesgue-almost every $y$ (for every $y$ if $\rho$
+  is bounded). The conditional law $\mu^y$ of $u$ given $y$ (the
+  **posterior**) has a version that, for every $y$ with $Z(y)<\infty$, is
+  absolutely continuous with respect to $\mu_0$ with
+  $$\frac{d\mu^y}{d\mu_0}(u)=\frac1{Z(y)}\exp\bigl(-\Phi(u;y)\bigr).$$
   For Gaussian noise $\eta\sim N(0,\Gamma)$ with $\Gamma$ positive definite one
   may take $\Phi(u;y)=\frac12|\Gamma^{-1/2}(y-G(u))|^2$.
 
@@ -7206,7 +7307,8 @@ approximation in section 6.
   variance $1$ and are pairwise uncorrelated, and if $u$ is Gaussian they are
   independent $N(0,1)$. The truncation $u_J$ after the first $J$ terms has
   $\mathbb E\|u-u_J\|_{L^2(D)}^2=\sum_{j>J}\nu_j$. If $D$ is closed and
-  bounded and $c$ is continuous on $D\times D$, then the $\phi_j$ with
+  bounded, every nonempty relatively open subset of $D$ has positive measure,
+  and $c$ is continuous on $D\times D$, then the $\phi_j$ with
   $\nu_j>0$ are continuous,
   $$\sup_{x,y\in D}\Bigl|c(x,y)-\sum_{j\le J}\nu_j\phi_j(x)\phi_j(y)\Bigr|
   \le\sup_{x\in D}\sum_{j>J}\nu_j\phi_j(x)^2\to0 ,$$
@@ -7325,7 +7427,9 @@ gives the IEEE unit roundoffs.
 Item 1.4 is Muller et al., Theorem 2.2, p. 26, Definition 2.3 and
 Theorem 2.3, p. 27, and the subnormal bounds (2.4)–(2.5), p. 28. It is also
 Higham, Theorem 2.2, p. 42, Quarteroni–Sacco–Saleri, Property 2.1, p. 51,
-Gautschi, (1.13)–(1.14), p. 7, and Stoer–Bulirsch, (1.2.2), p. 5. The
+Gautschi, (1.13)–(1.14), p. 7, and Stoer–Bulirsch, (1.2.2), p. 5. Muller et
+al., p. 28, say only that the subnormal relative error can be close to $1$; it
+equals $1$ when the rounded value is $0$, by their Property 2.1, p. 25. The
 statement in Quarteroni–Sacco–Saleri uses $x_{\min}=\beta^{L-1}$ as the lower
 end of the range, which is the smallest normal number in their convention;
 Stoer–Bulirsch prove (1.2.4) under the idealized assumption of an unbounded
@@ -7359,16 +7463,18 @@ $nu$ is reported in Muller et al., p. 172, from Jeannerod and Rump, without
 proof. Item 1.11 is Higham, (5.2)–(5.3), pp. 104–105, and Muller et al.,
 (5.7) and the remark on the fused multiply-add, p. 168.
 
-Item 1.12 is Higham, Algorithm 4.2 and (4.8)–(4.9), pp. 93–94, for Kahan's
-method, with the same bound in Muller et al., (5.14), p. 179; neither source
-makes the $O(nu^2)$ term explicit, and Higham attributes the proof to Knuth.
-The cascaded summation bound is Muller et al., Algorithm 5.11 and
-Theorem 5.7 (Rump, Ogita and Oishi), p. 182, and Priest's bound is Muller et
-al., Algorithm 5.9 and Theorem 5.6, p. 181. Item 1.13 is Higham, Theorem 8.5,
-p. 154, and the forward error bound at the start of §8.2, p. 155.
-Deuflhard–Hohmann, Theorem 2.34, p. 46, state the backward error for forward
-substitution as $|\widetilde L-L|\le n\,\mathrm{eps}\,|L|$, which is the
-first-order form of Higham's $\gamma_n$ bound.
+Item 1.12 is Higham, Algorithm 4.2 and (4.8), p. 93, and (4.9), p. 94, for Kahan's method, with the
+same bound in Muller et al., Algorithm 5.6, p. 179, and (5.14), p. 180; neither source makes the
+$O(nu^2)$ term explicit, and Higham attributes the proof to Knuth. Higham, p. 94, says that the
+proofs use the model (2.4), p. 44, which is the standard model; under that model alone the bound
+fails (for $x=(1,1)$ suitable relative errors of size $u$ give $\widehat S_2=2+5u+O(u^2)$), so the
+entry assumes correct rounding to nearest. The cascaded summation bound is Muller et al., Algorithm
+5.11 and Theorem 5.7 (Rump, Ogita and Oishi), p. 182, and Priest's bound is Muller et al., Algorithm
+5.8, p. 180 (written with Fast2Sum as Algorithm 5.9, p. 181), and Theorem 5.6, p. 181. Item 1.13 is
+Higham, Theorem 8.5, p. 154, and the forward error bound at the start of §8.2, p. 155.
+Deuflhard–Hohmann, Theorem 2.34, p. 46, state the backward error for forward substitution as
+$|\widetilde L-L|\le n\,\mathrm{eps}\,|L|$, which is the first-order form of Higham's $\gamma_n$
+bound.
 
 Mixed-precision iterative refinement is not stated in this section. Higham,
 Theorems 11.1–11.2, p. 234, and Higham and Mary, Acta Numerica 31 (2022),
@@ -7445,9 +7551,13 @@ derivative formula, not stated in these sources.
 Item 2.15 is Higham, Theorem 19.1 (Wedin), p. 392, with the example on p. 393.
 Higham assumes that $A$ and $A+\Delta A$ both have full rank and leaves the
 hypothesis $x\ne0$ implicit; the full rank of $A+\Delta A$ follows from
-$\kappa_2(A)\varepsilon<1$ by item 2.10. The example has
-$\kappa_2(A)\varepsilon=1$, at the boundary of the theorem's hypothesis, and
-serves only to show that the $\kappa_2(A)^2$ dependence is attained. First
+$\kappa_2(A)\varepsilon<1$ by item 2.10. Higham's example takes the perturbation
+of size $\varepsilon=\eta$, so that $\kappa_2(A)\varepsilon=1$, at the boundary of
+the theorem's hypothesis, and his displayed $\Delta A$ carries a misprinted
+entry $1$ in position $(1,1)$; with that entry the stated $y$ is wrong. The
+example in the synopsis scales the perturbation to $\delta<\eta$, which keeps it
+inside the hypothesis; the value of $y$ is a direct computation from the normal
+equations. First
 order versions are Golub–Van Loan, Theorem 5.3.1, p. 242, and Trefethen–Bau,
 Theorem 18.1, p. 131. Item 2.16 is Trefethen–Embree, definitions (2.1), (2.3)
 and (2.6), pp. 13, 14 and 16, Theorem 2.1, p. 16, (2.10), p. 17, Theorems 2.2,
@@ -7491,9 +7601,15 @@ for every square matrix, singular or not, and Algorithm 21.1, p. 160;
 Golub–Van Loan, Theorem 3.4.1, p. 113; Higham, pp. 173 and 176; and
 Stoer–Bulirsch, (4.1.9), p. 195.
 
-Item 3.3 is Higham, Theorems 9.3 and 9.4, p. 175. The constant $2\gamma_n$ in
-the solve bound, rather than $3\gamma_n+\gamma_n^2$, comes from the proof on
-p. 176, and the bound for nonnegative factors is (9.8), p. 176. The remark
+Item 3.3 is Higham, Theorems 9.3 and 9.4, p. 175. Higham states the solve
+bound with $2\gamma_n$, from a row-dependent argument in the proof on p. 176;
+that constant fails for $n\ge4$ (adversarial roundings within the standard
+model give backward errors $8.98u$, $11.95u$, $14.92u$ for $n=4,5,6$ against
+$2\gamma_n\approx8u,10u,12u$). The constant $3\gamma_n+\gamma_n^2$ follows from
+the factorization bound and the two triangular-solve bounds (Higham's second
+edition has $\gamma_{3n}$); the same correction gives $3\gamma_{n+1}+
+\gamma_{n+1}^2$ for Cholesky (3.8, Higham Theorem 10.4, p. 206) and the
+factor $n^2(3\gamma_n+\gamma_n^2)$ in 3.4, and the bound for nonnegative factors is (9.8), p. 176. The remark
 on pivoting is Higham, p. 174. Golub–Van Loan, Theorems 3.3.1 and 3.3.2,
 pp. 105–106, give the first-order bounds
 $|H|\le3(n-1)u(|A|+|\widehat L||\widehat U|)+O(u^2)$ and
@@ -7525,15 +7641,22 @@ dominant matrices. The positive definite case is Higham, p. 206, where the
 growth factor is stated to be exactly $1$ (Problem 10.4), together with the
 positivity of the pivots on p. 204.
 
-Item 3.7 is Trefethen–Bau, Theorem 23.1, p. 174, for Hermitian matrices;
-Higham, Theorem 10.1, p. 204; and Golub–Van Loan, Theorem 4.2.5, p. 143,
-in the form $A=GG^\top$. The formula for $r_{kk}^2$ follows from
-$u_{kk}=\det A_k/\det A_{k-1}$, Higham, p. 204. Item 3.8 is Higham, Theorems
-10.3 and 10.4, p. 206, with the normwise consequence (10.7), p. 206, and
-Theorem 10.7 (Demmel), p. 208, for the success and failure criteria; and
-Trefethen–Bau, Theorems 23.2 and 23.3, pp. 176–177, in
-$O(\epsilon_{\mathrm{machine}})$ form. The perturbation $\Delta A$ for the
-solve is not symmetric in general (Higham, p. 206).
+Item 3.7 is Trefethen–Bau, Theorem 23.1, p. 174, for Hermitian matrices; Higham, Theorem 10.1, p.
+204; and Golub–Van Loan, Theorem 4.2.5, p. 143, in the form $A=GG^\top$. The formula for $r_{kk}^2$
+follows from $u_{kk}=\det A_k/\det A_{k-1}$, Higham, p. 204. Item 3.8 is Higham, Theorems 10.3 and
+10.4, p. 206, with the normwise consequence (10.7), p. 206, and Theorem 10.7 (Demmel), p. 208, for
+the success and failure criteria; and Trefethen–Bau, Theorems 23.2 and 23.3, pp. 176–177, in
+$O(\epsilon_{\mathrm{machine}})$ form. The perturbation $\Delta A$ for the solve is not symmetric in
+general (Higham, p. 206). Higham states Theorem 10.7 for symmetric positive definite $A$, for which
+$H$ is positive definite and the failure clause is vacuous. The synopsis states the criteria for
+symmetric $A$ with positive diagonal, the setting in which the failure clause has content. Theorem
+10.7 also needs $\gamma_{n+1}<1$, that is $(n+1)u<\tfrac12$, which the source does not state; for
+$\gamma_{n+1}\ge1$ the bound $n\gamma_{n+1}/(1-\gamma_{n+1})$ is undefined or negative, and the
+failure criterion would apply to $A=I$. The derivation is that of Higham's proof: if the
+factorization completes, then $H+D^{-1}\Delta AD^{-1}=(\widehat RD^{-1})^\top(\widehat RD^{-1})$ is
+positive definite, the diagonal relation on p. 206 bounds the squared column norms of $\widehat
+RD^{-1}$ by $(1-\gamma_{n+1})^{-1}$, and hence $\|D^{-1}\Delta AD^{-1}\|_2\le
+n\gamma_{n+1}/(1-\gamma_{n+1})$ and $\lambda_{\min}(H)>-n\gamma_{n+1}/(1-\gamma_{n+1})$.
 
 Item 3.9 is Trefethen–Bau, Theorems 7.1 and 7.2, pp. 51–52, and Golub–Van
 Loan, Theorems 5.2.1 and 5.2.2, pp. 229–230, the latter with the Cholesky
@@ -7596,9 +7719,13 @@ Trefethen–Bau is *Numerical Linear Algebra* (SIAM, 1997). Stoer–Bulirsch is
 the third edition (2002), and Quarteroni–Sacco–Saleri is the second edition
 (2007). Golub–Van Loan is the third edition (1996), of which the local copy
 contains Chapters 1–6 only; its chapters on the unsymmetric and symmetric
-eigenvalue problems and on Lanczos methods could not be consulted. Güttel and
-Tisseur, "The nonlinear eigenvalue problem", is Acta Numerica 26 (2017),
-pp. 1–94.
+eigenvalue problems and on Lanczos methods could not be consulted; the local
+file labelled as the fourth edition (2013) is the same partial scan of the
+third edition. Parlett is *The Symmetric Eigenvalue Problem* (SIAM, 1998),
+Demmel is *Applied Numerical Linear Algebra* (SIAM, 1997), and Saad is
+*Numerical Methods for Large Eigenvalue Problems*, revised edition (SIAM,
+2011). Güttel and Tisseur, "The nonlinear eigenvalue problem", is Acta
+Numerica 26 (2017), pp. 1–94.
 
 Item 4.1 is Horn–Johnson, Theorem 2.3.1, p. 79, for the complex and the real
 triangular form, and Theorem 2.3.4, p. 82, for the real Schur form; also
@@ -7618,7 +7745,10 @@ Item 4.4 is Quarteroni–Sacco–Saleri, Theorem 5.6, p. 193, and Trefethen–Ba
 Theorem 27.1, p. 205, for the power method, and Trefethen–Bau, Theorem 27.2,
 pp. 206–207, with Quarteroni–Sacco–Saleri, §5.3.2, pp. 195–196, for inverse
 iteration. Trefethen–Bau assume throughout Lecture 27 that $A$ is real
-symmetric; Quarteroni–Sacco–Saleri treat diagonalizable complex matrices but
+symmetric, and on p. 206 take the shift and the vectors real; with a complex
+shift or starting vector the iterates converge to $q_J$ only up to a
+unimodular factor that need not settle to a sign; Quarteroni–Sacco–Saleri
+treat diagonalizable complex matrices but
 state convergence of inverse iteration only as a limit. Their Theorem 5.6
 bounds the unnormalized iterate $\tilde q^{(k)}$, a scalar multiple of
 $q^{(k)}$, and gives the constant
@@ -7658,31 +7788,45 @@ for real matrices with real eigenvalues of distinct moduli but omit the
 hypothesis on $X^{-1}$, which is needed for the eigenvalues to appear in the
 order of decreasing modulus; that rate is not stated here.
 
-Item 4.8 is Trefethen–Bau, Lecture 26, pp. 196–200, and Stoer–Bulirsch,
-§6.5.4, p. 402, for the reduction; Stoer–Bulirsch, p. 425, for the
-preservation of Hessenberg and Hermitian form, Theorem (6.6.5.5),
-pp. 428–429, for the unreduced case and the deflation, (6.6.5.2)–(6.6.5.3),
-p. 428, for the shifted iteration, and Theorem (6.6.5.8) with the shift
-strategy (6.6.5.7b), p. 430, for Wilkinson's theorem. Stoer–Bulirsch give
-Wilkinson's theorem without proof, citing Wilkinson (1968), and add that the
-rate is cubic apart from rare exceptions. Item 4.9 is Stoer–Bulirsch, Theorem
-(6.6.5.1), pp. 426–427; no second local source states it.
+Item 4.8 is Trefethen–Bau, Lecture 26, pp. 196–200 (Algorithm 26.1, p. 198), Demmel, Algorithm 4.6,
+p. 165, and Stoer–Bulirsch, §6.5.1, pp. 388–392, for the Householder reduction (Stoer–Bulirsch,
+§6.5.4, p. 402, reduce to Hessenberg form by elimination instead); Stoer–Bulirsch, p. 425, for the
+preservation of Hessenberg and Hermitian form, Theorem (6.6.5.5), pp. 428–429, for the unreduced
+case and the deflation, (6.6.5.2)–(6.6.5.3), p. 428, for the shifted iteration, and Theorem
+(6.6.5.8) with the shift strategy (6.6.5.7b), p. 430, for Wilkinson's theorem. Stoer–Bulirsch give
+Wilkinson's theorem without proof, citing Wilkinson (1968), and add that the rate is cubic apart
+from rare exceptions. Parlett, Theorem 8.10.1, p. 166, proves the convergence (at least linear from
+the start, for the QL form, with the tie rule of p. 163), and §8.11, p. 168, explains that the
+asymptotic rate is better than cubic almost always while quadratic convergence cannot be excluded;
+Demmel, Theorem 5.8, p. 214, states global convergence, at least linear, and asymptotically cubic
+for almost all matrices. Hence the rate is stated here as ultimate. Item 4.9 is Stoer–Bulirsch,
+Theorem (6.6.5.1), pp. 426–427, with the index range $2\le i\le n-1$ used here; also Demmel, Theorem
+4.9, p. 167, for real matrices with fully unreduced $H$, and Parlett, Theorem 7.2.1, p. 121, for the
+symmetric tridiagonal case.
 
 Item 4.10 is Trefethen–Bau, Theorem 26.1, p. 200, Theorem 29.1 and (29.10),
 p. 223. Trefethen–Bau work in their model (13.5) and (13.7), which is the
 standard model, and write $O(\epsilon_{\mathrm{machine}})$ with constants
-depending on the dimension.
+depending on the dimension. Demmel, p. 198, derives the eigenvalue
+consequence through Weyl's inequality for every backward stable algorithm.
 
 Item 4.11 is Stoer–Bulirsch, §6.5.2, pp. 395–397, and
 Quarteroni–Sacco–Saleri, §5.10.1, pp. 226–228, with (5.64), p. 227, for the
-decrease of $\Psi$; both sources give the formulas for $t$ in 4.11. Both state
+decrease of $\Psi$; both sources give the formulas for $t$ in 4.11, and the
+orientation of $G$ used here is that of Quarteroni–Sacco–Saleri, (5.60),
+p. 227 (for the counterclockwise rotation the quadratic becomes
+$t^2-2\eta t-1=0$). Both state
 the convergence of the cyclic method and its quadratic rate without proof,
 citing Wilkinson (1962). Quarteroni–Sacco–Saleri, p. 228, give the bound
 $\Psi(A^{(k+N)})\le\Psi(A^{(k)})^2/(\sqrt2\,\delta)$ for all $k$;
 Stoer–Bulirsch, p. 397, give $S(A^{(i+N)})\le S(A^{(i)})^2/\delta$ with
 $S=\Psi^2$, which is not homogeneous in $A$ and appears to be a misprint.
 Wilkinson's result is asymptotic, so the bound is stated here for all
-sufficiently large $k$.
+sufficiently large $k$. Demmel, Lemma 5.4, p. 234, Theorem 5.12, p. 235, and
+p. 236, and Parlett, §9.4.2, p. 195, and §9.5, pp. 197–198, give the decrease
+of $\Psi$, the convergence and the asymptotically quadratic rate of the cyclic
+method without the constant $1/(\sqrt2\,\delta)$, which rests on
+Quarteroni–Sacco–Saleri alone.
 
 Item 4.12 is Horn–Johnson, Corollary 4.3.16, p. 190, stated there with
 eigenvalues in increasing order; the definition of Ritz values is
@@ -7700,15 +7844,22 @@ p. 340, cite Kaniel (1966), Paige (1971) and Saad (1980) without stating the
 bound. Quarteroni–Sacco–Saleri define $\cos\varphi_n=|(q^{(n)})^\top u_n|$
 in the second bound; the vector there is the Lanczos starting vector $q_1$,
 as stated here. The hypotheses $\lambda_2>\lambda_n$ and
-$\lambda_1>\lambda_{n-1}$ make $\rho_1$ and $\rho_n$ finite.
+$\lambda_1>\lambda_{n-1}$ make $\rho_1$ and $\rho_n$ finite. The first
+bound is Saad, Theorem 6.4, (6.42), p. 149, with $i=1$ and $\gamma_1$ from
+(6.41), p. 148, for a Krylov space of dimension $m$ and $C_{m-1}$, and the
+second is Parlett, Theorem 12.4.1, p. 270, with $j=1$ and the eigenvalues in
+increasing order.
 
 Item 4.15 is Stoer–Bulirsch, Theorems (6.9.12) and (6.9.13), p. 451; the
 radius in Theorem (6.9.13) is written there with the moments
 $\mu_{ik}=x^*(A^*)^iA^kx$ and equals $\|Ax-\mu x\|_2/\|x\|_2$. The
 Bauer–Fike theorem and the eigenvalue perturbation bounds are in section 2.
-No local source was found for Kahan's residual bound for a Rayleigh–Ritz
-subspace of dimension $k>1$ or for Temple's inequality, and they are not
-stated.
+For Hermitian $A$ Weinstein's bound is also Saad, Corollary 3.3, p. 61, and
+Parlett, p. 244. Kahan's residual bound for a Rayleigh–Ritz subspace of
+dimension $k>1$ is Parlett, Theorem 11.5.1, p. 240 (Frobenius form, Theorem
+11.5.2, p. 241), and the Kato–Temple inequality is Saad, Theorem 3.8, p. 62,
+with Lemma 3.2, p. 62, and Parlett, Theorem 11.7.1, p. 244; they are not
+stated here.
 
 Item 4.16 is Stoer–Bulirsch, §6.7, pp. 436–440, and Trefethen–Bau,
 Lecture 31, pp. 236–237. The last part is the Golub–Reinsch step as derived
@@ -7724,6 +7875,8 @@ pp. 12–13, and the normalization of the left Jordan chains in Theorem 2.5,
 p. 10; the finiteness of the set of eigenvalues is assumed in the text
 preceding (2.8), p. 13. They quote Keldysh's theorem from Mennicken and
 Möller (2003), Theorem 1.6.5, and Kozlov and Maz'ja (1999), Theorem A.10.2.
+By their (2.11), p. 13, the left Jordan chains enter $W$ in reversed order
+within each chain.
 Item 4.19 is the monomial case of their Theorem 6.7, p. 78, with the pencil
 (6.18)–(6.20), pp. 76–77, the basis (6.9), p. 68, with $\sigma=0$ and all
 $\beta_j=1$, and the Taylor row of Table 6.6, p. 77. The identity
@@ -7731,7 +7884,12 @@ $\det L(z)=\det P(z)$, and with it the equality of algebraic and geometric
 multiplicities, is not stated there; it follows by multiplying $L(z)$ on the
 right by the block unit lower triangular matrix whose first block column is
 $b(z)\otimes I_n$, which gives a block upper triangular matrix with diagonal
-blocks $P(z)$ and a unit lower triangular block.
+blocks $P(z)$ and a unit lower triangular block. The first block of a left
+null vector $w$ of $L(\lambda)$ cannot vanish, since block columns
+$\ell,\ell-1,\dots,2$ then force $w=0$. Demmel, Definition 4.10, p. 182,
+and the block companion matrix, p. 183, treat the standard companion form
+for nonsingular leading coefficient, a partial second source for 4.17 and
+4.19; no second local source treats Keldysh's theorem.
 
 ### 5. Iterative methods for linear systems
 
@@ -7779,7 +7937,10 @@ diagonal written as $L+U$; Hackbusch states it for matrices with nonpositive
 off-diagonal entries. Item 5.8 is Varga, Theorem 3.11, p. 82 (Kahan), with
 Hackbusch, Lemma 3.40, p. 56, and Quarteroni–Sacco–Saleri, Theorem 4.7, p. 133.
 Item 5.9 is Varga, Theorem 3.12, p. 83 (with the iteration (3.59)), which
-gives the "if and only if" form under the stated nonsingularity hypothesis;
+gives the "if and only if" form assuming $D-\omega E$ nonsingular for all
+$0<\omega<2$, while its proof uses this only at the given $\omega$, and
+Corollary 3.14, p. 86, for block SOR; Kahan's bound excludes only
+$|\omega-1|\ge1$, so the interval statement is for real $\omega$;
 Hackbusch, Theorem 3.41, p. 57, proves the sufficiency and remarks on the
 necessity, and Quarteroni–Sacco–Saleri, Property 4.3, p. 133, state it without
 proof. The Jacobi statement is Hackbusch, Theorem 3.36, p. 55, and
@@ -7807,11 +7968,14 @@ Theorem 10.14, p. 239 (the sharper bound $2c^k/(1+c^{2k})$), Trefethen–Bau,
 Theorem 38.5, p. 299, Saad, Theorem 6.6, p. 192, and (6.107), p. 193, and
 Quarteroni–Sacco–Saleri, Theorem 4.12, p. 155.
 
-Item 5.14 is Trefethen–Bau, Theorem 35.2, p. 270, and Saad, Lemma 6.6, p. 193,
-and Proposition 6.15, p. 194. Item 5.15 is the theorem of Greenbaum, Pták and
-Strakoš (SIAM J. Matrix Anal. Appl. 17, 1996), listed in the bibliography of
-Trefethen–Embree but not stated in any local source; the statement rests on
-that paper and no local source was checked. Item 5.16 is Hackbusch, Theorem
+Item 5.14 is Trefethen–Bau, (35.11), p. 270, and Theorem 35.2, p. 271, and
+Saad, Lemma 6.6, p. 193, and Proposition 6.15, p. 194. Item 5.15 is the
+theorem of Greenbaum, Pták and Strakoš (SIAM J. Matrix Anal. Appl. 17, 1996),
+stated with these hypotheses as Liesen–Strakoš, *Krylov Subspace Methods*
+(Oxford, 2013), Theorem 5.7.7, p. 300, with the construction
+(5.7.22)–(5.7.24), pp. 298–299, and the parametrization of all such pairs in
+Theorem 5.7.8, pp. 300–301; Greenbaum, *Iterative Methods for Solving Linear
+Systems* (SIAM, 1997), p. 55, states it without proof. Item 5.16 is Hackbusch, Theorem
 10.30, p. 254, stated there for the conjugate residual method with a
 preconditioner $N$; with $N=I$ its iterates are the residual minimizers, and
 the proof uses only that minimality. Item 5.17 is Saad, Section 9.2.1,
@@ -7822,7 +7986,14 @@ split preconditioned Algorithm 9.2, p. 247; and Hackbusch, the algorithm
 Item 5.18 is the complex field-of-values form of Elman's bound recorded in
 Liesen–Tichý, [The Field of Values Bound on Ideal
 GMRES](https://www.karlin.mff.cuni.cz/~ptichy/download/public/LiTi2018.pdf),
-(1.4) and the paragraph following it, p. 2.
+(1.4) and the paragraph following it, p. 2. Greenbaum, Theorem 2.2.2 and
+(2.9), p. 31, proves the one-step bound for the minimal residual iteration
+Orthomin(1) in terms of the distance of the field of values from the origin;
+GMRES minimizes over a larger space, so its residuals obey the same bound.
+Liesen–Strakoš, (5.7.15), p. 296, state a stronger form, which implies this
+one since $\nu(W(A^{-1}))\ge\nu/\|A\|_2^2$, and Saad, Theorem 5.3, p. 134,
+the real case with positive definite symmetric part. At $k=0$ the bound holds
+with equality.
 
 ### 6. Matrix functions, matrix equations, and low-rank, randomized and tensor approximation
 
@@ -7835,8 +8006,10 @@ edition (1996); and the Acta Numerica surveys of Higham and Al-Mohy,
 "Computing matrix functions" (Vol. 19, 2010, pp. 159–208), Martinsson and
 Tropp (Vol. 29, 2020, pp. 403–572) and Lim (Vol. 30, 2021, pp. 555–764),
 together with Benner–Gugercin–Willcox (*SIAM Review* 57, 2015,
-pp. 483–531). Higham's *Functions of Matrices* (2008) is not local; the
-survey of Higham and Al-Mohy summarizes it and refers to it for proofs.
+pp. 483–531), and Higham, *Functions of Matrices* (SIAM, 2008), which the
+survey of Higham and Al-Mohy summarizes and refers to for proofs. The local
+file labelled as the fourth edition of Golub–Van Loan (2013) is the same
+partial scan of the third edition and has no chapter on matrix functions.
 
 Item 6.1 is Higham–Al-Mohy, Definitions 2.1 and 2.2, p. 161, the
 equivalence argument on pp. 161–162 (the full proof is cited there from
@@ -7845,15 +8018,21 @@ property on p. 162. Hackbusch, *Hierarchical Matrices*, §14.1, pp.
 355–359, gives the diagonalizable case (Remark 14.2, p. 356), the Jordan
 block formula (Exercise 14.6, p. 357), the sum, product and composition
 rules for diagonalizable matrices (Exercise 14.4, p. 356) and the spectral
-mapping property (Exercise 14.9, p. 359).
+mapping property (Exercise 14.9, p. 359). Higham 2008 gives the two
+definitions as Definitions 1.1 and 1.2, p. 3, and Definition 1.4, p. 5, the
+primary-function remark as Remark 1.7, p. 6, their equivalence as Theorem
+1.12, p. 8, and the listed properties as Theorem 1.13, pp. 10–11.
 
 Item 6.2: the power series criterion is Higham–Al-Mohy, Theorem 2.4, p.
 163; Hackbusch, Lemma 14.5, p. 357, gives only the sufficient condition
 $\rho(A-z_0I)<r$. The Cauchy integral is Hackbusch, Lemma 14.8, p. 358,
 where it is shown to agree with the diagonalizable and the power series
 definitions, with a check on a $2\times2$ Jordan block after the proof;
-its agreement with Definition 2.1 for a general matrix is standard
-(Higham 2008), but no local source proves it in full. The resolvent bound
+its agreement with Definition 2.1 for a general matrix is Higham 2008,
+Definition 1.11 and Theorem 1.12, p. 8, which refers for the proof to
+Horn–Johnson, *Topics in Matrix Analysis*, Theorem 6.2.28. The power series
+criterion is also Higham 2008, Theorem 4.7, p. 76, with both directions. The
+resolvent bound
 is Hackbusch, Theorem 14.13, p. 361, and the diagonalizable bound is
 Hackbusch, Theorem 14.10, p. 359, and Higham–Al-Mohy, p. 174. Hackbusch
 works with $(\zeta I-M)^{-1}$ and does not state the rectifiability
@@ -7863,8 +8042,10 @@ Item 6.3 is Higham–Al-Mohy, Theorems 2.5 and 2.6, p. 164, the identity
 $\log(e^B)=B$ on p. 165 (cited there from Higham 2008, Problem 1.39), and
 the sign function (2.9)–(2.10), p. 165. Hackbusch, Example 14.3, p. 356,
 defines a scalar sign with $\mathrm{sign}(0)=0$ for diagonalizable
-matrices; that convention differs and is not used here. This item rests
-on one local source.
+matrices; that convention differs and is not used here. Higham 2008 has
+the principal $p$-th root as Theorem 7.2, p. 174, the principal logarithm
+as Theorem 1.31, p. 20, the identity $\log(e^B)=B$ as Problem 1.39, p. 32,
+with solution p. 350, and the sign function as (5.1)–(5.2), p. 107.
 
 Item 6.4 is Higham–Al-Mohy, §7: the definition (7.1) and the
 differentiability condition, p. 190 (from Higham 2008, Theorem 3.8), the
@@ -7872,7 +8053,16 @@ condition number (7.2)–(7.3), p. 190 (from Higham 2008, Theorem 3.1),
 Theorems 7.2 and 7.3, p. 191, and the block formula (7.10), p. 192. The
 source says "open subset of $\mathbb R$ or $\mathbb C$"; the statement
 here separates the real-spectrum case from the holomorphic case. Higham
-1996 has no corresponding result. This item rests on one local source.
+2008 has the condition number as (3.2), p. 55, (3.7) and Theorem 3.1, p. 56,
+the existence conditions as Theorems 3.6 and 3.8, pp. 58 and 60, with $D$ an
+open subset of $\mathbb R$ or $\mathbb C$ (p. 58), the block formula as
+(3.16), p. 60, and the series as Problem 3.6, p. 70; p. 59 adds that one
+continuous derivative suffices for normal $A$. For real $D$ the matrices
+with spectrum in $D$ do not form an open set, whence the restriction on $E$
+in the first bullet. The bound $\|f(A)\|\le\tilde f(\|A\|)$ of
+Higham–Al-Mohy, (7.9), p. 191, needs $\|I\|=1$ (the Frobenius norm of the
+$n\times n$ identity is $\sqrt n$), while the derivative bound holds for every
+submultiplicative norm. Higham 1996 has no corresponding result.
 
 Item 6.5 is Higham–Al-Mohy, (5.2)–(5.3), pp. 175–176, and Lemma 5.1, p.
 177. The printed Lemma 5.1 has a misprint: it assumes $A\in\Omega_m$ and
@@ -7880,10 +8070,14 @@ writes $\Delta A=h_{2m+1}(2^{-s}A)$. Since $r_m(X)=e^{X+h_{2m+1}(X)}$ with
 commuting terms, the correct form, used here, assumes $2^{-s}A\in\Omega_m$
 and has $\Delta A=2^sh_{2m+1}(2^{-s}A)$; the bound (5.4) is consistent only
 with this form. The uniqueness of Padé approximants is stated on p. 175,
-citing Baker–Graves-Morris. No second local source treats scaling and
-squaring; Hackbusch, §14.2.2, pp. 361–362, has only the truncated Taylor
-series with the halving rule and mentions Padé approximation in a
-footnote.
+citing Baker–Graves-Morris. Higham 2008 has the Padé approximants as
+(10.23)–(10.24), p. 241, the backward error as Theorem 10.19, p. 242, which
+has $\Delta A=2^sh_{2m+1}(2^{-s}A)$ and so confirms the correction above,
+the bound (10.29)–(10.31), p. 243, and uniqueness in §4.4.2, p. 79.
+Hackbusch, §14.2.2, pp. 361–362, has only the truncated Taylor series with
+the halving rule and mentions Padé approximation in a footnote. For $m=0$
+the denominator $q_{00}=1$ has no zero, so $r_m$, $\nu_m$ and $\Omega_m$ are
+used for $m\ge1$.
 
 Item 6.6 is Higham, §15 introduction, (15.1) and (15.3), pp. 310–311,
 for $AX-XB=C$ with real $A\in\mathbb R^{m\times m}$ and $B\in\mathbb
@@ -7919,10 +8113,11 @@ and Tropp 2011). Theorem 11.5 states $B$ real but $\Omega\in\mathbb
 F^{n\times\ell}$; it is stated here for real standard normal test
 matrices, the case to which the constant $k/(\ell-k-1)$ applies. The proof
 sketch on p. 474 writes $\|\Sigma_1\|_F$ where $\|\Sigma_2\|_F$ is meant.
-The combined bound for $k\ge2$, $\ell-k\ge2$ is Halko, Martinsson and
-Tropp's Theorem 10.5, which is not local. The relation between the range
-finder and the randomized SVD is Martinsson–Tropp, §11.2, p. 469. Only one local
-source treats this item.
+The combined bound for $k\ge2$, $\ell-k\ge2$ follows by inserting the estimate
+of $\mathbb EZ$ on p. 474 into Theorem 11.5, since $k<\ell-1$ is $\ell-k\ge2$
+(it is Halko, Martinsson and Tropp's Theorem 10.5). The relation between the
+range finder and the randomized SVD is Martinsson–Tropp, §11.2, p. 469. Only
+one local source treats this item.
 
 Item 6.10 is Martinsson–Tropp: the restricted singular values (8.2), p.
 447, the Gaussian embedding, §8.3, p. 448, the Gaussian width, §8.4, pp.
@@ -7932,7 +8127,8 @@ embeddings, §8.7, pp. 452–453. The two consequences stated here are
 derived directly from Theorem 8.4 with explicit probabilities, using
 $w(E)\le\sqrt{2\log\#E}$ for a finite set of unit vectors (p. 451). The
 source's displayed bound $\sqrt{2\log\#E}<\sqrt{2\log(N/2)}$ on p. 451 is a
-misprint, since $\#E$ can be $N(N-1)/2$, and its sufficient dimension
+misprint, presumably for $\sqrt{2\log(N^2/2)}$, since $\#E$ can be
+$N(N-1)/2$, and its sufficient dimension
 $d\ge8\varepsilon^{-2}\log N$ is stated there without a failure
 probability. Only one local source treats this item.
 
@@ -7958,7 +8154,9 @@ Silva and Lim, real tensors without a best rank-$r$ approximation form a
 set of positive measure; that statement is not included.
 
 Item 6.13 is Hackbusch, *Tensor Spaces*, Lemma 10.1, pp. 282–283,
-Corollary 10.2 and Theorem 10.3, p. 283, and Corollary 10.4, p. 284. The
+Corollary 10.2 and Theorem 10.3, p. 283, and Corollary 10.4, p. 284;
+Corollary 10.2 prints $\mathrm{diag}\{\sigma_i\}$ where, by Corollary 8.25, the
+squares $(\sigma^{(j)}_i)^2$ are meant. The
 first inequality is attributed there to De Lathauwer, De Moor and
 Vandewalle. Existence of a best approximation in $\mathcal T_r$ is
 Hackbusch, Theorem 10.8, p. 290.
@@ -7970,7 +8168,9 @@ train format (factor $\sqrt{d-1}$, since only $d-1$ projections occur).
 The order of the projections, from the root to the leaves, is (11.60), p.
 357, and the existence of a best approximation is Theorem 11.56, p. 354,
 applied to the tensor train format as a hierarchical format with a linear
-dimension tree (§12.2). The sequential TT-SVD of Oseledets, which projects from the first
+dimension tree (§12.2). For $v=0$ all $\rho_j^*$ vanish and $\mathcal
+T_{\rho^*}$ is not defined, whence $v\ne0$ in the first bullet. The
+sequential TT-SVD of Oseledets, which projects from the first
 factor onwards using the singular vectors of the partially truncated
 tensor, satisfies the same bound, but no local source states that variant;
 it is not included.
@@ -7980,8 +8180,12 @@ diameters (5.3b) and (5.4a,b), p. 86, $\eta$-admissibility, Definition
 5.5, p. 87, the leaf size condition (5.36), p. 109, Definition 6.1, pp.
 119–120, the sparsity constant (6.5a,b), p. 122, Lemma 6.11, p. 124,
 Lemma 6.13, p. 125, the discussion of depths on p. 126, and Lemma 7.17, p.
-189. Lemma 6.11 assumes that no cluster has exactly one son, as stated in
-its proof. Hackbusch works over $\mathbb R$ and with a general rank
+189. Lemma 6.11 is unconditional: part (ii) of its proof passes to the
+reduced trees without clusters with exactly one son, which changes neither
+$P$ nor $C_{\mathrm{sp}}(P)$. The operation count
+$N_{MV}=2r(\#\tau+\#\sigma)-\#\tau-r$ per admissible block gives
+$S\le N_{MV}$ only for $r\ge1$, so $r\in\mathbb N$. Hackbusch works over
+$\mathbb R$ and with a general rank
 distribution $r(b)$; the constant-rank case is stated. A second local
 source for this item was not found.
 
@@ -8033,7 +8237,10 @@ Item 7.4 is Rump, (9.1)–(9.8), pp. 325–327. The midpoint–radius formula is
 Rump, (9.10), p. 329, stated there for an interval matrix times a point
 matrix. The form in 7.4 is the transposed case, used in the proof of Lemma
 10.5, p. 342. Item 7.5 is Rump, (4.1)–(4.2), p. 308, and (5.14)–(5.15),
-p. 313, which notes that the rounded result is best possible. The floating
+p. 313, which notes that the rounded result is best possible. Rump
+includes $\pm\infty$ in $\mathbb F$, so that rounding is always defined;
+with a finite $\mathbb F$ the first bullet of 7.5 needs the endpoints of
+$X\circ Y$ to lie in its range. The floating
 inclusion principle is Rump, p. 314, and Muller et al., §12.3.1, p. 465.
 The width bounds are Muller et al., §12.4.1, p. 469, derived there from the
 relative error bounds of directed rounding without underflow. Muller et al.,
@@ -8073,8 +8280,9 @@ Item 7.8 is Rump, Theorem 6.2, p. 316, with the computable version (6.5),
 p. 317. Rump takes $D=f'(X)$, the range of the derivative. A box $D$
 containing that range gives a larger $N$, so the hypothesis
 $N\subseteq X$ for $D$ implies it for $f'(X)$. The other two parts carry
-over by the same mean value argument. Continuous differentiability is
-assumed here so that $f'(X)$ is a compact interval.
+over by the same mean value argument, which uses the derivative only at
+interior points of $X$. Rump assumes $f$ differentiable on $\mathbb R$; continuity
+on $X$ and differentiability on its interior suffice for that argument.
 
 Item 7.9 is Rump, Theorem 13.1, p. 374, and Theorem 13.2, pp. 374–375. That
 theorem is proved by Brouwer's fixed-point theorem, following Alefeld.
@@ -8114,6 +8322,9 @@ non-degeneracy and local uniqueness statements. Nakao–Plum–Watanabe,
 Remark 6.3(d), p. 185, notes that local uniqueness does not need the
 surjectivity of $L$. Remark 6.5(c), p. 188, notes that $\mathcal F$ need
 only be defined on a neighbourhood containing the closed balls involved.
+In Theorem 6.4, p. 188, the letter $G$ denotes the remainder majorant
+(6.27) and enters (6.18) in place of $\int_0^tg$; the last sentence of
+7.13 says so explicitly.
 Both sources call the theorem "similar to the Newton–Kantorovich theorem".
 
 Item 7.14 is Nakao–Plum–Watanabe, §1.1, p. 3, for the embeddings and the
@@ -8121,8 +8332,10 @@ solvability of $Av=g$, (1.11)–(1.15), pp. 5–6, and Lemma 1.1, p. 7, for the
 abstract part. The one-dimensional bound is Theorem 1.5, p. 15. That
 theorem is stated "for all $u\in H^1_0$", but the right-hand side requires
 $u''\in L^2$, so the hypothesis $u\in H^2$ is added here. The piecewise
-quadratic constant $h/(2\pi)$ is reported on pp. 6 and 17 from the
-literature, without proof. The square-mesh bilinear constant is §1.4.2.2,
+quadratic constant $h/(2\pi)$, with the remark that it is best possible, is
+reported on p. 17 from the literature, without proof. The constant
+$h/(2\pi)$ quoted on pp. 6 and 18 is a different one, for biquadratic
+elements on square meshes. The square-mesh bilinear constant is §1.4.2.2,
 pp. 17–18, which cites Grisvard for
 $|u|_{H^2}=\|\Delta u\|_{L^2}$ on convex polygons. The triangle constant is
 §1.4.2.3, p. 18, and p. 6, reported from computer-assisted proofs in the
@@ -8175,15 +8388,14 @@ $f'\ne0$ on $I_\varepsilon$ is implicit in Gautschi's definition (4.49) of
 $M(\varepsilon)$. Quarteroni–Sacco–Saleri, Property 6.2, p. 254, states the
 order $(1+\sqrt5)/2$ without proof, citing Isaacson–Keller.
 
-Item 8.5: the first part is Quarteroni–Sacco–Saleri, Theorem 7.1,
-pp. 287–288, where the radius $r=\min(R,1/(2CL))$ is fixed in the proof;
-compare Stoer–Bulirsch, Theorem (5.3.2), pp. 299–300, which assumes bounds on
-$F'(x)^{-1}$ over a whole ball around $x^0$. The second part is
-Nocedal–Wright, Theorem 11.2, p. 276. The affine-covariant part is
-Deuflhard–Hohmann, Theorem 4.10, pp. 88–89, and Deuflhard, Theorem 2.3,
-p. 50 (the refined Newton–Mysovskikh theorem of Deuflhard–Potra); the
-uniqueness statement is restricted here to $D$, where the Lipschitz
-condition is available.
+Item 8.5: the first part is Quarteroni–Sacco–Saleri, Theorem 7.1, pp. 287–288, where the radius
+$r=\min(R,1/(2CL))$ is fixed in the proof; compare Stoer–Bulirsch, Theorem (5.3.2), pp. 299–300,
+which assumes bounds on $F'(x)^{-1}$ over a whole ball around $x^0$. The second part is
+Nocedal–Wright, Theorem 11.2, p. 276. The affine-covariant part is Deuflhard–Hohmann, Theorem 4.10,
+pp. 88–89, and Deuflhard, Theorem 2.3, p. 50 (the refined Newton–Mysovskikh theorem of
+Deuflhard–Potra); the uniqueness statement is restricted here to $D$, where the Lipschitz condition
+is available. Both sources place the iterates in the open ball $B(x^*,\rho)$ for $k\ge1$, which
+fails at $x^0=x^*$, where $\rho=0$; the strict inequality is stated here for $x^0\ne x^*$.
 
 Item 8.6 is Ciarlet, Theorem 7.7-3, pp. 485–486. Stoer–Bulirsch, Theorem
 (5.3.6), p. 302, states the finite-dimensional case on a convex set $C_0$
@@ -8222,14 +8434,15 @@ hypotheses of their Theorem 7.1, and in the result of Broyden, Dennis and
 Moré reported in Stoer–Bulirsch, pp. 315–316. The Dennis–Moré
 characterization of superlinear convergence is stated in section 9.
 
-Item 8.11 is Deuflhard–Hohmann, Theorem 4.14, p. 94. Its hypotheses do not
-state that $B(x^*,\rho)\subset D$, which the proof uses; the assumption is
-added here. Deuflhard, Theorems 4.7 and 4.8, pp. 194–196, gives the general
-form with outer inverses and possibly deficient rank, a point-dependent
-factor $\kappa(x)$, and the a posteriori estimate (4.42). Nocedal–Wright,
-Theorem 10.1, p. 256, gives $J_k^\top r_k\to0$ for the Gauss–Newton method
-with Wolfe line searches on a bounded level set under a uniform full-rank
-condition.
+Item 8.11 is Deuflhard–Hohmann, Theorem 4.14, pp. 94–95. Its hypotheses do not state that
+$B(x^*,\rho)\subset D$, which the proof uses; the assumption is added here. Like Theorem 4.10,
+Theorem 4.14 places the iterates in the open ball for $k\ge1$, which fails at $x^0=x^*$; the strict
+inequality is stated here for $x^0\ne x^*$. Deuflhard–Hohmann take $x^*$ to be a solution of the
+least-squares problem; the proof uses only $F'(x^*)^+F(x^*)=0$, which is the hypothesis stated here.
+Deuflhard, Theorems 4.7 and 4.8, pp. 194–196, gives the general form with outer inverses and
+possibly deficient rank, a point-dependent factor $\kappa(x)$, and the a posteriori estimate (4.42).
+Nocedal–Wright, Theorem 10.1, p. 256, gives $J_k^\top r_k\to0$ for the Gauss–Newton method with
+Wolfe line searches on a bounded level set under a uniform full-rank condition.
 
 Item 8.12 is Ciarlet, Theorem 7.13-1, pp. 548–549 (the implicit function
 theorem in Banach spaces, with the $C^m$ statement in part (c)), applied as
@@ -8254,19 +8467,25 @@ Item 8.14 is Griewank–Walther, Table 2.2, p. 19, the conventions
 procedure; Tables 3.2 and 3.4, pp. 34–35, for the tangent mode; and §3.2,
 (3.3) and Table 3.5, pp. 37–41, for the incremental adjoint recursion.
 
-Item 8.15 is Griewank–Walther, §4.4, (4.6)–(4.11), pp. 74–76, Proposition
-4.3, p. 78, and the bounds (4.17), p. 82, (4.18), p. 82, (4.21), p. 85, and
-(4.23), p. 85; the cheap gradient principle is (3.14), p. 44, and Rule 8,
-p. 88. The bound $\omega_{\mathrm{grad}}\le4$ requires the constraints on
-$w$; with $\mu$ unrestricted it rises to $5$, and counting
-multiplications only gives $3$ (p. 85). The cost of taping, needed when
-intermediate values are overwritten, is excluded (pp. 84 and 86).
+Item 8.15 is Griewank–Walther, §4.4, (4.6)–(4.11), pp. 74–76, Proposition 4.3, p. 78, and the bounds
+(4.17), p. 82, (4.18), p. 82, (4.21), p. 85, and (4.23), p. 85; the cheap gradient principle is
+(3.14), p. 44, and Rule 8, p. 88. The intervals are Griewank–Walther's. The vector-mode bounds
+(4.18) and (4.23) need $p\ge1$ and $q\ge1$, which Griewank–Walther assume implicitly; at $p=0$ or
+$q=0$ the evaluation cost does not scale and the bounds fail. On the admissible weights the tangent
+ratios come arbitrarily close to their lower ends $2$ and $1+p$, while $\omega_{\mathrm{grad}}$
+takes values in $(7/2,4]$ and the ratio for $q$ adjoint vectors in $(3/2+2q,\,3/2+5q/2]$, so the
+lower ends of the two adjoint intervals are not attained. The bound $\omega_{\mathrm{grad}}\le4$
+requires the constraints on $w$; with $\mu$ unrestricted it rises to $5$, and counting
+multiplications only gives $3$ (p. 85). The cost of taping, needed when intermediate values are
+overwritten, is excluded (pp. 84 and 86).
 
-Item 8.16 is Griewank–Walther, §8.1, (8.6)–(8.8), pp. 164–165, and p. 167
-for the complete graph when a row is dense; the remark on full Jacobians
-is p. 77 and Rule 17, p. 247. The Newsam–Ramsdell principle, Proposition
-8.1, p. 163, is the corresponding statement for general (non-$0$–$1$)
-seeds.
+Item 8.16 is Griewank–Walther, §8.1, (8.6)–(8.8), pp. 164–165. That a dense
+row makes the column incidence graph complete is immediate from the
+definition; p. 167 shows that the graph can be complete even when every row
+has only two structural nonzeros (binary interactions). The remark on full
+Jacobians is p. 77 and Rule 17, p. 247. The Newsam–Ramsdell principle,
+Proposition 8.1, p. 163, is the corresponding statement for general
+(non-$0$–$1$) seeds.
 
 ### 9. Numerical optimization
 
@@ -8282,7 +8501,8 @@ PDF page index and the printed page varies within these files.
 
 Item 9.1 is Nocedal–Wright, Theorems 2.2, 2.3 and 2.4, pp. 14–16, and
 Nesterov, Theorems 1.2.1, 1.2.2 and 1.2.3, pp. 20–23; the convex case is
-Nesterov, Theorem 2.1.1, p. 61. Nesterov's sufficient condition (Theorem
+Nocedal–Wright, Theorem 2.5, p. 16, and Nesterov, Theorem 2.1.1, p. 61.
+Nesterov's sufficient condition (Theorem
 1.2.3) assumes only that $f$ is twice differentiable, where Nocedal–Wright
 assume a continuous Hessian near $x^*$; the item states the Nocedal–Wright form.
 
@@ -8318,7 +8538,12 @@ as a hypothesis. Its proof establishes the Dennis–Moré condition (3.36)
 and concludes via Theorem 3.6; the item states the conclusion in that form,
 since superlinear convergence needs the unit step to be taken. The
 positive definiteness of $\nabla^2f(x^*)$ is implicit in Theorem 6.6 (its
-proof uses $\nabla^2f(x^*)^{-1/2}$). The Dennis–Moré theorem for nonlinear
+proof uses $\nabla^2f(x^*)^{-1/2}$). Theorem 3.6 allows $c_1\le\frac12$, but
+part (i) fails for $c_1=\frac12$: for $f(x)=\frac12x^2+x^3$ and $x<0$ near $0$
+the Newton step $p$ gives
+$f(x+p)-f(x)-\frac12f'(x)p=\frac12p^2(f''(\xi)-f''(x))>0$, and Wolfe steps
+$\alpha=1-10|x|$ keep the iterates negative and convergent to $0$. The
+proof needs $c_1<\frac12$, which the item assumes. The Dennis–Moré theorem for nonlinear
 equations is not stated in a local source and is not included; section 8
 states the local superlinear convergence of Broyden's method.
 
@@ -8371,7 +8596,7 @@ p. 396, Definition 5.1 (Fejér monotonicity), p. 91, Theorem 5.15
 Theorem 26.11 (Douglas–Rachford), p. 473. These theorems also give strong
 convergence under uniform monotonicity and the convergence of dual
 sequences, which the item omits. The proximal point method is also Beck,
-Theorem 10.28, in Euclidean spaces.
+Theorem 10.28, p. 288, in Euclidean spaces.
 
 Item 9.13 is Chambolle–Pock, Algorithm 6 (PDHG), p. 212, the Lagrangian
 (3.12), p. 178, and Theorem 5.1, pp. 213–214, with $h=0$; with a smooth
@@ -8402,15 +8627,21 @@ regularized problem (4.2), p. 425, Proposition 4.3 and Sinkhorn's iteration
 and 4.2, pp. 440–441. Peyré–Cuturi prove Proposition 2.4 by reference to
 linear programming duality, and Theorem 4.2 by reference to Franklin and
 Lorenz (1989); the scaling vectors are determined only up to the rescaling
-$(ru,v/r)$, which the Hilbert metric ignores.
+$(ru,v/r)$, which the Hilbert metric ignores. Peyré–Cuturi state the
+a posteriori bound for $v$ with the same plan $P^{(\ell)}$ as for $u$; since
+$P^{(\ell)\top}\mathbf 1_n=b$ that bound would force $v^{(\ell)}=v^\star$, and it
+fails numerically. The item states the $v$ bound for the half-step plan
+$Q^{(\ell)}$, by the argument of the $u$ bound with the roles of the two
+updates exchanged; this form is not in the source. Proposition 4.3, p. 432,
+is stated for general probability vectors; for marginals with zero entries the
+minimizer vanishes on the corresponding rows and columns, so the scaling
+vectors are positive only on the supports, and the item says so.
 
-Item 9.17 is Hinze–Pinnau–Ulbrich–Ulbrich, problem (1.77), Assumption 1.42
-and Theorem 1.43, p. 53, Assumption 1.47, p. 70, Theorem 1.48 and Lemma
-1.12, pp. 71–72, Corollary 1.3, p. 73, and the linear-quadratic optimality
-system (1.114)–(1.116), p. 74. Sufficiency follows from Theorem 1.46, p. 66,
-since the reduced objective is convex; the projection formula is Lemma
-1.12(iv) with $\gamma=1/\alpha$ and $\nabla\hat J(\bar u)=\alpha\bar u+B^*\bar p$
-from (1.113).
+Item 9.17 is Hinze–Pinnau–Ulbrich–Ulbrich, problem (1.77), p. 52, Assumption 1.42 and Theorem 1.43,
+p. 53, Assumption 1.47, p. 70, Theorem 1.48 and Lemma 1.12, pp. 71–72, Corollary 1.3, p. 73, and the
+linear-quadratic optimality system (1.114)–(1.116), p. 74. Sufficiency follows from Theorem 1.46, p.
+66, since the reduced objective is convex; the projection formula is Lemma 1.12(iv) with
+$\gamma=1/\alpha$ and $\nabla\hat J(\bar u)=\alpha\bar u+B^*\bar p$ from (1.113).
 
 ### 10. Polynomial and rational approximation
 
@@ -8421,7 +8652,9 @@ Quarteroni–Sacco–Saleri the 2nd edition (2007), Deuflhard–Hohmann the 2nd
 edition (2003), Han–Atkinson the 3rd edition (2009), Canuto–Hussaini–
 Quarteroni–Zang the 2006 volume *Fundamentals in Single Domains*, Ciarlet's
 *Linear and Nonlinear Functional Analysis with Applications* the SIAM 2013
-edition, and Baker–Graves-Morris the 2nd edition (1996).
+edition, Baker–Graves-Morris the 2nd edition (1996), and DeVore–Lorentz is
+*Constructive Approximation* (Springer, 1993), whose theorem numbers restart
+in each chapter and are cited with the chapter.
 
 Item 10.1 is Han–Atkinson, Theorem 3.1.1 and Corollary 3.1.4, p. 116, and
 Theorem 3.3.16, p. 138, together with Trefethen, Theorem 6.1, p. 51, and the
@@ -8433,16 +8666,21 @@ and the Mairhuber–Curtis theorem are Wendland, Definition 2.1 and Theorem
 subspace of $C[a,b]$ is stated without proof in the hints to Ciarlet,
 Problem 5.4-6, p. 251, which refers to Cheney's book; there the sign
 condition is misprinted as $\mathrm{sgn}(f(x_i)-p_n(x_i))=-\mathrm{sgn}(f(x_{i+1})-f(x_i))$,
-where $f(x_{i+1})-p_n(x_{i+1})$ is meant. The uniqueness of the best
-approximation from a Haar subspace and Haar's converse theorem rest on my
-own knowledge; no local source was checked for them.
+where $f(x_{i+1})-p_n(x_{i+1})$ is meant. DeVore–Lorentz, Chapter 3,
+defines a Haar system on a Hausdorff space by the zero count, p. 68, which
+is equivalent to the interpolation definition by Wendland's Theorem 2.2. It
+proves the uniqueness of the best approximation from a Haar space on a
+compact Hausdorff space, Theorem 4.2, p. 72, Haar's converse, Theorem 4.3,
+p. 72, and the alternation theorem for real Haar systems on $[a,b]$ or on
+the circle, Theorem 5.1, p. 74.
 
 Item 10.3 is Trefethen, Theorem 10.1, p. 93, which also gives uniqueness
 for complex $f$ on $[-1,1]$; Han–Atkinson, Theorems 3.3.19 and 3.3.20, p.
 139, on a general interval $[a,b]$ and for trigonometric polynomials; and
 Quarteroni–Sacco–Saleri, Property 10.1, p. 444. The de la Vallée Poussin
-bound is Quarteroni–Sacco–Saleri, Property 10.2, pp. 444–445, and
-Trefethen, Exercise 10.3, p. 98; the right-hand inequality
+bound is Quarteroni–Sacco–Saleri, Property 10.2, pp. 444–445,
+DeVore–Lorentz, Chapter 3, Theorem 5.2, pp. 74–75, for a general Haar
+system, and Trefethen, Exercise 10.3, p. 98; the right-hand inequality
 $E_n(f)\le\|f-q\|$ is immediate.
 
 Item 10.4 is Gautschi, (2.81)–(2.88), pp. 86–88, Theorem 2.2.1, p. 88, the
@@ -8470,7 +8708,7 @@ the zeros of $T_{n+1}$ is Quarteroni–Sacco–Saleri, (10.20), p. 433, and
 (10.25), p. 434. The equispaced asymptotics are also in
 Quarteroni–Sacco–Saleri, p. 338, and in the notes of Gautschi, p. 115. The
 near-best bounds are Trefethen, Theorem 16.1, p. 154. Faber's theorem is
-Gautschi, notes to Section 2.2.1, p. 116 (citing Natanson), Trefethen, p. 54
+Gautschi, notes to Section 2.2.1, p. 116 (citing Natanson), Trefethen, p. 55
 and (15.6), p. 137, and Deuflhard–Hohmann, p. 193; the divergence of the
 Lebesgue constants is also in Ciarlet, Problem 5.4-4, p. 251. Gautschi's
 note on p. 115 states $\Lambda_n>\frac2\pi\log n+c$ with
@@ -8489,7 +8727,12 @@ Item 10.9: the Bernstein inequality is Canuto–Hussaini–Quarteroni–Zang,
 (5.1.5), p. 268. The converse for analytic functions is Trefethen, Theorem
 8.3, p. 73, which uses the inequality $\|p\|_{E_\rho}\le\rho^d\|p\|$ for
 $p$ of degree $d$ (Exercise 8.6, pp. 75–76). The Bernstein inverse theorem
-for Hölder classes rests on my own knowledge; no local source states it.
+for Hölder classes is DeVore–Lorentz, Chapter 7, (1.2), p. 201, quoted there
+for $f\in C(\mathbb T)$ and $0<\alpha<1$; the general form is Theorem 3.3,
+p. 210, which characterizes $E_n(f)_p=O(n^{-\alpha})$, $\alpha>0$, by
+$f\in\mathrm{Lip}^*(\alpha,L_p)$, and the remark after it, p. 210, that
+$E_n(f)=O(1/n)$ gives only the Zygmund class and not $\mathrm{Lip}\,1$ shows
+the failure for $\alpha=1$.
 DeVore, Acta Numerica 7, pp. 86–87, gives the abstract Jackson and Bernstein
 inequalities that underlie such characterizations.
 
@@ -8574,16 +8817,22 @@ Schumaker, Theorem 4.61, p. 165, and Corollary 4.62, p. 166, whose condition
 (4.132) reads $t_i\in\{x:N_i^m(x)\ne0\}$; Stoer–Bulirsch quote the theorem
 without proof as Theorem 2.4.5.7, p. 121. Item 11.5 is Schumaker, Theorem
 4.76, p. 178, with Examples 4.74–4.75, pp. 177–178; the sign-change counts
-are those of Schumaker §2.4.
+are those of Schumaker, Definitions 2.10 and 2.11, p. 25. Example 4.75
+states the monotonicity without a range; its argument (adding a constant to
+the coefficients) uses the partition of unity, so 11.5 claims it only on
+$[y_m,y_{n+1})$. Outside that interval the spline returns to $0$, so it is
+not monotone on $\mathbb R$.
 
 Item 11.6 is Stoer–Bulirsch, Definition 2.4.1.1, p. 98, the Holladay
 identity Theorem 2.4.1.4, p. 99, Theorem 2.4.1.5, p. 100, and the existence
 statement Theorem 2.4.2.13, p. 105; Gautschi, Theorems 2.3.1 and 2.3.2,
 pp. 111–112, proves the minimality of the complete and natural spline among
 $C^2$ interpolants. Item 11.7 is Stoer–Bulirsch, Theorem 2.4.3.3, p. 109,
-which proves the bounds with $c_k\le2$; the sharper constants are those of
-Hall and Meyer (1976), quoted without proof in the footnote on p. 109 of
-Stoer–Bulirsch and in Gautschi, (2.147), p. 110, where $c_3$ is said to
+which proves the cruder bounds, with $c_k\le2$ for $k\le2$ and
+$2LK\|\Delta\|$ for $k=3$. The constants $c_0,\dots,c_3$ are those of Hall
+and Meyer (1976), quoted without proof in the footnote on p. 109 of
+Stoer–Bulirsch, in the form $c_kL\|\Delta\|^{4-k}$ for $k=0,1,2,3$ with
+$c_3=(K+K^{-1})/2$, and in Gautschi, (2.147), p. 110, where $c_3$ is said to
 depend on the mesh ratio.
 
 Item 11.8 is Schumaker, §6.4: Lemma 6.17, p. 223, constructs a
@@ -8613,17 +8862,17 @@ Table 9.1, p. 129. Item 11.11 is Wendland, Definition 8.1, p. 97, Definition
 7.1 (complete monotonicity), p. 86, Micchelli's Theorem 8.19 and Corollary 8.18,
 p. 113, and Corollary 8.20, p. 115.
 
-Item 11.12 is Wendland, §10.2: Theorem 10.7, p. 137, Definition 10.9 and
-Theorems 10.10–10.11, p. 138, Theorem 10.12, p. 139, and Corollary 10.13,
-p. 141; the Sobolev native space of the compactly supported functions is
-Theorem 10.35, p. 160, which excludes $k=0$ with $d\le2$. Item 11.13 is
-Wendland, Theorem 11.1, p. 173, Definition 11.2, p. 174, Theorem 11.4,
-p. 176, and Theorem 11.5, p. 177, specialized to a positive definite kernel
-(trivial polynomial space and $\alpha=0$, as in the remark on p. 176); the
-fill distance is Definition 1.4, p. 14, the cone condition Definition 3.6, p. 28,
-and the error bound Theorem 11.17, p. 184. Wendland does not state how $C$
-and $h_0$ depend on $\Omega$; by Remark 11.12, p. 181, for the generic
-estimate $\Omega$ enters only through its cone condition.
+Item 11.12 is Wendland, §10.2: Theorem 10.7, p. 137, Definition 10.9 and Theorems 10.10–10.11, p.
+138, Theorem 10.12, p. 139, and Corollary 10.13, p. 141; the Sobolev native space of the compactly
+supported functions is Theorem 10.35, p. 160, which excludes $k=0$ with $d\le2$. Item 11.13 is
+Wendland, Theorem 11.1, p. 173, Definition 11.2, p. 174, Theorem 11.4, p. 176, and Theorem 11.5, p.
+177, specialized to a positive definite kernel (trivial polynomial space and $\alpha=0$, as in the
+remark on p. 176); the fill distance is Definition 1.4, p. 14, the cone condition Definition 3.6, p.
+28, and the error bound Theorem 11.17, p. 184. Theorem 11.17 assumes $\Omega$ bounded with an
+interior cone condition; its proof, p. 185, applies Theorem 11.9, p. 179, before which Wendland
+remarks that open regions are not needed. 11.13 keeps $\Omega$ open, a harmless extra hypothesis.
+Wendland does not state how $C$ and $h_0$ depend on $\Omega$; by Remark 11.12, p. 181, for the
+generic estimate $\Omega$ enters only through its cone condition.
 
 Item 11.14 is Wendland, Definition 4.6, p. 41, Theorem 12.3, p. 210, and
 Corollaries 12.4, p. 213, and 12.8, p. 214. Theorem 12.3 is stated for
@@ -8676,8 +8925,7 @@ p. 117, and (7.41), p. 118. Cohen's hypothesis is the coefficient
 equivalence (4.3.23), assumed for the whole range $0<s<t$ in Theorem
 4.3.3; DeVore states the hypotheses only as "sufficient vanishing moments
 and smoothness" of $\psi$. For $\tau<1$ the Besov space is a quasi-normed
-space, treated in Cohen §3.7. Plonka–Potts–Steidl–Tasche was not used for
-this section.
+space, treated in Cohen §3.7.
 
 ### 12. Orthogonal polynomials and numerical quadrature
 
@@ -8688,7 +8936,8 @@ Analysis*, 2nd ed. (Birkhäuser, 2012), cited as Gautschi NA; Stoer–Bulirsch,
 Deuflhard–Hohmann, 2nd ed. (2003); Kress, *Linear Integral Equations*, 3rd
 ed. (2014); the author manuscript of Trefethen, *Approximation Theory and
 Approximation Practice* (2013), cited as ATAP, by its own pagination; and
-Trefethen–Weideman, SIAM Review 56 (2014), 385–458. Gautschi OP writes the
+Trefethen–Weideman, SIAM Review 56 (2014), 385–458; and Brass–Petras,
+*Quadrature Theory* (AMS, 2011). Gautschi OP writes the
 measure as $d\lambda$ and the Gauss weights as $\lambda_\nu$; the section
 writes $\mu$ and $w_k$.
 
@@ -8704,9 +8953,10 @@ Theorem 1.28 and Theorem 1.29, p. 12; Gautschi NA, (2.38)–(2.41), pp. 69–70;
 and Stoer–Bulirsch, Theorem (3.6.3), p. 172. Favard's theorem is stated
 without proof in Gautschi OP, pp. 11–12, and in Gautschi NA, Notes to
 Chapter 2, p. 115, both referring to Natanson; Gautschi OP adds that the
-measure has infinite support. The finiteness of all moments of the measure
-in Favard's theorem is part of the standard statement (the polynomials are
-in $L^2$ of the measure) and was not separately checked in a local source.
+measure has infinite support. Every measure in Gautschi OP has finite
+moments of all orders by the standing assumption (1.1.1), p. 1, so the
+measure of Favard's theorem has finite moments. The bound
+$\beta_k\le\max(a^2,b^2)$ is Gautschi OP, (1.3.9), p. 12, as printed.
 
 Item 12.3 is Gautschi OP, Theorems 1.19, 1.20 and 1.21, p. 7;
 Stoer–Bulirsch, Theorem (3.6.10), p. 174, and Deuflhard–Hohmann, Theorem
@@ -8715,18 +8965,23 @@ is also Gautschi NA, §3.2.3(d), p. 176.
 
 Item 12.4 is Gautschi OP, Definition 1.30 and Theorem 1.31, p. 13, and
 Theorem 1.32, p. 14; Stoer–Bulirsch, Theorem (3.6.20), p. 179, which also
-identifies $\pi_n$ as the characteristic polynomial of $J_n$.
+identifies $\pi_n$ as the characteristic polynomial of $J_n$; it writes
+$\det(J_j-xI)$, which differs from the monic $\det(xI-J_j)$ by the factor
+$(-1)^j$.
 
 Item 12.5 is Gautschi OP, Definition 1.44, p. 20, Theorem 1.45, p. 21, and
 the discussion of optimality, p. 22; Gautschi NA, Theorem 3.2.1, p. 170;
 Stoer–Bulirsch, Theorem (3.6.12)(b),(c), p. 175, for uniqueness and for the
 impossibility of degree $2n$; and Quarteroni–Sacco–Saleri, Theorem 10.1 and
-Corollary 10.2, p. 430, with $n+1$ nodes.
+Corollary 10.2, p. 430, with $n+1$ nodes. Brass–Petras, Theorems 5.1.3,
+5.1.4 and 5.1.5, p. 100, give the characterization, the impossibility of
+degree $2n$ and the uniqueness of the Gauss rule for a weight function.
 
 Item 12.6 is Gautschi OP, Theorems 1.46 and 1.48, p. 23; Gautschi NA,
 §3.2.3(a),(b),(f), pp. 175–177; and Deuflhard–Hohmann, Theorem 9.11, p. 282.
 The formula for the Christoffel numbers is Gautschi OP, Corollary to Theorem
-1.31, p. 14, combined with (3.1.6) in the proof of Theorem 3.1, p. 153.
+1.31, (1.3.20), p. 14, combined with (3.1.7) in the proof of Theorem 3.1,
+p. 153.
 
 Item 12.7 is Gautschi OP, Theorem 3.1, p. 153; Stoer–Bulirsch, Theorem
 (3.6.21), p. 179, where the eigenvector is scaled to have squared length
@@ -8747,8 +9002,8 @@ that appears.
 
 Item 12.9: the first two parts are Kress, Theorem 12.4 (attributed there to
 Szegő) and Corollary 12.5 (Steklov), p. 222, proved by the uniform
-boundedness principle; the necessity-and-sufficiency theorem is commonly
-attributed to Pólya. Kress uses $n$ nodes in the $n$th rule; the proof does
+boundedness principle; the section names the theorem after Pólya and
+Szegő, while Kress names only Szegő. Kress uses $n$ nodes in the $n$th rule; the proof does
 not use the number of nodes, and the section allows $m_n$ nodes. The third
 part is Gautschi NA, §3.2.3(c), pp. 175–176, stated there for a weight
 function on a finite interval. Convergence of Gauss and Clenshaw–Curtis
@@ -8758,13 +9013,19 @@ p. 190.
 Item 12.10 is Stoer–Bulirsch, Theorem (3.2.3), p. 152, with (3.2.9), p. 154,
 for the definite case; and Gautschi NA, §3.2.6, (3.78)–(3.80), pp. 187–188.
 Stoer–Bulirsch define the error as rule minus integral, as in the section;
-Gautschi NA uses the opposite sign.
+Gautschi NA uses the opposite sign. Brass–Petras, Theorem 4.2.5, p. 54, and
+(4.13), p. 55, give the representation for the error integral minus rule
+under the weaker hypothesis that $f^{(n)}$ is absolutely continuous, with
+$\xi\in[a,b]$ in the definite case.
 
 Item 12.11 is Quarteroni–Sacco–Saleri, Theorem 9.2, pp. 388–389, with the
 error defined as integral minus rule; the full proof is referred there to
 Isaacson–Keller. Stoer–Bulirsch, (3.1.4) and the table on pp. 147–148, list
 the same error terms for $n\le6$ with reference to Steffensen. The composite
 versions are Quarteroni–Sacco–Saleri, Theorem 9.3, pp. 392–393.
+Brass–Petras, Theorem 5.2.4 (Steffensen), p. 108, proves the definiteness
+and the sign of the coefficients, with $n$ denoting the number of nodes and
+$\xi\in[a,b]$.
 
 Item 12.12 is Stoer–Bulirsch, (3.3.1)–(3.3.4), pp. 156–157, with proof on
 pp. 157–160; and Quarteroni–Sacco–Saleri, Property 9.3, p. 398. Gautschi NA,
@@ -8780,16 +9041,28 @@ conclusion (3.88), p. 192; Deuflhard–Hohmann, Theorem 9.22, p. 293, gives the
 corresponding error estimate for the extrapolation tableau with general step
 sizes. The Romberg error formula is Stoer–Bulirsch, (3.4.7), p. 165, for the
 step sequence (3.4.5a), p. 163; it is quoted there without proof from Bauer,
-Rutishauser and Stiefel and from Bulirsch. For $k=0$ and $k=1$ it reduces to
+Rutishauser and Stiefel and from Bulirsch. It follows a paragraph on
+rational extrapolation but refers to the polynomial tableau $T_{ik}$ of
+(3.4.4), as the preceding sentence on the order $h_{i-k}^2\cdots h_i^2$ of
+polynomial extrapolation shows. For $k=0$ and $k=1$ it reduces to
 the trapezoidal and composite Simpson error terms.
 
 Item 12.14 is Trefethen–Weideman, Theorem 3.2, p. 396, and Theorem 3.1,
 p. 394, for the periodic case, and Theorem 5.1, p. 400, for the real line.
 
-Item 12.15 is ATAP, Theorem 19.3, p. 189, Theorem 19.4, p. 190, and Theorem
-19.5, p. 195; the Chebyshev points are (2.2), and the Bernstein ellipse is
+Item 12.15 is ATAP, Theorem 19.3, p. 189, and Theorem 19.4, p. 190. The
+Gauss bound printed there, (19.10), with $(n-2\nu-1)^{2\nu+1}$ in the
+denominator, is false: for $f(x)=|x|$, $\nu=1$, $V=2$ and nine Gauss points
+($n=8$) the error is $0.0183$ against the printed $0.0109$, and the error
+decays like $n^{-2}$. The bound stated here follows from the Chebyshev
+coefficient bound of Theorem 7.1, p. 50, and the exactness of the Gauss rule
+on polynomials of degree $2n+1$; (19.9) for Clenshaw–Curtis is correct.
+ATAP's Theorem 19.5, p. 195, which compares Clenshaw–Curtis with (19.10), is
+not used; the Chebyshev points are (2.2), and the Bernstein ellipse is
 defined in Chapter 8, p. 69. ATAP states the positivity of the
-Clenshaw–Curtis weights without proof (p. 187), and also states that the
+Clenshaw–Curtis weights without proof (p. 187); Brass–Petras prove it as
+Theorem 5.4.1 (Imhof), p. 115, for the rule of Definition 5.3.1, p. 110,
+whose nodes are the Chebyshev points. ATAP also states that the
 constant $64/15$ can be improved to $144/35$ for $n\ge4$ (Clenshaw–Curtis)
 or $n\ge2$ (Gauss), and that the factor $\rho^{1-n}$ can be improved to
 $\rho^{-n}$ for even $n$. Theorem 19.5 is quoted from Trefethen (2008)
@@ -8869,22 +9142,18 @@ $|f(x)|,|\hat f(x)|\le C(1+|x|)^{-1-\varepsilon}$ as a sufficient alternative.
 Item 13.8 is Plonka et al., Theorem 2.29, p. 86, with the sinc function as
 defined on p. 389 and $C_0(\mathbb R)$ as on p. 61.
 
-Item 13.9 is Plonka et al., §7.1, (7.1)–(7.14) and Algorithm 7.1,
-pp. 378–381, specialized to $d=1$, with (7.6), p. 379, for
-$c_k(\tilde\varphi)=\hat\varphi(k)/(2\pi)$, and the B-spline window (7.29)
-with (7.30)–(7.31) and Lemma 7.6, pp. 388–389. For the B-spline window
-$\psi=\varphi$, so the approximation $s$ equals $s_1$ and the error is pure
-aliasing. Plonka et al. assume $2m\ll\sigma N$ without making it precise; the
-statement assumes $2m\le\sigma N$, which puts the support of $\varphi$ inside
-$[-\pi,\pi]$, and the proof of Lemma 7.6 uses only (7.30)–(7.31) and
-$|k|/(\sigma N)\le1/(2\sigma)$. The series bound (7.34) was checked
-numerically for $\sigma\in\{1.25,2\}$ and $m\in\{1,2,4\}$. Lemma 7.7,
-p. 390, gives $4e^{-m\pi(1-1/(2\sigma-1))}\|\hat f\|_1$ for the truncated
-Gaussian window, and Theorem 7.8, p. 393, collects the bounds for four
-windows, two of them only with a reference to the literature; these are not
-included because the truncation hypotheses are not stated precisely there.
-The operation count is the one stated after (7.14), p. 380, and in
-Algorithm 7.1, p. 381.
+Item 13.9 is Plonka et al., §7.1, (7.1)–(7.14) and Algorithm 7.1, pp. 378–381, specialized to $d=1$,
+with (7.6), p. 379, for $c_k(\tilde\varphi)=\hat\varphi(k)/(2\pi)$, and the B-spline window (7.29),
+p. 388, with (7.30)–(7.31) and Lemma 7.6, pp. 389–390. For the B-spline window $\psi=\varphi$, so
+the approximation $s$ equals $s_1$ and the error is pure aliasing. Plonka et al. assume $2m\ll\sigma
+N$ without making it precise; the statement assumes $2m\le\sigma N$, which puts the support of
+$\varphi$ inside $[-\pi,\pi]$, and the proof of Lemma 7.6 uses only (7.30)–(7.31) and $|k|/(\sigma
+N)\le1/(2\sigma)$. The series bound (7.34) was checked numerically for $\sigma\in\{1.25,2\}$ and
+$m\in\{1,2,4\}$. Lemma 7.7, p. 390, gives $4e^{-m\pi(1-1/(2\sigma-1))}\|\hat f\|_1$ for the
+truncated Gaussian window, and Theorem 7.8, p. 393, collects the bounds for four windows, two of
+them only with a reference to the literature; these are not included because the truncation
+hypotheses are not stated precisely there. The operation count is the one stated after (7.14), p.
+380, and in Algorithm 7.1, p. 381.
 
 Item 13.10 is Plonka et al., §10.1, (10.1)–(10.9) and Algorithm 10.1,
 pp. 523–526. The factorization of the Hankel matrix is stated on p. 525 with
@@ -8958,7 +9227,10 @@ the global Lipschitz condition stated here avoids a smallness condition on
 $h$. The order is HNW, Definition II.1.2, p. 134. Quarteroni–Sacco–Saleri,
 Theorem 11.2, p. 487, give the variant
 $|y_n-u_n|\le(|y_0-u_0|+nh\tau(h))e^{nh\Lambda}$ with $\tau(h)$ the maximal
-local truncation error. The Euler bound is HNW, Theorem I.7.5, p. 40.
+local truncation error. The Euler bound is HNW, Theorem I.7.5 with (7.18),
+p. 40, which assumes the bounds on $f$, $\partial f/\partial y$ and
+$\partial f/\partial x$ in a neighbourhood of the solution and $|h|$
+sufficiently small.
 
 Item 14.5 is HNW, Definition II.1.1 (explicit) and condition (1.9), p. 134,
 Definition II.7.1, p. 205 (implicit), and Theorem II.7.2, p. 206 (unique
@@ -8984,7 +9256,10 @@ Hairer–Wanner II, Theorem IV.5.1, p. 72 (Hairer–Wanner, *Solving Ordinary
 Differential Equations II*, 2nd ed., Springer 1996).
 
 Item 14.9 is HNW, Definition II.7.6, p. 211, Theorems II.7.7 and II.7.8,
-p. 212, and Theorem II.7.9, p. 212. The orders of Gauss and Lobatto are
+p. 212, with the existence and uniqueness of the collocation polynomial for
+small $h$ stated after Theorem II.7.7 as a consequence of Theorem II.7.2, and
+Theorem II.7.9, p. 212, whose "order $p=s+r$" means local error
+$O(h^{s+r+1})$, hence order at least $s+r$ in the sense of 14.4. The orders of Gauss and Lobatto are
 also HNW, pp. 209–210. The node polynomials and the orders of Radau IIA and
 Lobatto IIIA are Hairer–Wanner II, (5.2)–(5.3), p. 72, and Theorems IV.5.3,
 p. 73, and IV.5.5, p. 75. The characterization of order $2s$ is Butcher,
@@ -9041,7 +9316,9 @@ Item 15.1 is HW, Propositions IV.3.1, p. 40, and IV.3.2, p. 41, and, for
 explicit methods, the polynomial form, Definition IV.2.1 and Theorem
 IV.2.2, p. 16. Theorem IV.2.2 is stated for explicit methods; for implicit
 methods the relation $R(z)=e^z+O(z^{p+1})$ follows by applying the method
-to the test equation.
+to the test equation. For the linear stage system $(I-zA)K=\lambda y_n\mathbb 1$
+of the test equation, $I-zA$ invertible gives the unique stage vector; when it
+is singular the stage equations have no solution or infinitely many.
 
 Item 15.2 is HW, (3.5) and Definition IV.3.3, p. 42, the criterion on
 p. 43, and Definition IV.3.7, p. 44; the explicit case is HW, p. 16, and
@@ -9051,12 +9328,11 @@ A-stable if it contains the open left half-plane; HW uses the closed set
 $|R(z)|\le1$ and the closed half-plane. For nonconstant rational $R$ the
 two notions agree.
 
-Item 15.3 is HW, Theorem IV.3.11, p. 48 (the Padé approximations), and
-Theorem IV.4.12, p. 58 (A-stability if and only if $k\le j\le k+2$, proved
-by order stars); and Iserles, Theorem 4.5, pp. 62–63, and Theorem 4.6
-(Wanner–Hairer–Nørsett), p. 63. Butcher, Theorem 355G, p. 228, proves the
-necessity of $d\le n+2$ for an $(n,d)$ Padé stability function. All three
-sources write the numerator degree first.
+Item 15.3 is HW, Theorem IV.3.11, p. 48, with the error constant (3.30), p. 49 (the Padé
+approximations), and Theorem IV.4.12, p. 58 (A-stability if and only if $k\le j\le k+2$, proved by
+order stars); and Iserles, Theorem 4.5, pp. 62–63, and Theorem 4.6 (Wanner–Hairer–Nørsett), p. 63.
+Butcher, Theorem 355G, p. 228, proves the necessity of $d\le n+2$ for an $(n,d)$ Padé stability
+function. All three sources write the numerator degree first.
 
 Item 15.4 is HW, Theorems IV.5.2, p. 72, IV.5.3, p. 73, and IV.5.5, p. 75,
 and, for the Gauss methods, Iserles, the Corollary to Theorem 4.6, p. 63.
@@ -9073,50 +9349,56 @@ HNW, (2.13), p. 373.
 Item 15.6 is HW, Definition V.2.1 (Widlund 1967), p. 250, and the table of
 angles (2.7), p. 251, which are computed values.
 
-Item 15.7 is HW, Definition IV.12.2, p. 181, Theorem IV.12.4 and Definition
-IV.12.5, p. 182, Theorem IV.12.9, p. 184, Definition IV.12.10 and Theorems
-IV.12.11 and IV.12.12 (Scherer 1979), p. 185, and Theorem IV.12.13 (Burrage
-& Butcher 1979) and Corollary IV.12.14, p. 186. Butcher, Definition 356A
-and Theorem 356C, p. 230, Definitions 357A and 357B, p. 233, Theorem 357C,
-p. 234, and Theorem 357D, p. 235, gives the same chain under the name
-BN-stability, and states the converse for irreducible non-confluent methods;
-HW, Corollary 12.14, needs only non-confluence. Iserles, Theorem 5.2, p. 79,
-proves the sufficiency of $b_i\ge0$ and $M\succeq0$ but uses "algebraically
-stable" for the nonexpansion property itself.
+Item 15.7 is HW, Definition IV.12.2, p. 181, Theorem IV.12.4 and Definition IV.12.5, p. 182, Theorem
+IV.12.9, p. 184, Definition IV.12.10 and Theorems IV.12.11 and IV.12.12 (Scherer 1979), p. 185, and
+Theorem IV.12.13 (Burrage & Butcher 1979) and Corollary IV.12.14, p. 186. Butcher, Definition 356A
+and Theorem 356C, p. 230, Definitions 357A and 357B, p. 233, Theorem 357C, p. 234, and Theorem 357D,
+p. 235, gives the same chain under the name BN-stability, and states the converse for irreducible
+non-confluent methods; HW, Corollary 12.14, needs only non-confluence. Iserles, Theorem 5.2, p. 79,
+proves the sufficiency of $b_i\ge0$ and $M\succeq0$ but uses "algebraically stable" for the
+nonexpansion property itself. HW, Definition IV.3.3, p. 42, defines A-stability through the rational
+function $R$, with no condition on $\det(I-zA)$, and Theorem IV.12.11 gives AN $\Rightarrow$ A in
+that sense. If A-stability also requires the stage equations to be uniquely solvable on $\mathbb
+C^-$, the implication fails for reducible methods: $A=\mathrm{diag}(1,-1)$, $b=(1,0)$ is
+algebraically stable with $R(z)=1/(1-z)$, while $\det(I-zA)=(1-z)(1+z)$ vanishes at $z=-1$.
 
 Item 15.8 is HW, (15.11) and Theorem IV.15.3, p. 230, and Definition IV.15.4
 (Frank, Schneid & Ueberhuber 1981) and Theorem IV.15.5, p. 231.
 
-Item 15.9 is HW, Theorem VII.1.1 (Weierstrass 1868, Kronecker 1890),
-pp. 452–453, the decoupled form (1.6)–(1.7), p. 453, the index of
-nilpotency, p. 454, and Definition VII.1.2 with the remark on constant
-coefficients, p. 455. HW writes the system as $Bu'+Au=d(x)$.
+Item 15.9 is HW, Theorem VII.1.1 (Weierstrass 1868, Kronecker 1890), pp. 452–453, the decoupled form
+(1.6)–(1.7), p. 453, the index of nilpotency, p. 454 (with the value $0$ when $B$ is invertible, the
+ordinary differential equation case), and Definition VII.1.2 with the remark on constant
+coefficients, p. 455. HW writes the system as $Bu'+Au=d(x)$. HW, p. 454, leaves the independence of
+the index from the transformations to an exercise; it is Kunkel–Mehrmann, Definition 2.1.9 and Lemma
+2.1.10, p. 18, in the second edition (EMS Press, 2024).
 
-Item 15.10 is HW, the index-1 problem (1.6)–(1.7), p. 374, the method
-(1.11), pp. 374–375, stiff accuracy (1.13), p. 376, and the estimate (1.24)
-with Theorem VI.1.1, p. 380; and the multistep method (2.2) with Theorem
-VI.2.1, p. 382.
+Item 15.10 is HW, the index-1 problem (1.6)–(1.7), p. 374, the method (1.11), pp. 374–375, stiff
+accuracy (1.13), p. 376, and the estimate (1.24) with Theorem VI.1.1, p. 380; and the multistep
+method (2.2) with Theorem VI.2.1, p. 382. Theorem VI.2.1 assumes the method stable at the origin and
+at infinity; the statement spells out stability at infinity as $\beta_k\ne0$ with the root condition
+for $\sigma$.
 
-Item 15.11 is Hochbruck–Ostermann, "Exponential integrators", Acta Numerica
-19 (2010), pp. 209–286: $\varphi_1$ in (2.10), p. 217, Assumptions 2.9 and
-2.10, p. 222, the method (2.29), p. 223, and Theorem 2.14, p. 224.
+Item 15.11 is Hochbruck–Ostermann, "Exponential integrators", Acta Numerica 19 (2010), pp. 209–286:
+$\varphi_1$ in (2.10), p. 217, Assumptions 2.9 and 2.10, p. 222, the method (2.29), p. 223, and
+Theorem 2.14, p. 224. Theorem 2.14 leaves implicit the step restriction $h\le h_0$ that keeps the
+numerical solution in the strip (2.28), p. 222.
 
 Item 15.12 is HLW, Definition VI.2.2, p. 183, Theorem VI.2.4 (Poincaré
 1899), p. 184, and Definition VI.3.1, p. 187; and Iserles, Theorem 5.6,
 p. 89.
 
-Item 15.13 is HLW, Theorems IV.2.1 and IV.2.2 (Cooper 1987), p. 101,
-Theorems VI.4.2 and VI.4.3, p. 192, Theorem VI.7.10, p. 222, and Lemma
-IV.3.2 and Theorem IV.3.3, p. 106; and Iserles, Theorem 5.7, p. 91 ($M=O$
-implies symplectic).
+Item 15.13 is HLW, Theorems IV.2.1 and IV.2.2 (Cooper 1987), p. 101, Theorems VI.4.2 and VI.4.3, p.
+192, Theorem VI.7.10, p. 222, and Lemma IV.3.2 and Theorem IV.3.3, p. 106; and Iserles, Theorem 5.7,
+p. 91 ($M=O$ implies symplectic). Theorem IV.3.3 omits consistency, which Lemma IV.3.2, p. 106,
+assumes through $R'(0)=1$.
 
 Item 15.14 is HLW, Theorem VI.3.3, p. 189, and Theorem VI.3.4 with (3.4),
 pp. 189–190.
 
-Item 15.15 is HLW, the modified equation (1.1)–(1.4), p. 338, Theorem
-IX.1.2, p. 340, the assumptions (7.2)–(7.3), p. 360, Theorem IX.7.2 with
-(7.4)–(7.5), p. 361, the constant $\eta$ from the proof of Theorem IX.7.5,
-p. 364, and Theorem IX.7.6, p. 365.
+Item 15.15 is HLW, the modified equation (1.1)–(1.4), p. 338, Theorem IX.1.2, p. 340, the
+assumptions (7.2)–(7.3), p. 360, Theorem IX.7.2 with (7.4)–(7.5), p. 361, the constant $\eta$ from
+the proof of Theorem IX.7.5, p. 364, and Theorem IX.7.6, p. 365. Theorem IX.7.6 states no condition
+on $\mu$; its proof, p. 366, uses $\mu\ge1$.
 
 Item 15.16 is HLW, (8.1), p. 366, and Theorem IX.8.1 (Benettin & Giorgilli
 1994), p. 367.
@@ -9127,23 +9409,24 @@ splitting), and the symmetric Baker–Campbell–Hausdorff formula
 
 ### 16. Finite difference methods for differential equations
 
-Stoer–Bulirsch is the 3rd ed. (2002), Varga's *Matrix Iterative Analysis*
-the 2nd ed. (2000), Iserles the 2nd ed. (2008), Quarteroni–Sacco–Saleri the
-2nd ed. (2007), Hackbusch's *Iterative Solution of Large Sparse Systems of
-Equations* the 2nd ed. (2016), Han–Atkinson's *Theoretical Numerical
-Analysis* the 3rd ed. (2009), Trefethen–Embree's *Spectra and
-Pseudospectra* the 2005 edition, Hundsdorfer–Verwer's *Numerical Solution of
-Time-Dependent Advection-Diffusion-Reaction Equations* the 2003 edition (cited
-as HV), LeVeque's *Finite Volume Methods for Hyperbolic Problems* the 2002
-edition, and Hairer–Wanner II the 2nd ed. (1996). The finite difference
-books of LeVeque (2007) and Gustafsson–Kreiss–Oliger, which treat several of
-these topics, were not checked because no local copy exists.
+Stoer–Bulirsch is the 3rd ed. (2002), Varga's *Matrix Iterative Analysis* the 2nd ed. (2000),
+Iserles the 2nd ed. (2008), Quarteroni–Sacco–Saleri the 2nd ed. (2007), Hackbusch's *Iterative
+Solution of Large Sparse Systems of Equations* the 2nd ed. (2016), Han–Atkinson's *Theoretical
+Numerical Analysis* the 3rd ed. (2009), Trefethen–Embree's *Spectra and Pseudospectra* the 2005
+edition, Hundsdorfer–Verwer's *Numerical Solution of Time-Dependent Advection-Diffusion-Reaction
+Equations* the 2003 edition (cited as HV), LeVeque's *Finite Volume Methods for Hyperbolic Problems*
+the 2002 edition, and Hairer–Wanner II the 2nd ed. (1996). The finite difference book of LeVeque
+(2007), which treats several of these topics, was not checked because no local copy exists.
+Gustafsson–Kreiss–Oliger (2nd ed., 2013) give the domain of dependence and the CFL condition, §1.3,
+pp. 23–24 (item 16.7), the sufficiency of the von Neumann condition for uniformly diagonalizable and
+for normal symbols, Theorem 4.2.7 and Corollary 4.2.1, p. 135 (item 16.6), and the Kreiss matrix
+theorem without proof, Theorem 4.2.8, pp. 137–138 (item 16.10).
 
 Item 16.1 is Stoer–Bulirsch, the truncation error (7.4.2), p. 582, Theorem
 (7.4.7), p. 583, and Theorem (7.4.10), p. 585; and Varga, Theorems 6.1,
 p. 186, and 6.2, p. 187, with the maximum bound (6.10). The monotonicity of
 the one-dimensional scheme (the discrete maximum principle) is also in
-Quarteroni–Sacco–Saleri, (12.5)–(12.10), pp. 540–542.
+Quarteroni–Sacco–Saleri, (12.5)–(12.10), pp. 541–542.
 
 Item 16.2 is Iserles, Lemma 12.5, p. 264 (tridiagonal Toeplitz matrices),
 and Lemma 8.1, p. 151, for the five-point matrix on the unit square with
@@ -9187,7 +9470,7 @@ Theorem 16.8, p. 370; Quarteroni–Sacco–Saleri, Theorem 13.1, p. 616
 (sufficiency of $|\gamma_k|\le1$ in the periodic case); and HV, (6.30)–(6.31)
 and the remark on normal matrices, p. 113.
 
-Item 16.7 is LeVeque, Section 4.4, p. 69, which states the CFL condition as a
+Item 16.7 is LeVeque, Section 4.4, pp. 68–69, which states the CFL condition as a
 necessary condition for convergence and stresses that it is not sufficient,
 and Quarteroni–Sacco–Saleri, Section 13.8.3, pp. 613–614. The latter
 describes (13.48) as necessary and sufficient for stability of every explicit
@@ -9231,11 +9514,17 @@ corresponding result for a general convex functional and general explicit
 Shu–Osher forms (Shu–Osher; Gottlieb–Shu–Tadmor) has no local source and is
 not stated.
 
-Item 16.15 is the continuous-operator case of Barles–Souganidis,
-[Convergence of Approximation Schemes for Fully Nonlinear Second Order
-Equations](https://doi.org/10.3233/ASY-1991-4305), Theorem 2.1 and
-(2.1)–(2.5), p. 275. The general form there uses the upper and lower
-semicontinuous envelopes in (2.4).
+Item 16.15 is the continuous-operator case of Barles–Souganidis, [Convergence of Approximation
+Schemes for Fully Nonlinear Second Order Equations](https://doi.org/10.3233/ASY-1991-4305), Theorem
+2.1, as cited and restated by Neilan–Salgado–Zhang, [Numerical analysis of strongly nonlinear
+PDEs](https://doi.org/10.1017/S0962492917000071), *Acta Numerica* 26 (2017), Theorem 3.7, p. 183,
+proof pp. 183–184, which "closely follows" it; Barles–Souganidis were not checked because no local
+copy exists. Neilan–Salgado–Zhang define consistency, Definition 3.1, p. 181, stability, Definition
+3.3, p. 182, and monotonicity, Definition 3.5, p. 183; the upper and lower semicontinuous envelopes
+for discontinuous operators are their Remark 3.2, p. 182. Their ellipticity, Definition 2.10, p.
+153, takes $F$ non-increasing in $r$ and non-decreasing in the Hessian, the opposite of the sign
+convention used here; their stability is a perturbation bound, stronger than the uniform bound on
+the solutions used here.
 
 ### 17. Hyperbolic conservation laws and finite volume methods
 
@@ -9274,12 +9563,15 @@ global scalar equivalence.
 
 Item 17.3 is GR, Theorem 5.4, pp. 50–51, and EG III, Theorems 79.10 and
 79.11, p. 329, for existence, uniqueness and the maximum principle. GR states
+the maximum principle as $\|u(t)\|_{L^\infty}\le\|u_0\|_{L^\infty}$; the form
+with $\mathop{\mathrm{ess\,inf}}$ and $\mathop{\mathrm{ess\,sup}}$ follows from
+order preservation, GR, (5.25), p. 50, compared with constant data. GR states
 order preservation and, for BV data, the TV bound, but does not state the
 $L^1$ contraction separately. The $L^1$ contraction for $f$ Lipschitz is HR,
 Proposition 2.10, p. 79. The flux-stability estimate is HR, Theorem 2.14,
 p. 86, whose hypotheses include piecewise $C^2$ fluxes. The full list of
 properties in one space dimension, including the time continuity, is HR,
-Theorem 2.15, pp. 86–87.
+Theorem 2.15, pp. 86–87, which assumes $f$ piecewise $C^2$.
 
 Item 17.4 is HR, Theorem 2.2, p. 64, and EG III, (79.14)–(79.15), p. 331, and
 Theorem 79.15, p. 332, with the convex case also in GR, (5.28), pp. 51–52.
@@ -9311,7 +9603,10 @@ the weaker statement that a TV-stable conservative scheme approaches the set
 of weak solutions.
 
 Item 17.8: the Harten–Hyman–Lax barrier is HR, Theorem 3.10, p. 115, with
-the truncation error computed before it on pp. 114–115; GR, p. 220, and
+the truncation error computed before it on pp. 114–115; HR, (3.41), p. 114,
+gives the truncation error (the defect divided by $\Delta t$) as
+$-\frac{\Delta t}{2\lambda^2}\partial_x(\beta(u)\partial_xu)+O(\Delta t^2)$,
+the form of the text after division by $\Delta t$; GR, p. 220, and
 Tadmor, p. 462, cite it. The linear barrier is Hundsdorfer–Verwer, Section
 I.7, p. 119, for the scheme (3.25) with the order conditions (3.26) on p. 59
 and the positivity condition (7.6) on p. 118. It is stated there for the
@@ -9326,7 +9621,8 @@ conditions are necessary for three-point schemes. The step from
 monotonicity preserving to monotone for linear schemes is Godunov's theorem,
 for which no local source was checked.
 
-Item 17.10 is HR, (3.54)–(3.55), p. 127, and Theorem 3.14, p. 128. The
+Item 17.10 is HR, (3.54)–(3.55), p. 127, and Theorem 3.14, p. 128, which
+compares the left limit $u(T^-)$ of the approximate solution with $v(T)$. The
 viscous bound is HR, Example 3.16, p. 134. The $\sqrt{\Delta x}$ rate is HR,
 Example 3.17, pp. 134–139, with the result (3.72) on p. 139. The front
 tracking statements are HR, Lemma 2.6, p. 71, Corollary 2.8, p. 73, and the
@@ -9360,11 +9656,13 @@ Bianchini and Bressan.
 
 Item 17.15 is HR, Theorem 6.4, p. 297 (front tracking is well defined with
 uniformly bounded variation), Theorem 6.7, p. 307 (existence and the Lax
-conditions at isolated jumps), Theorem 7.8, p. 344 (uniqueness of the limit,
-$L^1$ stability and the $O(\delta)$ rate), and Theorem 7.10, p. 345
-(uniqueness). Glimm's scheme and the Bianchini–Bressan vanishing viscosity
-theory are cited, not proved, in EG III, Remark 80.6, pp. 340–341; the
-Glimm existence result rests on that citation.
+conditions at isolated jumps), Theorem 7.8, p. 344 (uniqueness of the limit
+and $L^1$ stability), the error bound after its proof on p. 344, and
+Theorem 7.10, p. 345 (Lipschitz continuity in time of every weak solution of
+bounded variation, the first step of the uniqueness proof of Section 7.2).
+Glimm's scheme and the Bianchini–Bressan vanishing viscosity theory are cited,
+not proved, in EG III, Remark 80.6, pp. 340–341; the Glimm existence result
+rests on that citation.
 
 ### 18. Galerkin and finite element methods for elliptic problems
 
@@ -9382,13 +9680,14 @@ Definition 11.2, p. 124.
 Item 18.1 is BS, (2.7.7), p. 62, and EG II, Lemma 25.2, p. 15 (Lax–Milgram),
 and Theorem 25.9, p. 17 (BNB).
 
-Item 18.2 is EG II, Lemma 26.3 and Theorem 26.6, p. 29, and Lemma 26.9, p. 31
-(Fortin). EG proves the converse in the Hilbert setting; its constant was
-not recorded here.
+Item 18.2 is EG II, Lemma 26.3 and Theorem 26.6, p. 29, and Lemma 26.9, p. 31 (Fortin); the bound
+$\alpha_h\ge\alpha$ for coercive forms on subspaces is EG II, Example 26.4, p. 29. EG proves the
+converse in the Hilbert setting, with a linear idempotent operator and the constant of the text.
 
 Item 18.3 is EG II, Lemmas 26.12 and 26.13, p. 33 (Galerkin orthogonality
 and Céa, with the symmetric case), Lemma 26.14, p. 34 (Babuška), and Lemma
-26.18, p. 36 (Xu–Zikatanov); and BS, (2.8.1), p. 64 (Céa). The comparison
+26.18, p. 36 (Xu–Zikatanov, which assumes that both $V$ and $W$ are Hilbert
+spaces); and BS, (2.8.1), p. 64 (Céa). The comparison
 for the inner product is a direct check.
 
 Item 18.4 is EG II, Lemma 27.12, p. 50 (Strang 1), and Lemma 27.15, p. 51
@@ -9407,7 +9706,10 @@ example is a direct check.
 Item 18.6 is EG I, Theorem 3.10, p. 31 (traces), and Theorem 2.31, p. 24
 (embeddings, for open bounded Lipschitz sets with $d\ge2$); and BS, (1.6.6),
 p. 39 (multiplicative trace bound), and (1.4.6), p. 34 (embedding into
-continuous functions).
+continuous functions). EG I, Theorem 3.10(ii), states the kernel equality
+for every $s>1/p$; it holds only for $s<1+1/p$, and the example in the text
+is a direct check. Surjectivity onto $W^{s-1/p,p}(\partial\Omega)$ is EG I,
+Theorem 3.10(iii), in the cases listed there, which include $s=1$, $p=2$.
 
 Item 18.7 is EG II, Theorem 31.30, pp. 110–111 (convex domains), and Theorem
 31.31, p. 111 (polygons). EG quotes these from Grisvard without proof and
@@ -9435,17 +9737,19 @@ nodal variables of order $l$ is $m-l-n/p>0$ for $p>1$ and $m-l-n\ge0$ for
 $p=1$, where $m$ is the Sobolev order; EG states it as the boundedness of
 the degrees of freedom on $W^{l,p}(\hat K)$.
 
-Item 18.11 is BS, (4.8.12), p. 123, with the operator defined in (4.8.6) and
-the stability bound (4.8.15)–(4.8.16), p. 123; the averaging estimates are
-EG I, Theorem 22.6, p. 278. BS states the range $0\le k\le m$; the statement
-here keeps $k\ge1$, where the Scott–Zhang operator is defined for all
-$p\in[1,\infty]$. The Clément operator is named only; no local locator was
-checked for it.
+Item 18.11 is BS, (4.8.12), p. 123, with the operator defined in (4.8.6), p. 121, the local
+stability bound in the display before (4.8.9) and (4.8.10), p. 122, and the global stability bound
+(4.8.15)–(4.8.16), p. 123; (4.8.16) prints the seminorm $|v|_{W^{k,p}}$ on the right, where the norm
+is needed (for a nonzero constant $v$ and $k\ge1$ the printed right side vanishes), as stated here;
+the averaging estimates are EG I, Theorem 22.6, p. 278. BS states the range $0\le k\le m$; the
+statement here keeps $k\ge1$, where the Scott–Zhang operator is defined for all $p\in[1,\infty]$.
+The Clément operator is named only; no local locator was checked for it.
 
 Item 18.12 is EG I, Lemma 12.1, p. 137, and Lemma 12.8, p. 140 (discrete
 trace inequality), and BS, (4.5.11), p. 112 (global, quasi-uniform). EG
 reports the one-dimensional constant $\sqrt3$ for $\mathbb P_1$ on
-$(-1,1)$, (12.7), p. 140, which agrees with the example.
+$(-1,1)$, (12.7), p. 140, which agrees with the second example on an
+interval of length $2$.
 
 Item 18.13 is EG II, Theorem 32.2, p. 117, and BS, (5.4.4), p. 136, which
 gives $\|u-u_h\|_{H^1}\le Ch^{m-1}|u|_{H^m}$.
@@ -9482,13 +9786,11 @@ augmented norm is read from the proof of Theorem 38.10.
 Item 18.18 is EG II, Theorem 49.13, p. 358, with the a priori estimates
 (49.38).
 
-Item 18.19 is EG II, Proposition 50.1, p. 364, and Lemma 50.2, p. 365; and
-BS, (12.3.7), p. 337, and (12.5.17), p. 345. In the extracted text of Lemma
-50.2 the case distinction for $c_{2h}$ reads as if $c_{2h}=\|b\|/\alpha_h$
-when $\ker B_h\subset\ker B$; this is taken to be a lost "not", since the
-pressure term must vanish when the discrete kernel is conforming, as in BS,
-(12.3.7). The set $Z_h$ equals EG's $\Pi_h(u)+\ker B_h$ for any Fortin
-operator $\Pi_h$.
+Item 18.19 is EG II, Proposition 50.1, p. 364, and Lemma 50.2, p. 365, proof pp. 365–366; and BS,
+(12.3.7), p. 337, and (12.5.17), p. 345. Lemma 50.2 prints $c_{2h}=\|b\|/\alpha_h$ if $\ker
+B_h\not\subset\ker B$ and $c_{2h}=0$ otherwise, as stated here and in BS, (12.3.7); the text layer
+of the PDF drops the negation, which the page image shows. The set $Z_h$ equals EG's $\Pi_h(u)+\ker
+B_h$ for any Fortin operator $\Pi_h$.
 
 Item 18.20: the Raviart–Thomas element is EG I, Proposition 14.15, p. 166,
 with $\nabla\cdot\mathrm{RT}_k\subset\mathbb P_k$ in Lemma 14.9, p. 164, and
@@ -9496,10 +9798,15 @@ the commuting property in Lemma 16.2, p. 189; the mixed Darcy problem is EG
 II, Lemma 51.10, p. 387, and Theorem 51.16, pp. 388–389. Only one local
 source was used.
 
-Item 18.21 is EG II, Lemma 54.5, p. 425 (MINI), and Lemmas 54.8 and 54.9,
-pp. 427–429 (Taylor–Hood), with the convergence rate in Remark 54.10, p. 429;
-and BS, (12.6.7), p. 350, for the Taylor–Hood estimate on polygons. EG
-proves the inf-sup conditions in $W^{1,p}$ for all $p\in(1,\infty)$.
+Item 18.21 is EG II, Lemma 54.5, p. 425 (MINI), and Lemmas 54.8 and 54.9, pp. 427–429 (Taylor–Hood),
+with the convergence rate in Remark 54.10, p. 429; and BS, (12.6.7), p. 350, for the Taylor–Hood
+estimate on polygons. EG proves the inf-sup conditions in $W^{1,p}$ for all $p\in(1,\infty)$. EG's
+gloss of the boundary condition in Lemma 54.8, p. 427 ("at least $d$ internal edges, i.e. at most
+one face in $\partial D$"), is weaker than its proof, pp. 428–429, uses: the proof needs the
+directions of the internal edges to span $\mathbb R^d$. In the five-tetrahedron mesh of each unit
+cube of $(0,2)^3$, alternating between cubes, the corner tetrahedron with vertices $0$, $(1,1,0)$,
+$(0,1,1)$, $(1,0,1)$ has no face on $\partial\Omega$, and its three internal edges lie in one face.
+The statement takes spanning internal edges.
 
 Item 18.22 is EG I, Proposition 16.14 and Proposition 16.15, p. 196 (the
 continuous and the local discrete complexes), Lemma 16.16, p. 197 (commuting
@@ -9580,38 +9887,45 @@ $\varphi=x$, $N=1$, $\alpha=\beta=0$). The $L^p$ bounds are Canuto et al.,
 (5.4.5), p. 282, for the Legendre case and (5.5.4), p. 293, for the
 Chebyshev weight.
 
-Item 19.8: the Jacobi estimate is Shen–Tang–Wang, Theorem 3.35, p. 118, in
-the fixed-$m$ form (3.264) of Remark 3.7, p. 119; the theorem gives the
-explicit factor $\sqrt{(N-m+1)!/(N-l+1)!}\,(N+m)^{(l-m)/2}$, which is at most
-$m^{(m-l)/2}N^{l-m}$ for $N\ge m-1$. The Legendre and Chebyshev $L^2$
-estimates in standard weighted Sobolev norms are Canuto et al., (5.4.11),
-p. 283, and (5.5.9), p. 293, where the right-hand side is a seminorm
-$|u|_{H^{m;N}}$ that equals $\|u^{(m)}\|$ when $N\ge m-1$. The suboptimal
-$H^l$ estimate is Canuto et al., (5.4.18), p. 285, and the counterexample
-$u=L_{N+1}-L_{N-1}$ is Shen–Tang–Wang, p. 120. The $H^1_0$ projection
-estimate is Canuto et al., (5.4.29)–(5.4.30), p. 288; Shen–Tang–Wang,
-Theorem 3.38, p. 124, has a Jacobi-weighted version.
+Item 19.8: the Jacobi estimate is Shen–Tang–Wang, Theorem 3.35, p. 118, in the fixed-$m$ form
+(3.264) of Remark 3.7, p. 119; the theorem gives the explicit factor
+$\sqrt{(N-m+1)!/(N-l+1)!}\,(N+m)^{(l-m)/2}$, which is at most $m^{(m-l)/2}N^{l-m}$ for $N\ge m-1$.
+The Legendre and Chebyshev $L^2$ estimates in standard weighted Sobolev norms are Canuto et al.,
+(5.4.11), p. 283, and (5.5.9), p. 293, where the right-hand side is a seminorm $|u|_{H^{m;N}}$ that
+equals $\|u^{(m)}\|$ when $N\ge m-1$. The suboptimal $H^l$ estimate is Canuto et al., (5.4.18), p.
+285, and the counterexample $u=L_{N+1}-L_{N-1}$ is Shen–Tang–Wang, p. 120. The $H^1_0$ projection
+estimate is Canuto et al., (5.4.29)–(5.4.30), p. 288; Shen–Tang–Wang, Theorem 3.38, p. 124, has a
+Jacobi-weighted version. Theorem 3.35 does not say how $c$ depends on $m$, and $c$ cannot be chosen
+independent of $m$ for $m\le N+1$, which is why the statement fixes $m$: for $\alpha=\beta=0$,
+$l=0$, $u=L_{N+1}$ and $m=N+1$ the required constant is $0.866$, $1.021$, $1.632$, $3.527$, $16.39$,
+$352.9$ for $N=1,2,5,10,20,40$. The test with $u=(1-x^2)L_N'$ and $m=N+1$ shows that the constants
+that Theorems 3.38, 3.44 and 4.1 state independent of $m$ (and the constant of Theorem 4.5) cannot
+be uniform in $m$ either.
 
-Item 19.9: the Legendre estimates are Canuto et al., (5.4.33)–(5.4.35),
-p. 289, and the $H^1$ stability (5.4.37), p. 290; the weighted LGL estimate
-is Shen–Tang–Wang, Theorem 3.44, p. 137. The Chebyshev $L^2_\omega$ estimate
-is Canuto et al., (5.5.22), p. 296, and the Chebyshev–Gauss estimate in
-weighted derivative norms is Shen–Tang–Wang, Theorem 3.40, p. 130, in the
-fixed-$m$ form obtained as in item 19.8.
+Item 19.9: the Legendre estimates are Canuto et al., (5.4.33)–(5.4.35), p. 289, and the $H^1$
+stability (5.4.37), p. 290; the weighted LGL estimate is Shen–Tang–Wang, Theorem 3.44, p. 137. The
+Chebyshev $L^2_\omega$ estimate is Canuto et al., (5.5.22), p. 296, and the Chebyshev–Gauss estimate
+in weighted derivative norms is Shen–Tang–Wang, Theorem 3.40, p. 130, in the fixed-$m$ form obtained
+as in item 19.8. Theorem 3.44 claims $c$ independent of $m$; for $u=(1-x^2)L_N'$ and $m=N+1$ the
+required constant is $2.091$, $2.622$, $4.414$, $9.744$, $45.80$, $992.0$ for $N=1,2,5,10,20,40$,
+and the fixed-$m$ form is stated.
 
-Item 19.10 is Shen–Tang–Wang, Theorem 4.1, pp. 165–166, for problem (4.10),
-p. 143, with $b_\pm=0$, and the scheme (4.18), p. 145; the bound for the
-factorial factor is Remark 4.14, p. 166. The proof combines the first Strang
-lemma (their Theorem 1.3) with Theorems 3.38 and 3.44.
+Item 19.10 is Shen–Tang–Wang, Theorem 4.1, pp. 165–166, for problem (4.10), p. 143, with $b_\pm=0$,
+and the scheme (4.18), p. 145; the bound for the factorial factor is Remark 4.14, p. 166. The proof
+combines the first Strang lemma (their Theorem 1.3) with Theorems 3.38 and 3.44. Theorem 4.1 claims
+$c$ independent of $m$ and $k$; as for Theorems 3.38 and 3.44 (items 19.8 and 19.9) this fails up to
+$m=N+1$, and the fixed-order form is stated.
 
 Item 19.11: the scheme is Shen–Tang–Wang (4.93)–(4.95), pp. 171–172, for
 the problem (4.50)–(4.53), p. 158, specialized to Dirichlet conditions (the
 boundary terms in (4.95) then vanish). The error estimate is Theorem 4.5,
 p. 172; Shen–Tang–Wang state that $c$ depends only on the $L^\infty$ norms
-of $a$, $b$, $a'$, $b'$, but the coercivity constant of (4.98) also enters
-the proof. In the extracted text the hypothesis for (4.98) reads "$b\ge b_0>0$
-if $b_\pm=0$"; since for Dirichlet conditions coercivity follows from the
-Poincaré inequality, this is presumably "$b_\pm\ne0$". The collocation
+of $a$, $b$, $a'$, $b'$, but it also depends on $m$ and $k$ (the test of item
+19.8 with $u=(1-x^2)L_N'$, $a=1$, $b=0$, $k=N$ and $m=N+1$ gives required
+constants $0.609$ at $N=3$ and $248.0$ at $N=40$), and the coercivity constant of (4.98) also enters
+the proof. The hypothesis for (4.98) is "$b(x)\ge b_0>0$, if $b_\pm\ne0$"
+(p. 172); it does not apply to Dirichlet conditions, where coercivity follows
+from the Poincaré inequality. The collocation
 equivalence for constant $a$ follows from (4.39)–(4.41), p. 153, and is
 stated in Remarks 4.5 and 4.8, pp. 153 and 155. The multidimensional remark
 is Canuto et al., §6.4.3: the G-NI scheme (6.4.42), p. 361, and the Strang
@@ -9646,8 +9960,9 @@ $k$, is Theorem 8.1, p. 58. Item 19.16 is §15, pp. 89–91, with the
 computed eigenvalues in Table 15.1, p. 91; the same phenomenon appears for
 Maxwell's eigenvalue problem in Table 5.3. The failure of convergence is
 shown in the survey by computation, and its proof is in Boffi, Brezzi and
-Gastaldi (2000a), which was not checked. The exact eigenvalues $j^2+l^2$
-are those listed as "Exact" in Table 15.1.
+Gastaldi (2000a), which was not checked. The column "Exact" of Table 15.1
+lists the eigenvalues $j^2+l^2$ together with the spurious limits $6$, $15$,
+$15$ and $24$, which are marked with an exclamation mark.
 
 Item 19.17 is Ern–Guermond II, Chapter 34: the residual is Definition 34.1,
 p. 142, and its equivalence with the error is Lemma 34.3, pp. 142–143; the
@@ -9710,7 +10025,9 @@ monograph, and Xu–Zikatanov is "Algebraic multigrid methods", Acta Numerica
 
 Item 20.1 is Hackbusch, (11.22)–(11.23) and Lemma 11.11, p. 274, Lemma 11.23,
 Remark 11.24 and Definition 11.25 (smoothing property), p. 294, the
-approximation property (11.63), p. 298, and Theorem 11.35, p. 301. Hackbusch
+approximation property (11.63), p. 298, and Theorem 11.35, p. 301; the
+smoothing property of damped Richardson iteration is Theorem 11.27, p. 294.
+Hackbusch
 allows the smoothing property to hold only for $\nu<\bar\nu(h_\ell)$ with
 $\bar\nu(h)\to\infty$ (Theorem 11.36, p. 301); the item states the case
 $\bar\nu=\infty$. Hackbusch also notes (§11.6.4, p. 301) that the spectral
@@ -9728,7 +10045,10 @@ $\|W_\ell\|_2\le C_W\|A_\ell\|_2$.
 Item 20.4 is Brenner–Scott, Chapter 6: the model problem, pp. 155–156, the
 $k$-th level iteration, p. 160, Theorem 6.5.8 (two-grid), p. 164, Theorem
 6.5.9 (W-cycle), p. 165, Theorem 6.6.12 (V-cycle), p. 169, and Theorem 6.7.1
-(full multigrid), p. 170, whose proof uses $2\gamma^r<1$. Brenner–Scott work
+(full multigrid), p. 170, whose proof uses $2\gamma^r<1$ (the item writes
+$\zeta$ for Brenner–Scott's $\gamma$, which 20.2 uses for the cycle index).
+The mesh-dependent inner product $(\cdot,\cdot)_k$ and the operators $A_k$
+are (6.2.1)–(6.2.3), p. 157, and level $1$ is solved exactly, p. 160. Brenner–Scott work
 in the energy norm and treat only piecewise linear elements in two dimensions
 with full elliptic regularity; Remark 6.1.8, p. 156, points to the literature
 without that regularity.
@@ -9736,29 +10056,36 @@ without that regularity.
 Item 20.5 is Brenner–Scott, the framework (7.1.7)–(7.1.9), p. 176, Lemma
 7.1.14, p. 177, and Theorem 7.1.20, p. 178, and Xu–Zikatanov, Theorem 4.4,
 p. 613, which gives the minimization identity with its unique minimizer. The
-identity for $(B^{-1}v,v)$ is often called the lemma of Lions or the
-fictitious space lemma (Xu–Zikatanov, Theorem 6.3, p. 634, in a more general
-form). Item 20.6 is Xu–Zikatanov, Theorem 4.5, p. 613, with the exact-solver
-form (4.26), p. 614; for inexact subspace solvers the same theorem gives an
-identity in terms of the symmetrized subspace smoothers, and that form is not
-reproduced here. Item 20.7 is Xu–Zikatanov, Lemma 5.2, p. 619, Theorem 5.3,
-p. 620, and Theorem 5.6, pp. 622–623; the equivalence of $\bar R$ being
-positive definite with $\|I-RA\|_A<1$ is their Theorem 4.1, p. 610, via
-$I-\bar RA=(I-RA)^*(I-RA)$. The survey also treats semidefinite $A$ with a
-kernel contained in $V_c$; the item states the definite case. The ordering
-$\mu_1\le\cdots\le\mu_n$ is implicit in their use of the min–max principle.
+identity for $(B^{-1}v,v)$ is often called the lemma of Lions, a name none of
+the cited sources uses; Xu–Zikatanov prove a general form as Lemma 6.1, p. 633,
+and the fictitious space lemma as Theorem 6.3, p. 634, and Toselli–Widlund give
+the identity as Lemma 2.5, (2.13), p. 41. Item 20.6 is Xu–Zikatanov, Theorem
+4.5, p. 613, with the exact-solver form (4.26), p. 614; for inexact subspace
+solvers the same theorem gives an identity in terms of the symmetrized subspace
+smoothers, and that form is not reproduced here. Item 20.7 is Xu–Zikatanov,
+Lemma 5.2, p. 619, Theorem 5.3, p. 620, and Theorem 5.6, pp. 622–623; the
+equivalence of $\bar R$ being positive definite with $\|I-RA\|_A<1$ is their
+Theorem 4.1, p. 610, via $I-\bar RA=(I-RA)^*(I-RA)$. The survey also treats
+semidefinite $A$ with a kernel contained in $V_c$; the item states the definite
+case. The identity needs $V_c\ne V$: for $V_c=V$ both $E$ and $K(V_c)$ vanish.
+The ordering $\mu_1\le\cdots\le\mu_n$ is implicit in their use of the min–max
+principle.
 
 Item 20.8 is Toselli–Widlund, the setting of §2.2, pp. 35–37, Assumptions
 2.2, 2.3 and 2.4, p. 40, Lemma 2.5, p. 41, Lemma 2.6, p. 42, Theorem 2.7,
 p. 43, and Theorem 2.9, p. 44. Item 20.9 is Toselli–Widlund, §3.1–3.3,
 pp. 55–59, Assumptions 3.1, 3.2 and 3.5, pp. 56–59, and Theorem 3.13, p. 69;
-the remark on multiplicative and hybrid variants is on p. 55. Brenner–Scott,
+the remark on multiplicative and hybrid variants is on p. 55, and the
+sharpness of the bound is shown on p. 70; Brenner–Scott, Remark 7.4.29,
+p. 191, also note it. Brenner–Scott,
 Theorem 7.4.28, p. 191, prove the weaker bound $C(1+H/\delta)^2$ in two
 dimensions for a quasi-uniform mesh. Item 20.10 is Brenner–Scott, §7.2–7.3,
 with the setting (7.2.1)–(7.2.3), p. 179, Theorem 7.2.21 (hierarchical
-basis), p. 183, the definition (7.3.1)–(7.3.2) and Theorem 7.3.10 (BPX),
-pp. 183–185; convexity is assumed for simplicity, and Remark 7.3.9, p. 185,
-states that the estimate also holds for nonconvex polygons.
+basis), p. 183, with the hierarchical spaces and $B_j$ in (7.2.7)–(7.2.8),
+p. 180, and the definition (7.3.1)–(7.3.2) and Theorem 7.3.10 (BPX),
+pp. 183–185. Brenner–Scott assume convexity for simplicity, and Remark 7.3.9,
+p. 185, states that the BPX estimate also holds for nonconvex polygons, which
+is the form stated.
 
 Item 20.11 is Brenner–Scott, §7.5, pp. 191–192, Theorem 7.6.20 and Remark
 7.6.21 (BPS), p. 201, Theorem 7.7.16 and Remark 7.7.17 (Neumann–Neumann),
@@ -9766,7 +10093,11 @@ p. 205, Theorem 7.8.19 and Remark 7.8.20 (BDDC and its duality with FETI-DP),
 p. 210; and Toselli–Widlund, Assumption 6.1, p. 136, Theorem 6.4 (balancing
 Neumann–Neumann as a hybrid Schwarz method), p. 143, the account of the
 two-dimensional FETI-DP bound of Mandel and Tezaur, p. 166, Algorithm 6.24,
-p. 170, and Theorem 6.35 (FETI-DP, Algorithm B), p. 180. Toselli–Widlund also
+p. 170, and Theorem 6.35 (FETI-DP, Algorithm B), p. 180. Assumption 6.1 is used only
+for the balancing Neumann–Neumann method (pp. 136 and 177), and the FETI-DP
+bounds, in two and three dimensions, are for the Dirichlet preconditioner
+(p. 166). The sharpness of the BDDC bound is Brenner–Scott, Remark 7.8.20.
+Toselli–Widlund also
 prove the same bound for one-level FETI methods with a Dirichlet
 preconditioner (Theorems 6.15 and 6.21, pp. 154–159), which the item omits.
 The spectral equivalence of BDDC and FETI-DP is stated in Brenner–Scott
@@ -9792,7 +10123,7 @@ p. 38, and Theorem 3.9 (spectrum of a compact operator), p. 40. Item 21.2 is
 Kress, Definitions 4.1 and 4.2, p. 45, Definition 4.5, p. 46, and Theorem 4.17,
 p. 55; the Banach-space form for $(\lambda-K)u=f$ is Han–Atkinson, Theorem
 2.8.10, p. 101, and Atkinson, Theorem 1.3.1, p. 13. Item 21.3 is Kress, Theorem
-2.14, pp. 23–24, and Theorem 10.1 with its converse part, pp. 183–184, with
+2.14, pp. 23–24, and Theorems 10.1 and 10.2, pp. 183–184, with
 Han–Atkinson, Theorem 2.3.1 (geometric series theorem), p. 61.
 
 Item 21.4 is Kress, Definition 13.5, p. 242, Theorem 13.6, p. 243, and Theorem
@@ -9808,10 +10139,12 @@ Atkinson, §3.4, (3.4.80)–(3.4.88), pp. 72–73, Lemma 3.4.1, p. 73, and
 leaves the result as Problem 13.3, p. 278. The superconvergence is due to
 Sloan.
 
-Item 21.7 is Kress, Definition 10.9, p. 190, and Theorem 10.12, p. 191, with
-the convergence $\|(A_n-A)A_n\|\to0$ from §10.3; Han–Atkinson, Theorem 12.4.3,
-p. 510, give the analogous perturbation result for $\lambda-T$ under a
-smallness condition (12.4.22) on $\|(T-S)S\|$. The theory of collectively
+Item 21.7 is Kress, Definition 10.9, p. 190, Corollary 10.11
+($\|(A_n-A)A_n\|\to0$), p. 190, and Theorem 10.12, p. 191, whose numerators
+are $1+\|(I-A)^{-1}A_n\|$; Han–Atkinson, Theorem 12.4.3, p. 510, give the
+analogous perturbation result for $\lambda-T$ under a smallness condition
+(12.4.22) on $\|(T-S)S\|$, with the product form of the numerator in
+(12.4.23). The theory of collectively
 compact operators is due to Anselone. Item 21.8 is Kress, Theorems 12.7 and
 12.8, from p. 225, Atkinson, Theorems 4.1.1, p. 106, and 4.1.2, p. 107, and
 Han–Atkinson, Theorem 12.4.4, p. 511, whose estimate $\|u-u_n\|_\infty\le
@@ -9829,24 +10162,29 @@ the iterated solution; the Radau II order $2m-1$ holds for $u_h$ itself
 because $c_m=1$. Item 21.11 is Brunner, the graded mesh (6.2.31), p. 370, and
 Theorem 6.2.9, p. 377.
 
-Item 21.12 is Kress, Definition 6.14 and Theorem 6.15, p. 87, Theorem 6.18,
-p. 89, Theorem 6.19, p. 90, and Theorem 6.20, p. 91; the fundamental solution
-is Kress, Theorem 6.2, p. 76. Item 21.13 is Sauter–Schwab, the operator
-(3.1), p. 101, the definitions (3.6) of $V$, $K_\pm$, $K'_\pm$, $W$, p. 103,
-Theorem 3.1.16, p. 112, and Theorem 3.3.1 (jump relations), p. 115.
-Sauter–Schwab, Remark 3.1.18, p. 113, note that $|s|<\frac12$ cannot in
-general be enlarged on Lipschitz boundaries, that $s=\pm\frac12$ is allowed for
-the Laplacian, and that all $s>-\frac12$ are allowed on $C^\infty$ boundaries.
-Their $(3.6)$ includes the sign $W=-\gamma_1D$. Item 21.14 is Sauter–Schwab,
-Theorem 3.5.3, p. 151, which states the ellipticity of $b_V(\varphi,\varphi)=
-(\varphi,V\varphi)_{L^2(\Gamma)}$ and of $b_W$ on the quotient
-$H^{1/2}(\Gamma)/\mathbb K$; the solvability and quasi-optimality are the
-Lax–Milgram and Céa consequences. Item 21.15 is Sauter–Schwab, Theorem 4.2.9,
-p. 229, the special case of Theorem 4.2.7, p. 227, which requires discrete
-inf–sup conditions; Remark 4.2.8, p. 229, stresses that those conditions do
-not follow from density in general, whereas under the ellipticity of $a$ in
-Theorem 4.2.9 they do for $\ell\ge\ell_0$. Kress, Theorem 13.30, p. 269, gives a
-related Galerkin result for compact perturbations of coercive operators.
+Item 21.12 is Kress, Definition 6.14 and Theorem 6.15, p. 87, Theorem 6.18, p. 89, Theorem 6.19, p.
+90, and Theorem 6.20, p. 91; the fundamental solution is Kress, Theorem 6.2, p. 76. Kress's
+operators $K$, $K'$ in (6.35)–(6.36), p. 91, are twice those of the item. Item 21.17 is Kress,
+Theorem 6.21, p. 92, Theorems 6.22 and 6.23, p. 93, and Theorems 6.26 and 6.27, p. 94, in his
+normalization $\varphi-K\varphi=-2f$ and $\psi+K'\psi=2g$; uniqueness for the interior Dirichlet
+problem is Theorem 6.12, and the standing assumption that $\partial D$ is connected is stated in
+§6.2, p. 83. The exterior problems, Theorems 6.24–6.25 and 6.28–6.29, pp. 93–95, need the modified
+double-layer potential (6.41) and are not stated. Item 21.13 is Sauter–Schwab, the operator (3.1),
+p. 101, the definitions (3.6) of $V$, $K_\pm$, $K'_\pm$, $W$, p. 103, Theorem 3.1.16, p. 112, and
+Theorem 3.3.1 (jump relations), p. 115. Sauter–Schwab, Remark 3.1.18, p. 113, note that
+$|s|<\frac12$ cannot in general be enlarged on Lipschitz boundaries, that $s=\pm\frac12$ is allowed
+for the Laplacian, and that all $s>-\frac12$ are allowed on $C^\infty$ boundaries. Their $(3.6)$
+includes the sign $W=-\gamma_1D$. Item 21.14 is Sauter–Schwab, Theorem 3.5.3, p. 151, which states
+the ellipticity of $b_V(\varphi,\varphi)= (\varphi,V\varphi)_{L^2(\Gamma)}$ and of $b_W$ on the
+quotient $H^{1/2}(\Gamma)/\mathbb K$, under Convention 2.7.2, p. 67, which assumes the domains
+connected; the bound for $W$ needs a connected $\Gamma$, since for the boundary of a shell between
+two concentric spheres the kernel of $W$ contains every locally constant function. The solvability
+and quasi-optimality are the Lax–Milgram and Céa consequences. Item 21.15 is Sauter–Schwab, Theorem
+4.2.9, p. 229, the special case of Theorem 4.2.7, p. 227, which requires discrete inf–sup
+conditions; Remark 4.2.8, p. 229, stresses that those conditions do not follow from density in
+general, whereas under the ellipticity of $a$ in Theorem 4.2.9 they do for $\ell\ge\ell_0$. Kress,
+Theorem 13.30, p. 269, is a Galerkin result for strictly coercive operators; combined with Theorem
+13.7(b), p. 244, it gives the result for compact perturbations.
 
 Item 21.16 is Kress, Definition 15.1, p. 298, Theorem 15.4, p. 300, and
 Theorem 2.26, p. 28. The remark that $V$ is an isomorphism from
@@ -9856,7 +10194,8 @@ Theorem 3.1.16 and Theorem 3.5.3 of Sauter–Schwab by the Lax–Milgram lemma.
 ### 22. Inverse problems and regularization
 
 Kress is cited from the third edition (2014, Applied Mathematical Sciences
-82), Sullivan from the 2015 Texts in Applied Mathematics 63 volume, Law,
+82), Engl, Hanke and Neubauer from the 1996 Kluwer volume (Mathematics and
+Its Applications 375), Sullivan from the 2015 Texts in Applied Mathematics 63 volume, Law,
 Stuart and Zygalakis from the 2015 Texts in Applied Mathematics 62 volume,
 and Han–Atkinson from the third edition (2009). Stuart's survey is "Inverse
 problems: a Bayesian perspective", Acta Numerica 19 (2010), pp. 451–559, and
@@ -9876,16 +10215,16 @@ Theorem 15.18, p. 311; the remark that the Picard solution lies in
 $N(K)^\perp$ is immediate from the formula.
 
 For item 22.4, the definitions of best approximate and minimal norm
-solutions are Benning–Burger, Definition 4.1, p. 21, which call the
-regularized limits "generalized inverse" solutions without stating its
-properties. The domain, the normal-equation characterization, and the
-theorem that $K^\dagger$ is bounded if and only if $R(K)$ is closed are the
-standard theory of Engl, Hanke and Neubauer, *Regularization of Inverse
-Problems*, Chapter 2; no local source states them, and the item rests on
-that standard theory. The series form for compact $K$ combines this with
-Kress, Theorem 15.18. Bakushinskii's theorem, that a parameter choice
-depending on $y^\delta$ alone cannot give a convergent method for an
-ill-posed problem, is not stated in any local source and is not included.
+solutions are Benning–Burger, Definition 4.1, p. 21. Engl–Hanke–Neubauer
+call the first notion a least-squares solution and reserve "best-approximate
+solution" for the least-squares solution of minimal norm (Definition 2.1,
+p. 32). The domain $D(K^\dagger)=R(K)\oplus R(K)^\perp$ and the
+Moore–Penrose inverse are their Definition 2.2 and (2.7), p. 33; the closed
+graph and the boundedness criterion are Proposition 2.4, p. 34; the affine
+set $x^\dagger+N(K)$ of least-squares solutions is Theorem 2.5, p. 34; and
+the normal equation is Theorem 2.6, p. 35. The series form for compact $K$,
+with the finite-rank criterion for closed range, is Engl–Hanke–Neubauer,
+Proposition 2.7 and Theorem 2.8, p. 38, and Kress, Theorem 15.18, p. 311.
 
 Item 22.5 is Kress, Definitions 15.5 and 15.7, pp. 301–302, Theorem 15.6,
 p. 301, and the error splitting (15.7), p. 302. Benning–Burger, Definitions
@@ -9895,6 +10234,10 @@ assuming injectivity, and convergence rates. The spectral filters are Kress,
 Theorem 15.21, p. 313, and the spectral cut-off is Theorem 15.24, p. 316.
 Kress also proves, in Theorems 15.25 and 15.26, p. 317, that the
 discrepancy principle is a regular stopping rule for the cut-off.
+Bakushinskii's theorem is Engl–Hanke–Neubauer, Theorem 3.3, p. 52, stated
+for a possibly nonlinear regularization of $T^\dagger$ on $D(T^\dagger)$;
+with $K$ injective and the scheme regular on $R(K)$ the same proof gives
+continuity of $K^{-1}$ on $R(K)$.
 
 Item 22.6 is Kress, Theorem 16.4, p. 325 (minimizer and normal equation),
 Theorem 16.5, p. 325 (regularization scheme and $\|R_\alpha\|\le\|K\|/\alpha$),
@@ -9906,7 +10249,10 @@ $\frac12\|Ax-b\|_Q^2+\frac12\|x-x_0\|_R^2$; it assumes $A$ has closed range,
 which the regularized problem does not need. The a priori convergence
 statement is not a numbered theorem in Kress; it follows at once from the
 splitting (15.7) and the bound in Theorem 15.23, since
-$\delta\|R_\alpha\|\le\delta/(2\sqrt\alpha)\to0$.
+$\delta\|R_\alpha\|\le\delta/(2\sqrt\alpha)\to0$. Engl–Hanke–Neubauer
+prove the variational characterization as Theorem 5.1, p. 117, and the a
+priori convergence for bounded $K$, with limit $K^\dagger y$, as Theorem
+5.2, p. 118.
 
 In item 22.7 the characterization at $\nu=1$ is Kress, Theorem 16.6, p. 326,
 stated there as $f\in AA^*A(X)$; the case $\nu=\frac12$ with rate
@@ -9916,8 +10262,14 @@ $\alpha^\nu\|w\|$ for $0<\nu\le1$, the noisy-data bound with its parameter
 choice and constant $\frac32$, and the saturation statement are derived here
 from Kress's series (16.6), p. 326, using
 $\sup_{t>0}\alpha t^\nu/(\alpha+t)=\nu^\nu(1-\nu)^{1-\nu}\alpha^\nu\le\alpha^\nu$
-and monotone convergence; they are the standard results of Engl, Hanke and
-Neubauer, Chapters 4 and 5, which have no local copy.
+and, for saturation, Fatou's lemma applied to
+$\alpha^{-2}\|x_\alpha-x^\dagger\|^2=\sum_n(\alpha+\sigma_n^2)^{-2}|(x^\dagger,e_n)|^2$.
+Engl–Hanke–Neubauer give the general rate as Theorem 4.3 and Corollary 4.4,
+p. 74, the converse at the qualification as Theorem 4.11, p. 81, and their
+Tikhonov specialization, with qualification $1$, on pp. 119–120 ((5.16)–(5.19));
+their Proposition 5.3, p. 120, is the noisy-data form of saturation, that
+$\|x_{\alpha(\delta,y^\delta)}^\delta-x^\dagger\|=o(\delta^{2/3})$ for all
+$y^\delta$ forces $x^\dagger=0$ when $R(K)$ is infinite-dimensional.
 
 Item 22.8 is Kress, Definition 16.17, p. 334, Theorem 16.18, p. 335, the
 estimate (16.20), p. 336, Theorem 16.19, p. 336, and Theorem 16.20, p. 337;
@@ -9934,20 +10286,18 @@ Benning–Burger, p. 39, write the iteration with a step size $\tau$ as
 $u_k=u_{k-1}-\tau K^*(Ku_{k-1}-f^\delta)$; Kress starts from
 $x_0=aK^*y$, which is the first step of this iteration from $u_{-1}=0$.
 
-Item 22.10 is Benning–Burger, Definition 3.3, p. 18 (Bregman distance),
-Definition 5.2, p. 28 (variational regularization), Definition 5.9, p. 33
-(source condition), Lemma 5.13, p. 34, and Example 5.16, p. 36, where the
-estimate is derived. Benning–Burger measure noise by the fidelity,
-$\frac12\|f-f^\delta\|^2\le\delta$, so their $\delta/\alpha$ is
-$\delta^2/(2\alpha)$ here; their choice $\alpha=\sqrt{2\delta}/\|v\|$ with
-rate $O(\sqrt\delta)$ is the choice $\alpha=\delta/\|v\|$ with rate $O(\delta)$
-here. In the first display of
-their derivation the step $\frac12\|Ku^\dagger-f^\delta\|^2\le\frac12\|f-
-f^\delta\|^2$ is an equality, since $Ku^\dagger=f$. Existence of $u_\alpha$ is
-their Theorem 5.6, p. 30, under Assumption 5.4, p. 29, which is not repeated
-here; the statement assumes a minimizer. The subgradient $p_\alpha$ comes from
-their optimality condition (5.4), p. 28, for which the sum rule holds because
-the quadratic fidelity is continuous on $U$.
+Item 22.10 is Benning–Burger, Definition 3.3, p. 18 (Bregman distance; the symmetric distance is the
+remark after it, pp. 18–19, written out as (5.5), p. 32), Definition 5.2, p. 28 (variational
+regularization), Definition 5.9, p. 33 (source condition), Lemma 5.13, p. 34, and Example 5.16, p.
+36, where the estimate is derived. Benning–Burger measure noise by the fidelity,
+$\frac12\|f-f^\delta\|^2\le\delta$, so their $\delta/\alpha$ is $\delta^2/(2\alpha)$ here; their
+choice $\alpha=\sqrt{2\delta}/\|v\|$ with rate $O(\sqrt\delta)$ is the choice $\alpha=\delta/\|v\|$
+with rate $O(\delta)$ here. In the first display of their derivation the step
+$\frac12\|Ku^\dagger-f^\delta\|^2\le\frac12\|f- f^\delta\|^2$ is an equality, since $Ku^\dagger=f$.
+Existence of $u_\alpha$ is their Theorem 5.6, p. 30, under Assumption 5.4, p. 29, which is not
+repeated here; the statement assumes a minimizer. The subgradient $p_\alpha$ comes from their
+optimality condition (5.4), p. 28, for which the sum rule holds because the quadratic fidelity is
+continuous on $U$.
 
 Item 22.11 is Stuart, Lemma 6.10 and Theorems 6.9 and 6.11, p. 530.
 Stuart defines the Cameron–Martin space as the intersection of linear
@@ -9959,7 +10309,12 @@ Item 22.12 is Stuart, Theorem 6.31, p. 544, and Sullivan, Theorem 6.6,
 p. 100, with Lemma 6.7, p. 100. Stuart requires $\mu_0(X)=1$ for a measure on
 a separable Banach space, and both assume that the noise density has support
 $\mathbb R^q$; the proofs use that $\rho$ is positive everywhere. The
-Gaussian potential is Stuart (2.26), p. 471.
+Gaussian potential is Stuart (2.26), p. 471. Stuart's proof asserts only
+$Z(y)>0$. Finiteness holds for almost every $y$ because $e^{c(y)}Z(y)$, with
+$c$ the function of $y$ by which $\Phi$ differs from $-\log\rho(y-G(u))$, is
+the Lebesgue density of the law of $y$; it can fail on a null set when $\rho$
+is unbounded, and it holds for every $y$ when $\rho$ is bounded, for instance
+for Gaussian noise, where moreover $Z(y)\le1$.
 
 Item 22.13 is Stuart, Assumption 2.6, p. 471, Theorem 4.1 and Theorem 4.2,
 p. 501, Corollary 4.4, p. 503, with Assumption 2.7 and Lemma 2.8,
@@ -10114,20 +10469,20 @@ $C^\infty_{\mathrm{poly}}$, Definition 8.40), for uniform steps. The two
 sources differ in smoothness: Kloeden–Platen needs four derivatives of
 polynomial growth, Lord–Powell–Shardlow infinitely many bounded ones.
 
-Item 23.12 is Lord–Powell–Shardlow, Theorem 8.32, p. 341, under Assumption
-8.29, p. 338, and condition (8.59), with the scheme of Definition 8.24,
-p. 333, specialized to $m=1$. The remarks on general $m$ are Kloeden–Platen,
-Section 10.3, schemes (3.2)–(3.4), pp. 346–347, Example 10.3.4 (the
-Clark–Cameron example), pp. 349–350, and Theorem 10.3.5, pp. 350–351,
-whose hypotheses (3.19)–(3.23) are stated in terms of
-$\underline a=a-\frac12\sum_jL^jb^j$ and the operators of 23.10; the
-coincidence for additive noise is Lord–Powell–Shardlow, p. 333.
+Item 23.12 is Lord–Powell–Shardlow, Theorem 8.32, p. 341, under Assumption 8.29, p. 338, and
+condition (8.59), with the scheme of Definition 8.24, p. 333, specialized to $m=1$. The remarks on
+general $m$ are Kloeden–Platen, Section 10.3, the scheme (3.2), p. 346 (the scalar scheme is (3.1),
+p. 345), its Itô form (3.3), p. 346, and Stratonovich form (3.4), pp. 346–347, and, for commutative
+noise, (3.13)–(3.16), p. 348, Example 10.3.4 (the Clark–Cameron example), pp. 349–350, and Theorem
+10.3.5, pp. 350–351, whose hypotheses (3.19)–(3.23) are stated in terms of $\underline
+a=a-\frac12\sum_jL^jb^j$ and the operators of 23.10; the coincidence for additive noise is
+Lord–Powell–Shardlow, p. 334.
 
-Item 23.13 is Lord–Powell–Shardlow, Example 8.26, condition (8.52) and
-Definition 8.27, pp. 335–337, with the $\theta$-method condition stated on
-p. 337 and left as Exercise 8.13. The formula for $R$ and the equivalence
-were checked directly: $R<1$ if and only if
-$\Delta t\,(2r+\sigma^2+(1-2\theta)r^2\Delta t)<0$.
+Item 23.13 is Lord–Powell–Shardlow, Example 8.26, condition (8.52) and Definition 8.27, pp. 335–337,
+with the $\theta$-method condition stated on p. 337 and left as an exercise; the text refers to
+Exercise 8.13, p. 369, which concerns the $\theta$-Milstein method. The formula for $R$ and the
+equivalence were checked directly: $R<1$ if and only if $\Delta t\,(2r+\sigma^2+(1-2\theta)r^2\Delta
+t)<0$.
 
 Item 23.14 is Lelièvre–Stoltz, Definition 3.1, Assumption 3.2 and Theorem
 3.3, pp. 759–760, with the one-step operator (3.9), p. 751, and the
@@ -10156,8 +10511,11 @@ pp. 449–450. Theorem 10.34 also covers finite element Galerkin spaces with
 mesh parameter $\delta=h$ and multiplicative noise; for space-time white
 noise the source records the rate $O(\Delta t^{1/4-\epsilon})$ on p. 464.
 The condition $\zeta<\frac12$ for the Dirichlet Laplacian on an interval
-was checked directly from $\sum_j\lambda_j^{\zeta-1}<\infty$. The text of
-Assumption 3.19 names the operator $-A$ where the eigenvalue condition
+was checked directly from $\sum_j\lambda_j^{\zeta-1}<\infty$. The statement of
+Corollary 10.38 prints $\|A^{(1-\zeta)/2}Q^{1/2}\|_{\mathrm{HS}}<\infty$; the
+Assumption 10.23 it invokes, (10.34), p. 449, has $A^{(\zeta-1)/2}$, which is
+the form stated here and the one the white-noise example on p. 468 uses. The
+text of Assumption 3.19 names the operator $-A$ where the eigenvalue condition
 $\lambda_j>0$ refers to $A$, as the subsequent use of $e^{-tA}$ shows.
 
 ### 24. High-dimensional approximation, uncertainty quantification, and model reduction
@@ -10267,38 +10625,33 @@ the source uses a real parameter domain but complex interpolation points
 $\hat p\in\mathbb C^d$. Classical moment matching at a point is the
 non-parametric case of this theorem.
 
-Item 24.13 is Sullivan, Section 2.7: Theorem 2.46 (characterization and
-uniqueness by mean and covariance), Theorem 2.47 (Fernique), p. 26,
-Theorem 2.49 (Sazonov), p. 27, Definition 2.50 (Cameron–Martin space),
-pp. 27–28, and Theorem 2.51 (Feldman–Hájek), p. 28; and Stuart, Theorem
-6.6, p. 529, Lemma 6.10, p. 530, and Theorems 6.13 and 6.14, p. 531, from
-which the density formula and the meaning of $\langle h,x-m\rangle_C$ are
-taken. Sullivan states the equivalence of shifts only as one of several
-equivalent descriptions in Definition 2.50, without proof, and prints the
-density with $\langle v,x\rangle_{C^{-1}}$ undefined for general $x$; Stuart's
-limiting definition is used. Item 24.14 is Lord–Powell–Shardlow, Theorem
-7.52, p. 293, and Theorem 7.53, p. 294 (the random-field forms of Theorems
-5.28 and 5.29, pp. 202–203, which are proved there); the source divides by
-$\sqrt{\nu_j}$ without excluding $\nu_j=0$, and the item restricts the sum to
-$\nu_j>0$, the remaining terms vanishing almost surely. The identity for
-$\mathbb E\|u-u_J\|^2_{L^2(D)}$ follows directly from the expansion; the
-source states it for stationary fields as Corollary 7.54, p. 294. Sullivan,
-Theorems 11.3 (Mercer) and 11.4 (Karhunen–Loève), p. 225, states the same
-expansion less precisely. Item 24.15 is Sullivan, Section 11.2, pp. 234–237,
-with Definition 11.11 and Lemma 11.13, and Section 11.3, pp. 237–238, with
-Theorem 8.25, p. 157, for the product basis. Sullivan justifies completeness
-of the Hermite polynomials by the Weierstrass theorem, which on the
-unbounded line needs a supplement; the sufficient condition of finite
-exponential moments on p. 139 covers the Gaussian case, and completeness of
-the product basis follows from the tensor product structure of
-$L^2(\mathbb R^d,\gamma_d)$ noted on p. 237. The extension to countably many
-Gaussian variables (Cameron and Martin 1947) is mentioned by Sullivan,
-p. 236, and Lord–Powell–Shardlow, p. 427, but no local source proves it, and
-it is not stated. Item 24.16 is Sullivan, Theorem 12.13, p. 268, with Céa's
-lemma, Lemma 12.11, p. 266, applied to $\alpha$ on $\mathcal H$; the energy
-best-approximation property in the symmetric case is Lord–Powell–Shardlow,
-Theorem 9.46, p. 396, for the elliptic problem of Assumption 9.42 and
-Theorems 9.43 and 9.45, p. 396.
+Item 24.13 is Sullivan, Section 2.7: Theorem 2.46 (characterization and uniqueness by mean and
+covariance), Theorem 2.47 (Fernique), p. 26, Theorem 2.49 (Sazonov), p. 27, Definition 2.50
+(Cameron–Martin space), pp. 27–28, and Theorem 2.51 (Feldman–Hájek), p. 28; and Stuart, Theorem 6.6,
+p. 529, Lemma 6.10, p. 530, and Theorems 6.13 and 6.14, p. 531, from which the density formula and
+the meaning of $\langle h,x-m\rangle_C$ are taken. Sullivan states the equivalence of shifts only as
+one of several equivalent descriptions in Definition 2.50, without proof, and prints the density
+with $\langle v,x\rangle_{C^{-1}}$ undefined for general $x$; Stuart's limiting definition is used.
+Item 24.14 is Lord–Powell–Shardlow, Theorem 7.52, p. 293, and Theorem 7.53, p. 294 (the random-field
+forms of Theorems 5.28 and 5.29, pp. 202–203, which are proved there); the source divides by
+$\sqrt{\nu_j}$ without excluding $\nu_j=0$, and the item restricts the sum to $\nu_j>0$, the
+remaining terms vanishing almost surely. Both sources state Mercer's part for a compact $D$ without
+the hypothesis that the measure has full support on $D$, which it needs: for $D=[0,1]\cup\{2\}$ with
+Lebesgue measure and $c=\mathbf 1_{x=y=2}$, continuous on $D\times D$, the operator is zero while
+$c(2,2)=1$. The item adds the hypothesis. The identity for $\mathbb E\|u-u_J\|^2_{L^2(D)}$ follows
+directly from the expansion; the source states it for stationary fields as Corollary 7.54, p. 294.
+Sullivan, Theorems 11.3 (Mercer) and 11.4 (Karhunen–Loève), p. 225, states the same expansion less
+precisely. Item 24.15 is Sullivan, Section 11.2, pp. 234–237, with Definition 11.11 and Lemma 11.13,
+and Section 11.3, pp. 237–238, with Theorem 8.25, p. 157, for the product basis. Sullivan justifies
+completeness of the Hermite polynomials by the Weierstrass theorem, which on the unbounded line
+needs a supplement; the sufficient condition of finite exponential moments on p. 139 covers the
+Gaussian case, and completeness of the product basis follows from the tensor product structure of
+$L^2(\mathbb R^d,\gamma_d)$ noted on p. 237. The extension to countably many Gaussian variables
+(Cameron and Martin 1947) is mentioned by Sullivan, p. 236, and Lord–Powell–Shardlow, p. 427, but no
+local source proves it, and it is not stated. Item 24.16 is Sullivan, Theorem 12.13, p. 268, with
+Céa's lemma, Lemma 12.11, p. 266, applied to $\alpha$ on $\mathcal H$; the energy best-approximation
+property in the symmetric case is Lord–Powell–Shardlow, Theorem 9.46, p. 396, for the elliptic
+problem of Assumption 9.42 and Theorems 9.43 and 9.45, p. 396.
 
 Item 24.17 is DeVore–Hanin–Petrova: the networks $\Upsilon^{W,L}$ are
 defined in Sections 2.1–2.2, pp. 331–333, the class error in (5.1), p. 377,

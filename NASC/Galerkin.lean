@@ -1,14 +1,38 @@
 module
 
-public import NASC.Approximation
+public import NASC.Support.BestApproximation
 public import Mathlib.Analysis.Normed.Module.DoubleDual
 public import Mathlib.Analysis.InnerProductSpace.Projection.Basic
+
+import NASC.Support.LinearAlgebra
 
 /-!
 # Variational and mixed Galerkin methods
 
 Banach inf-sup solvability, Fortin's criterion, quasi-optimality, Strang consistency,
-duality, and saddle point problems. Bilinear forms are bundled into maps to the dual.
+energy quasi-optimality, Aubin--Nitsche duality, saddle point problems, and coercivity of the
+symmetric interior penalty form. Bilinear forms are bundled into maps to the dual: a form on
+`V × W` is a continuous linear map `A : V →L[ℝ] StrongDual ℝ W`, and `A v w` is its value.
+
+## Main definitions
+
+* `NASC.IsMixedSolution`: the two equations of a saddle point problem.
+* `NASC.sipgForm`: the symmetric interior penalty quadratic form, written in terms of the
+  broken gradient energy, the face fluxes and the jumps.
+
+## Main results
+
+* `NASC.bijective_iff_infSup_of_reflexive`: the Banach--Nečas--Babuška theorem.
+* `NASC.norm_restrict_ge_of_fortin`: Fortin's criterion for the discrete inf-sup condition.
+* `NASC.norm_galerkinError_le_of_infSup`: Babuška quasi-optimality, and
+  `NASC.norm_galerkinError_le_of_infSup_hilbert` its Xu--Zikatanov improvement.
+* `NASC.norm_galerkinError_le_strang`: Strang's lemma for inconsistent discrete forms.
+* `NASC.galerkin_energy_error_le`: energy quasi-optimality of conforming Galerkin solutions.
+* `NASC.norm_weak_galerkinError_le_of_dualApproximation`: the Aubin--Nitsche estimate.
+* `NASC.existsUnique_mixedSolution_of_infSup`, `NASC.exists_mixed_quasi_optimal_constant`:
+  Brezzi's saddle point theory.
+* `NASC.half_add_le_sipgForm`: coercivity of the symmetric interior penalty form, from the
+  weighted Cauchy--Schwarz inequality `NASC.sq_sum_inner_le_sum_mul_sum_div`.
 -/
 
 public section
@@ -18,7 +42,7 @@ noncomputable section
 namespace NASC
 
 open Set
-open scoped BigOperators InnerProductSpace
+open scoped InnerProductSpace
 
 section Banach
 
@@ -26,8 +50,9 @@ variable {V W : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [NormedAddCommGroup W] [NormedSpace ℝ W]
 
 /-- **Gap 18.1.** The Banach--Nečas--Babuška theorem. The inf-sup condition
-is written as a uniform lower bound for the map to the test-space dual. -/
-theorem bijective_iff_infSup_of_reflexive [CompleteSpace V] [CompleteSpace W]
+is written as a uniform lower bound for the map to the test-space dual. The trial space is
+a Banach space and the test space is reflexive (hence complete). -/
+theorem bijective_iff_infSup_of_reflexive [CompleteSpace V]
     (A : V →L[ℝ] StrongDual ℝ W)
     (hW : Function.Surjective (NormedSpace.inclusionInDoubleDual ℝ W)) :
     Function.Bijective A ↔
@@ -38,7 +63,7 @@ theorem bijective_iff_infSup_of_reflexive [CompleteSpace V] [CompleteSpace W]
 continuous inf-sup lower bound to the discrete trial space. -/
 theorem norm_restrict_ge_of_fortin (A : V →L[ℝ] StrongDual ℝ W)
     (X : Submodule ℝ V) (Y : Submodule ℝ W) (P : W →L[ℝ] Y)
-    {α γ : ℝ} (_hα : 0 < α) (hγ : 0 < γ) (hA : ∀ v, α * ‖v‖ ≤ ‖A v‖)
+    {α γ : ℝ} (hγ : 0 < γ) (hA : ∀ v, α * ‖v‖ ≤ ‖A v‖)
     (hP : ∀ w, γ * ‖P w‖ ≤ ‖w‖)
     (hfortin : ∀ (v : X) (w : W), A v.val (P w).val = A v.val w) :
     ∀ v : X, γ * α * ‖v‖ ≤ ‖(A v.val).comp Y.subtypeL‖ := by
@@ -105,12 +130,15 @@ theorem norm_galerkinError_le_of_infSup (A : V →L[ℝ] StrongDual ℝ W)
   exact (div_le_iff₀ hc).mpr (by
     simpa only [mul_comm ‖u - v‖] using hpoint ⟨v, hv⟩)
 
-/-- **Gap 18.3.** The Hilbert trial-space improvement of the inf-sup
-quasi-optimality factor. -/
+/-- **Gap 18.3.** The inner-product trial-space improvement of the inf-sup
+quasi-optimality factor (Xu--Zikatanov). Kato's identity `‖1 - P‖ = ‖P‖` for the Galerkin
+projection holds in any inner-product space, so neither completeness nor an orthogonal
+projection onto `X` is needed. The hypothesis `X ≠ ⊥` excludes the case `uh = 0`, where the
+bound can fail. -/
 theorem norm_galerkinError_le_of_infSup_hilbert {H : Type*}
-    [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteSpace H]
+    [NormedAddCommGroup H] [InnerProductSpace ℝ H]
     (A : H →L[ℝ] StrongDual ℝ W)
-    (X : Submodule ℝ H) [X.HasOrthogonalProjection] (Y : Submodule ℝ W)
+    (X : Submodule ℝ H) (Y : Submodule ℝ W)
     (hn : X ≠ ⊥) {α : ℝ} (hα : 0 < α)
     (hstab : ∀ v : X, α * ‖v‖ ≤ ‖(A v.val).comp Y.subtypeL‖)
     (u : H) (uh : X) (horth : ∀ w : Y, A (u - uh.val) w.val = 0) :
@@ -145,13 +173,14 @@ theorem norm_galerkinError_le_strang (A : V →L[ℝ] StrongDual ℝ W)
     _ ≤ ‖u - v.val‖ + (‖A‖ * ‖u - v.val‖ + ‖D‖) / α := add_le_add_right hv _
     _ = _ := by rw [add_div]; ring
 
-/-- **Gap 18.13.** Energy quasi-optimality for a conforming Galerkin approximation.
-The energy norm is written as the square root of the positive symmetric form. -/
+/-- **Gap 18.13.** Energy quasi-optimality for a conforming Galerkin approximation:
+the Galerkin error has the least energy `A e e` (the squared energy norm) among all errors
+`u - v` with `v` in the trial space. -/
 theorem galerkin_energy_error_le (A : V →L[ℝ] StrongDual ℝ V)
     (hA : ∀ v w, A v w = A w v) (hpos : ∀ v, 0 ≤ A v v)
     (X : Submodule ℝ V) (u : V) (uh : X) (horth : ∀ w : X, A (u - uh.val) w.val = 0)
     (v : X) :
-    Real.sqrt (A (u - uh.val) (u - uh.val)) ≤ Real.sqrt (A (u - v.val) (u - v.val)) := by
+    A (u - uh.val) (u - uh.val) ≤ A (u - v.val) (u - v.val) := by
   let e := u - uh.val
   let w := uh - v
   have hsplit : u - v.val = e + w.val := by
@@ -159,7 +188,6 @@ theorem galerkin_energy_error_le (A : V →L[ℝ] StrongDual ℝ V)
     abel
   have hew : A e w.val = 0 := horth w
   have hwe : A w.val e = 0 := (hA _ _).trans hew
-  apply Real.sqrt_le_sqrt
   rw [hsplit]
   simp only [map_add, add_apply, hew, hwe, add_zero, zero_add]
   exact le_add_of_nonneg_right (hpos w.val)
@@ -190,15 +218,22 @@ theorem norm_weak_galerkinError_le_of_dualApproximation {H : Type*}
   exact (mul_le_mul_iff_right₀ hp).mp (by
     simpa only [← pow_two, mul_comm ‖J e‖ (‖A‖ * δ * ‖e‖)] using hbound)
 
-/-- Equations for a mixed problem in the ambient spaces. -/
+/-- Equations for a mixed problem in the ambient spaces: `A u v + B v p = f v` for all
+`v` and `B u q = g q` for all `q`. -/
 def IsMixedSolution (A : V →L[ℝ] StrongDual ℝ V) (B : V →L[ℝ] StrongDual ℝ W)
     (f : StrongDual ℝ V) (g : StrongDual ℝ W) (u : V) (p : W) : Prop :=
   (∀ v, A u v + B v p = f v) ∧ ∀ q, B u q = g q
 
+/-- The defining equations of `NASC.IsMixedSolution`. -/
+theorem isMixedSolution_iff {A : V →L[ℝ] StrongDual ℝ V} {B : V →L[ℝ] StrongDual ℝ W}
+    {f : StrongDual ℝ V} {g : StrongDual ℝ W} {u : V} {p : W} :
+    IsMixedSolution A B f g u p ↔ (∀ v, A u v + B v p = f v) ∧ ∀ q, B u q = g q :=
+  Iff.rfl
+
 /-- **Gap 18.18.** Coercivity on the kernel and the constraint inf-sup condition
-give unique saddle point solvability in real reflexive Banach spaces. -/
-theorem existsUnique_mixedSolution_of_infSup [CompleteSpace V] [CompleteSpace W]
-    (hV : Function.Surjective (NormedSpace.inclusionInDoubleDual ℝ V))
+give unique saddle point solvability for a real Banach space `V` and a reflexive space `W`.
+Reflexivity of `V` is not assumed: the two conditions imply it. -/
+theorem existsUnique_mixedSolution_of_infSup [CompleteSpace V]
     (hW : Function.Surjective (NormedSpace.inclusionInDoubleDual ℝ W))
     (A : V →L[ℝ] StrongDual ℝ V) (B : V →L[ℝ] StrongDual ℝ W)
     {α β : ℝ} (hα : 0 < α) (hβ : 0 < β)
@@ -210,7 +245,7 @@ theorem existsUnique_mixedSolution_of_infSup [CompleteSpace V] [CompleteSpace W]
 
 /-- **Gap 18.19.** Uniform discrete saddle stability yields quasi-optimality with
 constants independent of the discrete subspaces. -/
-theorem exists_mixed_quasiOptimal_constant
+theorem exists_mixed_quasi_optimal_constant
     (A : V →L[ℝ] StrongDual ℝ V) (B : V →L[ℝ] StrongDual ℝ W) {α β : ℝ}
     (hα : 0 < α) (hβ : 0 < β) :
     ∃ C ≥ (0 : ℝ), ∀ (X : Submodule ℝ V) (Y : Submodule ℝ W)
@@ -227,38 +262,34 @@ theorem exists_mixed_quasiOptimal_constant
 
 end Banach
 
-/-- **Gap 18.17.** The symmetric interior penalty quadratic form controls the
-broken gradient and weighted jump norm under the inverse trace bound. -/
-theorem sipg_coercivity {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H]
-    {n : ℕ} (h : Fin n → ℝ) (hpos : ∀ i, 0 < h i) (j a : Fin n → H)
-    {c G η : ℝ} (hG : 0 ≤ G) (htrace : (∑ i, h i * ‖a i‖ ^ 2) ≤ c ^ 2 * G)
+section InteriorPenalty
+
+variable {ι H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H]
+
+/-- The symmetric interior penalty quadratic form `G - 2 ∑ ⟪aᵢ, jᵢ⟫ + η ∑ ‖jᵢ‖² / hᵢ`.
+Here `G` is the broken gradient energy, `aᵢ` the face averages of the normal fluxes, `jᵢ`
+the jumps, `hᵢ` the face sizes and `η` the penalty parameter. -/
+def sipgForm (s : Finset ι) (h : ι → ℝ) (a j : ι → H) (G η : ℝ) : ℝ :=
+  G - 2 * (∑ i ∈ s, inner ℝ (a i) (j i)) + η * ∑ i ∈ s, ‖j i‖ ^ 2 / h i
+
+/-- The defining formula of `NASC.sipgForm`. -/
+theorem sipgForm_def (s : Finset ι) (h : ι → ℝ) (a j : ι → H) (G η : ℝ) :
+    sipgForm s h a j G η =
+      G - 2 * (∑ i ∈ s, inner ℝ (a i) (j i)) + η * ∑ i ∈ s, ‖j i‖ ^ 2 / h i :=
+  (rfl)
+
+/-- **Gap 18.17.** The symmetric interior penalty quadratic form controls half of the
+broken gradient energy plus the weighted jump norm under the inverse trace bound. -/
+theorem half_add_le_sipgForm (s : Finset ι) (h : ι → ℝ) (hpos : ∀ i ∈ s, 0 < h i)
+    (j a : ι → H) {c G η : ℝ} (hG : 0 ≤ G) (htrace : (∑ i ∈ s, h i * ‖a i‖ ^ 2) ≤ c ^ 2 * G)
     (hpen : 2 * c ^ 2 + 1 / 2 ≤ η) :
-    (G + ∑ i, ‖j i‖ ^ 2 / h i) / 2 ≤
-      G - 2 * (∑ i, inner ℝ (a i) (j i)) + η * ∑ i, ‖j i‖ ^ 2 / h i := by
-  let T := ∑ i, ‖j i‖ ^ 2 / h i
-  let S := ∑ i, inner ℝ (a i) (j i)
-  let u := fun i ↦ Real.sqrt (h i) * ‖a i‖
-  let v := fun i ↦ ‖j i‖ / Real.sqrt (h i)
-  have hT : 0 ≤ T := Finset.sum_nonneg fun i _ ↦ div_nonneg (sq_nonneg _) (hpos i).le
-  have hu : (∑ i, u i ^ 2) = ∑ i, h i * ‖a i‖ ^ 2 := by
-    refine Finset.sum_congr rfl fun i _ ↦ ?_
-    simp only [u, mul_pow, Real.sq_sqrt (hpos i).le]
-  have hv : (∑ i, v i ^ 2) = T := by
-    refine Finset.sum_congr rfl fun i _ ↦ ?_
-    simp only [v, div_pow, Real.sq_sqrt (hpos i).le]
-  have hp : |S| ≤ ∑ i, u i * v i := by
-    refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun i _ ↦ ?_)
-    have hh : Real.sqrt (h i) ≠ 0 := (Real.sqrt_pos.mpr (hpos i)).ne'
-    have heq : u i * v i = ‖a i‖ * ‖j i‖ := by
-      dsimp only [u, v]
-      field_simp
-    rw [heq]
-    exact abs_real_inner_le_norm _ _
-  have hs : S ^ 2 ≤ c ^ 2 * G * T := calc
-    _ = |S| ^ 2 := (sq_abs _).symm
-    _ ≤ (∑ i, u i * v i) ^ 2 := pow_le_pow_left₀ (abs_nonneg _) hp 2
-    _ ≤ (∑ i, u i ^ 2) * (∑ i, v i ^ 2) := Finset.sum_mul_sq_le_sq_mul_sq _ _ _
-    _ ≤ _ := by rw [hu, hv]; exact mul_le_mul_of_nonneg_right htrace hT
+    (G + ∑ i ∈ s, ‖j i‖ ^ 2 / h i) / 2 ≤ sipgForm s h a j G η := by
+  rw [sipgForm_def]
+  set T := ∑ i ∈ s, ‖j i‖ ^ 2 / h i
+  set S := ∑ i ∈ s, inner ℝ (a i) (j i)
+  have hT : 0 ≤ T := Finset.sum_nonneg fun i hi ↦ div_nonneg (sq_nonneg _) (hpos i hi).le
+  have hs : S ^ 2 ≤ c ^ 2 * G * T :=
+    (sq_sum_inner_le_sum_mul_sum_div s hpos a j).trans (mul_le_mul_of_nonneg_right htrace hT)
   have hm : 0 ≤ G / 2 + 2 * c ^ 2 * T := by positivity
   have hc : 2 * S ≤ G / 2 + 2 * c ^ 2 * T := by
     by_cases hS : S ≤ 0
@@ -267,5 +298,7 @@ theorem sipg_coercivity {H : Type*} [NormedAddCommGroup H] [InnerProductSpace �
     nlinarith only [hs, sq_nonneg (G / 2 - 2 * c ^ 2 * T)]
   have hη := mul_le_mul_of_nonneg_right hpen hT
   linarith only [hc, hη]
+
+end InteriorPenalty
 
 end NASC

@@ -1,16 +1,44 @@
 module
 
-public import NASC.DirectMethods
-public import Mathlib.Analysis.Analytic.Basic
-public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import NASC.Conditioning
 public import Mathlib.Analysis.Matrix.Spectrum
+public import Mathlib.LinearAlgebra.Matrix.Hessenberg.Defs
 public import Mathlib.RingTheory.Polynomial.Chebyshev
+
+import NASC.Support.LinearAlgebra
 
 /-!
 # Eigenvalue and singular value computations
 
-Schur and singular value factorizations, power and Rayleigh iterations, QR, Krylov reduction,
-and linearizations of matrix-valued eigenproblems. See section 4 of the gap catalogue.
+Schur and singular value factorizations, power and Rayleigh quotient iterations, the QR
+algorithm, Hessenberg reduction and shifted QR steps, backward error of unitary reductions,
+Arnoldi and Lanczos (Kaniel–Paige–Saad), Golub–Kahan bidiagonalization, Keldysh's theorem and
+block companion linearizations of matrix polynomials. Gap numbers refer to section 4 of
+`GAPS.md`.
+
+## Notation
+
+* Matrix norms are the Euclidean operator norms of the scoped instance
+  `Matrix.Norms.L2Operator`.
+* `hA.eigenvalues₀` lists the eigenvalues of a Hermitian matrix in decreasing order, from zero.
+
+## Main definitions
+
+* `powerStep`, `IsQRIteration`, `accumulatedQ`, `accumulatedR`, `IsUnreducedHessenberg`,
+  `krylovSubmodule`, `blockCompanionPencil`.
+
+## Main results
+
+* `exists_schur_of_roots`, `exists_unitary_conjTranspose_mul_eq_singularValueDiagonal`.
+* `exists_phase_norm_powerStep_iterate_sub_le` (power method),
+  `exists_norm_rayleighQuotientStep_sub_le_cube` (Rayleigh quotient iteration).
+* `IsQRIteration.eq_conjTranspose_mul_mul`, `IsQRIteration.pow_eq_mul_accumulatedR`,
+  `IsQRIteration.exists_tendsto_conjTranspose_mul`: the QR algorithm.
+* `exists_unitary_conjTranspose_mul_upperHessenberg`, `IsUnreducedHessenberg.shifted_qr_step`.
+* `norm_conjTranspose_mul_sub_le_of_reductions`, `exists_arnoldiFrame`, `kaniel_paige_saad`,
+  `exists_unitary_conjTranspose_mul_bidiagonal`.
+* `exists_analyticOnNhd_sub_inv_pole_of_simple_eigenvalue` (Keldysh),
+  `det_blockCompanionPencil`, `blockCompanionPencil_mulVec_eq_zero_iff`.
 -/
 
 public section
@@ -19,7 +47,7 @@ noncomputable section
 
 namespace NASC
 
-open scoped Matrix BigOperators Matrix.Norms.L2Operator InnerProductSpace
+open scoped Matrix Matrix.Norms.L2Operator InnerProductSpace
 open Filter Matrix
 
 /-- **Gap 4.1.** Schur triangularization with the characteristic roots in the supplied order. -/
@@ -37,22 +65,26 @@ theorem exists_unitary_conjTranspose_mul_eq_singularValueDiagonal
       Uᴴ * A * V = singularValueDiagonal A := by
   sorry
 
-/-- Normalize the new vector in one power iteration. -/
+/-- Normalize the new vector in one power iteration. When `A x = 0` the step returns `0`. -/
 def powerStep {𝕜 E : Type*} [RCLike 𝕜] [NormedAddCommGroup E] [NormedSpace 𝕜 E]
     (A : E →ₗ[𝕜] E) (x : E) : E :=
   ((‖A x‖⁻¹ : ℝ) : 𝕜) • A x
 
-/-- **Gap 4.4.** The normalized power method converges up to a unit complex phase, at a
-rate fixed by the spectral ratio. Inverse iteration applies this estimate to the resolvent. -/
-theorem exists_phase_norm_powerStep_iterate_sub_le {n : ℕ}
-    (A : EuclideanSpace ℂ (Fin (n + 1)) →ₗ[ℂ] EuclideanSpace ℂ (Fin (n + 1)))
-    (B : Module.Basis (Fin (n + 1)) ℂ (EuclideanSpace ℂ (Fin (n + 1))))
-    (eigs : Fin (n + 1) → ℂ) (v : EuclideanSpace ℂ (Fin (n + 1))) {q : ℝ}
-    (hB : ∀ i, A (B i) = eigs i • B i) (hunit : ∀ i, ‖B i‖ = 1) (hv : ‖v‖ = 1)
-    (hcoord : B.repr v 0 ≠ 0) (h₀ : eigs 0 ≠ 0) (hq : 0 ≤ q) (hq' : q < 1)
-    (hgap : ∀ i ≠ 0, ‖eigs i‖ ≤ q * ‖eigs 0‖) :
-    ∃ C ≥ (0 : ℝ), ∀ k, ∃ phase : ℂ, ‖phase‖ = 1 ∧
-      ‖(powerStep A)^[k] v‖ = 1 ∧ ‖phase • (powerStep A)^[k] v - B 0‖ ≤ C * q ^ k := by
+/-- A power step scales `A x` by the inverse of its norm. -/
+theorem powerStep_def {𝕜 E : Type*} [RCLike 𝕜] [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    (A : E →ₗ[𝕜] E) (x : E) : powerStep A x = ((‖A x‖⁻¹ : ℝ) : 𝕜) • A x := (rfl)
+
+/-- **Gap 4.4.** The normalized power method converges up to a unit phase to a dominant unit
+eigenvector, at a rate fixed by the spectral ratio. The space is any normed space with an
+eigenbasis indexed by a finite type. -/
+theorem exists_phase_norm_powerStep_iterate_sub_le {𝕜 E ι : Type*} [RCLike 𝕜]
+    [NormedAddCommGroup E] [NormedSpace 𝕜 E] [Fintype ι] (A : E →ₗ[𝕜] E)
+    (B : Module.Basis ι 𝕜 E) (i₀ : ι) (eigs : ι → 𝕜) (v : E) {q : ℝ}
+    (hB : ∀ i, A (B i) = eigs i • B i) (hunit : ‖B i₀‖ = 1) (hv : ‖v‖ = 1)
+    (hcoord : B.repr v i₀ ≠ 0) (h₀ : eigs i₀ ≠ 0) (hq : 0 ≤ q) (hq' : q < 1)
+    (hgap : ∀ i ≠ i₀, ‖eigs i‖ ≤ q * ‖eigs i₀‖) :
+    ∃ C ≥ (0 : ℝ), ∀ k, ∃ phase : 𝕜, ‖phase‖ = 1 ∧
+      ‖(powerStep A)^[k] v‖ = 1 ∧ ‖phase • (powerStep A)^[k] v - B i₀‖ ≤ C * q ^ k := by
   sorry
 
 /-- **Gap 4.5.** Local cubic error for Rayleigh quotient iteration at a simple real
@@ -78,42 +110,82 @@ def IsQRIteration {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
     Q k ∈ unitary (Matrix (Fin n) (Fin n) 𝕜) ∧ (R k).IsUpperTriangular ∧
     B k = Q k * R k ∧ B (k + 1) = R k * Q k
 
-/-- **Gap 4.6.** Accumulated QR factors give the similarity iterates and the QR
-factorization of the powers. -/
-theorem IsQRIteration.exists_accumulatedFactors {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
-    {A : Matrix (Fin n) (Fin n) 𝕜} {B Q R : ℕ → Matrix (Fin n) (Fin n) 𝕜}
-    (h : IsQRIteration A B Q R) :
-    ∃ P U : ℕ → Matrix (Fin n) (Fin n) 𝕜,
-      P 0 = 1 ∧ U 0 = 1 ∧ ∀ k,
-        P (k + 1) = P k * Q k ∧ U (k + 1) = R k * U k ∧
-        B (k + 1) = (P (k + 1))ᴴ * A * P (k + 1) ∧ A ^ k = P k * U k ∧
-        A * P k = P (k + 1) * R k := by
-  obtain ⟨h0, hstep⟩ := h
-  let P : ℕ → Matrix (Fin n) (Fin n) 𝕜 := fun k ↦ Nat.rec 1 (fun i p ↦ p * Q i) k
-  let U : ℕ → Matrix (Fin n) (Fin n) 𝕜 := fun k ↦ Nat.rec 1 (fun i u ↦ R i * u) k
-  have hP₀ : P 0 = 1 := rfl
-  have hU₀ : U 0 = 1 := rfl
-  have hP (k : ℕ) : P (k + 1) = P k * Q k := rfl
-  have hU (k : ℕ) : U (k + 1) = R k * U k := rfl
-  have hPB (k : ℕ) : (P k)ᴴ * P k = 1 ∧ A * P k = P k * B k := by
-    induction k with
-    | zero => simp only [hP₀, h0, conjTranspose_one, one_mul, mul_one, and_self]
-    | succ k ih =>
-      obtain ⟨hQ, -, hk, hnext⟩ := hstep k
-      have hs : (Q k)ᴴ * Q k = 1 := Unitary.star_mul_self_of_mem hQ
-      constructor
-      · rw [hP, conjTranspose_mul, Matrix.mul_assoc, ← Matrix.mul_assoc (P k)ᴴ, ih.1,
-          one_mul, hs]
-      · rw [hP, ← Matrix.mul_assoc, ih.2, hk, hnext]
-        simp only [Matrix.mul_assoc]
-  have hAP (k : ℕ) : A * P k = P (k + 1) * R k := by
-    rw [hP, Matrix.mul_assoc, ← (hstep k).2.2.1, (hPB k).2]
-  have hpow (k : ℕ) : A ^ k = P k * U k := by
-    induction k with
-    | zero => simp only [hP₀, hU₀, pow_zero, mul_one]
-    | succ k ih => rw [pow_succ', ih, ← Matrix.mul_assoc, hAP, hU, Matrix.mul_assoc]
-  refine ⟨P, U, rfl, rfl, fun k ↦ ⟨hP k, hU k, ?_, hpow k, hAP k⟩⟩
-  rw [Matrix.mul_assoc, (hPB (k + 1)).2, ← Matrix.mul_assoc, (hPB (k + 1)).1, one_mul]
+/-- An unshifted QR iteration starts at `A` and passes from `B k = Q k R k` to `R k Q k`. -/
+theorem isQRIteration_iff {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
+    {A : Matrix (Fin n) (Fin n) 𝕜} {B Q R : ℕ → Matrix (Fin n) (Fin n) 𝕜} :
+    IsQRIteration A B Q R ↔ B 0 = A ∧ ∀ k,
+      Q k ∈ unitary (Matrix (Fin n) (Fin n) 𝕜) ∧ (R k).IsUpperTriangular ∧
+      B k = Q k * R k ∧ B (k + 1) = R k * Q k := Iff.rfl
+
+/-- The accumulated unitary factor `Q₀ Q₁ ⋯ Q_{k-1}` of a QR iteration. -/
+def accumulatedQ {M : Type*} [Monoid M] (Q : ℕ → M) : ℕ → M
+  | 0 => 1
+  | k + 1 => accumulatedQ Q k * Q k
+
+/-- The empty accumulated unitary factor is the identity. -/
+@[simp]
+theorem accumulatedQ_zero {M : Type*} [Monoid M] (Q : ℕ → M) : accumulatedQ Q 0 = 1 := (rfl)
+
+/-- The accumulated unitary factor multiplies by the next factor on the right. -/
+theorem accumulatedQ_succ {M : Type*} [Monoid M] (Q : ℕ → M) (k : ℕ) :
+    accumulatedQ Q (k + 1) = accumulatedQ Q k * Q k := (rfl)
+
+/-- The accumulated triangular factor `R_{k-1} ⋯ R₁ R₀` of a QR iteration. -/
+def accumulatedR {M : Type*} [Monoid M] (R : ℕ → M) : ℕ → M
+  | 0 => 1
+  | k + 1 => R k * accumulatedR R k
+
+/-- The empty accumulated triangular factor is the identity. -/
+@[simp]
+theorem accumulatedR_zero {M : Type*} [Monoid M] (R : ℕ → M) : accumulatedR R 0 = 1 := (rfl)
+
+/-- The accumulated triangular factor multiplies by the next factor on the left. -/
+theorem accumulatedR_succ {M : Type*} [Monoid M] (R : ℕ → M) (k : ℕ) :
+    accumulatedR R (k + 1) = R k * accumulatedR R k := (rfl)
+
+section IsQRIteration
+
+variable {𝕜 : Type*} [RCLike 𝕜] {n : ℕ} {A : Matrix (Fin n) (Fin n) 𝕜}
+  {B Q R : ℕ → Matrix (Fin n) (Fin n) 𝕜}
+
+/-- **Gap 4.6.** The accumulated unitary factor of a QR iteration is unitary and conjugates
+`A` to the current iterate. -/
+theorem IsQRIteration.conjTranspose_accumulatedQ_mul_self_and_mul_eq
+    (h : IsQRIteration A B Q R) (k : ℕ) :
+    (accumulatedQ Q k)ᴴ * accumulatedQ Q k = 1 ∧ A * accumulatedQ Q k = accumulatedQ Q k * B k := by
+  induction k with
+  | zero => simp only [accumulatedQ_zero, h.1, conjTranspose_one, one_mul, mul_one, and_self]
+  | succ k ih =>
+    obtain ⟨hQ, -, hk, hnext⟩ := h.2 k
+    have hs : (Q k)ᴴ * Q k = 1 := Unitary.star_mul_self_of_mem hQ
+    constructor
+    · rw [accumulatedQ_succ, conjTranspose_mul, Matrix.mul_assoc,
+        ← Matrix.mul_assoc (accumulatedQ Q k)ᴴ, ih.1, one_mul, hs]
+    · rw [accumulatedQ_succ, ← Matrix.mul_assoc, ih.2, hk, hnext]
+      simp only [Matrix.mul_assoc]
+
+/-- **Gap 4.6.** Each QR iterate is the unitary conjugate of `A` by the accumulated factor. -/
+theorem IsQRIteration.eq_conjTranspose_mul_mul (h : IsQRIteration A B Q R) (k : ℕ) :
+    B k = (accumulatedQ Q k)ᴴ * A * accumulatedQ Q k := by
+  obtain ⟨h₁, h₂⟩ := h.conjTranspose_accumulatedQ_mul_self_and_mul_eq k
+  rw [Matrix.mul_assoc, h₂, ← Matrix.mul_assoc, h₁, one_mul]
+
+/-- **Gap 4.6.** One more QR step: `A P_k = P_{k+1} R_k` for the accumulated factor `P_k`. -/
+theorem IsQRIteration.mul_accumulatedQ_eq (h : IsQRIteration A B Q R) (k : ℕ) :
+    A * accumulatedQ Q k = accumulatedQ Q (k + 1) * R k := by
+  rw [accumulatedQ_succ, Matrix.mul_assoc, ← (h.2 k).2.2.1,
+    (h.conjTranspose_accumulatedQ_mul_self_and_mul_eq k).2]
+
+/-- **Gap 4.6.** The accumulated factors give the QR factorization of the powers of `A`. -/
+theorem IsQRIteration.pow_eq_mul_accumulatedR (h : IsQRIteration A B Q R) (k : ℕ) :
+    A ^ k = accumulatedQ Q k * accumulatedR R k := by
+  induction k with
+  | zero => simp only [accumulatedQ_zero, accumulatedR_zero, pow_zero, mul_one]
+  | succ k ih =>
+    rw [pow_succ', ih, ← Matrix.mul_assoc, h.mul_accumulatedQ_eq, accumulatedR_succ,
+      Matrix.mul_assoc]
+
+end IsQRIteration
 
 /-- **Gap 4.7.** Unshifted QR converges, modulo diagonal phases, to the triangular
 conjugate of an eigenbasis whose inverse admits elimination without pivoting. -/
@@ -134,61 +206,42 @@ theorem IsQRIteration.exists_tendsto_conjTranspose_mul {n : ℕ}
         atTop (nhds (T * Matrix.diagonal eigs * T⁻¹)) := by
   sorry
 
-/-- **Gap 4.8.** Every square complex matrix has a unitary Hessenberg reduction. -/
-theorem exists_unitary_conjTranspose_mul_upperHessenberg {n : ℕ}
-    (A : Matrix (Fin n) (Fin n) ℂ) :
-    ∃ Q : Matrix (Fin n) (Fin n) ℂ, Q ∈ unitary (Matrix (Fin n) (Fin n) ℂ) ∧
-      ∀ i j, j.val + 1 < i.val → (Qᴴ * A * Q) i j = 0 := by
+/-- **Gap 4.8.** Householder reduction: every square matrix is unitarily similar to an upper
+Hessenberg matrix by a unitary matrix with a prescribed unit first column. For real input the
+reduction is orthogonal. The first column is what the implicit-Q theorem fixes. -/
+theorem exists_unitary_conjTranspose_mul_upperHessenberg {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
+    (A : Matrix (Fin (n + 1)) (Fin (n + 1)) 𝕜) (q : EuclideanSpace 𝕜 (Fin (n + 1)))
+    (hq : ‖q‖ = 1) :
+    ∃ Q : Matrix (Fin (n + 1)) (Fin (n + 1)) 𝕜, Q ∈ unitary (Matrix (Fin (n + 1)) (Fin (n + 1)) 𝕜) ∧
+      (∀ i, Q i 0 = q i) ∧ (Qᴴ * A * Q).IsUpperHessenberg := by
   sorry
 
-/-- **Gap 4.8.** A nonsingular shifted QR step preserves the unreduced Hessenberg form. -/
-theorem shiftedQR_upperHessenberg {n : ℕ} (H Q R : Matrix (Fin n) (Fin n) ℂ) (shift : ℂ)
-    (hH : ∀ i j, j.val + 1 < i.val → H i j = 0)
-    (hsub : ∀ i j, i.val = j.val + 1 → H i j ≠ 0)
-    (hQ : Q ∈ unitary (Matrix (Fin n) (Fin n) ℂ)) (hR : R.IsUpperTriangular)
+/-- An unreduced upper Hessenberg matrix: upper Hessenberg with nonzero subdiagonal. -/
+def IsUnreducedHessenberg {R : Type*} [Zero R] {n : ℕ} (H : Matrix (Fin n) (Fin n) R) : Prop :=
+  H.IsUpperHessenberg ∧ ∀ i j : Fin n, i.val = j.val + 1 → H i j ≠ 0
+
+/-- An unreduced Hessenberg matrix vanishes below the subdiagonal and not on it. -/
+theorem isUnreducedHessenberg_iff {R : Type*} [Zero R] {n : ℕ} {H : Matrix (Fin n) (Fin n) R} :
+    IsUnreducedHessenberg H ↔
+      (∀ i j : Fin n, j.val + 1 < i.val → H i j = 0) ∧
+        ∀ i j : Fin n, i.val = j.val + 1 → H i j ≠ 0 := by
+  rw [IsUnreducedHessenberg, Matrix.isUpperHessenberg_fin_iff]
+
+/-- **Gap 4.8.** A nonsingular shifted QR step is a unitary similarity and preserves the
+unreduced Hessenberg form. -/
+theorem IsUnreducedHessenberg.shifted_qr_step {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
+    {H Q R : Matrix (Fin n) (Fin n) 𝕜} (shift : 𝕜) (hH : IsUnreducedHessenberg H)
+    (hQ : Q ∈ unitary (Matrix (Fin n) (Fin n) 𝕜)) (hR : R.IsUpperTriangular)
     (hQR : H - shift • 1 = Q * R) (hne : R.det ≠ 0) :
-    let B := R * Q + shift • 1
-    B = Qᴴ * H * Q ∧
-      (∀ i j, j.val + 1 < i.val → B i j = 0) ∧
-      ∀ i j, i.val = j.val + 1 → B i j ≠ 0 := by
+    R * Q + shift • 1 = Qᴴ * H * Q ∧ IsUnreducedHessenberg (R * Q + shift • 1) := by
   sorry
-
-/-- Unitary similarity preserves the Euclidean operator norm. -/
-theorem l2_opNorm_unitary_mul_mul_conjTranspose {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
-    {W : Matrix (Fin n) (Fin n) 𝕜} (hW : W ∈ unitary (Matrix (Fin n) (Fin n) 𝕜))
-    (Y : Matrix (Fin n) (Fin n) 𝕜) : ‖W * Y * Wᴴ‖ = ‖Y‖ := by
-  have bound {U Z : Matrix (Fin n) (Fin n) 𝕜}
-      (hU : U ∈ unitary (Matrix (Fin n) (Fin n) 𝕜)) : ‖U * Z * Uᴴ‖ ≤ ‖Z‖ := by
-    have hstar : Uᴴ * U = 1 := Unitary.star_mul_self_of_mem hU
-    have hs := Matrix.l2_opNorm_conjTranspose_mul_self U
-    rw [hstar] at hs
-    have hle : ‖(1 : Matrix (Fin n) (Fin n) 𝕜)‖ ≤ 1 := by
-      rw [← Matrix.l2_opNorm_toEuclideanCLM, map_one]
-      exact ContinuousLinearMap.norm_id_le
-    have hsq : ‖U‖ * ‖U‖ ≤ 1 := hs ▸ hle
-    have hu : ‖U‖ ≤ 1 := by nlinarith only [hsq, norm_nonneg U]
-    calc
-      ‖U * Z * Uᴴ‖ ≤ ‖U * Z‖ * ‖Uᴴ‖ := Matrix.l2_opNorm_mul ..
-      _ ≤ ‖U * Z‖ := by
-        rw [Matrix.l2_opNorm_conjTranspose]
-        exact mul_le_of_le_one_right (norm_nonneg _) hu
-      _ ≤ ‖U‖ * ‖Z‖ := Matrix.l2_opNorm_mul ..
-      _ ≤ ‖Z‖ := mul_le_of_le_one_left (norm_nonneg _) hu
-  refine le_antisymm (bound hW) ?_
-  have hstar : Wᴴ * W = 1 := Unitary.star_mul_self_of_mem hW
-  have hconj : Wᴴ * (W * Y * Wᴴ) * W = Y := by
-    rw [← Matrix.mul_assoc Wᴴ (W * Y), ← Matrix.mul_assoc Wᴴ W, hstar, one_mul,
-      Matrix.mul_assoc Y, hstar, mul_one]
-  have hWU : Wᴴ ∈ unitary (Matrix (Fin n) (Fin n) 𝕜) := Unitary.star_mem hW
-  have hbound := bound (Z := W * Y * Wᴴ) hWU
-  rwa [conjTranspose_conjTranspose, hconj] at hbound
 
 /-- **Gap 4.10.** Backward errors for successive unitary reductions add, with the
 second error budget scaled by the first perturbed matrix norm. -/
-theorem norm_conjTranspose_mul_sub_le_of_reductions {n : ℕ}
-    {A H D P Q : Matrix (Fin n) (Fin n) ℂ} {u a b : ℝ}
-    (hP : P ∈ unitary (Matrix (Fin n) (Fin n) ℂ))
-    (hQ : Q ∈ unitary (Matrix (Fin n) (Fin n) ℂ)) (hbu : 0 ≤ b * u)
+theorem norm_conjTranspose_mul_sub_le_of_reductions {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
+    {A H D P Q : Matrix (Fin n) (Fin n) 𝕜} {u a b : ℝ}
+    (hP : P ∈ unitary (Matrix (Fin n) (Fin n) 𝕜))
+    (hQ : Q ∈ unitary (Matrix (Fin n) (Fin n) 𝕜)) (hbu : 0 ≤ b * u)
     (h₁ : ‖P * H * Pᴴ - A‖ ≤ a * u * ‖A‖) (h₂ : ‖Q * D * Qᴴ - H‖ ≤ b * u * ‖H‖) :
     ‖(P * Q) * D * (P * Q)ᴴ - A‖ ≤ (a + b * (1 + a * u)) * u * ‖A‖ := by
   let E₂ := D - Qᴴ * H * Q
@@ -232,6 +285,25 @@ def krylovSubmodule {𝕜 E : Type*} [Field 𝕜] [AddCommGroup E] [Module 𝕜 
     (A : E →ₗ[𝕜] E) (b : E) (k : ℕ) : Submodule 𝕜 E :=
   Submodule.span 𝕜 (Set.range fun j : Fin k ↦ (A ^ j.val) b)
 
+/-- The Krylov space of order `k` is spanned by `b, A b, …, A ^ (k - 1) b`. -/
+theorem krylovSubmodule_def {𝕜 E : Type*} [Field 𝕜] [AddCommGroup E] [Module 𝕜 E]
+    (A : E →ₗ[𝕜] E) (b : E) (k : ℕ) :
+    krylovSubmodule A b k = Submodule.span 𝕜 (Set.range fun j : Fin k ↦ (A ^ j.val) b) := (rfl)
+
+/-- The Krylov space of order zero is trivial. -/
+@[simp]
+theorem krylovSubmodule_zero {𝕜 E : Type*} [Field 𝕜] [AddCommGroup E] [Module 𝕜 E]
+    (A : E →ₗ[𝕜] E) (b : E) : krylovSubmodule A b 0 = ⊥ := by
+  rw [krylovSubmodule_def, Set.range_eq_empty, Submodule.span_empty]
+
+/-- Krylov spaces increase with the order. -/
+theorem krylovSubmodule_mono {𝕜 E : Type*} [Field 𝕜] [AddCommGroup E] [Module 𝕜 E]
+    (A : E →ₗ[𝕜] E) (b : E) {k l : ℕ} (hkl : k ≤ l) :
+    krylovSubmodule A b k ≤ krylovSubmodule A b l := by
+  refine Submodule.span_mono ?_
+  rintro _ ⟨j, rfl⟩
+  exact ⟨Fin.castLE hkl j, rfl⟩
+
 /-- **Gap 4.13.** A full-dimensional Krylov space has a prefix-compatible orthonormal
 Arnoldi frame whose compressed operator is upper Hessenberg. -/
 theorem exists_arnoldiFrame {𝕜 : Type*} [RCLike 𝕜] {n m : ℕ}
@@ -241,37 +313,40 @@ theorem exists_arnoldiFrame {𝕜 : Type*} [RCLike 𝕜] {n m : ℕ}
       (∀ (k : ℕ) (hk : k ≤ m),
         (Q.submatrix id (Fin.castLE hk)).toEuclideanLin.range =
           krylovSubmodule A.toEuclideanLin b k) ∧
-      ∀ i j : Fin m, j.val + 1 < i.val → (Qᴴ * A * Q) i j = 0 := by
+      (Qᴴ * A * Q).IsUpperHessenberg := by
   sorry
 
-/-- **Gap 4.14.** The upper Ritz value has the Chebyshev lower bound from the leading
-spectral separation and the angle of the initial vector. -/
-theorem kanielPaigeSaad_upperRitz {n m : ℕ}
+/-- **Gap 4.14.** Kaniel–Paige–Saad: the upper Ritz value has the Chebyshev lower bound from
+the leading spectral separation and the angle of the initial vector. -/
+theorem kaniel_paige_saad {n m : ℕ}
     (A : Matrix (Fin (n + 3)) (Fin (n + 3)) ℝ) (hA : A.IsHermitian)
     (b q : EuclideanSpace ℝ (Fin (n + 3))) (hb : ‖b‖ = 1) (hq : ‖q‖ = 1)
     (hvec : A.toEuclideanLin q = hA.eigenvalues₀ 0 • q)
     (hc : ⟪q, b⟫_ℝ ≠ 0)
     (hgap : hA.eigenvalues₀ (Fin.cast (Fintype.card_fin _).symm (Fin.last (n + 2))) <
       hA.eigenvalues₀ 1)
-    (Q : Matrix (Fin (n + 3)) (Fin (m + 1)) ℝ) (hQ : Qᵀ * Q = 1)
-    (hK : Q.toEuclideanLin.range = krylovSubmodule A.toEuclideanLin b (m + 1))
-    (hJ : (Qᵀ * A * Q).IsHermitian) :
+    (Q : Matrix (Fin (n + 3)) (Fin (m + 1)) ℝ) (hQ : Qᴴ * Q = 1)
+    (hK : Q.toEuclideanLin.range = krylovSubmodule A.toEuclideanLin b (m + 1)) :
     let top := hA.eigenvalues₀ 0
     let second := hA.eigenvalues₀ 1
     let bottom := hA.eigenvalues₀ (Fin.cast (Fintype.card_fin _).symm (Fin.last (n + 2)))
     let angle := (1 - ⟪q, b⟫_ℝ ^ 2) / ⟪q, b⟫_ℝ ^ 2
     let t := (Polynomial.Chebyshev.T ℝ m).eval (1 + 2 * (top - second) / (second - bottom))
-    top - (top - bottom) * angle / t ^ 2 ≤ hJ.eigenvalues₀ 0 ∧
-      hJ.eigenvalues₀ 0 ≤ top := by
+    let ritz := (isHermitian_conjTranspose_mul_mul Q hA).eigenvalues₀ 0
+    top - (top - bottom) * angle / t ^ 2 ≤ ritz ∧ ritz ≤ top := by
   sorry
 
-/-- **Gap 4.16.** Unitary bidiagonalization preserves the singular values of a tall
-matrix. -/
+/-- **Gap 4.16.** Golub–Kahan bidiagonalization: for every unit starting vector `v` there is a
+unitary reduction `Uᴴ A V` to upper bidiagonal form with nonnegative real diagonal `d` and
+superdiagonal `e`, in which `V` has first column `v`. It preserves the singular values. -/
 theorem exists_unitary_conjTranspose_mul_bidiagonal {𝕜 : Type*} [RCLike 𝕜] {m n : ℕ}
-    (A : Matrix (Fin m) (Fin n) 𝕜) (hnm : n ≤ m) :
-    ∃ (U : Matrix (Fin m) (Fin m) 𝕜) (V : Matrix (Fin n) (Fin n) 𝕜),
-      U ∈ unitary (Matrix (Fin m) (Fin m) 𝕜) ∧ V ∈ unitary (Matrix (Fin n) (Fin n) 𝕜) ∧
-      (∀ i j, i.val ≠ j.val → i.val + 1 ≠ j.val → (Uᴴ * A * V) i j = 0) ∧
+    (A : Matrix (Fin m) (Fin (n + 1)) 𝕜) (v : EuclideanSpace 𝕜 (Fin (n + 1))) (hv : ‖v‖ = 1) :
+    ∃ (U : Matrix (Fin m) (Fin m) 𝕜) (V : Matrix (Fin (n + 1)) (Fin (n + 1)) 𝕜) (d e : ℕ → ℝ),
+      U ∈ unitary (Matrix (Fin m) (Fin m) 𝕜) ∧
+      V ∈ unitary (Matrix (Fin (n + 1)) (Fin (n + 1)) 𝕜) ∧ (∀ i, V i 0 = v i) ∧
+      (∀ k, 0 ≤ d k) ∧ (∀ k, 0 ≤ e k) ∧
+      (∀ i j, (Uᴴ * A * V) i j =
+        if i.val = j.val then (d i.val : 𝕜) else if i.val + 1 = j.val then (e i.val : 𝕜) else 0) ∧
       (Uᴴ * A * V).toEuclideanLin.singularValues = A.toEuclideanLin.singularValues := by
   sorry
 
@@ -286,29 +361,41 @@ theorem exists_analyticOnNhd_sub_inv_pole_of_simple_eigenvalue {n : ℕ}
         (F z)⁻¹ = (z - z₀)⁻¹ • Matrix.vecMulVec v (star w) + R z := by
   sorry
 
-/-- The block companion pencil of a matrix polynomial of degree at most $d+1$. -/
-def companionPencil {𝕜 : Type*} [Field 𝕜] {n : ℕ} (d : ℕ)
-    (D : ℕ → Matrix (Fin n) (Fin n) 𝕜) (z : 𝕜) :
-    Matrix (Fin (d + 1) × Fin n) (Fin (d + 1) × Fin n) 𝕜 :=
+/-- The block companion pencil, evaluated at `z`, of the matrix polynomial
+`∑_{j ≤ d + 1} z ^ j D j` of degree at most `d + 1`: the first block row holds the
+coefficients, with `z D (d + 1)` added in the last block column, and the other block rows
+are `I` on the block diagonal and `-z I` on the block subdiagonal. -/
+def blockCompanionPencil {R : Type*} [CommRing R] {n : ℕ} (d : ℕ)
+    (D : ℕ → Matrix (Fin n) (Fin n) R) (z : R) :
+    Matrix (Fin (d + 1) × Fin n) (Fin (d + 1) × Fin n) R :=
   fun (i, a) (j, b) ↦
     if i.val = 0 then D j.val a b + (if j.val = d then z * D (d + 1) a b else 0)
     else if a ≠ b then 0
     else if i = j then 1
     else if i.val = j.val + 1 then -z else 0
 
-/-- **Gap 4.19.** The determinant of the companion pencil equals the polynomial
+/-- The entries of the block companion pencil. -/
+theorem blockCompanionPencil_apply {R : Type*} [CommRing R] {n : ℕ} (d : ℕ)
+    (D : ℕ → Matrix (Fin n) (Fin n) R) (z : R) (i j : Fin (d + 1)) (a b : Fin n) :
+    blockCompanionPencil d D z (i, a) (j, b) =
+      if i.val = 0 then D j.val a b + (if j.val = d then z * D (d + 1) a b else 0)
+      else if a ≠ b then 0
+      else if i = j then 1
+      else if i.val = j.val + 1 then -z else 0 := (rfl)
+
+/-- **Gap 4.19.** The determinant of the block companion pencil equals the polynomial
 determinant, including the singular-polynomial case. -/
-theorem det_companionPencil {𝕜 : Type*} [Field 𝕜] {n : ℕ} (d : ℕ)
-    (D : ℕ → Matrix (Fin n) (Fin n) 𝕜) (z : 𝕜) :
-    (companionPencil d D z).det = (∑ j ∈ Finset.range (d + 2), z ^ j • D j).det := by
+theorem det_blockCompanionPencil {R : Type*} [CommRing R] {n : ℕ} (d : ℕ)
+    (D : ℕ → Matrix (Fin n) (Fin n) R) (z : R) :
+    (blockCompanionPencil d D z).det = (∑ j ∈ Finset.range (d + 2), z ^ j • D j).det := by
   sorry
 
 /-- **Gap 4.19.** Kernel vectors of the pencil are exactly lifted polynomial kernel vectors. -/
-theorem companionPencil_mulVec_eq_zero_iff {𝕜 : Type*} [Field 𝕜] {n : ℕ}
-    (d : ℕ) (D : ℕ → Matrix (Fin n) (Fin n) 𝕜) (z : 𝕜)
-    (x : Fin (d + 1) × Fin n → 𝕜) :
-    companionPencil d D z *ᵥ x = 0 ↔
-      ∃ v : Fin n → 𝕜, (∑ j ∈ Finset.range (d + 2), z ^ j • D j) *ᵥ v = 0 ∧
+theorem blockCompanionPencil_mulVec_eq_zero_iff {R : Type*} [CommRing R] {n : ℕ}
+    (d : ℕ) (D : ℕ → Matrix (Fin n) (Fin n) R) (z : R)
+    (x : Fin (d + 1) × Fin n → R) :
+    blockCompanionPencil d D z *ᵥ x = 0 ↔
+      ∃ v : Fin n → R, (∑ j ∈ Finset.range (d + 2), z ^ j • D j) *ᵥ v = 0 ∧
         ∀ i a, x (i, a) = z ^ i.val * v a := by
   sorry
 

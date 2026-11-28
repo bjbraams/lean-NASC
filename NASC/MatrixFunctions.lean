@@ -1,12 +1,11 @@
 module
 
-public import NASC.EigenvalueMethods
-public import Mathlib.Analysis.Normed.Algebra.Exponential
+public import Mathlib.Analysis.CStarAlgebra.Matrix
 public import Mathlib.MeasureTheory.Integral.CircleIntegral
-public import Mathlib.LinearAlgebra.Matrix.Bilinear
-public import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
 
 import Mathlib.Algebra.Polynomial.Taylor
+import Mathlib.LinearAlgebra.Matrix.Bilinear
 
 /-!
 # Matrix functions and matrix equations
@@ -14,6 +13,26 @@ import Mathlib.Algebra.Polynomial.Taylor
 Hermite interpolation on Jordan blocks, contour and power-series calculus, and Sylvester
 and Lyapunov equations. See gaps 6.1–6.7.
 The Jordan block proofs use Mathlib's polynomial Taylor and Hasse derivative identities.
+
+## Main definitions
+
+* `NASC.jordanBlock n z`: the `n × n` Jordan block with eigenvalue `z`.
+* `NASC.matrixFunctionOnCircle f c r A`: the Cauchy integral of `f` against the resolvent of
+  `A` over the circle of center `c` and radius `r`.
+* `NASC.sylvesterLinearMap A B`: the operator `X ↦ A * X - X * B`.
+
+## Main results
+
+* `NASC.aeval_jordanBlock_apply_hasseDeriv`, `NASC.aeval_jordanBlock_apply`: polynomials of a
+  Jordan block are upper triangular Toeplitz matrices of (Hasse) derivatives.
+* `NASC.pow_jordanBlock_apply`: the binomial formula for the powers of a Jordan block.
+* `NASC.existsUnique_polynomial_iteratedDerivative`: Hermite interpolation.
+* `NASC.summable_smul_pow_jordanBlock_iff`, `NASC.matrixFunctionOnCircle_jordanBlock_apply`:
+  power-series and contour calculus on a Jordan block.
+* `NASC.exists_hasFDerivAt_matrixFunctionOnCircle_fromBlocks`: the Fréchet derivative as an
+  off-diagonal block.
+* `NASC.spectrum_sylvesterLinearMap`, `NASC.sylvester_integral_spec`,
+  `NASC.lyapunov_integral_spec`: Sylvester and Lyapunov equations.
 -/
 
 public section
@@ -22,12 +41,18 @@ noncomputable section
 
 namespace NASC
 
-open scoped Matrix BigOperators Matrix.Norms.L2Operator
+open scoped Matrix Matrix.Norms.L2Operator
 open MeasureTheory Matrix Polynomial
 
 /-- The size-$n$ Jordan block with eigenvalue $z$. -/
 def jordanBlock {𝕜 : Type*} [Ring 𝕜] (n : ℕ) (z : 𝕜) : Matrix (Fin n) (Fin n) 𝕜 :=
   fun i j ↦ if i = j then z else if j.val = i.val + 1 then 1 else 0
+
+/-- The entries of a Jordan block. -/
+theorem jordanBlock_apply {𝕜 : Type*} [Ring 𝕜] (n : ℕ) (z : 𝕜) (i j : Fin n) :
+    jordanBlock n z i j = if i = j then z else if j.val = i.val + 1 then 1 else 0 := by
+  unfold jordanBlock
+  rfl
 
 /-- The nilpotent Jordan block has ones on its first superdiagonal. -/
 theorem jordanBlock_zero_apply {𝕜 : Type*} [Ring 𝕜] {n : ℕ} (i j : Fin n) :
@@ -65,8 +90,9 @@ theorem pow_jordanBlock_zero_apply {𝕜 : Type*} [Ring 𝕜] {n : ℕ}
       simp only [h, ite_eq_right hj, ite_false, zero_mul, Finset.sum_const_zero]
 
 /-- On the nilpotent block a polynomial has its coefficients on the superdiagonals. -/
-theorem aeval_jordanBlock_zero_apply {n : ℕ} (p : ℂ[X]) (i j : Fin n) :
-    (Polynomial.aeval (jordanBlock n (0 : ℂ)) p) i j =
+theorem aeval_jordanBlock_zero_apply {R : Type*} [CommRing R] {n : ℕ} (p : R[X])
+    (i j : Fin n) :
+    (Polynomial.aeval (jordanBlock n (0 : R)) p) i j =
       if i ≤ j then p.coeff (j.val - i.val) else 0 := by
   induction p using Polynomial.induction_on' with
   | add p q hp hq =>
@@ -87,14 +113,14 @@ theorem aeval_jordanBlock_zero_apply {n : ℕ} (p : ℂ[X]) (i j : Fin n) :
         omega
       simp only [ite_eq_right h, ite_eq_right he, smul_zero]
 
-/-- **Gap 6.1.** Polynomial evaluation on a Jordan block is the upper triangular
-Toeplitz matrix of normalized derivatives. -/
-theorem aeval_jordanBlock_apply {n : ℕ} (p : ℂ[X]) (z : ℂ) (i j : Fin n) :
+/-- Polynomial evaluation on a Jordan block over a commutative ring is the upper triangular
+Toeplitz matrix of Hasse derivatives. -/
+theorem aeval_jordanBlock_apply_hasseDeriv {R : Type*} [CommRing R] {n : ℕ} (p : R[X]) (z : R)
+    (i j : Fin n) :
     (Polynomial.aeval (jordanBlock n z) p) i j =
-      if i ≤ j then (Polynomial.derivative^[j.val - i.val] p).eval z / (j.val - i.val).factorial
-      else 0 := by
-  let S := jordanBlock n (0 : ℂ)
-  have hsplit : S + algebraMap ℂ (Matrix (Fin n) (Fin n) ℂ) z = jordanBlock n z := by
+      if i ≤ j then (Polynomial.hasseDeriv (j.val - i.val) p).eval z else 0 := by
+  let S := jordanBlock n (0 : R)
+  have hsplit : S + algebraMap R (Matrix (Fin n) (Fin n) R) z = jordanBlock n z := by
     rw [Algebra.algebraMap_eq_smul_one]
     ext a b
     by_cases h : a = b
@@ -108,20 +134,33 @@ theorem aeval_jordanBlock_apply {n : ℕ} (p : ℂ[X]) (z : ℂ) (i j : Fin n) :
   rw [← ht, aeval_jordanBlock_zero_apply]
   by_cases h : i ≤ j
   · simp only [ite_eq_left h, Polynomial.taylor_coeff]
+  · simp only [ite_eq_right h]
+
+/-- **Gap 6.1.** Polynomial evaluation on a Jordan block is the upper triangular
+Toeplitz matrix of normalized derivatives. -/
+theorem aeval_jordanBlock_apply {K : Type*} [Field K] [CharZero K] {n : ℕ} (p : K[X]) (z : K)
+    (i j : Fin n) :
+    (Polynomial.aeval (jordanBlock n z) p) i j =
+      if i ≤ j then (Polynomial.derivative^[j.val - i.val] p).eval z / (j.val - i.val).factorial
+      else 0 := by
+  rw [aeval_jordanBlock_apply_hasseDeriv]
+  by_cases h : i ≤ j
+  · simp only [ite_eq_left h]
     let k := j.val - i.val
-    have hfact : (k.factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero k
-    have hd (q : ℂ[X]) : Polynomial.derivative^[k] q = k.factorial • Polynomial.hasseDeriv k q :=
-      (congrFun (Polynomial.factorial_smul_hasseDeriv (R := ℂ) (k := k)) q).symm
+    have hfact : (k.factorial : K) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero k
+    have hd : Polynomial.derivative^[k] p = k.factorial • Polynomial.hasseDeriv k p :=
+      (congrFun (Polynomial.factorial_smul_hasseDeriv (R := K) (k := k)) p).symm
     rw [hd, Polynomial.eval_smul, nsmul_eq_mul]
     exact (eq_div_iff hfact).mpr (mul_comm _ _)
   · simp only [ite_eq_right h]
 
 /-- **Gap 6.1.** Given jet data at distinct eigenvalues, the Hermite interpolant is
-uniquely determined in degrees smaller than the sum of the requested multiplicities. -/
-theorem existsUnique_polynomial_iteratedDerivative {s : ℕ}
-    (z : Fin s → ℂ) (hz : Function.Injective z) (m : Fin s → ℕ)
-    (hm : 0 < ∑ i, m i) (jet : ∀ i, Fin (m i) → ℂ) :
-    ∃! p : ℂ[X], p.natDegree < ∑ i, m i ∧
+uniquely determined in degrees smaller than the sum of the requested multiplicities. When all
+multiplicities vanish the interpolant is the zero polynomial. -/
+theorem existsUnique_polynomial_iteratedDerivative {K : Type*} [Field K] [CharZero K] {s : ℕ}
+    (z : Fin s → K) (hz : Function.Injective z) (m : Fin s → ℕ)
+    (jet : ∀ i, Fin (m i) → K) :
+    ∃! p : K[X], p.degree < (∑ i, m i : ℕ) ∧
       ∀ i j, (Polynomial.derivative^[j.val] p).eval (z i) = jet i j := by
   sorry
 
@@ -132,23 +171,23 @@ def matrixFunctionOnCircle {n : Type*} [Fintype n] [DecidableEq n]
   (2 * (Real.pi : ℂ) * Complex.I)⁻¹ •
     circleIntegral (fun z ↦ f z • (z • (1 : Matrix n n ℂ) - A)⁻¹) c r
 
+/-- The defining formula for `matrixFunctionOnCircle`. -/
+theorem matrixFunctionOnCircle_def {n : Type*} [Fintype n] [DecidableEq n]
+    (f : ℂ → ℂ) (c : ℂ) (r : ℝ) (A : Matrix n n ℂ) :
+    matrixFunctionOnCircle f c r A = (2 * (Real.pi : ℂ) * Complex.I)⁻¹ •
+      circleIntegral (fun z ↦ f z • (z • (1 : Matrix n n ℂ) - A)⁻¹) c r := by
+  unfold matrixFunctionOnCircle
+  rfl
+
 /-- Entries of a Jordan-block power are the corresponding binomial coefficients times
 powers of its eigenvalue. -/
-theorem pow_jordanBlock_apply {n : ℕ} (z : ℂ) (k : ℕ) (i j : Fin n) :
+theorem pow_jordanBlock_apply {R : Type*} [CommRing R] {n : ℕ} (z : R) (k : ℕ) (i j : Fin n) :
     (jordanBlock n z ^ k) i j =
-      if i ≤ j then (k.choose (j.val - i.val) : ℂ) * z ^ (k - (j.val - i.val)) else 0 := by
-  have h := aeval_jordanBlock_apply (Polynomial.X ^ k) z i j
+      if i ≤ j then (k.choose (j.val - i.val) : R) * z ^ (k - (j.val - i.val)) else 0 := by
+  have h := aeval_jordanBlock_apply_hasseDeriv (Polynomial.X ^ k) z i j
   rw [map_pow, Polynomial.aeval_X] at h
-  rw [h]
-  by_cases hij : i ≤ j
-  · simp only [ite_eq_left hij]
-    rw [Polynomial.iterate_derivative_X_pow_eq_smul, Polynomial.eval_smul, Polynomial.eval_pow,
-      Polynomial.eval_X, Nat.descFactorial_eq_factorial_mul_choose, Nat.cast_mul]
-    have hfact : (((j.val - i.val).factorial : ℕ) : ℂ) ≠ 0 := by
-      exact_mod_cast Nat.factorial_ne_zero (j.val - i.val)
-    rw [smul_eq_mul]
-    field_simp
-  · simp only [ite_eq_right hij]
+  rw [h, ← Polynomial.monomial_one_right_eq_X_pow, Polynomial.hasseDeriv_monomial,
+    Polynomial.eval_monomial, mul_one]
 
 /-- **Gap 6.2.** The Jordan-block power series converges precisely when its scalar
 entry series, indexed by the derivatives up to the size of the block, converge. -/
@@ -201,7 +240,7 @@ theorem matrixFunctionOnCircle_jordanBlock_apply {n : ℕ}
 /-- **Gap 6.4.** The Fréchet derivative of the contour functional calculus appears as the
 upper-right block of the same function evaluated on the block triangular input. -/
 theorem exists_hasFDerivAt_matrixFunctionOnCircle_fromBlocks {n : ℕ}
-    (f : ℂ → ℂ) (c : ℂ) {r : ℝ} (hr : 0 < r) (A : Matrix (Fin n) (Fin n) ℂ)
+    (f : ℂ → ℂ) (c : ℂ) {r : ℝ} (A : Matrix (Fin n) (Fin n) ℂ)
     (hf : AnalyticOnNhd ℂ f (Metric.closedBall c r))
     (hA : spectrum ℂ A ⊆ Metric.ball c r) :
     ∃ L : Matrix (Fin n) (Fin n) ℂ →L[ℂ] Matrix (Fin n) (Fin n) ℂ,
@@ -212,20 +251,28 @@ theorem exists_hasFDerivAt_matrixFunctionOnCircle_fromBlocks {n : ℕ}
   sorry
 
 /-- The Sylvester linear operator $X \mapsto AX-XB$. -/
-def sylvesterLinearMap {m n : ℕ} (A : Matrix (Fin m) (Fin m) ℂ) (B : Matrix (Fin n) (Fin n) ℂ) :
-    Matrix (Fin m) (Fin n) ℂ →ₗ[ℂ] Matrix (Fin m) (Fin n) ℂ :=
-  mulLeftLinearMap (Fin n) ℂ A - mulRightLinearMap (Fin m) ℂ B
+def sylvesterLinearMap {R m n : Type*} [CommRing R] [Fintype m] [Fintype n]
+    (A : Matrix m m R) (B : Matrix n n R) : Matrix m n R →ₗ[R] Matrix m n R :=
+  mulLeftLinearMap n R A - mulRightLinearMap m R B
+
+/-- The Sylvester operator maps `X` to `A * X - X * B`. -/
+theorem sylvesterLinearMap_apply {R m n : Type*} [CommRing R] [Fintype m] [Fintype n]
+    (A : Matrix m m R) (B : Matrix n n R) (X : Matrix m n R) :
+    sylvesterLinearMap A B X = A * X - X * B := by
+  unfold sylvesterLinearMap
+  rfl
 
 /-- **Gap 6.6.** The Sylvester spectrum consists of differences of eigenvalues. -/
-theorem spectrum_sylvesterLinearMap {m n : ℕ}
-    (A : Matrix (Fin m) (Fin m) ℂ) (B : Matrix (Fin n) (Fin n) ℂ) :
-    spectrum ℂ (sylvesterLinearMap A B) =
-      {z | ∃ a ∈ spectrum ℂ A, ∃ b ∈ spectrum ℂ B, z = a - b} := by
+theorem spectrum_sylvesterLinearMap {K m n : Type*} [Field K] [IsAlgClosed K]
+    [Fintype m] [Fintype n] [DecidableEq m] [DecidableEq n]
+    (A : Matrix m m K) (B : Matrix n n K) :
+    spectrum K (sylvesterLinearMap A B) =
+      {z | ∃ a ∈ spectrum K A, ∃ b ∈ spectrum K B, z = a - b} := by
   sorry
 
 /-- **Gap 6.6.** The half-line integral solves the Sylvester equation for operators
 with spectra in opposite open half-planes. -/
-theorem isUnique_sylvester_integral {m n : ℕ}
+theorem sylvester_integral_spec {m n : ℕ}
     (A : Matrix (Fin m) (Fin m) ℂ) (B : Matrix (Fin n) (Fin n) ℂ)
     (C : Matrix (Fin m) (Fin n) ℂ)
     (hA : ∀ z ∈ spectrum ℂ A, 0 < z.re) (hB : ∀ z ∈ spectrum ℂ B, z.re < 0) :
@@ -237,7 +284,7 @@ theorem isUnique_sylvester_integral {m n : ℕ}
 open scoped ComplexOrder in
 /-- **Gap 6.7.** A stable matrix admits a unique Lyapunov solution given by the
 half-line Gramian integral. Positive semidefiniteness and definiteness are preserved. -/
-theorem lyapunov_integral {n : ℕ}
+theorem lyapunov_integral_spec {n : ℕ}
     (A C : Matrix (Fin n) (Fin n) ℂ) (hA : ∀ z ∈ spectrum ℂ A, z.re < 0) :
     let X := ∫ t in Set.Ioi (0 : ℝ),
       NormedSpace.exp ((t : ℂ) • A) * C * NormedSpace.exp ((t : ℂ) • Aᴴ)

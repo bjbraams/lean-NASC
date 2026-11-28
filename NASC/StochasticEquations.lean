@@ -1,6 +1,5 @@
 module
 
-public import NASC.MonteCarlo
 public import TauCeti.Probability.BrownianMotion.Integral.Ito.Basic
 public import TauCeti.Probability.BrownianMotion.Integral.Wiener
 
@@ -9,7 +8,24 @@ public import TauCeti.Probability.BrownianMotion.Integral.Wiener
 
 Scalar strong solutions, the local Itô--Taylor expansion, Euler--Maruyama and Milstein
 errors, mean-square theta stability, and a spectral approximation of stochastic convolution.
-Itô and deterministic Wiener integrals use TauCeti's Brownian motion APIs.
+Itô and deterministic Wiener integrals use TauCeti's Brownian motion APIs
+(`TauCeti.Probability.IsItoIntegral`, `TauCeti.Probability.IsPreBrownianReal.wienerIntegral`
+and the horizon measure `TauCeti.Probability.timeMeasure`).
+
+## Main definitions
+
+* `NASC.IsScalarStrongSDESolution`: a strong solution of a scalar Itô equation.
+
+## Main results
+
+* `NASC.exists_scalarStrongSDESolution`: strong existence and pathwise uniqueness.
+* `NASC.exists_itoTaylor_local_remainder_bound`: the local Itô--Taylor expansion.
+* `NASC.exists_eulerMaruyama_strong_error_bound`: strong order one half of Euler--Maruyama.
+* `NASC.exists_milstein_strong_error_bound`: strong order one of the Milstein scheme.
+* `NASC.theta_mean_square_stability`: mean-square stability of the stochastic theta method.
+* `NASC.memLp_exp_mul_sub`: the exponential convolution kernel is square integrable.
+* `NASC.stochastic_convolution_spectral_error_le`: spectral approximation of a stochastic
+  convolution.
 -/
 
 public section
@@ -19,21 +35,38 @@ noncomputable section
 namespace NASC
 
 open MeasureTheory ProbabilityTheory Set Filter TauCeti.Probability
-open scoped ENNReal NNReal Topology BigOperators
+open scoped ENNReal NNReal Topology
 
 section ScalarSDE
 
 variable {Ω : Type*} [mΩ : MeasurableSpace Ω]
 
-/-- Scalar strong solution using the bundled filtration and Itô integral predicate. -/
+/-- Scalar strong solution of `dX = a(t, X) dt + b(t, X) dW` with initial value `X₀`, using
+the bundled filtration and Itô integral predicate: `X` is adapted, has almost surely
+continuous paths and square-integrable values, its drift is almost surely pathwise integrable
+on every horizon `(0, t]`, and it satisfies the integral equation almost surely. The
+integrability condition makes the Bochner drift integral meaningful rather than a junk `0`. -/
 def IsScalarStrongSDESolution (ℱ : Filtration ℝ≥0 mΩ) (P : Measure Ω)
     (W : ℝ≥0 → Ω → ℝ) (a b : ℝ≥0 → ℝ → ℝ) (X₀ : Ω → ℝ)
     (X : ℝ≥0 → Ω → ℝ) : Prop :=
   Adapted ℱ X ∧ (∀ᵐ ω ∂P, Continuous fun t ↦ X t ω) ∧
     (∀ t, Integrable (fun ω ↦ X t ω ^ 2) P) ∧
+    (∀ᵐ ω ∂P, ∀ t, Integrable (fun s ↦ a s (X s ω)) (timeMeasure t)) ∧
     ∃ I, IsItoIntegral ℱ P W (fun t ω ↦ b t (X t ω)) I ∧
       ∀ᵐ ω ∂P, ∀ t, X t ω = X₀ ω +
         (∫ s, a s (X s ω) ∂timeMeasure t) + I t ω
+
+/-- The defining conditions of `NASC.IsScalarStrongSDESolution`. -/
+theorem isScalarStrongSDESolution_iff {ℱ : Filtration ℝ≥0 mΩ} {P : Measure Ω}
+    {W : ℝ≥0 → Ω → ℝ} {a b : ℝ≥0 → ℝ → ℝ} {X₀ : Ω → ℝ} {X : ℝ≥0 → Ω → ℝ} :
+    IsScalarStrongSDESolution ℱ P W a b X₀ X ↔
+      Adapted ℱ X ∧ (∀ᵐ ω ∂P, Continuous fun t ↦ X t ω) ∧
+        (∀ t, Integrable (fun ω ↦ X t ω ^ 2) P) ∧
+        (∀ᵐ ω ∂P, ∀ t, Integrable (fun s ↦ a s (X s ω)) (timeMeasure t)) ∧
+        ∃ I, IsItoIntegral ℱ P W (fun t ω ↦ b t (X t ω)) I ∧
+          ∀ᵐ ω ∂P, ∀ t, X t ω = X₀ ω +
+            (∫ s, a s (X s ω) ∂timeMeasure t) + I t ω :=
+  Iff.rfl
 
 /-- **Gap 23.9.** Scalar strong existence and pathwise uniqueness for globally
 Lipschitz drift and diffusion with square-integrable initial data. -/
@@ -54,12 +87,14 @@ theorem exists_scalarStrongSDESolution {ℱ : Filtration ℝ≥0 mΩ} (P : Measu
 
 /-- **Gap 23.10.** The scalar Itô--Taylor expansion through the second stochastic
 order. Its retained terms are the drift, the Brownian increment and the
-centered-square Milstein correction. -/
+centered-square Milstein correction. The derivatives of orders one to three are bounded,
+so the coefficients grow at most linearly. -/
 theorem exists_itoTaylor_local_remainder_bound {ℱ : Filtration ℝ≥0 mΩ}
     (P : Measure Ω) [IsProbabilityMeasure P] (W : ℝ≥0 → Ω → ℝ)
     (hW : IsFilteredPreBrownianReal ℱ W P) (hWcont : ∀ᵐ ω ∂P, Continuous fun t ↦ W t ω)
     (a b : ℝ → ℝ) (ha : ContDiff ℝ 3 a) (hb : ContDiff ℝ 3 b)
-    (hbd : ∃ L, ∀ (k : ℕ), k ≤ 3 → ∀ x, |iteratedDeriv k a x| + |iteratedDeriv k b x| ≤ L)
+    (hbd : ∃ L, ∀ (k : ℕ), 1 ≤ k → k ≤ 3 → ∀ x,
+      |iteratedDeriv k a x| + |iteratedDeriv k b x| ≤ L)
     (x : ℝ) (X : ℝ≥0 → Ω → ℝ)
     (hX : IsScalarStrongSDESolution ℱ P W (fun _ ↦ a) (fun _ ↦ b) (fun _ ↦ x) X) :
     ∃ C ≥ (0 : ℝ), ∀ h ∈ Ioc (0 : ℝ≥0) 1,
@@ -112,7 +147,7 @@ theorem exists_milstein_strong_error_bound {ℱ : Filtration ℝ≥0 mΩ}
 
 /-- **Gap 23.13.** The stochastic theta method has the exact mean-square
 amplification factor and the corresponding stability test. -/
-theorem theta_meanSquare_stability {ℱ : Filtration ℝ≥0 mΩ}
+theorem theta_mean_square_stability {ℱ : Filtration ℝ≥0 mΩ}
     (P : Measure Ω) [IsProbabilityMeasure P] (W : ℝ≥0 → Ω → ℝ)
     (hW : IsFilteredPreBrownianReal ℱ W P) {h : ℝ≥0} (hh : 0 < h)
     (r σ θ x : ℝ) (hθ : θ ∈ Icc (0 : ℝ) 1) (hx : x ≠ 0)
@@ -129,26 +164,42 @@ theorem theta_meanSquare_stability {ℱ : Filtration ℝ≥0 mΩ}
 
 end ScalarSDE
 
+/-- The exponential convolution kernel `s ↦ exp (-c (t - s))` is square integrable for the
+horizon measure on `(0, t]`, where it is bounded by `exp (|c| t)`. -/
+theorem memLp_exp_mul_sub (c : ℝ) (t : ℝ≥0) :
+    MemLp (fun s : ℝ≥0 ↦ Real.exp (-c * ((t : ℝ) - s))) 2 (timeMeasure t) := by
+  refine MemLp.of_bound (by fun_prop : Continuous fun s : ℝ≥0 ↦
+    Real.exp (-c * ((t : ℝ) - s))).aestronglyMeasurable (Real.exp (|c| * t)) ?_
+  rw [timeMeasure_def, ae_restrict_iff' measurableSet_Ioc]
+  refine Filter.Eventually.of_forall fun s hs ↦ ?_
+  rw [Real.norm_eq_abs, abs_of_pos (Real.exp_pos _), Real.exp_le_exp]
+  have h₀ : 0 ≤ (t : ℝ) - s := sub_nonneg.mpr (by exact_mod_cast hs.2)
+  have h₁ : (t : ℝ) - s ≤ t := sub_le_self _ s.2
+  calc
+    -c * ((t : ℝ) - s) ≤ |c| * ((t : ℝ) - s) :=
+      mul_le_mul_of_nonneg_right (neg_le_abs c) h₀
+    _ ≤ |c| * t := mul_le_mul_of_nonneg_left h₁ (abs_nonneg c)
+
 /-- **Gap 23.16.** Semi-implicit spectral stepping for diagonal additive
 stochastic convolution, with the mean-square error summed over all modes.
-The continuous and discrete modes use the same Brownian motions. -/
-theorem stochasticConvolution_spectral_error_le {Ω : Type*} [MeasurableSpace Ω]
+The continuous and discrete modes use the same Brownian motions. The mode errors are
+summed in `ℝ≥0∞`, so the bound also asserts their summability. -/
+theorem stochastic_convolution_spectral_error_le {Ω : Type*} [MeasurableSpace Ω]
     (P : Measure Ω) [IsProbabilityMeasure P] (W : ℕ → ℝ≥0 → Ω → ℝ)
     (hW : ∀ j, IsPreBrownianReal (W j) P)
     (e q : ℕ → ℝ) (he : ∀ j, 0 < e j) (hmono : Monotone e) (hq : ∀ j, 0 ≤ q j)
     {ζ : ℝ} (hζ : ζ ∈ Ioc (0 : ℝ) 2)
-    (htrace : Summable fun j ↦ e j ^ (ζ - 1) * q j)
-    (hkern : ∀ (j : ℕ) (t : ℝ≥0), MemLp
-      (fun s : ℝ≥0 ↦ Real.exp (-e j * ((t : ℝ) - s))) 2 (timeMeasure t)) :
+    (htrace : Summable fun j ↦ e j ^ (ζ - 1) * q j) :
     ∃ C ≥ (0 : ℝ), ∀ (N n : ℕ) (h : ℝ≥0), 0 < h → 1 ≤ (h : ℝ) * e N →
       let t := (n : ℝ≥0) * h
       let X := fun (j : ℕ) (ω : Ω) ↦
-        Real.sqrt (q j) * (hW j).wienerIntegral t ((hkern j t).toLp _) ω
+        Real.sqrt (q j) * (hW j).wienerIntegral t ((memLp_exp_mul_sub (e j) t).toLp _) ω
       let U := fun (j : ℕ) (ω : Ω) ↦ if j < N then
         Real.sqrt (q j) * ∑ i ∈ Finset.range n,
           (1 + h * e j)⁻¹ ^ (n - i) * (W j ((i + 1 : ℕ) * h) ω - W j (i * h) ω)
         else 0
-      (∑' j, ∫ ω, (X j ω - U j ω) ^ 2 ∂P) ≤ C * (h : ℝ) ^ ζ * ∑' j, e j ^ (ζ - 1) * q j := by
+      (∑' j, ∫⁻ ω, ENNReal.ofReal ((X j ω - U j ω) ^ 2) ∂P) ≤
+        ENNReal.ofReal (C * (h : ℝ) ^ ζ * ∑' j, e j ^ (ζ - 1) * q j) := by
   sorry
 
 end NASC
